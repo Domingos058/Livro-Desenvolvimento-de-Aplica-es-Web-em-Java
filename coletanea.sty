@@ -324,6 +324,18 @@
 \NewDocumentEnvironment{projeto}{mmm}
 {\begin{tarefaBase}{projeto}{Projeto}{corProjetos}{#1}{#2}{#3}}%
     {\end{tarefaBase}}%
+    
+\NewDocumentEnvironment{exercicioSemArquivo}{mmm}
+{\begin{tarefaBaseSemArquivo}{exercicio}{Exercício}{corExercicios}{#1}{#2}{#3}}%
+    {\end{tarefaBaseSemArquivo}}%
+
+\NewDocumentEnvironment{desafioSemArquivo}{mmm}
+{\begin{tarefaBaseSemArquivo}{desafio}{Desafio}{corDesafios}{#1}{#2}{#3}}%
+    {\end{tarefaBaseSemArquivo}}%
+
+\NewDocumentEnvironment{projetoSemArquivo}{mmm}
+{\begin{tarefaBaseSemArquivo}{projeto}{Projeto}{corProjetos}{#1}{#2}{#3}}%
+    {\end{tarefaBaseSemArquivo}}%
 
 
 
@@ -355,9 +367,9 @@
 \hypersetup{
     pdftitle={\@title}, 
     pdfauthor={\@author},
-    pdfsubject={Coletânea de Exercícios},
+    pdfsubject={Programação para Web em Java},
     pdfcreator={David Buzatto},
-    pdfkeywords={Exercícios}{Linguagem de Programação}{Linguagem C}{Linguagem Java}, 
+    pdfkeywords={Aplicações para Web}{Linguagem de Programação}{Linguagem Java}{Banco de Dados}, 
     colorlinks=false,
     hidelinks,
     bookmarksdepth=4
