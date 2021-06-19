@@ -6,64 +6,96 @@
 
 \section{Introdução}
 
-Para que você seja capaz de construir aplicações Web, primeiramente é preciso conhecer como esse serviço é estruturado. A World Wide Web, ou simplesmente Web, é um serviço executado em diversos computadores interligados em uma rede mundial, sendo que em alguns desses computadores são executados programas chamados de ``servidores'', enquanto na maioria dos outros são executados programas chamados ``clientes'', que se comunicam com os servidores, estes por sua vez servem recursos para estes clientes. Na Figura 1.1 é ilustrado um recorte desta rede mundial.
+Para que você seja capaz de construir aplicações Web, primeiramente é preciso conhecer como esse serviço é estruturado. A \textit{World Wide Web} (WWW), ou simplesmente Web, é um serviço executado em diversos computadores interligados em uma rede mundial, sendo que em alguns desses computadores são executados programas chamados de \textbf{servidores}, enquanto na maioria dos outros são executados programas chamados \textbf{clientes}, que se comunicam com os servidores, estes por sua vez servem recursos para estes clientes. Na Figura~\ref{fig:cap01ClienteServidor} é ilustrado um recorte desta rede mundial.
 
-Figura 1.1: Recorte da estrutura da World Wide Web
-Fonte: do autor
+\FloatBarrier
+\begin{figure}[!htbp]
+    \centering
+    \caption{Recorte da estrutura da WWW}
+    \includegraphics[scale=0.6]{imagens/cap01ClienteServidor}
+    \\\textbf{Fonte:} Elaborada pelo autor
+    \label{fig:cap01ClienteServidor}
+\end{figure}
+\FloatBarrier
 
-Perceba que no recorte apresentado na Figura 1.1, são mostrados sete computadores, sendo que quatro deles atuam como clientes e os outros três como servidores. É importante entender que o que faz um computador ser cliente ou servidor é o tipo de programa que está sendo usado/executado. No nosso exemplo, as máquinas que atuam como servidores executam um programa denominado Servidor Web, que tem a capacidade de servir (disponibilizar) aos outros computadores da rede, recursos que fazem parte de uma aplicação Web, por exemplo, arquivos HTML (HyperText Markup Language), imagens em diversos formatos, arquivos de estilo, arquivos de script, etc. Os clientes, por sua vez, são os conhecidos navegadores Web, ou browsers, que usamos no nosso dia a dia para acessar a Web e navegar em diversos sites.
+Perceba que no recorte apresentado na Figura~\ref{fig:cap01ClienteServidor}, são mostrados sete computadores, sendo que quatro deles atuam como clientes e os outros três como servidores. É importante entender que o que faz um computador ser cliente ou servidor é o tipo de programa que está sendo usado/executado. No nosso exemplo, as máquinas que atuam como servidores executam um programa denominado Servidor Web, que tem a capacidade de servir (disponibilizar) aos outros computadores da rede, recursos que fazem parte de uma aplicação Web, por exemplo, arquivos \textit{Hypertext Markup Language} (HTML), imagens em diversos formatos, arquivos de estilo, arquivos de \textit{script}, etc. Os clientes, por sua vez, são, na maioria das vezes, os conhecidos navegadores Web, ou \textit{browsers}, que usamos no nosso dia a dia para acessar a Web e navegar em diversos sites.
 
-Da mesma forma que existem diversos navegadores, existem também alguns Servidores Web, sendo o Apache o mais famoso e o mais utilizado. Como já foi dito, um servidor Web tem a função de servir recursos requisitados pelos clientes. Vamos aprender como isso funciona. Veja a Figura 1.2.
+Da mesma forma que existem diversos navegadores, existem também alguns Servidores Web, sendo o Apache o mais famoso e o mais utilizado. Como já foi dito, um Servidor Web tem a função de servir recursos requisitados pelos clientes. Vamos aprender como isso funciona. Veja a Figura~\ref{fig:cap01RequestResponse}.
 
-Figura 1.2: Processo de requisição e resposta (request/response)
-Fonte: do autor
+\FloatBarrier
+\begin{figure}[!htbp]
+    \centering
+    \caption{Processo de requisição e resposta (\textit{request}/\textit{response})}
+    \includegraphics[scale=0.6]{imagens/cap01RequestResponse}
+    \\\textbf{Fonte:} Elaborada pelo autor
+    \label{fig:cap01RequestResponse}
+\end{figure}
+\FloatBarrier
 
-Na Figura 1.2, é mostrado o processo de requisição e resposta. Neste processo, o cliente à esquerda (navegador), envia uma requisição a um recurso contido no Servidor Web (à direita) através de uma URL (Uniform Resource Locator), sendo que nessa requisição, o cliente especifica o protocolo a ser usado, o endereço do servidor e o caminho para o recurso. Sendo assim, uma URL tem a seguinte forma: \url{protocolo://máquina/caminho_do_recurso}, onde:
+Na Figura~\ref{fig:cap01RequestResponse} é mostrado o processo de requisição e resposta. Nesse processo, o cliente à esquerda (navegador), envia uma requisição a um recurso contido no Servidor Web (à direita) através de uma \textit{Uniform Resource Locator} (URL), sendo que nessa requisição, o cliente especifica o protocolo a ser usado, o endereço do servidor e o caminho para o recurso. Assim, uma URL tem a seguinte forma:
 
 \begin{itemize}
 
-    \item \textbf{protocolo:} é a parte da URL que diz ao servidor qual o protocolo a ser utilizado. Quando acessamos páginas Web, o protocolo utilizado é o HTTP;
+    \item \textbf{\texttt{protocolo://máquina/caminho\_do\_recurso}}, onde:
     
-    \item \textbf{máquina:} é o nome ou o endereço IP da máquina que está executando o servidor Web;
+    \begin{itemize}
     
-    \item \textbf{caminho\_do\_recurso:} é o caminho completo do recurso desejado que é disponibilizado pelo servidor.
+        \item \textbf{protocolo:} é a parte da URL que diz ao servidor qual o protocolo a ser utilizado. Quando acessamos páginas Web, por padrão, o protocolo utilizado é o \textit{Hypertext Transfer Protocol} (HTTP);
+        
+        \item \textbf{máquina:} é o nome ou o endereço codificado pelo \textit{Internet Protocol} (IP) da máquina que está executando o Servidor Web;
+        
+        \item \textbf{caminho\_do\_recurso:} é o caminho completo do recurso desejado que é disponibilizado pelo servidor.
+        
+    \end{itemize}
     
 \end{itemize}
 
-Confuso? Nem tanto. Vamos a um exemplo! Imagine a seguinte situação: Queremos acessar o site do IFSP. Para isso, abra o seu navegador e preencha o campo endereço com ``\url{http://www.ifsp.edu.br/}'' (sem as aspas) e tecle <ENTER>. Fazendo isso, o navegador manda uma requisição através de uma URL, usando o protocolo HTTP para a máquina ``www.ifsp.edu.br'', que por sua vez retorna ao navegador uma página HTML que representa aquele endereço. 
-Perceba que não especificamos o caminho do recurso! Isso não foi necessário, pois os servidores Web são normalmente configurados para ter um comportamento padrão para responder às requisições onde só seja especificado o nome da máquina e esse comportamento padrão é direcionar para o recurso index.html, que é um arquivo HTML. Portanto, usar o endereço ``\url{http://www.ifsp.edu.br/}'' é o mesmo que usar o endereço ``\url{http://www.ifsp.edu.br/index.html}''. Faça um teste! Coloque o endereço com o caminho do recurso (índex.html) e tecle <ENTER>. O que aconteceu? A mesma página foi exibida não foi? Ótimo!
+Confuso? Nem tanto. Vamos a um exemplo! Imagine a seguinte situação: Queremos acessar o site do IFSP. Para isso, abra o seu navegador e preencha o campo endereço com \texttt{http://www.ifsp.edu.br/} e tecle \texttt{<ENTER>}. Fazendo isso, o navegador envia uma requisição através de uma URL, usando o protocolo HTTP para a máquina \texttt{www.ifsp.edu.br}, que por sua vez retorna ao navegador uma página HTML que representa aquele endereço. 
 
-Vamos fazer mais um teste? Preencha novamente a barra de endereços no seu navegador com o endereço ``\url{http://j.i.uol.com.br/galerias/psp/patapon201.jpg}'' (sem as aspas) e tecle <ENTER>. Deve ter aparecido uma imagem de um jogo não foi? Vamos analisar a URL então: usamos o protocolo HTTP, para pedir para o Servidor Web que está executando na máquina ``j.i.uol.com.br'' o recurso ``patapon201.jpg'', que está armazenado no caminho ``/galerias/psp/''. Este processo está ilustrado na Figura 1.3.
+Perceba que não especificamos o caminho do recurso! Isso não foi necessário, pois os Servidores Web são normalmente configurados para ter um comportamento padrão para responder às requisições onde só seja especificado o nome da máquina e esse comportamento padrão é direcionar para o recurso index.html, que é um arquivo HTML. Portanto, usar o endereço \texttt{http://www.ifsp.edu.br/} é o mesmo que usar o endereço \texttt{http://www.ifsp.edu.br/index.html}. Faça um teste! Coloque o endereço com o caminho do recurso (\texttt{index.html}) e tecle \texttt{<ENTER>}. O que aconteceu? A mesma página foi exibida não foi? Ótimo!
 
-Figura 1.3: Processo de requisição e resposta a um recurso
-Fonte: do autor
+Vamos fazer mais um teste? Preencha novamente a barra de endereços no seu navegador com o endereço \texttt{http://j.i.uol.com.br/galerias/psp/patapon201.jpg} e tecle \texttt{<ENTER>}. Deve ter aparecido uma imagem de um jogo não foi? Vamos analisar a URL: usamos o protocolo HTTP, para pedir para o Servidor Web que está executando na máquina \texttt{j.i.uol.com.br} o recurso \texttt{patapon201.jpg}, que está armazenado no caminho \texttt{/galerias/psp/}. Este processo está ilustrado na Figura~\ref{fig:cap01ExemploRequestResponse}.
 
-Perceba que os passos 1, 2 e 3 da Figura 1.3 representam o processo de requisição, enquanto os passos 4, 5 e 6 representam o processo de resposta. Note também que ao clicar em qualquer link em uma página, todo esse processo é executado pelo navegador.
+\FloatBarrier
+\begin{figure}[!htbp]
+    \centering
+    \caption{Exemplo do processo de requisição e resposta a um recurso}
+    \includegraphics[scale=0.38]{imagens/cap01ExemploRequestResponse}
+    \\\textbf{Fonte:} Elaborada pelo autor
+    \label{fig:cap01ExemploRequestResponse}
+\end{figure}
+\FloatBarrier
+
+Perceba que os passos 1, 2 e 3 da Figura~\ref{fig:cap01ExemploRequestResponse} representam o processo de requisição, enquanto os passos 4, 5 e 6 representam o processo de resposta. Note também que ao clicar em qualquer link em uma página, todo esse processo é executado pelo navegador.
+
 Muito bem! Agora que você já sabe como funciona o processo de requisição e resposta entre um navegador (cliente) e um Servidor Web, podemos prosseguir com nossos estudos, agora focando em como a linguagem e a plataforma Java podem ser utilizadas para trabalhar com aplicações Web.
 
 
-\section{Container de Servlets}
+\section{\textit{Container} de Servlets}
 
-Na seção anterior você aprendeu algumas coisas novas, mas onde que a linguagem Java se encaixa nisso tudo? Quando criamos aplicações Web, além de termos páginas com código HTML e outros recursos como imagens, por exemplo, precisamos ter também componentes que processem informações que queremos que nossa aplicação manipule. Imagine que você vai fazer login na sua rede social favorita (Orkut, Facebook, etc.). Você preenche um campo com seu nome de usuário, sua senha e clica no botão para acessar o sistema e então eu lhe pergunto: O que acontece? Quem que vai validar seu usuário e sua senha? Como você deve saber uma página HTML não consegue fazer isso não é mesmo? Veja a tela de login do Facebook na Figura 1.4.
+Na seção anterior você aprendeu algumas coisas novas, mas onde que a linguagem Java se encaixa nisso tudo? Quando criamos aplicações Web, além de termos páginas com código HTML e outros recursos como imagens, por exemplo, precisamos ter também componentes que processem informações que queremos que nossa aplicação manipule. Imagine que você vai fazer login na sua rede social favorita (Facebook, Instagram etc.). Você preenche um campo com seu nome de usuário, sua senha e clica no botão para acessar o sistema e então eu lhe pergunto: O que acontece? Quem que vai validar seu usuário e sua senha? Como você deve saber uma página HTML não consegue fazer isso não é mesmo? Veja a tela de login do Facebook na Figura~\ref{fig:cap01LoginFacebook}.
 
-Figura 1.4: Tela de login da rede social Facebook
-Fonte: Print screen, \url{http://www.facebook.com}
+\FloatBarrier
+\begin{figure}[!htbp]
+    \centering
+    \caption{Tela de login da rede social Facebook}
+    \includegraphics[scale=0.38]{imagens/cap01LoginFacebook}
+    \\\textbf{Fonte:} \textit{Print screen} de \url{http://www.facebook.com}, acessado em 18/06/2021
+    \label{fig:cap01LoginFacebook}
+\end{figure}
+\FloatBarrier
 
-O responsável em processar os dados enviados é um componente de software que é executado no servidor em que a aplicação Web está implantada. Se a aplicação é feita em PHP, um script PHP vai fazer essa validação e retornar algum resultado com base no que foi verificado. Se a aplicação for feita em ASP acontece o mesmo, ou seja, algum componente vai tratar a requisição (que enviou o usuário e a senha) e vai validá-la. Em Java é a mesma coisa!
+O responsável em processar os dados enviados é um componente de software que é executado no servidor em que a aplicação Web está implantada. Se a aplicação é feita em PHP, um script PHP vai fazer essa validação e retornar algum resultado com base no que foi verificado. Se a aplicação for feita em ASP.NET, Node.js etc. acontece o mesmo, ou seja, algum componente vai tratar a requisição (que enviou o usuário e a senha) e vai validá-la. Em Java é a mesma coisa!
 
-Dependendo da tecnologia que queremos utilizar na construção de nossas aplicações Web é preciso instalar os softwares necessários, permitindo então que a tecnologia escolhida possa ser utilizada. Como iremos aprender a utilizar a linguagem Java para criar aplicações Web, iremos usar um programa chamado ``Container de Servlets''. Esse tal ``Container'' funciona como um Servidor Web simples, capaz de servir arquivos, da mesma forma que um Servidor Web convencional, mas ele tem um poder especial! Ele consegue executar classes compiladas em Java, além de fazer outras coisas muito legais que vamos aprender durante a disciplina.
+Dependendo da tecnologia que queremos utilizar na construção de nossas aplicações Web é preciso instalar os softwares necessários, permitindo então que a tecnologia escolhida possa ser utilizada. Como iremos aprender a utilizar a linguagem Java para criar aplicações Web, iremos usar um programa chamado \textit{Container} de Servlets. Esse tal \textit{Container} funciona como um Servidor Web simples, capaz de servir arquivos, da mesma forma que um Servidor Web convencional, mas ele tem um poder especial! Ele consegue executar classes compiladas em Java, além de fazer outras coisas que vamos aprender durante a disciplina.
 
 Para que possamos utilizar código Java em nossas aplicações Web, recorremos a alguns componentes que podem ser criados dentro delas, sendo que o tipo principal desses componentes é o Servlet. Você se lembra do nosso exemplo do Facebook? Os desenvolvedores do Facebook, se usassem Java, poderiam ter criado um Servlet para receber os dados do formulário de login, processá-los e retornar alguma resposta para o cliente (navegador).
 
-Muito bem. Sabemos então que se usarmos Java para desenvolver nossas aplicações Web, os componentes que são capazes de processar dados nas nossas aplicações e retornar resultados são os Servlets e que esses tais Servlets são executados em um programa chamado Container de Servlets, que funciona como um Servidor Web simples, mas com alguns ``poderes'' a mais.
+Muito bem. Sabemos então que se usarmos Java para desenvolver nossas aplicações Web, os componentes que são capazes de processar dados nas nossas aplicações e retornar resultados são os Servlets e que esses tais Servlets são executados em um programa chamado \textit{Container} de Servlets, que funciona como um Servidor Web simples, mas com alguns ``poderes'' a mais.
 
-Da mesma forma que existem navegadores e Servidores Web diferentes, adivinhe só, existem também Containers de Servlets diferentes! Iremos utilizar na nossa disciplina o Apache Tomcat (não confunda com o Apache que é servidor Web). Antes de prosseguirmos, vamos deixar uma coisa clara. Quando estamos no mundo ``Java para Web'', várias dúvidas surgem o tempo todo, visto que existe uma infinidade de termos diferentes e que normalmente causam confusão. Uma coisa que deixa muitas pessoas confusas é a diferenciação entre um Container de Servlets e um Servidor de Aplicações.
+Da mesma forma que existem navegadores e Servidores Web diferentes, adivinhe só, existem também Containers de Servlets diferentes! Iremos utilizar na nossa disciplina o Apache Tomcat, que não deve ser confundido com o Apache HTTP que é um Servidor Web. Antes de prosseguirmos, vamos deixar uma coisa clara. Quando estamos no mundo ``Java para Web'', várias dúvidas surgem o tempo todo, visto que existe uma infinidade de termos diferentes e que normalmente causam confusão. Uma coisa que deixa muitas pessoas confusas é a diferenciação entre um \textit{Container} de Servlets e um Servidor de Aplicações.
 
-Em um Container de Servlets são implementadas uma série de especificações que permitem que os desenvolvedores que forem trabalhar com ele usem uma determinada gama de funcionalidades, sendo que essas especificações são baseadas nos Servlets. Um Servidor de Aplicações é como se fosse um Container de Servlets com anabolizantes, pois além de implementar toda a especificação dos Servlets e as especificações ligadas a eles, esse tipo de servidor também implementa uma série de outras especificações da plataforma Java EE (Java Enterprise Edition) que fogem do propósito da nossa disciplina.
-
-\begin{saibaMais}
-    Ficou curioso? Quer saber mais detalhes sobre o Java EE? Dê uma olhada na Wikipedia: \url{http://pt.wikipedia.org/wiki/Java_EE} e no site da Oracle (dona do Java): \url{http://download.oracle.com/javaee/} (em inglês)
-\end{saibaMais}
+Em um \textit{Container} de Servlets são implementadas uma série de especificações que permitem que os desenvolvedores que forem trabalhar com ele usem uma determinada gama de funcionalidades, sendo que essas especificações são baseadas nos Servlets. Um Servidor de Aplicações é como se fosse um \textit{Container} de Servlets com anabolizantes, pois além de implementar toda a especificação dos Servlets e as especificações ligadas a eles, esse tipo de servidor também implementa uma série de outras especificações da plataforma Jakarta EE (\textit{Enterprise Edition})\footnote{\url{https://jakarta.ee/}}, atigamente denominada Java EE, que fogem do propósito da nossa disciplina.
 
 O Apache Tomcat é capaz de executar tudo o que vamos precisar para trabalhar com nossas aplicações. Na próxima seção vamos aprender mais alguns detalhes teóricos e na última seção vamos realizar algumas atividades!
 
@@ -128,7 +160,7 @@ Muito bem, criamos nosso primeiro projeto. Vamos executá-lo para ver o que acon
 Muito bem! Temos nossa primeira aplicação rodando no Tomcat! Fácil não é mesmo? Por enquanto não vamos nos preocupar com a estrutura do projeto, iremos aprender os detalhes aos poucos. Vamos colocar um pouco de código HTML no nosso index.jsp? Ele deve estar aberto no NetBeans. Se não estiver, procure o arquivo index.jsp na pasta ``Páginas Web'' do seu projeto e clique duas vezes no arquivo para abri-lo no editor. Vamos mudar o título, escrever ``Olá Mundo!'' no lugar de ``Hello World!'' e inserir um link para a página do IFSP. Veja na Listagem 1.1 como ficou o meu código.
 
 Listagem 1.1: Código do arquivo index.jsp
-\htmlCode{Teste}{projetos/index.jsp}
+\htmlCode{Teste}{projetos/capitulo01/OlaMundoWeb/web/index.html}
 Fonte: do autor
 
 Salve o arquivo depois de editá-lo. Se o navegador ainda estiver aberto no index.jsp, volte a ele e aperte a tecla F5 do seu teclado para mandar o navegador atualizar a página. Se não estiver, dê o ``play'' no projeto de novo. Você vai ver que a página vai exibir as alterações que fizemos. Teste o link para ver se está funcionando. A página deve ter ficado como mostrada na Figura 1.7.
