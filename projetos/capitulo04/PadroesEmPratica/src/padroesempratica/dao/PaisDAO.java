@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package padroesempratica.dao;
 
 import java.sql.PreparedStatement;
@@ -42,11 +37,11 @@ public class PaisDAO extends DAO<Pais> {
     public void atualizar( Pais obj ) throws SQLException {
 
         String sql = "UPDATE pais " +
-                     "SET " +
+                     "SET" +
                      "    nome = ?, " +
                      "    sigla = ? " +
                      "WHERE" +
-                    "    id = ?;";
+                     "    id = ?;";
 
         PreparedStatement stmt = getConnection().prepareStatement( sql );
         stmt.setString( 1, obj.getNome() );

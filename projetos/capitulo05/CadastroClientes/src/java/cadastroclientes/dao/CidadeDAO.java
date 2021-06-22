@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package cadastroclientes.dao;
 
 import cadastroclientes.entidades.Cidade;
@@ -27,9 +22,9 @@ public class CidadeDAO extends DAO<Cidade> {
     public void salvar( Cidade obj ) throws SQLException {
 
         PreparedStatement stmt = getConnection().prepareStatement(
-                "INSERT INTO "
-                + "cidade( nome, estado_id ) "
-                + "VALUES( ?, ? );" );
+                "INSERT INTO " + 
+                "cidade( nome, estado_id ) " + 
+                "VALUES( ?, ? );" );
 
         stmt.setString( 1, obj.getNome() );
         stmt.setInt( 2, obj.getEstado().getId() );
@@ -43,12 +38,12 @@ public class CidadeDAO extends DAO<Cidade> {
     public void atualizar( Cidade obj ) throws SQLException {
 
         PreparedStatement stmt = getConnection().prepareStatement(
-                "UPDATE cidade "
-                + "SET"
-                + "    nome = ?,"
-                + "    estado_id = ? "
-                + "WHERE"
-                + "    id = ?;" );
+                "UPDATE cidade " + 
+                "SET" + 
+                "    nome = ?," + 
+                "    estado_id = ? " + 
+                "WHERE" + 
+                "    id = ?;" );
 
         stmt.setString( 1, obj.getNome() );
         stmt.setInt( 2, obj.getEstado().getId() );
@@ -63,9 +58,9 @@ public class CidadeDAO extends DAO<Cidade> {
     public void excluir( Cidade obj ) throws SQLException {
 
         PreparedStatement stmt = getConnection().prepareStatement(
-                "DELETE FROM cidade "
-                + "WHERE"
-                + "    id = ?;" );
+                "DELETE FROM cidade " + 
+                "WHERE" + 
+                "    id = ?;" );
 
         stmt.setInt( 1, obj.getId() );
 
@@ -80,17 +75,17 @@ public class CidadeDAO extends DAO<Cidade> {
         List<Cidade> lista = new ArrayList<Cidade>();
 
         PreparedStatement stmt = getConnection().prepareStatement(
-                "SELECT "
-                + "    c.id idCidade, "
-                + "    c.nome nomeCidade, "
-                + "    e.id idEstado, "
-                + "    e.nome nomeEstado, "
-                + "    e.sigla siglaEstado "
-                + "FROM "
-                + "    cidade c, "
-                + "    estado e "
-                + "WHERE"
-                + "    c.estado_id = e.id;" );
+                "SELECT" + 
+                "    c.id idCidade, " + 
+                "    c.nome nomeCidade, " + 
+                "    e.id idEstado, " + 
+                "    e.nome nomeEstado, " + 
+                "    e.sigla siglaEstado " + 
+                "FROM" + 
+                "    cidade c, " + 
+                "    estado e " + 
+                "WHERE" + 
+                "    c.estado_id = e.id;" );
 
         ResultSet rs = stmt.executeQuery();
 
@@ -124,18 +119,18 @@ public class CidadeDAO extends DAO<Cidade> {
         Cidade cidade = null;
 
         PreparedStatement stmt = getConnection().prepareStatement(
-                "SELECT "
-                + "    c.id idCidade, "
-                + "    c.nome nomeCidade, "
-                + "    e.id idEstado, "
-                + "    e.nome nomeEstado, "
-                + "    e.sigla siglaEstado "
-                + "FROM "
-                + "    cidade c, "
-                + "    estado e "
-                + "WHERE"
-                + "    c.id = ? AND "
-                + "    c.estado_id = e.id;" );
+                "SELECT" + 
+                "    c.id idCidade, " + 
+                "    c.nome nomeCidade, " + 
+                "    e.id idEstado, " + 
+                "    e.nome nomeEstado, " + 
+                "    e.sigla siglaEstado " + 
+                "FROM" + 
+                "    cidade c, " + 
+                "    estado e " + 
+                "WHERE" + 
+                "    c.id = ? AND " + 
+                "    c.estado_id = e.id;" );
 
         stmt.setInt( 1, id );
 

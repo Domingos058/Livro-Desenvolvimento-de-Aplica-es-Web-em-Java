@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package cadastroclientes.dao;
 
 import cadastroclientes.entidades.Cidade;
@@ -28,19 +23,19 @@ public class ClienteDAO extends DAO<Cliente> {
     public void salvar( Cliente obj ) throws SQLException {
 
         PreparedStatement stmt = getConnection().prepareStatement(
-                "INSERT INTO "
-                + "cliente( "
-                + "    nome, "
-                + "    sobrenome, "
-                + "    dataNascimento, "
-                + "    cpf, "
-                + "    email, "
-                + "    logradouro, "
-                + "    numero, "
-                + "    bairro, "
-                + "    cep, "
-                + "    cidade_id ) "
-                + "VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );" );
+                "INSERT INTO " + 
+                "cliente(" + 
+                "    nome, " + 
+                "    sobrenome, " + 
+                "    dataNascimento, " + 
+                "    cpf, " + 
+                "    email, " + 
+                "    logradouro, " + 
+                "    numero, " + 
+                "    bairro, " + 
+                "    cep, " + 
+                "    cidade_id ) " + 
+                "VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );" );
 
         stmt.setString( 1, obj.getNome() );
         stmt.setString( 2, obj.getSobrenome() );
@@ -62,20 +57,20 @@ public class ClienteDAO extends DAO<Cliente> {
     public void atualizar( Cliente obj ) throws SQLException {
 
         PreparedStatement stmt = getConnection().prepareStatement(
-                "UPDATE cliente "
-                + "SET"
-                + "    nome = ?, "
-                + "    sobrenome = ?,"
-                + "    dataNascimento = ?, "
-                + "    cpf = ?, "
-                + "    email = ?, "
-                + "    logradouro = ?, "
-                + "    numero = ?, "
-                + "    bairro = ?, "
-                + "    cep = ?, "
-                + "    cidade_id = ? "
-                + "WHERE"
-                + "    id = ?;" );
+                "UPDATE cliente " + 
+                "SET" + 
+                "    nome = ?, " + 
+                "    sobrenome = ?," + 
+                "    dataNascimento = ?, " + 
+                "    cpf = ?, " + 
+                "    email = ?, " + 
+                "    logradouro = ?, " + 
+                "    numero = ?, " + 
+                "    bairro = ?, " + 
+                "    cep = ?, " + 
+                "    cidade_id = ? " + 
+                "WHERE" + 
+                "    id = ?;" );
 
         stmt.setString( 1, obj.getNome() );
         stmt.setString( 2, obj.getSobrenome() );
@@ -98,9 +93,9 @@ public class ClienteDAO extends DAO<Cliente> {
     public void excluir( Cliente obj ) throws SQLException {
 
         PreparedStatement stmt = getConnection().prepareStatement(
-                "DELETE FROM cliente "
-                + "WHERE"
-                + "    id = ?;" );
+                "DELETE FROM cliente " + 
+                "WHERE" + 
+                "    id = ?;" );
 
         stmt.setInt( 1, obj.getId() );
 
@@ -115,29 +110,29 @@ public class ClienteDAO extends DAO<Cliente> {
         List<Cliente> lista = new ArrayList<Cliente>();
 
         PreparedStatement stmt = getConnection().prepareStatement(
-                "SELECT "
-                + "    c.id idCliente, "
-                + "    c.nome nomeCliente, "
-                + "    c.sobreNome sobrenomeCliente, "
-                + "    c.dataNascimento dataNascimentoCliente, "
-                + "    c.cpf cpfCliente, "
-                + "    c.email emailCliente, "
-                + "    c.logradouro logradouroCliente, "
-                + "    c.numero numeroCliente, "
-                + "    c.bairro bairroCliente, "
-                + "    c.cep cepCliente, "
-                + "    ci.id idCidade, "
-                + "    ci.nome nomeCidade, "
-                + "    e.id idEstado, "
-                + "    e.nome nomeEstado, "
-                + "    e.sigla siglaEstado "
-                + "FROM "
-                + "    cliente c, "
-                + "    cidade ci, "
-                + "    estado e "
-                + "WHERE"
-                + "    c.cidade_id = ci.id AND "
-                + "    ci.estado_id = e.id;" );
+                "SELECT" + 
+                "    c.id idCliente, " + 
+                "    c.nome nomeCliente, " + 
+                "    c.sobreNome sobrenomeCliente, " + 
+                "    c.dataNascimento dataNascimentoCliente, " + 
+                "    c.cpf cpfCliente, " + 
+                "    c.email emailCliente, " + 
+                "    c.logradouro logradouroCliente, " + 
+                "    c.numero numeroCliente, " + 
+                "    c.bairro bairroCliente, " + 
+                "    c.cep cepCliente, " + 
+                "    ci.id idCidade, " + 
+                "    ci.nome nomeCidade, " + 
+                "    e.id idEstado, " + 
+                "    e.nome nomeEstado, " + 
+                "    e.sigla siglaEstado " + 
+                "FROM" + 
+                "    cliente c, " + 
+                "    cidade ci, " + 
+                "    estado e " + 
+                "WHERE" + 
+                "    c.cidade_id = ci.id AND " + 
+                "    ci.estado_id = e.id;" );
 
         ResultSet rs = stmt.executeQuery();
 

@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
 <html>
     <head>
         <title>Testes Tags JSP</title>
@@ -7,6 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+        
         <%-- Criando um objeto do tipo produto usando a tag <jsp:useBean --%>
         <jsp:useBean id="meuProduto" class="entidades.Produto" scope="page"/>
         <jsp:setProperty name="meuProduto" property="codigo" value="4"/>
@@ -19,5 +21,6 @@
         ${pageScope.meuProduto.descricao},
         ${pageScope.meuProduto.unidadeMedida}, 
         ${pageScope.meuProduto.quantidade}
+        
     </body>
 </html>
