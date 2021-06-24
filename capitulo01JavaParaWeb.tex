@@ -93,20 +93,20 @@ O responsável em processar os dados enviados é um componente de software que �
 
 Para que possamos utilizar código Java em nossas aplicações Web, recorremos a alguns componentes que podem ser criados dentro delas, sendo que o tipo principal desses componentes é o Servlet. Você se lembra do nosso exemplo do Facebook? Os desenvolvedores do Facebook, se usassem Java, poderiam ter criado um Servlet para receber os dados do formulário de \textit{login}, processá-los e retornar alguma resposta para o cliente, que no caso, normalmente é um navegador.
 
-Muito bem. Sabemos então que se usarmos Java para desenvolver nossas aplicações Web, os componentes que são capazes de processar dados nas nossas aplicações e retornar resultados são os Servlets. Os Servlets são executados e gerenciados pelos \textit{Containers} de Servlets, que funcionam como um Servidor Web simples, mas com alguns ``poderes'' a mais. Esses \textit{Containers} também podem ser componentes de infraestruturas ainda mais robustas, que no caso são os Servidores de Aplicações. Um Servidor de Aplicações é como se fosse um \textit{Container} de Servlets com anabolizantes, pois além de implementar toda a especificação dos Servlets e as especificações ligadas a eles, esse tipo de servidor também implementa uma série de outras especificações da plataforma Jakarta EE (\textit{Enterprise Edition})\footnote{\url{https://jakarta.ee/}}, atigamente denominada Java EE, que fogem do propósito deste livro.
+Muito bem. Sabemos então que se usarmos Java para desenvolver nossas aplicações Web, os componentes que são capazes de processar dados nas nossas aplicações e retornar resultados são os Servlets. Os Servlets são executados e gerenciados pelos \textit{Containers} de Servlets, que funcionam como um Servidor Web simples, mas com alguns ``poderes'' a mais. Esses \textit{Containers} também podem ser componentes de infraestruturas ainda mais robustas, que no caso são os Servidores de Aplicações. Um Servidor de Aplicações é como se fosse um \textit{Container} de Servlets com anabolizantes, pois além de implementar toda a especificação dos Servlets e as especificações ligadas a eles, esse tipo de servidor também implementa uma série de outras especificações da plataforma Jakarta EE (\textit{Enterprise Edition})\footnote{\url{https://jakarta.ee/}}, antigamente denominada Java EE, que fogem do propósito deste livro.
 
-Da mesma forma que existem navegadores e Servidores Web diferentes, adivinhe só, existem também Servidores de Aplicações e \textit{Containers} de Servlets diferentes! Iremos utilizar na nossa disciplina a implementação de referência das especificações do Jakarta EE 8, que é feita pelo Servidor de Aplicações Eclipse Glassfish 5.1. Trabalharemos com essa versão, que mesmo não sendo a mais recente, será a ideal para o que precisaremos fazer e que tem um melhor suporte no NetBeans. Quando estamos no mundo ``Java para Web'', várias dúvidas surgem o tempo todo, visto que existe uma infinidade de termos diferentes e que normalmente causam confusão, além de existir um ecossistema absurdamente vasto. Na próxima seção vamos aprender mais alguns detalhes teóricos e na última seção vamos realizar algumas atividades!
+Da mesma forma que existem navegadores e Servidores Web diferentes, adivinhe só, existem também Servidores de Aplicações e \textit{Containers} de Servlets diferentes! Iremos utilizar na nossa disciplina a implementação de referência das especificações do Jakarta EE 8, que é feita pelo Servidor de Aplicações Eclipse Glassfish 5.1.0. Trabalharemos com essa versão, que mesmo não sendo a mais recente, será a ideal para o que precisaremos fazer e que tem um melhor suporte no NetBeans. Quando estamos no mundo ``Java para Web'', várias dúvidas surgem o tempo todo, visto que existe uma infinidade de termos diferentes e que normalmente causam confusão, além de existir um ecossistema absurdamente vasto. Na próxima seção vamos aprender mais alguns detalhes teóricos e na última seção vamos realizar algumas atividades!
 
 
 \section{Servlets e JSPs}
 
 Um carro serve para dirigir. Uma televisão para assistir. Uma sandália para andar. Cada um tem suas características e vão evoluindo com o tempo. Há muito tempo atrás, quando foi inventada a televisão, a imagem que era gerada não era muito boa e era em preto e branco. Foram passando os anos e a indústria foi evoluindo o equipamento. Primeiro a imagem melhorou, depois colocaram cores, depois foram criando telas cada vez maiores, mais finas, com maior resolução, inventaram outras formas de emitir imagens, gastar menos energia elétrica e assim por diante. E daí?
 
-Tudo evolui. O que não evolui é descartado e/ou substituído. A primeira especificação dos Servlets foi lançada em 1997 e de lá para cá, a especificação foi evoluindo, permitindo que os Servlets se tornassem componentes mais versáteis e mais fáceis de utilizar. Na versão 5.1 do Eclipse Glassfish (perfil \textit{Web}) que implementa as especificações do Jakarta EE 8 (perfil \textit{Web}), é implementada a especificação 4.0 dos Servlets, a especificação 2.3 das JSPs (JavaServer Pages), entre outras.
+Tudo evolui. O que não evolui é descartado e/ou substituído. A primeira especificação dos Servlets foi lançada em 1997 e de lá para cá, a especificação foi evoluindo, permitindo que os Servlets se tornassem componentes mais versáteis e mais fáceis de utilizar. Na versão 5.1.0 do Eclipse Glassfish (perfil \textit{Web}) que implementa as especificações do Jakarta EE 8 (perfil \textit{Web}), é implementada a especificação 4.0 dos Servlets, a especificação 2.3 das JSPs (JavaServer Pages), entre outras.
 
 Já aprendemos que os Servlets são componentes de uma aplicação Web feita em Java e que têm a capacidade de processar dados enviados a eles e gerar respostas. Um Servlet pode gerar como resposta o código HTML de uma página, entretanto essa abordagem era utilizada nas versões mais antigas dos Servlets e é totalmente desencorajada hoje em dia. Como eu disse agora a pouco, tudo evolui. Para que os desenvolvedores não precisassem mais gerar código HTML dentro do código Java de um Servlet, foram inventadas as páginas JSP. Uma página JSP é um arquivo que pode conter –e geralmente contém– código HTML e que pode interagir diretamente com algumas funcionalidades de uma aplicação Web.
 
-A rigor, um JSP é processado pelo Servidor de Aplicações e todo o seu conteúdo é traduzido em um Servlet, que por sua vez é compilado e executado pelo Servidor. Todo esse processo é executado nos bastidores, então não precisamos nos preocupar com esses detalhes, mas é sempre bom saber um pouquinho como as coisas funcionam não é mesmo?
+A rigor, um JSP é processado pelo Servidor de Aplicações e todo o seu conteúdo é traduzido em um Servlet, que por sua vez é compilado e executado pelo Servidor. Todo esse processo é realizado nos bastidores, então não precisamos nos preocupar com esses detalhes, mas é sempre bom saber um pouquinho como as coisas funcionam não é mesmo?
 
 Por causa desse comportamento de tradução das JSPs para Servlets, nós podemos inserir código Java dentro das JSPs, mas novamente não iremos usar essa abordagem, muito menos irei ensinar como fazer, visto que da mesma forma que gerar HTML dentro de um Servlet manualmente é desencorajado, essa abordagem de inserir código Java dentro das JSPs também não deve ser utilizada. Uma JSP deve ser usada para exibir dados, não para processá-los diretamente usando código Java. Note que não estou dizendo que não iremos manipular dados dentro das JSPs, mas sim que existem formas seguras e corretas para fazer isso. Aprenderemos esses detalhes só no Capítulo 3, pois até lá, já teremos aprendido outros detalhes que ainda não foram apresentados.
 
@@ -118,27 +118,34 @@ Nesta seção você aprenderá a instalar e configurar a IDE Apache NetBeans e o
 
 \subsection{Apache NetBeans}
 
-Você conhece a linguagem Java, aprendeu a teoria e a prática da programação orientada a objetos e provavelmente usou a IDE Apache NetBeans para escrever seus códigos. Neste livro trabalharemos com a versão 12 desta IDE e nos passos abaixo é explicado como deve ser feito o \textit{download} e a instalação da mesma. Esses passos podem ser pulados caso você já tenha a ferramenta instalada em seu computador.
+Você conhece a linguagem Java, aprendeu a teoria e a prática da programação orientada a objetos e provavelmente usou a IDE Apache NetBeans para escrever seus códigos. Neste livro trabalharemos com a versão 12 desta IDE e nos passos abaixo é explicado como deve ser feito o \textit{download} e a instalação da mesma. Esses passos podem ser pulados caso você já tenha a ferramenta instalada em seu computador. Além disso, na playlist disponível no \textit{link} \url{https://www.youtube.com/playlist?list=PLqEuQ0dDknqVcfcBHGaYrET7IBfchVS-U} você encontrará tutoriais de preparação de ambientes de desenvolvimento para trabalhar com Java para Web, que serão mantidos atualizados.
 
 \begin{enumerate}
 
-    \item Acesse o endereço: \url{http://netbeans.org/downloads/}
+    \item Acesse o endereço: \url{https://www.apache.org/dyn/closer.cgi/netbeans/netbeans/12.3/Apache-NetBeans-12.3-bin-windows-x64.exe};
     
-    \item Haverá várias opções de download. Procure pela maior, especificada como ``Tudo''. É a da última coluna. Tem cerca de 319MB. Coloque o arquivo para baixar e vá tomar um café. Se tiver dúvida, dê uma olhada na Figura 1.5. Note que durante o desenvolvimento deste livro, a versão mais atual do NetBeans era a 6.9.1. Você pode baixar a mais recente caso esteja disponível.
+    \item Ao acessar esse \textit{link}, a versão 12.3 do Apache NetBeans será baixada;
     
-    Figura 1.5: Baixando o NetBeans completo (\url{http://netbeans.org/downloads/})
-    Fonte: Print screen, \url{http://netbeans.org/downloads/}
-    
-    \item Baixou? Execute o instalador. Logo no primeiro passo, clique no botão ``Personalizar...'' (canto inferior esquerdo) para personalizar a instalação. Como iremos utilizar o Tomcat como Container de Servlets, selecione-o para que ele seja instalado. Na Figura 1.6, estão marcados os componentes que você OBRIGATORIAMENTE precisa instalar (IDE de base, Java SE, Java Web e EE, Recursos sob demanda, Apache Tomcat 6.0). Se quiser instalar outros componentes, fique à vontade.
-    
-    Figura 1.6: Personalização da instalação do NetBeans
-    Fonte: Print screen, NetBeans IDE 6.9.1
-    
-    \item Clique no botão ``OK'' do diálogo de personalização e vá clicando em ``Próximo'' até que a instalação termine. Ao terminar, feche o instalador. Um ícone do NetBeans vai ter sido criado na sua área de trabalho. Com isso terminamos nosso tutorial super-rápido de instalação do NetBeans.
+    \item Baixou? Execute o instalador. As versões atuais do NetBeans farão a instalação completa da IDE. Basta seguir o assistente, escolher o JDK instalado e aguardar o fim da instalação.
     
 \end{enumerate}
 
-Com o NetBeans instalado, abra-o. Caso o esteja executando pela primeira vez, uma página de boas-vindas será exibida. Você pode fechá-la se quiser, além de marcar para que não seja exibida novamente. Vamos criar então nosso primeiro projeto Web!
+Com o NetBeans instalado, abra-o. Caso o esteja executando pela primeira vez, uma página de boas-vindas será exibida. Você pode fechá-la se quiser, além de marcar para que não seja exibida novamente. Antes de criarmos o nosso primeiro projeto Java Web, precisamos baixar, instalar e configurar o Servidor de Aplicações Eclipse Glassfish.
+
+
+\subsection{Eclipse Glassfish}
+
+Como já dito, iremos instalar a versão 5.1.0 do Eclipse Glassfish, que pode ser encontrado no \textit{link} 
+\url{https://www.eclipse.org/downloads/download.php?file=/glassfish/web-5.1.0.zip}. Como não existe um instalador, faremos a instalação manualmente. Ao terminar de baixar o arquivo, descompacte-o na sua pasta de usuário do Windows. Se fez certo, vai ter algo como \texttt{C:\textbackslash Users\textbackslash SeuUsuario\textbackslash glassfish5\textbackslash} no seu sistema de arquivos. Pronto! O Glassfish está instalado! A última coisa que precisaremos fazer é copiar o Driver Java Database Conectivity (JDBC) do Sistema Gerenciador de Banco de Dados (SGBD) MariaDB/MySQL que usaremos nos próximos Capítulos deste livro.
+
+Para isso, baixe o arquivo acessível através do \textit{link} \url{https://downloads.mariadb.com/Connectors/java/connector-java-2.7.3/mariadb-java-client-2.7.3.jar} e, ao terminar de baixar, copie-o para o diretório \texttt{C:\textbackslash Users\textbackslash SeuUsuario\textbackslash glassfish5\textbackslash glassfish\textbackslash\\domains\textbackslash domain1\textbackslash lib\textbackslash}.
+
+
+
+
+\subsection{Primeiro Projeto Java para Web}
+
+Agora que temos tudo configurado, iremos criar nosso primeiro projeto Java para Web! Siga os passos abaixo:
 
 \begin{itemize}
 
