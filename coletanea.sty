@@ -120,6 +120,7 @@
     enhanced,
     breakable,
     drop fuzzy shadow,
+    before skip=\baselineskip,
     grow to left by=13mm,grow to right by=15mm,
     overlay={\begin{tcbclipinterior}\fill[corAzulTema!40](frame.south west)rectangle([xshift=7mm]frame.north west);\end{tcbclipinterior}}
 }
@@ -131,16 +132,13 @@
 \xpatchcmd{\inputminted}{\minted@fvset}{\minted@fvset\dontdofcolorbox}{}{}
 %\makeatother não é necessário em arquivos .sty
 
+\newcounter{exercicio}[chapter]
+\newcounter{desafio}[chapter]
+\newcounter{projeto}[chapter]
+\newcounter{listagens}[chapter]
+
 \newtcblisting{inlineJavaCode}{
     minted language=java%
-}
-
-\newtcblisting{inlineCCode}{
-    minted language=c%
-}
-
-\newtcblisting{inlineCPPCode}{
-    minted language=cpp%
 }
 
 \newtcblisting{inlineHTMLCode}{
@@ -151,46 +149,38 @@
     minted language=javascript%
 }
 
+\newtcblisting{inlineCssCode}{
+    minted language=css%
+}
+
 
 \newtcbinputlisting{\javaCode}[3][]{%
     listing file={#3},
-    title=\texttt{#2},
+    title=\texttt{\refstepcounter{listagens}\label{listagem:#3}Listagem \thechapter.\thelistagens: #2},
     colframe=corAzulTema,
     minted language=java
 }
 
-\newtcbinputlisting{\cCode}[3][]{%
-    listing file={#3},
-    title=\texttt{#2},
-    colframe=corAzulTema,
-    minted language=c
-}
-
-\newtcbinputlisting{\cppCode}[3][]{%
-    listing file={#3},
-    title=\texttt{#2},
-    colframe=corAzulTema,
-    minted language=cpp
-}
-
 \newtcbinputlisting{\htmlCode}[3][]{%
     listing file={#3},
-    title=\texttt{#2},
+    title=\texttt{\refstepcounter{listagens}\label{listagem:#3}Listagem \thechapter.\thelistagens: #2},
     colframe=corAzulTema,
     minted language=html
 }
 
 \newtcbinputlisting{\javascriptCode}[3][]{%
     listing file={#3},
-    title=\texttt{#2},
+    title=\texttt{\refstepcounter{listagens}\label{listagem:#3}Listagem \thechapter.\thelistagens: #2},
     colframe=corAzulTema,
     minted language=javascript
 }
 
-
-\newcounter{exercicio}[chapter]
-\newcounter{desafio}[chapter]
-\newcounter{projeto}[chapter]
+\newtcbinputlisting{\cssCode}[3][]{%
+    listing file={#3},
+    title=\texttt{\refstepcounter{listagens}\label{listagem:#3}Listagem \thechapter.\thelistagens: #2},
+    colframe=corAzulTema,
+    minted language=css
+}
 
 
 
@@ -386,17 +376,17 @@
 
 
 % lista de listagens de código fonte - não gostei.... precisa refazer...
-\newcommand{\listlistagensname}{Lista de Listagens de Código Fonte}
-\newlistof{listoflistagens}{lis}{\listlistagensname}
-\newcounter{list}[chapter]
-\newcommand{\listagem}[1]{%
-    \refstepcounter{list}%
-    \par\noindent Listagem~\thechapter.\thelist: #1%
-    \addcontentsline{lis}{list}{\protect\numberline{\thechapter.\thelist}#1}\par
-}
-\makeatletter
-\let\l@list\l@figure
-\makeatother
+%\newcommand{\listlistagensname}{Lista de Listagens de Código Fonte}
+%\newlistof{listoflistagens}{lis}{\listlistagensname}
+%\newcounter{list}[chapter]
+%\newcommand{\listagem}[1]{%
+%    \refstepcounter{list}%
+%    \par\noindent Listagem~\thechapter.\thelist: #1%
+%    \addcontentsline{lis}{list}{\protect\numberline{\thechapter.\thelist}#1}\par
+%}
+%\makeatletter
+%\let\l@list\l@figure
+%\makeatother
 
 % código até aqui
 
