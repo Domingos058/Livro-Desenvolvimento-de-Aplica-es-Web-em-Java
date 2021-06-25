@@ -26,3 +26,7 @@ del *.gz
 del *.gz(busy)
 del *.stf
 del *.listing
+del *.lis
+del *.exp
+del *.equ
+del *.def
