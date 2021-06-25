@@ -17,6 +17,7 @@
 \RequirePackage{microtype}
 \RequirePackage[table,xcdraw]{xcolor}
 \RequirePackage{hyperref}
+\RequirePackage{tocloft}
 \RequirePackage{subcaption}
 \RequirePackage{epigraph}
 \RequirePackage{url}
@@ -42,51 +43,11 @@
 \RequirePackage{geometry}
 \RequirePackage[alf,abnt-emphasize=bf]{abntex2cite}
 \RequirePackage{tcolorbox}
-\tcbuselibrary{minted,skins,breakable}
+\tcbuselibrary{minted,skins,breakable,xparse}
 \RequirePackage{tikz}
 \RequirePackage{tkz-euclide}
 \usetikzlibrary{positioning}
-%\usetkzobj{all} % removido!!!
 
-
-\DeclareOption{java}{
-    \ifdefined\linguagemJava
-    \else
-        \newcommand{\linguagemJava}{}
-    \fi
-}
-
-\DeclareOption{c}{
-    \ifdefined\linguagemC
-    \else
-        \newcommand{\linguagemC}{}
-    \fi
-}
-
-\DeclareOption{cpp}{
-    \ifdefined\linguagemCPP
-    \else
-        \newcommand{\linguagemCPP}{}
-    \fi
-}
-
-\DeclareOption{algoritmos}{
-    \ifdefined\topicoAlgoritmos
-    \else
-        \newcommand{\topicoAlgoritmos}{}
-    \fi
-}
-
-\DeclareOption{esd}{
-    \ifdefined\topicoESD
-    \else
-        \newcommand{\topicoESD}{}
-    \fi
-}
-
-%\ExecuteOptions{c}
-
-\ProcessOptions\relax
 
 
 % código a partir daqui
@@ -101,6 +62,7 @@
 \definecolor{corCaixaBoasPraticas}{RGB}{0,153,102}
 \definecolor{corCaixaSaibaMais}{RGB}{0,153,204}
 \definecolor{corCaixaAtencao}{RGB}{255, 102, 0}
+\definecolor{corCaixaDestaque}{RGB}{0, 0, 255}
 
 % listas compactas
 \setlist[itemize]{noitemsep,nolistsep}
@@ -392,6 +354,49 @@
 \input{GoudyInitialen/GoudyIn.fd}
 \newcommand*\GoudyInFamily{\usefont{U}{GoudyIn}{xl}{n}}
 \renewcommand{\LettrineFontHook}{\GoudyInFamily}
+
+% caixinhas de destaque
+\newtcbox{\destaque}{
+    reset,
+    on line,
+    enhanced,
+    nobeforeafter,
+    tcbox raise base,
+    boxrule=0.7pt,
+    top=1mm,
+    bottom=0mm,
+    right=1mm,
+    left=1mm,
+    boxsep=0.5pt,
+    before upper={\vphantom{dlg}},
+    colframe=black,
+    coltext=black,
+    colback=black!5!white,
+    drop fuzzy shadow,
+    arc=3pt,
+    %sharp corners,
+    %rounded corners=downhill
+}
+
+\MakeRobust\destaque
+
+\ifdefined\pdfstringdefDisableCommands
+  \pdfstringdefDisableCommands{\def\destaque#1{'#1'}}
+\fi
+
+
+% lista de listagens de código fonte - não gostei.... precisa refazer...
+\newcommand{\listlistagensname}{Lista de Listagens de Código Fonte}
+\newlistof{listoflistagens}{lis}{\listlistagensname}
+\newcounter{list}[chapter]
+\newcommand{\listagem}[1]{%
+    \refstepcounter{list}%
+    \par\noindent Listagem~\thechapter.\thelist: #1%
+    \addcontentsline{lis}{list}{\protect\numberline{\thechapter.\thelist}#1}\par
+}
+\makeatletter
+\let\l@list\l@figure
+\makeatother
 
 % código até aqui
 
