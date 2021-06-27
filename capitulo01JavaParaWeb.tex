@@ -122,9 +122,9 @@ Você conhece a linguagem Java, aprendeu a teoria e a prática da programação 
 
 \begin{enumerate}
 
-    \item Acesse o endereço: \url{https://www.apache.org/dyn/closer.cgi/netbeans/netbeans/12.3/Apache-NetBeans-12.3-bin-windows-x64.exe};
+    \item Acesse o endereço: \url{https://www.apache.org/dyn/closer.cgi/netbeans/netbeans/12.4/Apache-NetBeans-12.4-bin-windows-x64.exe};
     
-    \item Ao acessar esse \textit{link}, a versão 12.3 do Apache NetBeans será baixada;
+    \item Ao acessar esse \textit{link}, a versão 12.4 do Apache NetBeans será baixada;
     
     \item Baixou? Execute o instalador. As versões atuais dos instaladores NetBeans farão a instalação completa da IDE. Basta seguir o assistente, escolher o JDK instalado (8 ou superior) e aguardar o fim da instalação.
     
@@ -191,7 +191,7 @@ Nesse passo, faremos a última configuração necessária, que consiste apenas e
 Ao fazer isso, o GlassFish estará pronto para ser utilizado. Caso haja alguma dúvida, visite o \textit{link} mencionado que contém uma playlist de tutoriais para a configuração de ambientes de desenvolvimento.
 
 
-\subsection{Primeiro Projeto Java para Web}
+\subsection{Primeiro Projeto Java para Web}\label{subsec:primeiroProjeto}
 
 Agora que temos tudo configurado, iremos criar nosso primeiro projeto Java para Web! Siga os passos abaixo:
 
@@ -265,7 +265,7 @@ Aprenderemos como criar manualmente um Servlet, para que possamos aprender algun
     \begin{figure}[!htbp]
         \centering
         \caption{Diálogo de Importação de Bibliotecas}
-        \includegraphics[scale=1]{imagens/cap01AddLibraryImport}
+        \includegraphics[scale=0.9]{imagens/cap01AddLibraryImport}
         \\\textbf{Fonte:} Elaborada pelo autor
         \label{fig:cap01AddLibraryImport}
     \end{figure}
@@ -277,7 +277,7 @@ Aprenderemos como criar manualmente um Servlet, para que possamos aprender algun
     \begin{figure}[!htbp]
         \centering
         \caption{Diálogo de Inserção de Bibliotecas com Biblioteca Importada}
-        \includegraphics[scale=1]{imagens/cap01AddLibraryImported}
+        \includegraphics[scale=0.9]{imagens/cap01AddLibraryImported}
         \\\textbf{Fonte:} Elaborada pelo autor
         \label{fig:cap01AddLibraryImported}
     \end{figure}
@@ -289,7 +289,7 @@ Aprenderemos como criar manualmente um Servlet, para que possamos aprender algun
     \begin{figure}[!htbp]
         \centering
         \caption{Biblioteca Inserida no Projeto}
-        \includegraphics[scale=1]{imagens/cap01AddLibraryFinished}
+        \includegraphics[scale=0.9]{imagens/cap01AddLibraryFinished}
         \\\textbf{Fonte:} Elaborada pelo autor
         \label{fig:cap01AddLibraryFinished}
     \end{figure}
@@ -297,62 +297,58 @@ Aprenderemos como criar manualmente um Servlet, para que possamos aprender algun
     
 \end{itemize}
 
-Agora que importamos e inserimos a biblioteca \destaque{\textit{Jakarta EE Web 8 API Library}} para o nosso projeto, podemos usar as funcionalidades Web implementadas pelo Jakarta EE. Nos próximos passos criaremos e testaremos nosso primeiro Servlet.
+Agora que importamos e inserimos a biblioteca \destaque{\textit{Jakarta EE Web 8 API Library}} no nosso projeto, podemos usar as funcionalidades Web implementadas pelo Jakarta EE. Nos próximos passos criaremos e testaremos nosso primeiro Servlet.
 
 \begin{itemize}
     
-    \item \textbf{Passo 1:} Na árvore que representa a estrutura do projeto, procure pela pasta ``Pacotes de código-fonte'' e expanda-a (clique no sinal de ``+'' à esquerda). Dentro dela haverá um pacote com o ícone cinza chamado ``<pacote padrão>''. Como vocês devem saber, é desencorajado que se trabalhe com pacotes padrão em Java, então vamos criar um pacote. Clique com o botão direito na pasta ``Pacotes de código-fonte'' e escolha ``Novo'', procure pela opção ``Pacote Java...'' e clique nela. Se esta opção não estiver sendo exibida, clique na opção ``Outro...'' (no final da lista), escolha ``Java'' em ``Categorias'', ``Pacote Java'' nos ``Tipos de Arquivos'' e clique em ``Próximo''. Preencha o campo ``Nome do pacote'' com ``olamundoweb'' (sem as aspas) e clique em ``Finalizar''. O pacote será criado;
+    \item \textbf{Passo 1:} Na árvore que representa a estrutura do projeto, procure pela pasta \destaque{\textit{Source Packages}} e expanda-a (clique no sinal de ``+'' à esquerda). Dentro dela haverá um pacote com o ícone cinza chamado \destaque{\textit{<default package>}}. Como vocês devem saber, é desencorajado que se trabalhe com pacotes padrão em Java, então vamos criar um pacote. Clique com o botão direito na pasta \destaque{\textit{Source Packages}} e escolha \destaque{\textit{New}}, procure pela opção \destaque{\textit{Java Package...}} e clique nela. Se esta opção não estiver sendo exibida, clique na opção \destaque{\textit{Other...}} (no final da lista), escolha \destaque{\textit{Source Packages}} nas categorias, e \destaque{\textit{Java `Package}} nos tipos de arquivos e clique em \destaque{\textit{Next >}}. Preencha o campo \destaque{\textit{Package Name:}} com ``olamundoweb'' (sem as aspas) e clique em \destaque{\textit{Finish}}. O pacote será criado;
+        
+    \item \textbf{Passo 2:} Repita o Passo 1, só que agora clicando com o botão direito no pacote que você criou e crie um pacote chamado ``servlets'' (sem as aspas). O nome do pacote deverá ser preenchido com ``olamundoweb.servlets''. Seu projeto agora terá um pacote chamado ``olamundoweb.servlets''. O resultado desses dois primeiros passos podem ser vistos na Figura~\ref{fig:cap01CriacaoPacote};
     
-    \item \textbf{Passo 2:} Repita o Passo 1, só que agora clicando com o botão direito no pacote que você criou e crie um pacote chamado ``servlets'' (sem as aspas). O nome do pacote deverá ser preenchido com ``olamundoweb.servlets''. Seu projeto agora terá um pacote chamado ``olamundoweb.servlets'';
-    
-    \item \textbf{Passo 3:} Clique com o botão direito no pacote ``olamundoweb.servlets'', escolha ``Novo'' e clique na opção ``Classe Java...''. Novamente, se não a encontrar, clique em ``Outro...'' e procure pela ``Classe Java'' (está na categoria ``Java'') e clique em ``Próximo''. Preencha o campo ``Nome da classe'' com ``OlaServlet'' (sem as aspas) e clique em ``Finalizar''. A classe será criada dentro do pacote especificado e será aberta no editor. Você vai ter algo como apresentado na Listagem~\thechapter.\ref{listagem:projetos/capitulo01/parciais/OlaServlet.java};
+    \FloatBarrier
+    \begin{figure}[!htbp]
+        \centering
+        \caption{Criação do Pacote \texttt{olamundoweb.servlets}}
+        \includegraphics[scale=0.9]{imagens/cap01CriacaoPacote}
+        \\\textbf{Fonte:} Elaborada pelo autor
+        \label{fig:cap01CriacaoPacote}
+    \end{figure}
+    \FloatBarrier
+            
+    \item \textbf{Passo 3:} Clique com o botão direito no pacote  \destaque{\texttt{olamundoweb.servlets}}, escolha \destaque{\textit{New}} e clique na opção \destaque{\textit{Java Class...}}. Novamente, se não a encontrar, clique em \destaque{\textit{Other...}} e procure por \destaque{\textit{Java Class...}} (está na categoria ``Java'') e clique em \destaque{\textit{Next >}}. Preencha o campo \destaque{\textit{Class Name:}} com ``OlaServlet'' (sem as aspas) e clique em \destaque{\textit{Finish}}. A classe será criada dentro do pacote especificado e será aberta no editor. Você vai ter algo como apresentado na Listagem~\thechapter.\ref{listagem:projetos/capitulo01/parciais/OlaServlet.java} (sem os comentários);
     
     \javaCode{olamundoweb/servlets/OlaMundoWeb.java}{projetos/capitulo01/parciais/OlaServlet.java}
     
-    \item \textbf{Passo 4:} Para que uma classe seja um Servlet, precisamos estender a classe HttpServlet, que está contida no pacote javax.servlet.http e então implementar os métodos HTTP que queremos que nosso Servlet trate. Não se preocupe, ainda vamos aprender sobre os métodos HTTP, então o importante, a saber, por enquanto, é que os métodos HTTP mais usados são o GET (doGet(...) de HttpServlet) e o POST (doPost(...) de HttpServlet). Então teremos que sobrescrever cada um desses métodos e ainda criaremos um terceiro que será invocado a partir dos outros dois. Confuso? Vamos ver como o código ficaria. Leia os comentários e copie o código da Listagem~\thechapter.\ref{listagem:projetos/capitulo01/OlaMundoWeb/src/java/olamundoweb/servlets/OlaServlet.java} para o seu editor!
+    \item \textbf{Passo 4:} Para que uma classe seja um Servlet, precisamos estender a classe \texttt{HttpServlet}, que está contida no pacote \texttt{javax.servlet.http}\footnote{O Jakarta EE 8 segue a nomenclatura antiga do Java EE, onde o pacote base é o \texttt{javax}. A partir da versão 9, esse pacote foi renomeado para \texttt{jakarta}.} e então implementar os métodos HTTP que queremos que nosso Servlet trate. Não se preocupe, ainda vamos aprender sobre os métodos HTTP, então o mais importante a saber, por enquanto, é que os métodos HTTP mais usados são o  \texttt{GET} (\texttt{doGet(...)} de \texttt{HttpServlet}) e o  \texttt{POST} (\texttt{doPost(...)} de  \texttt{HttpServlet}). Então teremos que sobrescrever cada um desses métodos e ainda criaremos um terceiro que será invocado a partir dos outros dois. Confuso? Vamos ver como o código ficaria. Leia os comentários e copie o código da Listagem~\thechapter.\ref{listagem:projetos/capitulo01/OlaMundoWeb/src/java/olamundoweb/servlets/OlaServlet.java} para o seu editor.
     
 \end{itemize}
 
+\FloatBarrier
 \javaCode{olamundoweb/servlets/OlaMundoWeb.java}{projetos/capitulo01/OlaMundoWeb/src/java/olamundoweb/servlets/OlaServlet.java}
+\FloatBarrier
     
-Até agora criamos uma classe chamada OlaServlet, que estende a classe HttpServlet. Sobrescrevemos os métodos doGet e doPost herdados de HttpServlet que tratam respectivamente os métodos GET e POST do protocolo HTTP e criamos um terceiro método, chamado processRequest, que tem a mesma assinatura dos métodos doGet e doPost e que é invocado dentro deles. É no processRequest que iremos colocar o código que queremos executar, sendo que no nosso exemplo, estamos mandando imprimir na saída duas Strings: ``Olá Mundo!'' e ``Meu Primeiro Servlet!''. Ou seja, se chamarmos o Servlet usando o método GET, o método doGet será invocado e passará o controle para o método processRequest que irá imprimir as mensagens na saída. O mesmo acontece para o método POST.
+Até agora criamos uma classe chamada  \texttt{OlaServlet}, que estende a classe \texttt{HttpServlet}. Sobrescrevemos os métodos \texttt{doGet} e \texttt{doPost} herdados de \texttt{HttpServlet} que tratam respectivamente os métodos \texttt{GET} e \texttt{POST} do protocolo HTTP e criamos um terceiro método, chamado \texttt{processRequest}, que tem a mesma assinatura dos métodos \texttt{doGet} e \texttt{doPost} e que é invocado dentro deles. É no \texttt{processRequest} que iremos colocar o código que queremos executar, sendo que no nosso exemplo, estamos mandando imprimir na saída duas Strings: ``Olá Mundo!'' e ``Meu Primeiro Servlet!''. Ou seja, se chamarmos o Servlet usando o método \texttt{GET}, o método \texttt{doGet} será invocado e passará o controle para o método \texttt{processRequest} que irá imprimir as mensagens na saída. O mesmo acontece para o método \texttt{POST}.
 
-Muito bem, você tem um Servlet totalmente funcional, mas ai você se pergunta: ``Como vou chamar esse Servlet através do navegador?''. Então eu respondo: ``Precisamos mapeá-lo e dar um endereço para ele.''. Ai você diz: ``Mas como?''. E eu respondo: ``Siga os passos a seguir.''
+Muito bem, você tem um Servlet totalmente funcional, mas ai você se pergunta: ``Como vou chamar esse Servlet através do navegador?''. Então eu respondo: no código completo, você percebeu que há uma anotação chamada \texttt{@WebServlet}? É essa anotação que vai fornecer essa informação\footnote{Antigamente precisávamos fazer o mapemanto em um arquivo \textit{Extensible Markup Language} (XML) (\url{http://pt.wikipedia.org/wiki/XML}) chamado de Descritor de Implantação, representado pelo arquivo \texttt{web.xml}, o que atualmente, com as versõs mais novas do Jakarta/Java EE, não é mais necessário.}, expecificamente no parâmetro \texttt{urlPatterns}. Perceba que configuramos esse parâmetro com um array de Strings com um elemento: ``/ola''. Com isso, podemos agora acessar o \texttt{OlaServlet} a partir de uma URL, que no nosso caso é ``\url{http://localhost:8080/OlaMundoWeb/ola}'', ou seja, usamos o protocolo HTTP, para a máquina \texttt{localhost} (que é o endereço da nossa máquina), na porta 8080 (que é a porta que o GlassFish ouve por padrão), para acessar a aplicação chamada \texttt{OlaMundoWeb} (isso vem do contexto que criamos no Passo 3 da Subseção~\ref{subsec:primeiroProjeto}, volte lá para dar uma olhadinha), para por fim acessar o recurso mapeado sob o nome de ``ola'' que no caso é o nosso Servlet. 
 
-\begin{itemize}
+Sei que pode parecer um pouco confuso no começo, mas logo você vai pegar o jeito da coisa. Dê um ``play'' no projeto de novo. O navegador vai abrir no endereço da aplicação novamente. Insira o ``ola'' (sem as aspas) no final da URL e tecle \texttt{<ENTER>}. O que aconteceu? Apareceu uma página em branco não foi? É claro, afinal, nosso Servlet não gera HTML, mas apenas imprime duas mensagens na saída padrão não é mesmo? Mas como podemos ver essas mensagens? Volte no NetBeans e procure, logo abaixo, uma aba chamada \destaque{\textit{Output}}. Ela provavelmente vai estar selecionada. Dentro dela devem haver outras três abas: \destaque{\textit{OlaMundoWeb (run)}} que deve estar selecionada e que é usada para mostrar o processo de construção do projeto da nossa aplicação, \destaque{\textit{Java DB Database Process}}, que exibe o \textit{status} do Java DB e, por fim, \destaque{\textit{GlassFish Server 5.1}}, que exibe a saída padrão do GlassFish. Clique nessa última aba e veja o que está escrito lá embaixo: as duas mensagens que enviamos para a saída padrão através do método \texttt{System.out.println} dentro do Servlet, sendo que o fim de cada linha conterá os caracteres \texttt{|\#]}\footnote{Esse sufixo é inserido automaticamente pelo servidor.}! Veja o resultado na Figura~\ref{fig:cap01SaidaGlassFish}. Volte ao navegador e tecle \texttt{<ENTER>} novamente no endereço do Servlet. Volte no NetBeans. Mais duas mensagens! Fácil não é mesmo?
 
-    \item \textbf{Passo 1:} Na estrutura do projeto, procure por uma pasta chamada ``Arquivos de configuração''. Adivinhe o que tem dentro dela? Arquivos de configuração é claro! O que nos interessa é o web.xml, que vamos chamar de DI (Descritor de Implantação), do termo em inglês Deployment Descriptor, e que é um arquivo XML. É no DI que ficam especificadas as configurações na nossa aplicação e é nele que vamos fazer o tal mapeamento que falei. O que está esperando? Abra-o no editor;
+\FloatBarrier
+\begin{figure}[!htbp]
+    \centering
+    \caption{Saída do GlassFish 5.1}
+    \includegraphics[scale=0.9]{imagens/cap01SaidaGlassFish}
+    \\\textbf{Fonte:} Elaborada pelo autor
+    \label{fig:cap01SaidaGlassFish}
+\end{figure}
+\FloatBarrier
     
-    \begin{saibaMais}
-        Não sabe o que é XML? Dê uma olhada aqui: \url{http://pt.wikipedia.org/wiki/XML}
-    \end{saibaMais}
-    
-    \item \textbf{Passo 2:} Para nos auxiliar, o NetBeans tem um editor gráfico para o DI. Ao abrir o web.xml, perceba que existem várias guias (Geral, Servlets, Filtros, Páginas, ..., XML). Adivinhe em qual iremos clicar. Clique na guia ``Servlets''. Ao clicar, procure pelo botão ``Adicionar elemento servlet...'' e clique nele. Um diálogo será aberto. Vamos preenchê-lo. Em ``Nome do Servlet'', vamos preencher com o mesmo nome da nossa classe Servlet, ou seja, ``OlaServlet'' (sem as aspas). Em ``Classe do servlet'' precisamos apontar para a nossa classe. Clique em procurar, expanda ``Pacotes de código-fonte'' até encontrar o arquivo ``OlaServlet.java''. Selecione-o e clique em ``Selecione o arquivo''. Deixe o campo ``Arquivo JSP'' em branco. Preencha descrição com ``meu primeiro servlet'' (sem as aspas) e por fim preencha o campo ``Padrão de URL'' com ``/ola'' (sem as aspas e não esqueça de inserir a barra). Veja a Figura 1.8. Clique em OK e salve o arquivo;
-    
-    Figura 1.8: Mapeando o primeiro Servlet
-    Fonte: Print screen, NetBeans IDE 6.9.1
-    
-\end{itemize}
-
-No Passo 2 fizemos o mapeamento para amarrar o Servlet ``OlaServlet'' a um padrão de URL. Lembra que preenchemos o campo ``Padrão URL'' com ``/ola''? Com isso, podemos agora acessar o OlaServlet a partir de uma URL, que no nosso caso é ``\url{http://localhost:8084/OlaMundoWeb/ola}'', ou seja, usamos o protocolo HTTP, para a máquina localhost (que é o endereço da nossa máquina), na porta 8084 (que é a porta que o Tomcat ouve), para acessar a aplicação chamada OlaMundoWeb (isso vem do contexto que criamos no Passo 3 da Seção 1.4, volte lá para dar uma olhadinha), para por fim acessar o recurso mapeado sob o nome de ``ola'' que no caso é o nosso Servlet. 
-
-Sei que pode parecer um pouco confuso no começo, mas logo você vai pegar o jeito da coisa. Dê um ``Play'' no projeto de novo. O navegador vai abrir no endereço da aplicação novamente. Insira o ``ola'' (sem as aspas) no final da URL e tecle <ENTER>. O que aconteceu? Apareceu uma página em branco não foi? É claro, afinal, nosso Servlet não gera HTML, mas apenas imprime duas mensagens na saída padrão não é mesmo? Mas como podemos ver essas mensagens? Volte no NetBeans e procure, logo abaixo, uma aba chamada ``Saída'' (ela provavelmente vai estar selecionada). Dentro dela existem outras três abas: OlaMundoWeb (run) que deve estar selecionada e que é usada para mostrar o processo de compilação (na verdade não é só o processo de compilação que é exibido, mas sim todo o processo de construção do projeto) na nossa aplicação, Log Apache Tomcat 6.0.xx usada para mostrar os logs do nosso Container. Por fim, Apache Tomcat 6.0.xx, que exibe a saída padrão do Tomcat. Clique nessa última aba e veja o que está escrito lá embaixo. As duas mensagens que mandamos através do método println dentro do Servlet! Volte ao navegador e tecle <ENTER> novamente no endereço do Servlet. Volte no NetBeans. Mais duas mensagens! Fácil não é mesmo?
-
-Para fechar a nossa primeira Aula, vamos voltar ao nosso DI (Descritor de Implantação). Abra novamente o web.xml e procure pela aba XML (a última). O web.xml é um arquivo XML que, como eu já disse, é responsável por manter todas as configurações da nossa aplicação. Apesar do NetBeans ter um editor gráfico para esse arquivo, sempre é bom entendermos, nem que seja um pouquinho, como as coisas funcionam nos bastidores. Ao clicar na aba XML será exibido o código do DI. Veja na Listagem 1.5.
-
-Listagem 1.5: web.xml da aplicação
-Fonte: do autor
-
-O DI inicia com o preâmbulo padrão de um arquivo XML, <?xml...> e depois a primeira tag, chamada <web-app>, é utilizada. Essa é a tag principal do web.xml, que informa que esse arquivo é um DI. Dentro dela, temos primeiramente a tag <servlet>, que contém a descrição do Servlet, o nome dele e a classe Java correspondente. O que isso te lembra? Aquele diálogo que preenchemos no Passo 2 durante o mapeamento do Servlet (veja na Seção 1.4), não é? Após a tag <servlet>, onde o Servlet foi declarado, vem a tag <servlet-mapping> que é usada para mapear o Servlet. Veja que o nome definido dentro de <servlet-name> é o mesmo que está contido dentro da tag <servlet> e que dentro de <servlet-mapping> está declarado o mapeamento para ``/ola''.
-
-A tag <session-config> não é importante agora. A tag <welcome-file-list> é usada para especificar a lista de arquivos que devem ser utilizados como ponto de partida quando acessamos nossa aplicação. Lembra que eu falei que em um Servidor Web nós podemos definir um arquivo padrão para ser aberto? No Tomcat, que é nosso Container, isso é feito dentro dessa tag. Olhe só quem está lá! O index.jsp, que é a página inicial que é mostrada quando acessamos nossa aplicação pelo endereço \url{http://localhost:8084/OlaMundoWeb}.
-
-Por mais que nosso exemplo não tenha nenhuma utilidade aparente, ele foi importante para nós entendermos o funcionamento básico de uma aplicação Web feita em Java. Nas próximas aulas vamos colocar o que aprendemos em prática, além de aprender várias outras coisas, para criarmos um sistema de cadastro na forma de uma aplicação Web. Não se esqueça de praticar o que aprendemos até agora. 
+Por mais que nosso exemplo não tenha nenhuma utilidade aparente, ele foi importante para nós entendermos o funcionamento básico de uma aplicação Web feita em Java. Nas próximas aulas vamos colocar o que aprendemos em prática, além de aprender várias outras coisas com o objetivo criarmos um sistema de cadastro na forma de uma aplicação Web. Não se esqueça de praticar o que aprendemos até agora. 
 
 
 \section{Resumo}
 
-Nesta aula aprendemos o que é e como funciona uma aplicação Web em Java. Aprendemos a criar nosso primeiro projeto e alguns detalhes sobre a tecnologia que estamos utilizando. Executamos nossa aplicação e fizemos algumas modificações nela para vermos o que estava sendo feito. Criamos também – de forma manual – um Servlet, que como aprendemos é um dos componentes principais de uma aplicação Web em Java. Aprendemos também que existe um arquivo, denominado Descritor de Implantação – o web.xml – que descreve as características da nossa aplicação Web e onde fizemos o mapeamento do Servlet que criamos para uma URL válida dentro da nossa aplicação.
+Nesta aula aprendemos o que é e como funciona uma aplicação Web em Java. Aprendemos a criar nosso primeiro projeto e alguns detalhes sobre a tecnologia que estamos utilizando. Executamos nossa aplicação e fizemos algumas modificações nela para vermos o que estava sendo feito. Criamos também –de forma manual– um Servlet, que como aprendemos é um dos componentes principais de uma aplicação Web em Java.
 
 
 \section{Exercícios}
@@ -373,18 +369,21 @@ Nesta aula aprendemos o que é e como funciona uma aplicação Web em Java. Apre
 \section{Projetos}
 
 \begin{projetoSemArquivo}{}{}{}
-    Crie um novo projeto Java Web no NetBeans, com o nome de ``MinhaPagina'', edite o index.jsp de modo a exibir seus dados pessoais, seus interesses, etc. Tente inserir uma imagem também. Dica: a imagem deve estar dentro do projeto do NetBeans. Pense se você entende o motivo pelo qual o arquivo index.jsp é mostrado por padrão quando você acessa sua página através da URL \url{HTTP://localhost:8084/MinhaPagina}.
+    Crie um novo projeto Java Web no NetBeans, com o nome de ``MinhaPagina'', edite o \texttt{index.html} de modo a exibir seus dados pessoais, seus interesses etc. Tente inserir uma imagem também. Dica: a imagem deve estar dentro do projeto do NetBeans. Pense se você entende o motivo pelo qual o arquivo \texttt{index.html} é mostrado por padrão quando você acessa sua página através da URL \url{HTTP://localhost:8080/MinhaPagina}.
 \end{projetoSemArquivo}
 
 \begin{projetoSemArquivo}{}{}{}
-    Crie um novo projeto Java Web no NetBeans, com o nome de ``Contador''. Nesse projeto você deve criar um Servlet manualmente e dentro do método processRequest use um laço de repetição (for) para direcionar para a saída padrão os números de 1 a 30. Não se esqueça de mapear o Servlet no DI e de verificar se ao acessar a URL criada os números são exibidos.
+    Crie um novo projeto Java Web no NetBeans, com o nome de ``Contador''. Nesse projeto você deve criar um Servlet manualmente e dentro do método \texttt{processRequest} use uma estrutura de repetição para direcionar para a saída padrão os números de 1 a 30.
 \end{projetoSemArquivo}
 
 \begin{projetoSemArquivo}{}{}{}
-    Crie um novo projeto Java Web no NetBeans, com o nome de ``Fibonacci''. Nesse projeto, você deve criar um Servlet manualmente e dentro do método processRequest use um laço de repetição (for) para exibir os 30 primeiros termos da série de Fibonacci. Crie um método chamado fibonacci dentro do seu Servlet, sendo que este método deve receber como parâmetro um int e retornar um int. O int que é recebido como parâmetro é o número do termo desejado, enquanto o int que é retornado é o termo correspondente ao parâmetro que foi recebido. A série de Fibonacci é formada inicialmente pelos números 1 e 1, sendo que os próximos números da série são gerados a partir da soma dos dois números anteriores. Os sete primeiros termos da série de Fibonacci são:
-    1, 1, 2, 3, 5, 8, 13, onde: 2 = 1 + 1, 3 = 1 + 2, 5 = 2 + 3, 8 = 3 + 5, 13 = 5 + 8
+    Crie um novo projeto Java Web no NetBeans, com o nome de ``Fibonacci''. Nesse projeto, você deve criar um Servlet manualmente e dentro do método \texttt{processRequest} use uma estrutura de repetição para exibir os 30 primeiros termos da série de Fibonacci. Crie um método chamado \texttt{fibonacci} dentro do seu Servlet, sendo que este método deve receber como parâmetro um inteiro e retornar um inteiro. O inteiro que é recebido como parâmetro é o número do termo desejado, enquanto o inteiro que é retornado é o termo correspondente ao parâmetro que foi recebido. A série de Fibonacci é formada inicialmente pelos números 1 e 1, sendo que os próximos números da série são gerados a partir da soma dos dois números anteriores. Os sete primeiros termos da série de Fibonacci são $1, 1, 2, 3, 5, 8, 13$, onde: $2 = 1 + 1, 3 = 1 + 2, 5 = 2 + 3, 8 = 3 + 5, 13 = 5 + 8$.
+    
     Exemplos de chamadas da função fibonacci:
-    fibonacci(2): retorna 1
-    fibonacci(5): retorna 5
-    fibonacci(7): retorna 13
+    \begin{itemize}
+        \item \texttt{fibonacci(2)}: retorna 1
+        \item \texttt{fibonacci(5)}: retorna 5
+        \item \texttt{fibonacci(7)}: retorna 13
+    \end{itemize}
+    
 \end{projetoSemArquivo}
