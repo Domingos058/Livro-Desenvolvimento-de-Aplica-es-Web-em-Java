@@ -3,20 +3,265 @@
 
 \lettrine[lines=4, lhang=0.1, lraise=0, loversize=0.2, findent=0.1em]{\textcolor{corAzulTema}{N}}{ESTE} aaa.
 
+Objetivos
+Entender e aplicar o Padrão Factory.
+Entender e aplicar o Padrão DAO.
+Entender e aplicar o Padrão MVC.
+Aprender a integrar banco de dados com uma aplicação Java.
+
+
 \section{Introdução}
 
-QUAL FERRAMENTA USAR?
+Nesta aula iremos dar um passo importantíssimo em nossos estudos sobre desenvolvimento de software, pois iremos aprender a integrar uma base de dados em um sistema de testes que iremos construir. Isso nos dará o embasamento necessário para que na próxima aula nós consigamos utilizar uma base de dados em aplicações Web. Além de aprendermos a conectar nossa aplicação com uma base de dados, iremos aprender também alguns padrões de projeto que nos ajudarão a organizar nossa aplicação de forma a melhorar sua manutenção. 
+Antes de começarmos a discussão e a implementação desses padrões, nós precisamos preparar nosso ambiente de desenvolvimento. O NetBeans já temos instalado. O SGBD que iremos utilizar, o MySQL, você provavelmente já deve ter instalado também. Com isso pronto, precisamos instalar uma ferramenta para nos ajudar a criar nossa base de dados. Iremos utilizar o MySQL Workbench, uma ferramenta gratuita para gerenciamento do MySQL. 
+
 
 \section{Preparando o Ambiente}
 
+Para começar, vamos fazer o download da ferramenta. Acesse o endereço http://www.mysql.com/downloads/workbench/, escolha Microsoft Windows como plataforma, que provavelmente é o sistema operacional que você está utilizando. Existem três opções de download, clique no botão “Download” da primeira delas (Windows (x86, 32-bit), MSI Installer). Fazendo isso, você será direcionado para uma página onde é requisitado um nome de usuário e senha. Se você não quiser se cadastrar (não precisa), clique no link embaixo do formulário de login onde está escrito “No thanks, just take me to the downloads!”. Diversos links de download serão apresentados. Escolha qualquer um dos links que estão no Brasil. Podem usar os que estão como HTTP. Baixe o instalador.
+Baixou? Legal! Execute o instalador. No primeiro e no segundo passos, clique em “Next”. No terceiro, escolha a instalação completa (“Complete”) e clique em “Next”. No último passo, escolha “Finish”. A instalação vai iniciar. Ao terminar, deixe marcada a opção “Launch MySQL Workbench now” e clique em “Finish”. Aguarde o MySQL Workbench abrir. Quando precisar abri-lo de novo, ele vai estar sob o menu “MySQL” do menu “Iniciar” do Windows.
+A interface principal da versão 5.2 do Workbench pode ser vista na Figura 4.1.
+
+Figura 4.1: Interface principal do MySQL Workbench
+ 
+Fonte: Print screen, MySQL Workbench
+Essa interface é dividida em três partes: “SQL Development”, “Data Modeling” e “Server Administration”. Vamos mexer primeiro na “Server Administration”. Verifique se existe alguma instância configurada nessa lista, se não tiver, clique em “New Server Instance”. Um assistente aparecerá. Marque a opção “localhost”, pois o nosso servidor de banco de dados está instalado na nossa máquina e clique em “Next”. Em “Connection Name”, preencha com “localhost” (sem as aspas) caso não esteja preenchido. Em “Connection Method” escolha “Standard (TCP/IP)”. “Hostname” deve estar preenchido como “locahost” (sem as aspas) e “Port” como “3306” (sem as aspas). “Username” deve estar preenchido como “root” (sem as aspas). No campo “Password”, clique em “Store in Vault...” Ele vai pedir a senha para o usuário root. Eu normalmente defino a senha do usuário root como “root” também, mas algumas pessoas deixam a senha do root vazia. Coloque a senha que você configurou quando instalou o MySQL e clique em “OK”. Deixe o campo “Default Schema” vazio e clique em “Next”. Clique em “Next” novamente. Próximo passo, clique em “Next”. “Next” de novo. Antes do Workbench aplicar as configurações, se estiver tudo OK, ele vai avisar que está tudo correto e vai te perguntar se você quer continuar sem revisar as configurações. Clique em “Continue without review”. Último passo. O Workbench vai preencher o campo “Server Instance Name” com “mysqld@localhost” deixe assim mesmo e clique em “Finish”. Com isso a nova instância foi configurada. Se houver mais alguma na lista, apague-a clicando com o botão direito e escolhendo “Delete Server Instance”.
+Agora vamos em “SQL Development”. Se você seguiu todos os passos anteriores corretamente, nessa seção da interface deve haver uma conexão chamada “localhost”. Se houver mais de uma conexão listada, apague as que não se chamarem “localhost”. Pronto? Muito bem! Sempre que abrirmos o Workbench, essas configurações já estarão feitas, não se preocupe. Agora nós vamos criar uma base de dados para trabalharmos nos exemplos desta aula.
+Em “SQL Development”, clique duas vezes na conexão criada, chamada “localhost”. Na interface que aparecerá, verifique o lado esquerdo (“Object Browser”). Vão estar listados todos os esquemas do servidor de banco de dados. Clique com o botão direito na parte branca desse painel e escolha “Create Schema”. Preencha o campo “Name” com “testes\_padroes” (sem as aspas) e deixe o campo “Collation” como “Server Default”. Clique em “Apply”. Uma janela será aberta para mostrar o código SQL que será executado. Clique em “Apply” e depois em “Finish”. A janela anterior aparecerá novamente. Clique em “Close”. Fazendo isso, o novo esquema (vamos chamar os esquemas de base de dados) será criado e estará listado na lista “Object Browser”. 
+Logo acima do painel “Object Browser”, em “Default”, escolha a base que criamos (testes\_padroes). Na aba “Overview”, clique na base “testes\_padroes”. Veja a Figura 4.2.
+Figura 4.2: Selecionando a base de dados “testes\_padroes”
+ 
+Fonte: Print screen, MySQL Workbench
+Com a base “testes\_padroes” selecionada, ainda na aba “Overview”, clique duas vezes em “Add Table”. Vamos criar agora uma tabela que vai armazenar os dados de teste que iremos mexer durante esta aula. Preencha “Name” com “pais” (sem as aspas). Pais é país, mas vamos omitir o acento tudo bem? Deixe o valor padrão nos campos “Collation” e “Engine”. Lá no final da janela, clique na aba “Collumns”. O assistente já vai ter preenchido uma coluna com o nome de “idpais”. Edite esse nome e deixe apenas “id”. O tipo (datatype) deve ficar como INT (inteiro) e as colunas PK (chave primária), NN (not null) e AI (auto-increment) devem ficar marcadas. Essa coluna da tabela será nossa chave primária. Agora vamos às outras colunas. Nossos países terão um nome e uma sigla. Então precisamos criar mais duas colunas, uma com nome de “nome” e a outra com nome de “sigla”. A coluna “nome” terá o tipo VARCHAR(100), ou seja, um VARCHAR de 100 posições e a coluna “sigla” terá o tipo VARCHAR(2). Não vamos mexer em mais nada. Veja como ficou na Figura 4.3.
+
+
+Figura 4.3: Criando a tabela “pais”
+ 
+Fonte: Print screen, MySQL Workbench
+Feito isso, clique em “Apply”. Uma janela será aberta para exibir o código SQL que será executado. Clique em “Apply” e depois em “Finish”. Por fim, clique em “Close”. Pronto, criamos a nossa tabela para armazenar dados dos países. Deixe o Workbench aberto e abra o NetBeans. 
+
+
 \section{Padrão de Projeto Factory}
 
-\section{Padrão de Projeto DAO - \textit{Data Access Object}}
+Primeiramente, vamos criar um novo projeto no NetBeans, só que agora ele não será um projeto Web, pois o que vamos fazer não precisa ser em um projeto desse tipo. Siga os passos que você está acostumado a fazer ao criar um projeto Java Web, só que desta vez escolha “Java” na categoria e “Aplicativo Java” nos tipos de projeto. Dê o nome de “PadroesEmPratica” para o projeto. Não se esqueça de marcar a opção “Usar pasta dedicada para armazenar bibliotecas”.
+Como iremos conectar no banco de dados MySQL, precisamos adicionar no nosso projeto a biblioteca que implementa esse conector. Para nossa comodidade, o NetBeans já vem com essa biblioteca. Sendo assim, com o projeto criado, vá à pasta “Bibliotecas”, clique com o botão direito e escolha “Adicionar biblioteca...” e importe a biblioteca “MySQL JDBC Driver”. Depois de importar, selecione-a e adicione no projeto. Expanda a pasta “Bibliotecas” e veja que o arquivo .jar, que contém as classes do conector, estará inserido no projeto.
+A partir de agora, podemos conectar ao banco de dados a partir do nosso código. Como você deve saber, para que possamos usar um banco de dados em Java, nós usamos uma especificação chamada JDBC (Java Database Connectivity). Essa especificação deve ser implementada pelos fabricantes dos SGBDs, permitindo assim que os programas feitos em Java possam se comunicar com estes SGBDs. Normalmente, esses pacotes que implementam o JDBC são chamados de “Drivers JDBC” e são obtidos nos sites dos fabricantes dos SGBDs. Como eu já disse, o NetBeans já vem com o driver do MySQL, então basta importarmos para o nosso projeto e utilizá-lo.
+A questão agora é: “Como conectar no banco de dados?”. Para que possamos conectar no MySQL, existem uma série de “comandos” que precisamos fazer cada vez que queremos estabelecer uma conexão. Você, como desenvolvedor, sabe que uma boa prática de programação é encapsular trechos de código que fazem uma determinada tarefa em funções e que as funções em Java são chamadas de métodos.
+Legal, mas e o que o tal do “padrão de projeto” tem haver com isso? Ou melhor, o que é um padrão de projeto? O termo padrão de projeto (design pattern em inglês) foi criado por Christopher Alexander (ALEXANDER; ISHIKAWA; MURRAY, 1977) na década de 1970 para designar soluções de sucesso para problemas recorrentes na área da arquitetura. Alexander definiu nessa época uma série de padrões que apresentavam soluções padrão para problemas que aconteciam de forma corriqueira, sendo que uma série de padrões correlatos foram o que podemos chamar de linguagem de padrões. A partir do termo cunhado por Alexander, alguns programadores começaram a criar padrões de projeto para a computação, iniciando esse trabalho do domínio da programação orientada a objetos.
+<Saiba mais:
+Quer aprender mais sobre padrões de projeto? Acesse os links a seguir:
+http://pt.wikipedia.org/wiki/Padrão\_de\_projeto\_de\_software
+http://s2i.das.ufsc.br/seminarios/apresentacoes/padroes\_de\_projeto.pdf
+http://en.wikipedia.org/wiki/Design\_pattern\_(computer\_science) (em inglês)
+>
+O livro “Padrões de Projeto” (GAMMA et al., 2000) é a referência básica para os padrões de projeto criados para resolver problemas relacionados ao desenvolvimento orientado a objetos. A partir de agora, quando você ler “padrão de projeto”, entenda que estarei falando de padrões relacionados ao desenvolvimento de software orientado a objetos, tudo bem? Sendo assim, o primeiro padrão que iremos aprender se chama Factory (fábrica). 
+Vamos entender o contexto do padrão. Imagine que no seu programa você precisa utilizar um determinado tipo de objeto muitas e muitas vezes e que este objeto precisa ser inicializado com uma série de valores, sendo que esses valores normalmente são sempre os mesmos. Assim, cada vez que você instância esse objeto, você precisa executar uma determinada quantidade de código. Como resolver isso? Criar um método que faça essa tarefa é uma boa solução não é mesmo? Mas em qual classe eu vou escrever esse método? No padrão Factory, nós criamos classes especializadas que serão fábricas de objetos e que terão um método que executará a tarefa da fábrica, ou seja, criar um determinado tipo de objeto.
+No nosso projeto, um tipo de objeto que usaremos muito, é um objeto que representa a conexão entre nosso programa escrito em Java e o SGBD. Sendo assim, nós precisamos de uma fábrica de conexões! Vamos implementar a fábrica? No projeto que você criou agora a pouco, o NetBeans gerou por padrão um pacote chamado “padroesempratica” dentro da pasta “Pacotes de código-fonte”. Crie dentro deste pacote outro com o nome de “jdbc” (sem as aspas) e dentro do pacote “padroesempratica.jdbc”, crie uma classe Java com o nome de “ConnectionFactory” (sem as aspas).
+Essa classe conterá o método que vai fabricar a conexão. Veja o código dela na Listagem 4.1.
 
-\section{Padrão de Projeto MVC - \textit{Model-View-Controller}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Listagem 4.1: Código da fábrica de conexões
+ 
+Fonte: do autor
+Copiou o código? Ótimo! Analisando o código desta classe, você vai perceber que existe um bloco estático logo no início do arquivo. Blocos estáticos são executados apenas uma vez durante o ciclo de vida de um programa, pois sua execução se dá depois que a classe em questão é carregada pela máquina virtual Java. Esta classe tem um método chamado getConnection() que vai fabricar a conexão para nós e que caso ocorra algum problema, vai lançar uma exceção do tipo SQLException. Toda vez que chamarmos esse método, ele vai retornar uma nova conexão para nós. 
+Agora precisamos testar esse método para ver se não está havendo nenhum erro. Clique novamente com o botão direito no pacote “padroesempratica” e crie um novo pacote chamado “testes”. Dentro do pacote “padroesempratica.testes”, crie uma classe chamada “TesteConnectionFactory”. Como você deve saber, para que uma classe em Java possa ser executada, nós precisamos implementar o método “main” com uma determinada assinatura. O que vamos fazer no método “main” da classe “TesteConnectionFactory” é tentar criar uma conexão e ver se nenhum erro é retornado. Na Listagem 4.2 você pode ver o código desta classe.
+Listagem 4.2: Classe para teste de conexão
+ 
+Fonte: do autor
+Copie o código para a classe e salve o arquivo. Para executarmos apenas uma classe que tem o método main, basta clicar com o botão direito no editor e escolhe a opção “Executar arquivo”, ou então, com o arquivo aberto no editor, usar o atalho Shift+F6. Fazendo isso, a classe vai ser compilada e executada pelo NetBeans. Se tudo estiver correto, você verá na saída a mensagem “Conexão criada com sucesso!”. Deu erro? Verifique se o código da classe “ConnectionFactory” está correto e se a senha do root, definida dentro do método getConnection está correta. Agora que está tudo certo, vamos simular um erro. Entre na classe ConnectionFactory e coloque uma senha inválida (terceiro parâmetro do método getConnection de DriverManagaer) para o usuário root, por exemplo, “123”. Volte na classe de testes e execute-a novamente (Shift+F6). Gerou um erro não foi? A mensagem “Erro ao tentar criar a conexão!” deve ter sido exibida, seguida de várias linhas que explicam o erro ocorrido. A primeira linha dos erros diz que o acesso foi negado para o usuário “root@localhost” não foi? Por que aconteceu isso? Porque a senha está errada! Volte na fábrica de conexões e coloque a senha correta. Teste novamente. Agora deve estar tudo certo.
+Legal, temos uma fábrica de conexões, mas do que adianta uma fábrica de alguma coisa se a gente não usar o que é fabricado? Vamos para o próximo padrão, onde iremos organizar uma camada de persistência para nossa aplicação e usaremos a fábrica de conexões para viabilizar a comunicação entre nossa aplicação e o SGBD.
+
+
+\section{Padrão de Projeto \textit{Data Access Object} (DAO)}
+
+Quando temos o nosso primeiro contato com JDBC, normalmente nos é ensinado a colocar todo o código SQL que vai executar uma determinada operação em um método que trata o “clique” de um botão. Sendo assim, imagine uma interface desktop (em Swing) onde poderíamos criar, alterar e/ou excluir países. Quando implementamos o botão responsável por criar um novo país, somos ensinados a inserir todo o código SQL para fazer isso, sendo que esse código é implementado usando uma cláusula INSERT. O mesmo aconteceria para os botões alterar e excluir. Será que essa é a melhor solução? Será que a classe que implementa nossa interface gráfica tem que ter essa responsabilidade, ou seja, lidar com SQL? E se por algum motivo nós quiséssemos usar o código para criar um novo país em alguma outra tela? Teríamos que copiar o código de inserção novamente? Tenho certeza que para essa última pergunta você já deve ter respondido mentalmente que “NÃO!”, pois podemos criar métodos que executariam essa operação, mas então te pergunto: Como fazer isso?
+Para resolver esse problema, existe um padrão de projeto onde a ideia é isolar todo acesso ao banco de dados em classes que seriam responsáveis em fazer a comunicação entre a aplicação Java, ou qualquer aplicação escrita usando uma linguagem orientada a objetos, e o banco de dados. Esse padrão se chama DAO (Data Access Object – Objeto de Acesso a Dados), sendo este um dos mais famosos. Vamos aprender como implementá-lo?
+Um objeto do tipo DAO deve ter a capacidade de executar as operações básicas sobre uma determinada tabela de um banco de dados. Essas operações são comumente chamadas de CRUD (Create, Read, Update e Delete – Criar, Ler, Atualizar e Excluir). Praticamente cada tabela do nosso banco de dados terá no lado da aplicação uma classe implementada que representa um registro da tabela (tabela “pais”, classe Pais), além de ter uma classe DAO que vai manipular objetos do tipo Pais. Como precisamos definir essas quatro operações básicas que cada DAO vai conter, vamos criar uma classe abstrata que servirá de modelo.
+No pacote “padroesempratica”, crie um novo pacote chamado “dao”. Dentro do pacote “padroesempratica.dao”, crie uma classe chamada “DAO” e copie o código apresentado na Listagem 4.3 e na Listagem 4.4. Note que as duas listagens são partes da mesma classe.
+Listagem 4.3: Primeira parte da implementação da classe abstrata DAO
+ 
+Fonte: do autor
+Listagem 4.4: Segunda parte da implementação da classe abstrata DAO
+ 
+Fonte: do autor
+Copiou o código? Ótimo! Vamos entendê-lo. Na linha 13 da Listagem 4.3 definimos uma classe abstrata (classes abstratas não podem ser instanciadas, são usadas como modelos) chamada DAO que diz que toda classe que for implementá-la, deve definir um tipo “T” que obrigatoriamente estende Object. As construções entre “<” e “>” são chamadas de “Tipos Genéricos” em Java. Note que o tipo “T” é usado em todo o corpo da classe. Está confuso? Acalme-se, logo você vai entender.
+Na linha 16 da Listagem 4.3 é declarada uma conexão, que sempre será obtida usando o método getConnection definido na linha 39. Observe que poderíamos ter declarado essa conexão como protected, mas vamos deixá-la como private e usar o método getConnection() para obtê-la. Na linha 49 é definido o método para fechar a conexão, afinal, sempre que usarmos uma conexão, precisamos fechá-la depois de usar. 
+Veja que no construtor da classe (linha 24 da Listagem 4.3), a conexão é obtida usando a fábrica que criamos na seção anterior! Esse construtor será executado quando instanciarmos os objetos das classes que estenderem esse DAO, então, quando criarmos nossos objetos DAO, uma conexão com o banco de dados será estabelecida.
+A partir da linha 60 da Listagem 4.4 são definidos todos os métodos CRUD deste DAO genérico. Note que temos dois métodos que correspondem à parte “R” do CRUD, onde um obtém todas as entidades cadastradas e outro obtém apenas uma usando como base seu identificador.
+Com o DAO genérico pronto, vamos implementar a classe que vai representar a tabela “pais”. Crie um novo pacote chamado “entidades” dentro do pacote “padroesempratica”. Dentro do pacote “padroesempratica.entidades”, crie uma classe chamada “Pais” (sem as aspas). Os objetos dessa classe representarão registros da tabela “pais”, sendo assim, precisamos que essa classe tenha os mesmos atributos da tabela correspondente. Lembre-se que na tabela “pais” nós definimos três colunas: id (INT), nome (VARCHAR) e sigla (VARCHAR). Na nossa classe, iremos usar o tipo “int” como tipo correspondente ao INT da tabela. Para o tipo VARCHAR, usaremos Strings. Veja na Listagem 4.5 como deve ficar a implementação parcial da classe Pais.
+Listagem 4.5: Implementação parcial da classe Pais
+ 
+Fonte: do autor
+ Tenho certeza que você se lembra da discussão sobre o padrão JavaBeans não é mesmo? Onde foi dito que devemos expor ao mundo “fora da classe” os atributos que nós queremos que possam ser configurados e obtidos por seus utilizadores? Da primeira vez que falamos sobre isso, nós implementamos manualmente cada método set e get correspondente a um campo privado não foi? Como essa tarefa é muito corriqueira, o NetBeans tem uma funcionalidade que faz isso automaticamente para nós. Com a classe implementada, como exibido na Listagem 4.5, clique com o botão direito no editor e escolha “Inserir código...”. Veja na Figura 4.4.
+Figura 4.4: Usando o assistente de inserção de código
+ 
+Fonte: Print screen, NetBeans IDE 6.9.1
+Ao clicar nesta opção, uma pequena lista com o nome de “Gerar” será exibida no editor. Nessa lista, escolha a opção “Getter e setter...”. Adivinhe o que vamos fazer? Gerar os métodos get e set para cada campo da classe! Fazendo isso, um diálogo será exibido, mostrando todos os campos privados da classe. Marque cada um dos campos clicando na caixa de seleção correspondente, ou então, a classe inteira e clique no botão “Gerar”. Veja o que aconteceu! A ferramenta gerou o código dos gets e sets para nós! Segue na Listagem 4.6 o código completo da classe Pais.
+
+
+
+
+
+
+
+Listagem 4.6: Implementação completa da classe Pais
+ 
+Fonte: do autor
+Muito legal não é mesmo? Agora que temos a classe que representa a estrutura da tabela “pais” da nossa base de dados, vamos implementar nosso primeiro DAO concreto, ou seja, uma classe que vai estender a classe abstrata DAO. Novamente, no pacote “padroesempratica.dao”, crie uma classe chamada “PaisDAO” (sem as aspas). Essa classe irá lidar com os objetos do tipo Pais, fazendo a ponte entre nossos objetos e o banco de dados. Com a classe criada, copie o código apresentado na Listagem 4.7.
+
+
+
+
+Listagem 4.7: Implementação parcial do PaisDAO
+ 
+Fonte: do autor
+Veja que nosso PaisDAO vai estender DAO, informando como tipo a classe Pais (DAO<Pais>). Ao copiar o código, você perceberá que o NetBeans vai reclamar, dizendo que tem um erro na classe. O nome da classe ficará destacado em vermelho. Passe o mouse por cima do nome e aguarde. Será exibida a causa do erro. No erro, é dito que a classe PaisDAO não implementa todos os métodos abstratos da classe DAO e isso é verdade, visto que como estamos estendendo a classe DAO, precisamos implementar todos os métodos abstratos que foram definidos nela e ainda não fizemos isso. Teríamos então que implementar manualmente todos os métodos marcados como abstratos na classe DAO. Ao invés de fazermos isso manualmente, o NetBeans pode nos ajudar novamente. Veja que na linha do erro, à esquerda, é mostrada uma pequena lâmpada. Clique nela. Ao clicar, o NetBeans vai listar as alternativas que ele pode executar para resolver o erro. No caso, apenas uma opção será listada (“Implementar todos os métodos abstratos”) veja a Figura 4.5.
+Figura 4.5: Implementando automaticamente os métodos abstratos de DAO
+ 
+Fonte: Print screen, NetBeans IDE 6.9.1
+Clique nesta opção e, novamente, como num passe de mágica, o NetBeans gera todo o esqueleto da classe para nós, criando uma implementação padrão para cada método abstrato da classe DAO. Mesmo ao fazer isso, o NetBeans continua reclamando que existe um erro. Nesse caso, é dito que é lançada uma exceção no construtor padrão. Você se lembra que lá no DAO genérico nós temos um construtor que cria a conexão e que ele lança uma SQLException? Pois bem, quando criamos um objeto de uma determinada classe, o construtor da superclasse da classe em questão é executado. Como estendemos DAO em PaisDAO, ao tentarmos instanciar um objeto do tipo PaisDAO, o construtor de PaisDAO será executado, além do construtor de DAO, que é sua superclasse. Como o construtor de DAO lança uma exceção caso ocorra algum problema, nós precisamos ou tratar ou dizer que o construtor de PaisDAO também lança esse tipo de exceção. Nós iremos usar a segunda abordagem. Para isso, basta implementar o construtor padrão de PaisDAO e dizer que ele lança esse tipo de exceção. Sendo assim, segue na Listagem 4.8 a implementação que temos até agora da classe PaisDAO.
+<Glossário: Construtor Padrão
+O construtor padrão é o construtor que não tem nenhum parâmetro.
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Listagem 4.8: Implementação parcial de PaisDAO com o construtor padrão
+ 
+Fonte: do autor
+Muito bom. Até agora preparamos toda o esqueleto do nosso PaisDAO, mas SQL que é bom, nada. Vamos agora implementar nosso primeiro método do CRUD, o “salvar”. Para poupar espaço, irei listar apenar o método em questão, ao invés de listar a classe completa, tudo bem? Lembre-se que estamos implementando o método “salvar” da classe PaisDAO. Antes de implementar o método “salvar”, importe a classe “java.sql.PreparedStatement”. Na Listagem 4.9 pode ser vista a implementação do método “salvar” da classe PaisDAO.
+Listagem 4.9: Implementação do método “salvar” da classe PaisDAO
+ 
+Fonte: do autor
+Vamos analisar o código para ver o que está acontecendo. Na linha 2 está definida a assinatura do método. O método “salvar” recebe um parâmetro do tipo Pais, sendo que os dados do objeto passado nesse parâmetro serão persistidos no banco de dados. Nas linhas 4 e 5 é definida a cláusula INSERT do banco de dados. Como a coluna id de pais foi definida como auto incremento, nós não precisamos fornecê-la. Ao invés de definirmos manualmente os valores das colunas nome e sigla, perceba que utilizamos sinais de interrogação, indicando que no lugar de cada ponto de interrogação será trocado pelo valor correto. Na linha 7 é criado um PreparedStatement a partir da conexão do DAO usando o código SQL que foi definido nas linhas 4 e 5. Na linha 8, o primeiro parâmetro do código SQL (primeiro ponto de interrogação) é trocado pelo valor retornado pelo método getNome() do objeto “obj” do tipo Pais. A mesma coisa acontece na linha 9, onde o segundo parâmetro do código SQL (segundo ponto de interrogação) é trocado pelo valor retornado pelo método getSigla(). Com o PreparedStatement configurado, na linha 11 mandamos que seja executado o PreparedStatement. Por fim, na linha 12, fechamos o PreparedStatement. Fácil não é?
+Vamos testar? No pacote “padroesempratica.testes”, crie uma classe chamada TestePaisDAO e copie o código da Listagem 4.10.
+
+
+
+
+
+
+Listagem 4.10: Código de teste para o PaisDAO
+ 
+Fonte: do autor
+Copiou o código? Execute a classe (botão direito no arquivo, “Executar arquivo” ou Shift+F6). Se tudo estiver correto, a classe será compilada e executada e nenhum erro será emitido. Fazendo isso, um novo registro na tabela “pais” será gerado. Vamos confirmar isso? No MySQL Workbench, abra o editor de SQL clicando duas vezes na conexão definida na seção “SQL Development”. Provavelmente o editor já deve estar aberto. Em “Object Browser” selecione a base “testes\_padroes” em “Default”. Em “Scratch”, entre digite “select * from pais;” (sem as aspas) e clique no botão que tem um desenho de um raio na barra de tarefas. O código SQL digitado será executado e o resultado será exibido logo abaixo. Veja a Figura 4.6.
+Figura 4.6: Fazendo uma consulta do MySQL Workbench
+ 
+Fonte: Print screen, MySQL Workbench
+Muito bem! Nosso método salvar está funcionando corretamente. Vamos analisar o código da Listagem 4.10. Entre as linhas 16 e 18 instanciamos e configuramos um objeto do tipo Pais. O nome desse país é Brasil e a sigla é BR. Na linha 20, declaramos uma referência do tipo PaisDAO que foi inicializada com null. Como todo o código dos métodos do DAO podem lançar uma exceção do tipo SQLException, temos que usar um bloco try. Na linha 24 instanciamos o PaisDAO e na linha 25 passamos o objeto do tipo Pais que criamos para o método “salvar” do DAO, que por sua vez vai executar o código SQL que definimos. Caso ocorra algum problema durante a execução de uma dessas duas linhas, o catch que ouve exceções do tipo SQLException captura o erro e manda mostrar esses problemas dando um printStackTrace() no objeto que representa a exceção. Por fim, temos um bloco finally que trata do fechamento da conexão. Sempre quando usarmos um DAO, precisamos fechar sua conexão quando terminarmos de usar. Na linha 33 verifica-se se o “dão” aponta para null. Se não apontar, tenta fechar a conexão, que também pode lançar uma exceção do tipo SQLException e que é tratada dentro do bloco try que está aninhado no finally.
+Agora que já criamos e testamos nosso primeiro método do PaisDAO, vamos implementar o restante dos métodos. Cada um deles será apresentado em uma listagem diferente. Os métodos de pesquisa (“R” do CRUD) serão um pouco diferente, sendo assim, eu os discutirei depois. Vamos lá!
+
+
+Listagem 4.11: Implementação do método “atualizar” da classe PaisDAO
+ Fonte: do autor
+Listagem 4.12: Implementação do método “excluir” da classe PaisDAO
+ Fonte: do autor
+
+
+
+
+
+
+
+
+
+
+Listagem 4.13: Implementação do método “listarTodos” da classe PaisDAO
+ 
+Fonte: do autor
+
+
+
+
+
+
+
+
+
+
+
+
+
+Listagem 4.14: Implementação do método “obterPorId” da classe PaisDAO
+ 
+Fonte: do autor
+Não se esqueça de importar as classes java.sql.ResultSet, java.util.ArrayList e import java.util.List. Para finalizar essa seção, vamos discutir o código da Listagem 4.13. O método listarTodos retorna uma lista que pode conter apenar objetos do tipo Pais. Essa lista que será retornada é instanciada e inicializada na linha 4. Neste momento, temos a lista de objetos do tipo Pais, só que ela ainda está vazia. Na linha 7, cria-se o PreparedStatement com o SQL que foi definido na linha 5 e, na linha 8, executamos o PreparedStatement usando o método executeQuery(), que retorna um objeto do tipo ResultSet. Os objetos do tipo ResultSet representam os resultados que são retornados em consultas SQL (comando SELECT). Na linha 10, criamos um laço de repetição while, que é executado enquanto rs.next() retornar true. Na primeira vez que rs.next() é invocado, o ponteiro de registros do ResultSet passa a apontar para o primeiro resultado obtido na consulta. Dentro do while, entre as linhas 12 e 15, nós criamos um objeto do tipo Pais e configuramos seus dados a partir dos dados obtidos no ResultSet, usando o método apropriado para cada tipo de cada coluna. Na linha 17, o objeto Pais que acabou de ser criado e configurado, é inserido na lista. O corpo do while é repetido até que rs.next() retorne false, ou seja, quando todos os resultados da consulta foram obtidos. Nesse ponto, temos a lista de objetos totalmente preenchida. Nas linhas 21 e 22, são fechados o ResultSet e o PreparedStatement. Por fim, na linha 24, a lista com os objetos do tipo Pais é retornada. 
+Note que o método “obterPorId”, definido na Listagem 4.14, tem uma implementação muito parecida com o método “listarTodos”, só que no caso do “obterPorId”, apenas um objeto pode ser retornado, visto que cada registro da tabela pais tem um identificador específico. Caso o id passado como parâmetro não represente um registro da tabela pais, o método retorna null.
+Agora, como exercício, modifique a classe TestePaisDAO para testar todos os métodos que foram implementados. Verifique se todos estão corretos usando o MySQL Workbench para comparar os resultados obtidos. Tente entender a implementação de cada método do CRUD.
+Não fez o exercício? Então faça! Ele não é opcional.
+Viu só que legal? Com tudo isso que fizemos, conseguimos isolar toda a camada de persistência da nossa aplicação. Para cada tabela nova que tivermos na base de dados, precisamos implementar a classe correspondente à tabela (que chamamos de entidade) e a classe DAO que vai manipular os objetos da classe criada e fazer o intercâmbio entre o mundo orientado a objetos com o mundo relacional. Essa comunicação entre objetos e o modelo relacional, é chamada de ORM (Object-Relational Mapping – Mapeamento Objeto-Relacional). Existem diversos frameworks que automatizam esse processo, gerando todo o código SQL automaticamente para nós. Infelizmente não teremos tempo para aprendê-los. Um desses frameworks é o Hibernate.
+<Saiba mais:
+Quer saber mais sobre ORM? Acesse os links a seguir:
+http://pt.wikipedia.org/wiki/Mapeamento\_objeto-relacional
+http://en.wikipedia.org/wiki/Object-relational\_mapping (em inglês)
+http://www.hibernate.org/
+>
+Estamos quase acabando! Vamos para o último padrão de projeto.
+
+
+
+\section{Padrão de Projeto \textit{Model-View-Controller} (MVC)}
+
+
+O padrão MVC (Model-View-Controller – Modelo-Visualização-Controle) é um padrão muito utilizado no desenvolvimento de aplicações que utilizam linguagens orientadas a objetos. Este padrão ajuda os desenvolvedores a separar as regras de negócio da aplicação, ou seja, as regras de como os dados devem se armazenados, qual a ordem que devem ser gravados, etc., da lógica de apresentação desses dados, ou seja, como eles serão exibidos aos usuários do sistema. Essa separação se dá utilizando três camadas: 
+•	Model (Modelo): A camada Model é usada para organizar como a informação é armazenada e gerenciada dentro da aplicação. No exemplo que construímos durante esta aula, as classes Pais e PaisDAO fazem parte do modelo.
+•	View (Visualização): Essa camada organiza os recursos utilizados para exibir ao usuário os dados que são gerenciados pela camada de modelo.
+•	Controller (Controle): A camada Controller, como o próprio nome já diz, é responsável por controlar o fluxo de execução da aplicação.
+A partir dessas definições, nós podemos ver nitidamente, nos exemplos que estamos construindo desde o início da disciplina, qual recurso faz parte de cada camada. A entidade Pais faz parte do modelo. Uma JSP faz parte da visualização, pois é usada pelo usuário tanto para inserir dados no sistema quanto para visualizá-los. Os Servlets que construímos fazem parte do controle, pois são eles que recebem os dados, os utilizam usando a camada de modelo e decidem para onde o fluxo da aplicação deve ser direcionado, por exemplo, uma página JSP que vai exibir a saída gerada por eles.
+Essa foi uma pequena introdução do MVC, pois durante a próxima aula nós iremos usá-lo extensivamente no projeto que iremos criar. Tenho certeza que você vai achar muito legal e útil! Como de costume, pratique o que você aprendeu durante esta aula, com as atividades de aprendizagem.
+
+
 
 \section{Resumo}
 
+Nesta aula demos um passo muito importante na nossa vida como desenvolvedores. Nós aprendemos que existem os chamados “padrões de projeto” ou “design patterns”, que são padrões que guiam os desenvolvedores na solução de problemas recorrentes através do uso de soluções de sucesso. Estudamos os padrões Factory e DAO implementando exemplos e aprendemos o básico do funcionamento do padrão MVC. Na próxima aula iremos implementar um projeto completo usando esses três padrões. 
+
+
 \section{Exercícios}
+
+1 – Defina, com suas palavras, o padrão Factory.
+2 – Defina, com suas palavras, o padrão DAO.
+3 – Defina, com suas palavras, o padrão MVC.
+4 – Da mesma forma que fizemos para a tabela “pais”, crie uma tabela no MySQL, usando o Workbench, com o nome de “fruta”. Essa tabela deve ter como colunas um campo identificador (id), um campo que armazenará o nome da fruta (VARCHAR) e um campo para armazenar a cor predominante da fruta (VARCHAR). Implemente, no projeto que criamos durante a Aula 4, a entidade Fruta e a classe FrutaDAO. Crie uma classe de testes chamada TesteFrutaDAO para testar os métodos do DAO da fruta. 
+5 – Repita a atividade 4, só que agora para a tabela “carro”. Um carro deve ter um identificador, um nome (VARCHAR), um modelo (VARCHAR) e um ano de fabricação (INT).
+6 – Repita a atividade 4, só que agora para a tabela “produto”. Um produto deve ter um identificador, uma descrição (VARCHAR) e uma quantidade em estoque (INT).
+
 
 \section{Projetos}

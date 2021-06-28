@@ -3,21 +3,650 @@
 
 \lettrine[lines=4, lhang=0.1, lraise=0, loversize=0.2, findent=0.1em]{\textcolor{corAzulTema}{N}}{ESTE} aaa.
 
+Objetivos
+Entender e realizar a construção de uma aplicação Web em Java completa.
+
+
 \section{Introdução}
 
-CUIDADO! É NECESSÁRIO DISPONIBILIZAR DENTRO DO DOMÍNIO CONFIGURADO NO GLASSFISH OS .JARS NECESSÁRIOS PELAS APLICAÇÕES. A CONFIGURAÇÃO VIA NETBEANS/PROJETO/ARQUIVO WAR NÃO É EFETIVADA!!!
+%CUIDADO! É NECESSÁRIO DISPONIBILIZAR DENTRO DO DOMÍNIO CONFIGURADO NO GLASSFISH OS .JARS NECESSÁRIOS PELAS APLICAÇÕES. A CONFIGURAÇÃO VIA NETBEANS/PROJETO/ARQUIVO WAR NÃO É EFETIVADA!!!
 %CAMINHO: C:\Users\<USUÁRIO>\glassfish5\glassfish\domains\domain1\lib
+
+Nesta aula iremos colocar em prática tudo o que aprendemos nas aulas anteriores com o objetivo de criar uma aplicação Web em Java completa. Iremos passar por todos os passos do desenvolvimento da aplicação para que na próxima aula, você possa usar um conjunto de requisitos para desenvolver um sistema sozinho. Vamos começar?
 
 \section{Analisando os Requisitos}
 
+Imagine que fomos contratados para criar um sistema para controle de cadastro de clientes. Esse sistema deve manter vários dados de um cliente: nome, sobrenome, data de nascimento, CPF, e-mail, logradouro, número, bairro, cidade e CEP. O contratante também deseja que seja possível manter um cadastro de cidades e de estados, sendo que as cidades devem ter um nome e um estado, enquanto um estado deve ter um nome e uma sigla. Cada um dos cadastros (cliente, cidade e estado), deve conter as funcionalidades de criar, alterar e excluir um determinado registro.
+Vamos analisar esses requisitos. Primeiramente, vamos identificar os tipos de entidades que farão parte do sistema, fazendo a seguinte pergunta: Quais são os tipos de “coisas” que o sistema deve gerenciar? O sistema deve manter um cadastro de Clientes, um cadastro de Cidades e um cadastro de Estados. Sendo assim, identificamos três entidades, ou seja, Cliente, Cidade e Estado.
+Cada um desses tipos de entidade tem uma determinada lista de características. Vamos organizá-las em uma tabela. Veja essa organização na Tabela 5.1.
+Tabela 5.1: Características dos tipos de entidade
+Entidade	Atributos (características)
+Cliente	- nome;
+- sobrenome;
+- data de nascimento;
+- CPF;
+- e-mail;
+- logradouro;
+- número;
+- bairro;
+- Cidade;
+- CEP.
+Cidade	- nome;
+- Estado.
+Estado	- nome;
+- sigla.
+Fonte: do autor
+Sabemos que esses tipos de entidade que foram identificados se tornarão tabelas na nossa base de dados relacional não é mesmo? Cada característica de cada tipo de entidade se tornará uma coluna na tabela correspondente. Sabemos também que cada registro de uma determinada tabela precisa ser diferenciado dos outros não é mesmo? Para isso analisamos as tabelas até que consigamos identificar as chaves primárias de cada uma delas. Uma chave primária é o conjunto mínimo de um ou mais atributos de um determinado tipo de entidade que garante a unicidade de um registro, sendo assim, precisamos encontrar, na lista de características de cada entidade, uma ou mais características que, usadas em conjunto, garantem que um registro é diferente de outro. Tomemos como exemplo o tipo de entidade Estado. Veja na Tabela 5.2 uma lista de registros da tabela “estado” do nosso provável banco de dados.
+Tabela 5.2: Exemplos de registros da tabela “estado”
+Tabela: estado
+nome	sigla
+São Paulo	SP
+Rio de Janeiro	RJ
+Minas Gerais	MG
+...	...
+Fonte: do autor
+O que diferencia um estado de outro? Se usarmos os atributos “nome” e “sigla”, nós sempre teremos um estado diferente do outro não é mesmo? E se usarmos apenas o “nome”? Ou então somente a “sigla”? Temos então três opções para definir a chave primária dessa tabela. Podemos usar “nome” e “sigla”, somente “nome” ou somente “sigla”. Dentre essas três opções, qual ou quais são as que têm o menor conjunto de atributos? Somente “nome” ou somente “sigla”, correto? Como temos duas opções, podemos escolher qualquer uma delas. Vamos dizer que nós escolhemos a opção de definir a chave primária da tabela usando o atributo “sigla”. Legal, agora sabemos que um estado é diferenciado do outro pela sua sigla, então não pode existir mais de um registro com a mesma sigla. 
+Agora temos outro problema: desempenho do banco de dados. Quando criarmos a tabela “cidade”, esta vai ter que referenciar a tabela “estado” usando uma coluna que vai ter o mesmo tipo da coluna que representa a chave primária da tabela “estado”. Essa coluna, como você deve se lembrar, é denominada chave estrangeira. Como cada estado tem uma sigla de dois caracteres, sempre que um estado for referenciado em um registro da tabela “cidade”, essa referência vai ter que ter o mesmo valor da tabela sigla. Apesar de essa abordagem funcionar, nós podemos atacar esse problema de outra forma. Podemos definir que a coluna “sigla” tem valor único (unique) nos registros da tabela “estado”, e então criar uma chave primária que contém apenas um número. Essa chave primária é chamada de chave artificial, ou surrogate, sendo que normalmente é chamada de “id” (identificador). Note que como o próprio nome diz, essa chave é artificial. O que vai garantir a unicidade dos registros é a configuração de cada uma das colunas. 
+O que ganhamos com isso? Ganhamos desempenho, pois estamos usando números para referenciar colunas de outras tabelas, não Strings. Imagine definir a chave primária de um cliente como CPF. Ao precisarmos referenciar um cliente em outra tabela, digamos uma tabela de “pedidos”, precisaríamos ter uma cópia do CPF do cliente em cada pedido, gastando cerca de 14 caracteres (um CPF é no formato 000.000.000-00), ao passo que poderíamos usar apenas um número! Sabendo de tudo isso, podemos partir para o projeto do banco de dados.
+
+
 \section{Projetando Banco de Dados}
+
+Não irei documentar aqui todo o processo de projeto do banco de dados, que vai desde a análise dos requisitos, passando pela criação do DER (Diagrama Entidade-Relacionamento) até a implementação do modelo físico, pois este não é o objetivo dessa disciplina, mas note que no desenvolvimento de um sistema esses passos são normalmente realizados. Iremos então partir diretamente para a implementação do modelo físico. Antes de criarmos o SQL para a criação da estrutura da nossa base de dados, vamos organizar os atributos das nossas tabelas – que são baseadas nas características dos tipos de entidade – e especificar suas características. Veja a Tabela 5.3.
+Tabela 5.3: Detalhamento das colunas de cada tabela
+Tabela	Coluna	Tipo	É único?
+cliente	id*	INT	sim
+	nome	VARCHAR(45)	
+	sobrenome	VARCHAR(45)	
+	dataNascimento	DATETIME	
+	cpf	VARCHAR(14)	sim
+	email	VARCHAR(60)	
+	logradouro	VARCHAR(50)	
+	numero	VARCHAR(6)	
+	bairro	VARCHAR(30)	
+	cep	VARCHAR(9)	
+	cidade\_id**	INT	
+cidade	id*	INT	sim
+	nome	VARCHAR(30)	
+	estado\_id**	INT	
+estado	id*	INT	sim
+	nome	VARCHAR(30)	
+	sigla	VARCHAR(2)	Sim
+* chave primária
+** chave estrangeira
+Fonte: do autor
+Usei o MySQL Workbench para criar um diagrama do nosso modelo físico. Veja como ficou na Figura 5.1.
+
+
+
+
+Figura 5.1: Diagrama do modelo físico da base de dados
+ 
+Fonte: Print screen, MySQL Workbench
+Vamos agora implementar o banco de dados. No MySQL Workbench, crie uma nova base de dados com o nome de “cadastro\_clientes” como feito na Seção 4.2. Com a base criada, selecione-a no “Object Browser” e copie o código da Listagem 5.1 no editor (Scratch) e execute o script.
+Listagem 5.1: Script SQL para criação da tabela “estado”
+ 
+Fonte: do autor
+Faça o mesmo processo para a Listagem 5.2 e para a Listagem 5.3.
+Listagem 5.2: Script SQL para criação da tabela “cidade”
+ 
+Fonte: do autor
+
+
+Listagem 5.3: Script SQL para criação da tabela “cliente”
+ 
+Fonte: do autor
+Ao fazer esses três passos, temos nossas três tabelas criadas dentro da base de dados. Clique com o botão direito no “Object Browser” e escolhe “Refresh All”. Expanda o banco “cadastro\_clientes” e então expanda a pasta “Tables”. Lá dentro estarão as três tabelas criadas. Muito bem, terminamos a implementação do banco. Vamos agora criar um diagrama de classes para representar cada uma das nossas entidades, que serão mapeamentos das nossas tabelas no mundo orientado a objetos.
+
+
 
 \section{Criando o Diagrama de Classes}
 
+Para criar nosso diagrama de classes UML, vamos usar a ferramenta astah* UML (o antigo JUDE UML) que pode ser obtida através do endereço http://astah.change-vision.com/. Usaremos a versão “Community” que é gratuita. Como já disse cada tabela do nosso banco de dados vai ter uma representação na nossa aplicação. Essa representação, como você já sabe, é criada usando classes. No diagrama de classes da Figura 5.2, você pode ver as três classes que representam nossas entidades. Note que cada classe contém uma série de atributos privados que representam as colunas da tabela e que o acesso a esses atributos é feito usando os métodos get e set correspondentes (omitidos no diagrama). 
+
+
+
+
+Figura 5.2: Diagrama de classes das entidades
+ 
+Fonte: Print screen, astah* UML
+Outro detalhe é que criei apenas o diagrama das classes que são as entidades do sistema, não me preocupando com as outras classes que nosso sistema conterá. Novamente, como no exemplo do nosso banco de dados, em um sistema de verdade, normalmente são desenvolvidos diagramas de classes muito mais completos e complexos, bem como outros tipos de diagramas UML que forem necessários. Com tudo isso pronto, podemos partir para o desenvolvimento do sistema propriamente dito!
+
+
+
 \section{Construindo o Sistema}
+
+Nossa primeira tarefa será criar o projeto no NetBeans. Para isso, abra o NetBeans e crie um novo projeto do tipo Java Web com o nome de “CadastroClientes” (sem as aspas). Marque a opção para usar uma pasta dedicada para armazenar as bibliotecas. Com o projeto criado, acesse suas propriedades e desmarque a opção “Implantar ao salvar”. Nas bibliotecas, importe a “JSTL 1.1” e o “MySQL JDBC Driver” e após importar, adicione no projeto.
+Em “Pacotes de código-fonte”, crie o pacote “cadastroclientes” (sem as aspas) e os pacotes “controladores”, “dao”, “entidades”, “jdbc” e “testes” dentro do pacote “cadastroclientes”. Em “Páginas Web”, crie os diretórios “formularios” (sem acento) e dentro deste, crie os diretórios “cidades”, “clientes” e “estados”. Veja na Figura 5.3 como deve ficar a estrutura do projeto.
+
+
+
+
+
+
+Figura 5.3: Estrutura do projeto
+ 
+Fonte: Print screen, NetBeans IDE 6.9.1
+Com a estrutura configurada, vamos agora copiar algumas classes do projeto “PadroesEmPatrica” que criamos na aula anterior. Para isso abra esse projeto, se ainda não estiver aberto, no NetBeans. Expanda o pacote “padroesempratica.jdbc”, clique com o botão direito no arquivo “ConnectionFactory.java” e escolha “Copiar”. Volte ao projeto “CadastroClientes”, clique com o botão direito no pacote “cadastroclientes.jdbc”, escolha “Colar” e então “Refatorar Copiar...”. Um diálogo será aberto. Clique no botão “Refatorar”. O arquivo será copiado para o projeto e as alterações que forem necessárias fazer no arquivo, como mudar a cláusula “package”, serão feitas pelo NetBeans. Faça o mesmo processo para o arquivo “DAO.java” contido no pacote “pradoesempratica.dao” do projeto “PadroesEmPratica”, copiando-o no pacote “cadastroclientes.dao” do projeto “CadastroClientes”. O NetBeans vai apontar um erro no arquivo depois da cópia. Para corrigir, abra o arquivo no editor e altere o “import” que está com problema. 
+Outro detalhe é que precisamos mudar a URL da nossa fábrica de conexões para fazer com que as conexões criadas sejam relativas à base de dados “cadastro\_clientes”. Para isso, abra o arquivo “ConnectionFactory.java” do pacote “cadastroclientes.jdbc” e mude a URL de “jdbc:mysql://localhost/testes\_padroes” para “jdbc:mysql://localhost/cadastro\_clientes”.
+Agora vamos preparar toda a camada de persistência. No pacote “cadastroclientes.entidades”, crie três classes: “Estado”, “Cidade” e “Cliente” (sem as aspas). Nas três listagens a seguir estão listados os códigos-fonte das três classes. Note que estou omitindo os gets e os sets, mas isso não significa que eles não devam existir. Fica por sua conta criar os gets e sets ok? Não se esqueça de fazer isso!
+
+Listagem 5.4: Entidade “Estado”
+ 
+Fonte: do autor
+Listagem 5.5: Entidade “Cidade”
+ 
+Fonte: do autor
+
+
+
+
+
+
+
+
+Listagem 5.6: Entidade “Cliente”
+ 
+Fonte: do autor
+Com as entidades prontas, vamos criar os DAOs. No pacote “cadastroclientes.dao”, crie três classes: “EstadoDAO”, “CidadeDAO” e “ClienteDAO”. O código-fonte de cada uma dessas classes é apresentado nas listagens a seguir. Atenção! As listagens foram divididas.
+
+
+
+
+
+
+
+
+
+
+
+Listagem 5.7: Código da classe “EstadoDAO” (parte 1)
+ 
+Fonte: do autor
+Listagem 5.8: Código da classe “EstadoDAO” (parte 2)
+ Fonte: do autor
+
+
+
+
+
+
+Listagem 5.9: Código da classe “EstadoDAO” (parte 3)
+ 
+Fonte: do autor
+
+
+
+
+
+
+
+
+
+
+
+Listagem 5.10: Código da classe “CidadeDAO” (parte 1)
+ 
+Fonte: do autor
+Listagem 5.11: Código da classe “CidadeDAO” (parte 2)
+ Fonte: do autor
+Listagem 5.12: Código da classe “CidadeDAO” (parte 3)
+ Fonte: do autor
+
+
+
+
+Listagem 5.13: Código da classe “ClienteDAO” (parte 1)
+ 
+Fonte: do autor
+Listagem 5.14: Código da classe “ClienteDAO” (parte 2)
+ 
+Fonte: do autor
+
+
+Listagem 5.15: Código da classe “ClienteDAO” (parte 3)
+ 
+Fonte: do autor
+Listagem 5.16: Código da classe “ClienteDAO” (parte 4)
+ 
+Fonte: do autor
+
+
+
+Listagem 5.17: Código da classe “ClienteDAO” (parte 5)
+ 
+Fonte: do autor
+Quantos códigos hein? Copiou tudo? Crie algumas classes de teste no pacote “cadastroclientes.teste” e teste a persistência de cada entidade. Com isso, terminamos a parte da persistência do nosso projeto.
+Agora nós vamos começar a implementar as visualizações e os controladores. Nossa aplicação terá três links no index.jsp, sendo que cada link levará a um determinado cadastro. Cada cadastro vai conter uma página principal onde todos os itens desse cadastro serão exibidos e onde poderão ser alterados, excluídos ou então poderemos cadastrar um novo item.
+Vamos começar pelo cadastro de estados. Na pasta “estados” dentro da pasta “formularios”, crie um arquivo JSP com o nome de “listagem” (sem as aspas). Nesse arquivo vão ser listados todos os estados, portanto precisamos obter esses estados de alguma forma. Você se lembra que nos nossos DAOs existe um método chamado listarTodos que retorna todos os registros de uma determinada tabela? Nós não vamos usar esse método diretamente no JSP, então vamos criar uma classe de serviços que vai instanciar o DAO, gerar a lista e fechar a conexão para nós. Nos pacotes de código-fonte, crie um novo pacote dentro do “cadastroclientes” chamado “servicos” (sem o “ç”). Nesse pacote, crie uma classe chamada “EstadoServices” (sem as aspas). Essa classe vai ter apenas um método, chamado getTodos, que retornará uma lista de estados. Veja o código-fonte dela na Listagem 5.18.
+Listagem 5.18: Código-fonte da classe EstadoServices
+ 
+Fonte: do autor
+Criamos essa classe para que ela encapsule todo o processo de obtenção da lista de estados. Note que é no método getTodos que o EstadoDAO vai ser instanciado e gerenciado.
+Agora que temos a classe que vai obter a lista de estados para nós, além de gerenciar o DAO, nós podemos implementar o nosso arquivo de listagem de estados. Abra o arquivo “/formulários/estados/listagem.jsp” e copie o código da Listagem 5.19.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Listagem 5.19: Código-fonte do arquivo “/formularios/estados/listagem.jsp”
+ 
+Fonte: do autor
+Vamos analisar o código. Na linha 18, usamos a EL “\${pageContext.request.contextPath}” que vai gerar o caminho completo dos recursos da aplicação. Nesta linha, criamos um link que aponta para o arquivo “/formularios/estado/novo.jsp” – que ainda não implementamos – e que será o formulário responsável em criar um novo estado. Este mesmo código é repetido na linha 46. Na linha 20, abrimos a tag de uma tabela e, até a linha 29, criamos seu cabeçalho. Na linha 32, usamos a tag jsp:useBean para instanciar um objeto do tipo EstadoServices, que contém o método que vamos usar para obter a lista de estados. Demos o nome de “servicos” para essa instância. Na linha 34, usamos um c:forEach para iterar sobre a lista retornada pelo método getTodos da instância “servicos”. Note que a chamada do método getTodos é somente “todos”, pois seguimos o padrão JavaBeans nas ELs como você deve se lembrar. Essa chamada é feita usando EL na propriedade “items”. Na propriedade “var”, damos o nome da variável que vai armazenar a instância atual durante a iteração, no caso, “estado”. Entre as linhas 35 e 41 nós definimos o código que será gerado a cada iteração do c:forEach. As três primeiras colunas da tabela são fáceis de entender, entretanto a quarta e a quinta mudam um pouco. Na linha 39, a coluna é formada por um link que aponta para “/processaEstados?acao=prepAlteracao\&id=\${estado.id}”. Note que estamos codificando na URL duas variáveis. A primeira, chamada “acao”, vai informar para o Servlet que vai estar mapeado para /processaEstados o que queremos fazer, no caso, “prepAlteracao” (preparar alteração). A segunda variável, chamada “id” vai conter o id do estado daquela linha da tabela, ou seja, queremos alterar um estado que tem um determinado id. O mesmo acontece na linha 40, mudando a ação para “prepExclusao” (preparar exclusão). Sei que pode estar um pouco confuso, mas na hora que terminarmos todos os arquivos do cadastro de estados tudo isso vai ficar fácil de entender, não se preocupe.
+Note que deixei a linha 11 por último. Nela usamos a tag link para referenciar um arquivo de folhas de estilos. Nos exemplos das aulas anteriores nós usamos estilos declarados dentro do arquivo JSP usando a tag style. A partir de agora iremos separar os estilos em arquivos e é por isso que foi usada a tag link para a pontar para “/css/estilos.css”. Vamos criar esse arquivo? Na pasta “Páginas Web”, crie um diretório chamado “css” (sem as aspas), clique com o botão direito sobre ele e escolha “Novo”. Provavelmente o item que queremos não estará visível, então escolha “Outro...”. Escolha “Web” na categoria e em “Tipo de arquivos” escolha “Folha de estilos em cascata”. Clique em próximo e dê o nome de “estilos” ao arquivo. Copie o código da Listagem 5.20 neste arquivo.
+
+
+
+
+
+
+
+
+Listagem 5.20: Arquivo de estilos da aplicação
+ 
+Fonte: do autor
+Execute o projeto e aponte o navegador para a página de listagem para ver como está ficando. Se você já tiver alguns estados cadastrados, vai ver que eles aparecerão na tabela. Vamos agora criar nosso formulário para criar estados. Na pasta “/formularios/estados”, crie um arquivo JSP chamado “novo” (sem as aspas). O código-fonte do arquivo pode ser visto na Listagem 5.21.
+
+
+
+Listagem 5.21: Arquivo “/formularios/estados/novo.jsp”
+ 
+Fonte: do autor
+Salve o arquivo e veja se ele está sendo exibido corretamente no navegador. Acesse-o pelo link “Novo Estado” da página de listagem de estados. Vamos analisar o código. Na linha 10 referenciamos o nosso arquivo de estilos. Nas linhas 18 e 19 declaramos a tag do formulário. Note que a action está apontando para “/processaEstados” que será a URL que mapearemos o Servlet que tratará os estados. A novidade nesse formulário é o uso de um input do tipo hidden (escondido). Esses tipos de input são usados para guardar valores que o usuário do sistema não tem acesso diretamente. No nosso caso, esse input, que tem o nome de “acao” e valor “criar”, vai indicar ao Servlet que queremos criar um novo estado. Nós precisamos tratar isso na implementação do nosso Servlet ok? Como já temos nossa página de listagem e o nosso formulário de criação de estados, está na hora de criarmos o Servlet que vai gerenciar isso. No pacote “cadastroclientes.controladores”, crie um Servlet com o nome de “EstadosServlet” (sem as aspas) e configure o mapeamento dele para “/processaEstados” (sem as aspas).
+A seguir, na Listagem 5.22 e na Listagem 5.23, é apresentado o código do método processRequest do Servlet EstadosServlet.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Listagem 5.22: Código-fonte do método processRequest do Servlet “EstadosServlet” (parte 1)
+ 
+Fonte: do autor
+
+
+
+
+
+Listagem 5.23: Código-fonte do método processRequest do Servlet “EstadosServlet” (parte 2)
+ 
+Fonte: do autor
+Copie todo o código e execute o projeto. Acesse a listagem de estados e clique para criar um novo estado. Preencha o formulário e salve. O novo estado será salvo e a listagem aparecerá novamente. Como exercício, tente entender o que está acontecendo no Servlet. Todo o código apresentado já foi estudado nos exemplos anteriores. Perceba que foram tratadas todas as ações possíveis, mas ainda faltam dois arquivos JSP para implementarmos. O “alterar.jsp” e o “excluir.jsp”. Vamos fazer isso? Crie um arquivo na pasta “/formularios/estados” com o nome de “alterar” (sem as aspas) e copie o código da Listagem 5.24.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Listagem 5.24: Código do arquivo “/formularios/estados/alterar.jsp”
+ 
+Fonte: do autor
+Note que não numerei as linhas dessa listagem, visto que as diferenças importantes em relação ao arquivo novo.jsp são poucas. O que foi alterado é o input hidden nomeado como “acao”, que agora tem o valor “alterar”. Foi criado outro input hidden para armazenar o id do estado que será alterado. Note que os valores dos campos são preenchidos usando o atributo “estado” que foi configurado no request dentro do Servlet, na seção do código que trata a ação “prepAlteracao”.
+O arquivo excluir.jsp é bem parecido, só que neste arquivo não precisamos ter campos de entrada para nome e sigla, pois não vamos alterar esses dados. O importante é o id, que novamente vai ser configurado em um campo escondido. Veja na Listagem 5.25 o código do arquivo “/formularios/estados/excluir.jsp” que você deve criar.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Listagem 5.25: Código do arquivo “/formularios/estados/excluir.jsp”
+ 
+Fonte: do autor
+Copiou tudo? Teste! Verifique se tudo está funcionando corretamente. Antes de partirmos para os outros cadastros, vamos alterar o index.jsp criando três links, um para cada listagem dos cadastros. O novo código do index.jsp pode ser visto na Listagem 5.26.
+
+Listagem 5.26: Código-fonte do index.jsp
+ 
+Fonte: do autor
+Teste o index.jsp e veja que agora ele tem três links para cada um dos cadastros. O que falta agora para terminarmos nosso projeto é implementar todos os JSPs dos outros cadastros, bem como seus respectivos Servlets e classes de serviço. A seguir, vou listar cada um desses arquivos, agrupando-os por tipo de cadastro, sendo que só irei comentar as linhas que contenham código que ainda não utilizamos ou que precisem de alguma explicação. Não se esqueça de testar o projeto sempre que tiver implementado os arquivos necessários para o funcionamento de uma determinada funcionalidade. Outro detalhe é que algumas linhas de código de algumas listagens foram divididas em duas linhas (nas listagens anteriores eu usei uma flecha para indicar isso), então preste atenção nas linhas que iniciam logo na margem esquerda, pois elas fazem parte da linha anterior. Antes das listagens vou indicar qual arquivo que estamos implementando. Lembre-se de criá-lo antes! Vamos começar?
+•	Arquivo “cadastroclientes.servicos.CidadeServices.java” (Listagem 5.27).
+
+
+
+Listagem 5.27: Código-fonte da classe CidadeServices
+ 
+Fonte: do autor
+•	Arquivo “/formularios/cidades/listagem.jsp” (Listagem 5.28 e Listagem 5.29).
+
+
+
+
+Listagem 5.28: Código-fonte do arquivo “/formularios/cidades/listagem.jsp” (parte 1)
+ 
+Fonte: do autor
+
+
+
+
+
+
+
+
+
+
+
+Listagem 5.29: Código-fonte do arquivo “/formularios/cidades/listagem.jsp” (parte 2)
+ 
+Fonte: do autor
+•	Arquivo “/formularios/cidades/novo.jsp” (Listagem 5.30).
+
+
+
+
+
+
+
+
+Listagem 5.30: Arquivo “/formularios/cidades/novo.jsp”
+ 
+Fonte: do autor
+Note que na linha 33 da Listagem 5.30 nós usamos o serviço getTodos() da classe EstadoServices para obter todos os estados cadastrados e com isso gerar as opções (tag option) do select (combo box). Note que o valor de cada option é o id associado a determinado estado, enquanto o que aparece ao usuário é a junção entre o nome e a sigla do mesmo estado. O id do estado selecionado será enviado ao Servlet por meio da variável “idEstado”, configurada no atributo “name” da tag select.
+•	Método processRequest do arquivo “CidadesServlet.java” contido no pacote “cadastroclientes.controladores”. O padrão de URL do mapeamento desse Servlet deve ser configurado para “/processaCidades” (sem as aspas) (Listagem 5.31 e Listagem 5.32).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Listagem 5.31: Código-fonte do método processRequest do Servlet “CidadesServlet” (parte 1)
+ 
+Fonte: do autor
+
+
+
+Listagem 5.32: Código-fonte do método processRequest do Servlet “CidadesServlet” (parte 2)
+ 
+Fonte: do autor
+•	Arquivo “/formularios/cidades/alterar.jsp” (Listagem 5.33 e Listagem 5.34).
+
+
+Listagem 5.33: Código do arquivo “/formularios/cidades/alterar.jsp” (parte 1)
+ 
+Fonte: do autor
+
+
+
+
+
+
+
+
+
+
+Listagem 5.34: Código do arquivo “/formularios/cidades/alterar.jsp” (parte 2)
+ 
+Fonte: do autor
+Na Listagem 5.34 temos algo muito interessante. Note que construímos nosso select da mesma forma que fizemos na Listagem 5.30, entretanto precisamos saber qual é o estado que é usado na cidade que será alterada. Para isso, ao usarmos o c:forEach, nós comparamos o id de cada estado do cadastro com o id do estado associado à cidade que vai ser alterada. Caso os ids sejam iguais, isso quer dizer que é o estado usado na cidade, sendo assim, a tag option é gerada com um atributo a mais, o “selected”, configurado como “true”. Usando esse atributo, nós dizemos ao navegador que aquele determinado item deve ser selecionado por padrão.
+•	Arquivo “/formularios/cidades/excluir.jsp” (Listagem 5.35).
+Listagem 5.35: Código do arquivo “/formularios/cidades/excluir.jsp”
+ 
+Fonte: do autor
+•	Arquivo “cadastroclientes.servicos.ClienteServices.java” (Listagem 5.36).
+Listagem 5.36: Código-fonte da classe ClienteServices
+ 
+Fonte: do autor
+•	Arquivo “/formularios/clientes/listagem.jsp” (Listagem 5.37 e Listagem 5.38).
+
+
+
+Listagem 5.37: Código-fonte do arquivo “/formularios/clientes/listagem.jsp” (parte 1)
+ 
+Fonte: do autor
+
+
+
+
+
+
+
+
+
+Listagem 5.38: Código-fonte do arquivo “/formularios/clientes/listagem.jsp” (parte 2)
+ 
+Fonte: do autor
+•	Arquivo “/formularios/clientes/novo.jsp” (Listagem 5.39, Listagem 5.40 e Listagem 5.41).
+
+
+
+
+
+
+
+
+
+Listagem 5.39: Arquivo “/formularios/clientes/novo.jsp” (parte 1)
+ 
+Fonte: do autor
+
+
+
+Listagem 5.40: Arquivo “/formularios/clientes/novo.jsp” (parte 2)
+ 
+Fonte: do autor
+
+
+
+Listagem 5.41: Arquivo “/formularios/clientes/novo.jsp” (parte 3)
+ 
+Fonte: do autor
+•	Método processRequest do arquivo “ClientesServlet.java” contido no pacote “cadastroclientes.controladores”. O padrão de URL do mapeamento desse Servlet deve ser configurado para “/processaClientes” (sem as aspas) (Listagem 5.42, Listagem 5.43, Listagem 5.44 e Listagem 5.45).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Listagem 5.42: Código-fonte do método processRequest do Servlet “ClientesServlet” (parte 1)
+ Fonte: do autor
+
+
+
+
+
+
+Listagem 5.43: Código-fonte do método processRequest do Servlet “ClientesServlet” (parte 2)
+ 
+Fonte: do autor
+Note que no início da Listagem 5.43 (linha 42), nós usamos a classe SimpleDateFormat para converter a data inserida pelo usuário no formulário para um objeto do tipo java.util.Date. Para fazer essa conversão, precisamos criar o SimpleDateFormat com o formato que estamos usando para a data, no caso “dia dia / mês mês / ano ano ano ano” (dia com dois dígitos, mês com dois dígitos e ano com quatro dígitos), que deve ser codificado como dd/MM/yyyy.  Para fazer a conversão, usamos o método “parse” de SimpleDateFormat, sendo que a String com a data que é passada para o método “parse” deve estar no formato especificado no construtor do SimpleDateFormat. Caso a String não esteja no formato correto, é lançada uma exceção do tipo ParseException que precisamos tratar.
+Outro detalhe é que nossa classe Cliente não usa o tipo java.util.Date para representar datas, mas sim o tipo java.sql.Date. Sendo assim, após gerarmos a data com o método “parse”, precisamos ainda criar um objeto do tipo java.sql.Date, que recebe como parâmetro o tempo em milissegundos (método getTime() de java.util.Date) da data desejada, ou seja, da data que foi criada a partir da String passada pelo usuário através do formulário.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Listagem 5.44: Código-fonte do método processRequest do Servlet “ClientesServlet” (parte 3)
+ 
+Fonte: do autor
+
+
+
+
+
+
+
+
+
+Listagem 5.45: Código-fonte do método processRequest do Servlet “ClientesServlet” (parte 4)
+ 
+Fonte: do autor
+•	Arquivo “/formularios/clientes/alterar.jsp” (Listagem 5.46, Listagem 5.47 e Listagem 5.48).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Listagem 5.46: Código do arquivo “/formularios/clientes/alterar.jsp” (parte 1)
+ 
+Fonte: do autor
+
+
+
+
+
+
+
+Listagem 5.47: Código do arquivo “/formularios/clientes/alterar.jsp” (parte 2)
+ 
+Fonte: do autor
+Para que possamos apresentar a data de nascimento (tipo java.sql.Date) do cliente que está passando pelo processo de edição em um formato específico, nós usamos a tag fmt:formatDate (linha 46 da Listagem 5.47), que faz parte da JSTL. Note que a TagLib que contém essa tag é declarada no início da Listagem 5.46 usando o prefixo “fmt”. Na tag fmt:formatDate, usada na Listagem 5.47, usamos o atributo “pattern” (padrão) para configurarmos o formato da String que deve ser gerada a partir da data de nascimento do cliente. O atributo “value” é usado para indicar o objeto da data que faz parte do objeto “cliente” contido no “requestScope”, ou seja, o objeto que queremos formatar. O atributo “var” é usado para indicar o nome da variável usada para armazenar o resultado da formatação, sendo que no caso, configuramos o nome da variável como “data”. Por fim, o atributo “scope” é usado para definir o escopo que essa variável vai existir, no caso, cofiguramos para “page”, ou seja, a variável só vai existir dentro dessa página. A seguir, como valor do input da data de nascimento, usamos a variável “data”, obtida usando EL na forma \${data}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Listagem 5.48: Código do arquivo “/formularios/clientes/alterar.jsp” (parte 3)
+ 
+Fonte: do autor
+•	Arquivo “/formularios/clientes/excluir.jsp” (Listagem 5.49 e Listagem 5.50).
+
+Listagem 5.49: Código do arquivo “/formularios/clientes/excluir.jsp” (parte 1)
+ 
+Fonte: do autor
+Veja que no final da Listagem 5.49 (linha 38) usamos novamente um formatador de datas (tag fmt:formatDate) para apresentar a data de nascimento do cliente. Note que desta vez o uso do formatador foi simplificado, visto que agora não precisamos inserir a data formatada dentro de um input como fizemos na Listagem 5.47. Quando queremos apenas exibir a data formatada, basta usarmos a tag fmt:formatDate com os atributos “pattern” e “value” configurados que a data formatada será gerada onde a tag foi usada.
+
+
+Listagem 5.50: Código do arquivo “/formularios/clientes/excluir.jsp” (parte 2)
+ 
+Fonte: do autor
+Ufa! Quanta coisa! Copiou todos os arquivos? Testou tudo o que você fez? Que bom! Se tudo funcionou, parabéns! Caso tenha dado algum problema, verifique o que pode ter acontecido, principalmente comparando o código que você copiou com o código das listagens. Agora você é capaz de criar uma aplicação Web em Java que contenha cadastros. Muito legal não é mesmo? Com essa bagagem teórica e prática que tivemos nessa e nas aulas anteriores, nós seremos capazes de trabalhar no projeto que será proposto na próxima aula.
+
 
 \section{Resumo}
 
+Nesta aula construímos uma aplicação Web completa que mantém o cadastro de Clientes, Cidades e Estados. Durante o nosso aprendizado, nós usamos os padrões que aprendemos na Aula 4 para criar a arquitetura da nossa aplicação, dividindo as responsabilidades entre as classes, bem como usando as camadas propostas no padrão MVC, organizando assim o nosso projeto. 
+
 \section{Exercícios}
+
+1 – Estude todos os arquivos de código-fonte que foram apresentados nesta aula e, mentalmente, descreva cada uma das linhas desses arquivos.
+2 – Na listagem de clientes, insira uma nova coluna na tabela para apresentar a data de nascimento de cada cliente. Use a tag fmt:formatDate para formatar a data no formato dd/MM/yyyy (dia com dois dígitos, mês com dois dígitos e ano com quatro dígitos). Não se esqueça de usar a diretiva “<%@taglib ...%>” para configurar a TagLib de formatadores da JSTL. 
+3 – Um detalhe que passou sem ser tratado no nosso projeto é a validação dos campos dos cadastros. Por exemplo, imagine que uma data de nascimento errada foi fornecida pelo usuário do sistema no cadastro de clientes, ou então que foi inserida uma sigla com mais de dois caracteres no cadastro de estados. Se esses dados forem passados de forma errada ao banco de dados, ele gerará um erro e então nosso cadastro não vai funcionar corretamente. Como você resolveria esse problema? Tente criar um mecanismo de validação dos dados fornecidos pelo usuário no cadastro de estados. Caso algum campo não tenha as características necessárias (sigla com mais de dois caracteres, por exemplo), direcione o usuário para uma página de erro, onde deve ser apresentado ao usuário qual erro ocorreu. Nessa página deve existir um botão “Voltar”, que levará o usuário de volta à listagem de estados.
+4 – Crie um mecanismo de validação de dados para o cadastro de cidades, da mesma forma que você fez para o cadastro de estados.
+5 – Crie um mecanismo de validação de dados para o cadastro de clientes, da mesma forma que você fez para o cadastro de estados.
+
 
 \section{Projetos}
