@@ -1,4 +1,4 @@
-package servlets;
+package primeiroformulario.servlets;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -12,15 +12,21 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author Prof. Dr. David Buzatto
  */
-@WebServlet( name = "ProcessaDadosClienteServlet", urlPatterns = { "/processaDadosCliente" } )
+@WebServlet( name = "ProcessaDadosClienteServlet",
+             urlPatterns = { "/processaDadosCliente" } )
 public class ProcessaDadosClienteServlet extends HttpServlet {
 
-    protected void processRequest( HttpServletRequest request, HttpServletResponse response )
+    protected void processRequest( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
         
-        /* Precisamos manter de forma consistente o mesmo encoding em todas
-         * as camadas da aplicação. aqui informamos que a requisição está 
-         * chegando codificada em UTF-8.
+        /* Precisamos manter de forma consistente
+         * o mesmo encoding em todas as camadas da
+         * aplicação, evitando assim problemas com
+         * caracteres acentuados. Aqui informamos
+         * que a requisição está chegando codificada
+         * em UTF-8.
          */
         request.setCharacterEncoding( "UTF-8" );
         
@@ -45,11 +51,10 @@ public class ProcessaDadosClienteServlet extends HttpServlet {
         System.out.println( "CPF: " + CPF );
         System.out.println( "Data de Nascimento: " + dataNascimento );
 
-        System.out.print( "Sexo: " );
         if ( sexo.equals( "M" ) ) {
-            System.out.println( "Masculino" );
+            System.out.println( "Sexo: Masculino" );
         } else {
-            System.out.println( "Feminino" );
+            System.out.println( "Sexo: Feminino" );
         }
 
         System.out.println( "Observações: " + observacoes );
@@ -57,13 +62,17 @@ public class ProcessaDadosClienteServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+    protected void doGet(
+            HttpServletRequest request,
+            HttpServletResponse response )
             throws ServletException, IOException {
         processRequest( request, response );
     }
 
     @Override
-    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+    protected void doPost(
+            HttpServletRequest request,
+            HttpServletResponse response )
             throws ServletException, IOException {
         processRequest( request, response );
     }

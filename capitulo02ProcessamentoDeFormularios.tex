@@ -14,9 +14,9 @@ Neste Capítulo vamos começar a aprender a criar algo útil! No Capítulo anter
 A forma tradicional de se desenvolver aplicações para Web que interajam com o servidor é utilizando os chamados formulários. Um formulário é composto normalmente por um conjunto de componentes que permitem que o usuário forneça dados para serem submetidos ao servidor. Quando esses dados são recebidos pelo servidor, algum componente da aplicação vai tratá-los, sendo que no nosso caso, esse componente vai ser implementado na forma de um Servlet.
 Atualmente existem diversas técnicas para a criação de aplicações Web, sendo que, dependendo da técnica/tecnologia, a forma de submeter dados ao servidor é diferente. Uma dessas técnicas é o chamado Asynchronous JavaScript and XML (AJAX) que hoje em dia é implementado de inúmeras formas. Neste livro não iremos aprender a usar AJAX, porque infelizmente não teremos tempo, mas garanto que se você se empenhar no decorrer do nosso curso, ao final, você estará apto a aprender a trabalhar com AJAX.
 
-Abra o NetBeans e crie um novo projeto Java Web. Dê o nome de ``PrimeiroFormulario'' (sem as aspas). Sempre que for criar um novo projeto, siga os passos descritos na Subseção \label{subsec:primeiroProjeto} do Capítulo 1. Com o projeto criado, vamos editar o \texttt{index.html}. Nele vamos alterar o título da página e criar nosso primeiro formulário, que será usado para preenchermos dados pessoais de um cliente. Veja na Listagem~\thechapter.\ref{listagem:projetos/capitulo02/PrimeiroFormulario/web/index.html} como ficou o código. Não se esqueça de copiá-lo no seu \texttt{index.html}.
+Abra o NetBeans e crie um novo projeto Java Web. Dê o nome de ``PrimeiroFormulario'' (sem as aspas). Sempre que for criar um novo projeto, siga os passos descritos na Subseção \label{subsec:primeiroProjeto} do Capítulo 1. Com o projeto criado, vamos editar o \texttt{index.html}. Nele vamos alterar o título da página e criar nosso primeiro formulário, que será usado para preenchermos dados pessoais de um cliente. Veja na Listagem~\thechapter.\ref{listagem:projetos/capitulo02/parciais/indexInicio.html} como ficou o código. Não se esqueça de copiá-lo no seu \texttt{index.html}.
 
-\htmlCode{Protótipo do formulário de dados do cliente (\texttt{index.html})}{projetos/capitulo02/PrimeiroFormulario/web/index.html}
+\htmlCode{Protótipo do formulário de dados do cliente (\texttt{index.html})}{projetos/capitulo02/parciais/indexInicio.html}
 
 Copiou? Salve o arquivo e execute a aplicação. Você vai ter algo como o mostrado na Figura~\ref{fig:cap02PrimeiroFormulario}.
 
@@ -30,7 +30,7 @@ Copiou? Salve o arquivo e execute a aplicação. Você vai ter algo como o mostr
 \end{figure}
 \FloatBarrier
 
-Quanta coisa! O formulário não ficou uma obra prima, mas esse não é nosso objetivo agora. Precisamos entender o que cada \textit{tag} faz. Vamos agora analisar o código da Listagem~\thechapter.\ref{listagem:projetos/capitulo02/PrimeiroFormulario/web/index.html} e entender o protótipo que fizemos. Irei detalhar apenas as \textit{tags} \texttt{<form>} e seus componentes, pois acredito que você já conheça as outras que foram utilizadas. Vamos lá então:
+Quanta coisa! O formulário não ficou uma obra prima, mas esse não é nosso objetivo agora. Precisamos entender o que cada \textit{tag} faz. Vamos agora analisar o código da Listagem~\thechapter.\ref{listagem:projetos/capitulo02/parciais/indexInicio.html} e entender o protótipo que fizemos. Irei detalhar apenas as \textit{tags} \texttt{<form>} e seus componentes, pois acredito que você já conheça as outras que foram utilizadas. Vamos lá então:
 
 \begin{itemize}
     \item \textbf{Linha 13:} Nesta linha abrimos a \textit{tag} \texttt{<form>} que delimita um formulário HTML. Note que fechamos a \textit{tag} form na linha 43. Todas as \textit{tags} que forem inseridas entre \texttt{<form>} e \texttt{</form>} farão parte do formulário;
@@ -47,118 +47,126 @@ Quanta coisa! O formulário não ficou uma obra prima, mas esse não é nosso ob
     
     \item \textbf{Linha 33:} Idem à linha anterior, com a diferença que o valor é ``F''. Note que a propriedade name de ambos os radios é a mesma, pois eles representam o mesmo campo (sexo). Perceba que no navegador, se você selecionar um deles e depois clicar no outro, o que estava selecionado previamente deixa de ser selecionado. Se a propriedade \texttt{name} for diferente, eles serão considerados campos diferentes e então esse comportamento da seleção não existirá. Note ainda que você pode ``amarrar'' quantos radios você precisar;
     
-    \item \textbf{Linha 38:} Nessa linha definimos uma área de texto. Esse componente, representado pela \textit{tag} textarea é utilizado, como o próprio nome já diz, para criar uma área de texto livre, onde o usuário poderá digitar uma quantidade arbitrária de texto. Note que para utilizar um textarea nós precisamos usar a \textit{tag} de fechamento (<textarea>), ao invés de fazer da forma que estamos fazendo com os inputs. A novidade nesse componente são as propriedades cols e rows, que são usadas respectivamente para definir a quantidade de colunas e de linhas do componente;
+    \item \textbf{Linha 38:} Nessa linha definimos uma área de texto. Esse componente, representado pela \textit{tag} \texttt{<textarea>} é utilizado, como o próprio nome já diz, para criar uma área de texto livre, onde o usuário poderá digitar uma quantidade arbitrária de texto. Note que para utilizar um \texttt{<textarea>} nós precisamos usar a \textit{tag} de fechamento (\texttt{</textarea>}), ao invés de fazer da forma que estamos fazendo com os \textit{inputs}. A novidade nesse componente são as propriedades \texttt{cols} e \texttt{rows}, que são usadas respectivamente para definir a quantidade de colunas e de linhas do componente;
     
-    \item \textbf{Linha 41:} Por fim, nessa linha definimos um input do tipo submit, que é um botão que tem o comportamento padrão de, ao ser clicado, submeter (enviar) os dados do formulário para o servidor. Note que usamos a propriedade value para definir o texto do botão.
+    \item \textbf{Linha 41:} Por fim, nessa linha definimos um \textit{input} do tipo \textit{submit}, que é um botão que tem o comportamento padrão de, ao ser clicado, submeter (enviar) os dados do formulário para o servidor. Note que usamos a propriedade \texttt{value} para definir o texto do botão.
 \end{itemize}
 
-Agora que já conhecemos alguns dos componentes que podemos utilizar nos nossos formulários, mas você deve estar se perguntando: ``Tudo bem, o input do tipo submit é usado para enviar os dados do formulário para o servidor, mas onde eu digo ao submit para onde os dados do formulário devem ser enviados?''. Vamos à resposta!
+Agora que já conhecemos alguns dos componentes que podemos utilizar nos nossos formulários, mas você deve estar se perguntando: ``Tudo bem, o \textit{input} do tipo \textit{submit} é usado para enviar os dados do formulário para o servidor, mas onde eu digo ao \textit{submit} para onde os dados do formulário devem ser enviados?''. Vamos à resposta!
+
 Eu tenho dito várias vezes que o componente que vai tratar os dados de um formulário na nossa aplicação é o Servlet não é mesmo? Então precisamos criar um Servlet que vai receber esses dados e então configurar o formulário para direcionar os dados inseridos nele para o Servlet apropriado.
-Vamos criar o Servlet? Mas agora iremos fazer de uma forma mais automática do que a que estamos fazendo desde que aprendemos a trabalhar com os Servlets. Na pasta de pacotes de código-fonte do projeto, crie um pacote chamado ``primeiroformulario.servlets'' (sem as aspas). Clique com o botão direito no pacote criado, escolha ``Novo'' e procure pela opção ``Servlet...''. Se não encontrou, escolha a propriedade ``Outro...'', selecione ``Web'' na categoria, ``Servlet'' no tipo de arquivo e clique em ``Próximo''. 
-Preencha o campo ``Nome da classe'' com ``ProcessaDadosClienteServlet'' (sem as aspas) e clique em ``Próximo''. Nesse passo, note que o assistente nos pede o nome do Servlet e o padrão de URL. Lembra que criávamos nossa classe do Servlet e implementávamos seu esqueleto, além de fazer seu mapeamento no DI, manualmente? Agora o NetBeans vai fazer tudo isso para nós automaticamente! Deixe o campo ``Nome do Servlet'' com o valor padrão (que é o nome da classe) e preencha o campo ``Padrão(ões) de URL'' com ``/processaDadosCliente'' (sem as aspas). Não iremos aprender sobre os padrões de inicialização na nossa disciplina, mas nada impede que você aprenda para que eles servem, basta consultar a bibliografia recomendada nas referências bibliográficas da apostila tudo bem? Tudo feito? Clique em ``Finalizar''.
-Ao fazer isso, o nosso Servlet será criado e aberto no editor. Como eu sei que você é uma pessoa super curiosa, dê uma olhada no web.xml para ver que o Servlet que foi criado já foi mapeado lá! Legal hein?
-Note que o NetBeans já implementou o esqueleto do Servlet para nós. O primeiro método implementado é o processRequest. Lembra-se dele? É nele que vamos inserir o código que queremos que o Servlet execute. Após o fechamento do bloco deste método, note que existe uma linha onde está escrito ``HttpServlet methods. Click on the + sign on the left to Edit the code.''. Siga a sugestão da frase e clique no ``+''. O que apareceu? A implementação dos métodos GET e POST, sendo que dentro delas é chamado o processRequest! Viu só? Da mesma forma que fazíamos manualmente! Não iremos mexer ali, então você pode contrair novamente esta seção do código clicando no sinal de ``–''.
-Note que além de implementar o esqueleto do nosso Servlet, o NetBeans também inseriu um trecho de código dentro do processRequest. O código que está inserido configura o tipo de retorno do Servlet (response.setContentType(...)), obtém o canal de escrita do Servlet, escreve uma série de Strings que representam uma página HTML nesse canal e o fecha. Você se lembra que já falei algumas vezes que não iremos implementar Servlets que geram código HTML? Então, vamos limpar esse método, tirando todo o código que foi inserido dentro dele. Vá no editor e apague o conteúdo entre as linhas 30 (response.setContentType(...)) e 45 (``\}''), incluindo elas. Seu processRequest deve estar vazio agora.
-Antes de codificarmos, vamos a mais um pouquinho de teoria. Você se lembra, lá no comecinho da primeira aula, que eu falei que o cliente manda uma requisição para o servidor e ele manda uma resposta? Nos Servlets, essa requisição e essa resposta são representadas respectivamente por objetos do tipo HttpServletRequest e HttpServletResponse. Note que os três métodos implementados nos nossos Servlets (processRequest, doGet e doPost) recebem dois parâmetros, sendo eles dos tipos que mencionei. Qual a conclusão que você chega então? Os dados enviados pelo cliente ao servidor estão dentro do objeto do tipo HttpServletRequest, que chamamos de request no nosso código e os dados que enviamos de volta ao cliente devem ser inseridos no objeto do tipo HttpServletResponse, que demos o nome de response.
-Sabendo disso, agora ficou fácil! Os dados do formulário de clientes que estamos construindo serão recebidos pelo nosso Servlet através do objeto apontado por request! Legal não é? Mas ainda falta um detalhe... Não informamos ao formulário para quem ele deve enviar os dados! Vamos fazer isso agora. Volte no index.jsp e procure pela \textit{tag} form (a mesma que está na linha 15 da Listagem 2.1). Para informarmos à \textit{tag} form qual é o destino dos seus dados, utilizamos a propriedade action, sendo que nesta propriedade, colocamos a URL do componente que deve tratar os dados do formulário. Mapeamos nosso Servlet usando o padrão ``/processaDadosCliente'' não foi? Então, qual será a URL do nosso Servlet? Resposta: ``http://localhost:8084/PrimeiroFormulario/processaDadosCliente''. Vamos editar nossa \textit{tag} form então, configurando a propriedade action para a URL citada. Na Listagem 2.2 você pode ver como ficou o código da \textit{tag} form. Note que não estou listando todo o arquivo.
 
-Listagem 2.2: Configurando a propriedade action da \textit{tag} form
- 
-Fonte: do autor
-Isso que dizer que, quando clicarmos no botão ``Enviar Dados'' (que é um input do tipo submit), os dados que estiverem preenchidos nos componentes que estão dentro deste formulário, serão enviados para http://localhost:8084/PrimeiroFormulario/processaDadosCliente, que é o endereço do nosso Servlet! Já alterou o arquivo? Salvou? Legal! Atualize a página, preencha os campos e clique no botão ``Enviar Dados''. O que aconteceu? Uma página em branco foi exibida não é? E na barra de endereços, o que apareceu? O endereço do Servlet mais um monte de ``coisas''! Os detalhes sobre isso nós iremos aprender na próxima seção, então não se preocupe por enquanto.
-Você se lembra dos nossos primeiros exemplos? Acessávamos o endereço do Servlet, uma página em branco era exibida e duas Strings eram direcionadas para a saída do Tomcat, lembra? Quem fazia esse direcionamento era o Servlet não era? Vamos fazer a mesma coisa com o nosso Servlet de dados dos clientes, mas mostraremos os dados que foram preenchidos nos formulários. Vamos lá então?
-Volte ao Servlet, vamos implementar o método processRequest. Qual é mesmo o nome do parâmetro do método processRequest que armazena os dados enviados pelo cliente? É o request certo? Veja o código da Listagem 2.3. Leia o comentário que fiz.
+Vamos criar o Servlet, mas agora iremos fazer de uma forma mais automática do que a que estamos fazendo desde que aprendemos a trabalhar com os Servlets. Na pasta de pacotes de código-fonte do projeto, crie um pacote chamado ``primeiroformulario.servlets'' (sem as aspas). Clique com o botão direito no pacote criado, escolha \destaque{\textit{New}} e procure pela opção \destaque{\textit{Servlet...}}. Se não encontrou, escolha a opção \destaque{\textit{Other...}}, selecione \destaque{\textit{Web}} na categoria, \destaque{\textit{Servlet}} no tipo de arquivo e clique em \destaque{\textit{Next >}}.
 
+Preencha o campo \destaque{\textit{Class Name:}} com ``ProcessaDadosClienteServlet'' (sem as aspas) e clique em \destaque{\textit{Next >}}. Nesse passo, note que o assistente nos pede o nome do Servlet (\destaque{\textit{Servlet Name:}}) e o(s) padrão(ões) de URL (\destaque{\textit{URL Pattern(s):}}). Além disso, há a opção de inserir esses dados no descritor de implantação (\textit{deployment descriptor}), mas como estamos trabalhando com anotações para fazer o mapeamento do Servlet, essa opção deve ficar desmarcada. Falando sobre a anotação \texttt{@WebServlet}, ao preenchermos esses campos, o NetBeans vai inserí-la para nós de forma automática! Deixe o campo \destaque{\textit{Servlet Name:}} com o valor padrão (que é o nome da classe) e preencha o campo \destaque{\textit{URL Pattern(s):}} com ``/processaDadosCliente'' (sem as aspas). Não iremos aprender sobre os parâmetros de inicialização (\textit{initialization parameters}) na nossa disciplina, mas nada impede que você aprenda para que eles servem, basta consultar a bibliografia recomendada nas referências bibliográficas do livro tudo bem? Tudo feito? Clique em \destaque{\textit{Finish}}.
 
+Ao fazer isso, o nosso Servlet será criado e aberto no editor. Veja que a anotação \texttt{@WebServlet} foi inserida apropriadamente no código da classe! Legal hein?
 
+Note também que o NetBeans já implementou o esqueleto do Servlet para nós. O primeiro método implementado é o \texttt{processRequest}. Lembra-se dele? É nele que vamos inserir o código que queremos que o Servlet execute. Após o fechamento do bloco deste método, note que existe uma linha onde está escrito ``\textit{HttpServlet methods. Click on the + sign on the left to Edit the code.}''. Siga a sugestão da frase e clique no ``+''. O que apareceu? A implementação dos métodos \texttt{GET} e \texttt{POST}, sendo que dentro delas é chamado o processRequest! Viu só? Da mesma forma que fazíamos manualmente! Não iremos mexer ali, então você pode contrair novamente esta seção do código clicando no sinal de ``–''.
 
+Note que além de implementar o esqueleto do nosso Servlet, o NetBeans também inseriu um trecho de código dentro do \texttt{processRequest}. O código que está inserido configura o que o Servlet gerará de resposta a quem o requisitou (\texttt{response.setContentType(...)}), obtém o fluxo de escrita do Servlet, escreve uma série de Strings que representam uma página HTML nesse fluxo e o fecha automaticamente, dado o uso do \textit{try with resources}. Você se lembra que já falei algumas vezes que não iremos implementar Servlets que geram código HTML? Então, vamos limpar esse método, tirando todo o código que foi inserido dentro dele. Vá no editor e apague o conteúdo entre as linhas 34 (\texttt{response.setContentType(...)}) e 46 (\texttt{\}}), incluindo elas. Seu \texttt{processRequest} deve estar vazio agora.
 
+Antes de escrevermos nosso código, vamos a mais um pouquinho de teoria. Você se lembra, lá no comecinho do primeiro capítulo aula, que eu falei que o cliente manda uma requisição para o servidor e ele manda uma resposta? Nos Servlets, essa requisição e essa resposta são representadas respectivamente por objetos do tipo \texttt{HttpServletRequest} e \texttt{HttpServletResponse}. Note que os três métodos implementados nos nossos Servlets (\texttt{processRequest}, \texttt{doGet} e \texttt{doPost}) recebem dois parâmetros, sendo eles dos tipos que mencionei. Qual a conclusão que você chega então? Os dados enviados pelo cliente ao servidor estão dentro do objeto do tipo \texttt{HttpServletRequest}, que chamamos de \texttt{request} no nosso código e os dados que enviamos de volta ao cliente, ou a quem invocou o Servlet, devem ser inseridos no objeto do tipo \texttt{HttpServletResponse}, que demos o nome de \texttt{response}.
 
+Sabendo disso, agora ficou fácil! Os dados do formulário de clientes que estamos construindo serão recebidos pelo nosso Servlet através do objeto apontado por \texttt{request}! Legal, mas ainda falta um detalhe... Não informamos ao navegador qual o destino dos dados do formulário! Vamos fazer isso agora. Volte no \texttt{index.html} e procure pela \textit{tag} \texttt{<form>} (a mesma que está na linha 13 da Listagem~\thechapter.\ref{listagem:projetos/capitulo02/parciais/indexInicio.html}). Para informarmos ao navegador qual o destino do dados do formulário, utilizamos a propriedade \texttt{action}, sendo que nesta propriedade, colocamos a URL do componente que deve tratar os dados do formulário. Mapeamos nosso Servlet usando o padrão ``/processaDadosCliente'' não foi? Então, qual será a URL do nosso Servlet? Resposta: ``processaDadosCliente''. Vamos editar nossa \textit{tag} \texttt{<form>} então, configurando a propriedade \texttt{action} para a URL citada. Na Listagem~\thechapter.\ref{listagem:projetos/capitulo02/parciais/indexAction.html} você pode ver como ficou o código da \textit{tag} \texttt{<form>}. Note que não estou listando todo o arquivo.
 
+\htmlCode{Configurando a propriedade \texttt{action} da \textit{tag} form (\texttt{index.html})}{projetos/capitulo02/parciais/indexAction.html}
 
+Isso que dizer que, quando clicarmos no botão ``Enviar Dados'' (que é um \textit{input} do tipo \texttt{submit}), os dados que estiverem nos componentes que estão dentro desse formulário serão enviados para o recurso \texttt{processaDadosCliente}, que é o endereço do nosso Servlet! Já alterou o arquivo? Salvou? Legal! Atualize a página, preencha os campos e clique no botão ``Enviar Dados''. O que aconteceu? Uma página em branco foi exibida não é? E na barra de endereços, o que apareceu? O endereço do Servlet mais um monte de ``coisas''! Os detalhes sobre isso nós iremos aprender na próxima seção, então não se preocupe por enquanto.
 
+Você se lembra dos nossos primeiros exemplos? Acessávamos o endereço do Servlet, uma página em branco era exibida e duas Strings eram direcionadas para a saída do servidor, lembra? Quem fazia esse direcionamento era o Servlet não era? Vamos fazer a mesma coisa com o nosso Servlet de dados dos clientes, mas mostraremos os dados que foram preenchidos nos formulários. Vamos lá então?
 
+Volte ao Servlet, vamos implementar o método \texttt{processRequest}. Qual é mesmo o nome do parâmetro do método \texttt{processRequest} que armazena os dados enviados pelo cliente? É o \texttt{request} certo? Veja o código da Listagem~\thechapter.\ref{listagem:projetos/capitulo02/PrimeiroFormulario/src/java/primeiroformulario/servlets/ProcessaDadosClienteServlet.java}. Leia todos os comentário que fiz.
 
+\javaCode{Implementação do método \texttt{processRequest} (\texttt{ProcessaDadosClienteServlet.java})}{projetos/capitulo02/PrimeiroFormulario/src/java/primeiroformulario/servlets/ProcessaDadosClienteServlet.java}
 
+Copiou o código? Legal. Vamos entender o que está acontecendo. Primeiramente, na linha 31, para mantermos a consistência da codificação em que os dados da nossa aplicação estão trafegando entre as camadas, configuramos o \texttt{request} para processar seus dados usando o encoding \texttt{UTF-8}. Mais adiante no livro aprenderemos a criar um filtro que fará isso automaticamente para todos os nossos Servlets, mas por enquanto vamos fazer um a um, da forma que está no código.
 
-Listagem 2.3: Implementação do método processRequest
- 
-Fonte: do autor
-Copiou o código? Legal. Vamos entender o que está acontecendo. Na linha 14 é declarada uma variável do tipo String com o nome de ``nome''. Essa variável é inicializada com o valor obtido ao se chamar o método getParameter( String param ) de request. O parâmetro passado ao método getParameter, que é uma String, é o nome que foi dado ao componente do formulário, que no caso foi ``nome''. Estude as linhas 15, 16, 17, 18 e 19 e tente fazer um paralelo com o formulário contido no index.jsp. Note que a String que é passada como parâmetro no método getParameter(...) sempre reflete o nome dado ao componente do formulário através da propriedade name. Veja a linha 17. Declaramos uma variável chamada dataNascimento que é inicializada com o valor do parâmetro ``dataNasc'' (configurado no formulário).
-O que fizemos até a linha 19 foi criar uma variável que vai receber o valor de cada componente do formulário. A partir da linha 21, até o final do método, direcionamos para a saída os dados que foram obtidos. Vamos testar? Salve o Servlet e execute o projeto (botão de ``play'', lembra?). Na página, preencha o formulário, clique em ``Enviar Dados'' e volte no NetBeans para ver o que aconteceu. Olhe na janela de saída! Lá estão os dados que você preencheu no formulário! Muito bem! Imagine agora se esse fosse um sistema real. Esses dados recebidos dentro do Servlet poderiam alimentar uma query SQL para inserir esse cliente em um banco de dados! Legal não é?! A partir desse ponto, você já deve estar entendendo melhor o que está acontecendo não é mesmo? Mas e aquele monte de coisas escritas no endereço do navegador depois de clicar em Enviar Dados? Esse comportamento está intrinsecamente ligado ao tipo de método HTTP que estamos usando. Vamos para a próxima seção, vou explicar isso lá.
+Na linha 41 é declarada uma variável do tipo \texttt{String} com o nome de ``nome''. Essa variável é inicializada com o valor obtido ao se chamar o método \texttt{getParameter( String param )} de \texttt{request}. O parâmetro passado ao método \texttt{getParameter}, que é uma \texttt{String}, é o nome que foi dado ao componente do formulário, que no caso foi ``nome''. Estude as linhas 42, 43, 44, 45 e 46 e tente fazer um paralelo com o formulário contido no \texttt{index.html}. Note que a String que é passada como parâmetro no método \texttt{getParameter(...)} sempre reflete o nome dado ao componente do formulário através da propriedade \texttt{name}. Veja a linha 44. Declaramos uma variável chamada dataNascimento que é inicializada com o valor do parâmetro ``dataNasc'' (configurado no formulário).
+
+O que fizemos até a linha 46 foi criar uma variável que vai receber o valor de cada componente do formulário. A partir da linha 48, até o final do método, direcionamos para a saída os dados que foram obtidos. Vamos testar? Salve o Servlet e execute o projeto (botão de ``play'', lembra?). Na página, preencha o formulário, clique em ``Enviar Dados'' e volte no NetBeans para ver o que aconteceu. Olhe na janela de saída! Lá estão os dados que você preencheu no formulário! Muito bem! Imagine agora se esse fosse um sistema real. Esses dados recebidos dentro do Servlet poderiam alimentar uma \textit{query} SQL para inserir esse cliente em um banco de dados! Legal não é?! A partir desse ponto, você já deve estar entendendo melhor o que está acontecendo, mas e aquele monte de coisas escritas no endereço do navegador depois de clicar em ``Enviar Dados''? Esse comportamento está intrinsecamente ligado ao tipo de método HTTP que estamos usando. Vamos para a próxima Seção, vou explicar isso lá.
 
 
 \section{Métodos HTTP}
 
-O protocolo HTTP 1.1, que usamos em nossas aplicações Web, define uma série de métodos que podem ser usados para tratar diversos tipos de requisições. Na nossa vida, como desenvolvedores Web, iremos nos importar somente com os métodos GET e POST. Sendo assim vamos detalhá-los.
-<Saiba mais:
-Quer conhecer os outros métodos HTTP (HEAD, TRACE, etc.)? Acesse este link: http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html (em inglês)
->
+O protocolo HTTP que usamos em nossas aplicações Web, define uma série de métodos que podem ser usados para tratar diversos tipos de requisições. Na nossa vida, como desenvolvedores Web, iremos nos importar com vários desses métodos. Neste Capítulo trataremos os métodos \texttt{GET} e \texttt{POST} e nos próximos usaremos outros métodos para dividir a responsabilidade das operações da nossa aplicação. Sendo assim vamos a eles.
+
+\begin{saibaMais}
+    Quer conhecer os outros métodos HTTP como \texttt{HEAD}, \texttt{PUT}, \texttt{DELETE} etc.? Acesse este link: \url{https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Methods}
+\end{saibaMais}
 
 
 \subsection{Método GET}
 
-O método GET (to get = obter) é usado principalmente para pedir ao servidor algum recurso. Quando nós fazemos uma pesquisa no Google, por exemplo, estamos usando o método GET. Qualquer URL que colocamos na barra de endereço do nosso navegador é enviada ao servidor usando o método GET. Vamos fazer um teste. Entre na página do Google (www.google.com.br) e pesquise por ``métodos http'' (sem as aspas). Ao clicar em pesquisar, o resultado será mostrado no navegador. Veja a barra de endereços. Haverá algo assim:
-%\url{http://www.google.com.br/#hl=pt-BR\&biw=1440\&bih=713\&q=métodos+http\&aq=f\&
-%aqi=g10\&aql=\&oq=\&gs_rfai=\&fp=90f65ad7da748e6d}
-Parece grego, mas não é! Vamos entender a URL. Estamos usando o protocolo HTTP, para acessar a máquina www.google.com.br. O recurso é representado pelo restante da URL:
-%hl=pt-BR\&biw=1440\&bih=713\&q=métodos+http\&aq=f\&aqi=g10\&aql=\&oq=\&gs_rfai=\&
-fp=90f65ad7da748e6d
-Vamos dividir esse resto da URL nos símbolos ``\&''. Vamos obter isso aqui:
-hl=pt-BR
-biw=1440
-bih=713
-q=métodos+http
-aq=f
-aqi=g10
-...
-Note que a forma de cada pedaço da parte correspondente ao recurso é x=y, onde ``x'' é o nome de uma variável e ``y'' é o valor. No nosso exemplo, a variável ``q'' tem o valor ``métodos+http'' que no caso é a nossa consulta! Ou seja, o componente que trata as pesquisas do Google, entende que a variável ``q'' vai conter o valor da pesquisa que estamos fazendo!
-Execute novamente o nosso projeto, limpe todos os campos e preencha o campo ``Nome'' com ``Juca'' (sem as aspas) e o campo ``Sexo'' com Masculino e clique em ``Enviar Dados''. Veja a URL que foi obtida na barra de endereços:
-%T\url{http://localhost:8084/PrimeiroFormulario/processaDadosCliente?nome=Juca&
-%sobrenome=&cpf=&dataNasc=&sexo=M&observacoes=}
-Veja o caminho do recurso!
-%processaDadosCliente?nome=Juca\&sobrenome=\&cpf=\&dataNasc=\&sexo=M\&observacoes=
-O que isso quer dizer:
-Senhor ``processaDadosCliente'', por favor, receba as variáveis nome, sobrenome, cpf, dataNasc, sexo e observacoes, utilize seus valores e me devolva o recurso associado a eles. O ponto de interrogação após o mapeamento do Servlet (/processaDadosCliente) indica que o que vem depois dele (do ponto de interrogação) são variáveis HTTP. Cada variável, como já vimos, está na forma x=y, onde ``x'' é a variável e ``y'' é o valor, sendo que elas são separadas por ``\&''. Então temos: ``nome'' igual a ``Juca'', ``sobrenome'' igual a vazio, ``cpf'' igual a vazio, ``dataNasc'' igual a vazio, ``sexo'' igual a ``M'' e ``observacoes'' igual a vazio. A saída no NetBeans deve ter ficado assim:
-Dados do Cliente:
-Nome: Juca
-Sobrenome: 
-CPF: 
-Data de Nascimento: 
-Sexo: Masculino
-Observações:
-Vamos mandar a requisição novamente para o NetBeans, só que agora modificando a URL ao invés de usar o formulário. Dê o sobrenome de ``Santos'' ao Juca e defina o CPF como 123456789. Preencheu a URL na barra de endereços? Tecle <ENTER> e veja o que aconteceu no NetBeans. A saída deve ter sido essa aqui:
-Dados do Cliente:
-Nome: Juca
-Sobrenome: Santos
-CPF: 123456789
-Data de Nascimento: 
-Sexo: Masculino
-Observações:
-Então, basicamente, ao usarmos o método GET, indicamos que queremos algum recurso do servidor. Quando enviamos dados através do método GET, esses dados, na forma de variáveis, são codificados na própria URL. O nosso formulário do index.jsp utiliza por padrão o método GET. Qualquer formulário usa por padrão o método GET. Se quisermos mudar o método de envio do formulário, precisamos usar a propriedade method da \textit{tag} form. Ai você me pergunta: Porque usaríamos outro método? O GET já não funciona? E eu respondo: Sim, o GET funciona, mas imagine a seguinte situação: você vai armazenar os dados de um usuário de um sistema. Você vai mandar vários dados para o servidor, inclusive uma senha. O que acontece? A senha enviada vai aparecer na URL! Afinal, a senha é um campo do formulário! O ideal seria ninguém a ver correto? Outro problema. O tamanho de uma URL é fixo! Então não podemos mandar conteúdos de tamanho arbitrário, visto que iremos perder dados caso usemos o método GET! Então como fazemos? Método POST, ao resgate!
-<Saiba mais:
-O tamanho fixo das URLs é uma restrição imposta pelos navegadores e/ou pelos servidores, visto que o protocolo HTTP não fixa o tamanho de uma URL. Mais detalhes aqui: http://www.boutell.com/newfaq/misc/urllength.html (em inglês)
->
+O método \texttt{GET} (\textit{to get} = obter) é usado principalmente para pedir ao servidor algum recurso, sendo que ele retornará os dados requisitados, caso existam, claro. Quando nós fazemos uma pesquisa no Google ou clicamos em um \textit{link}, estamos usando o método \texttt{GET}. Qualquer URL que colocamos na barra de endereço do nosso navegador é enviada ao servidor usando o método \texttt{GET}. Vamos fazer um teste. Entre na página do Google (\url{www.google.com}) e pesquise por ``métodos http'' (sem as aspas). Ao clicar em pesquisar, o resultado será mostrado no navegador. Note que no meu caso eu fiz a busca digitando diretamente na barra do navegador Chrome. Veja a barra de endereços. Haverá algo assim:
 
+\texttt{https://www.google.com/search?q=métodos+http\&oq=métodos+http\&aqs=chrome.....}
+
+Parece grego, mas não é! Vamos entender a URL. Estamos usando o protocolo HTTP, para acessar a máquina \texttt{www.google.com} e o recurso inicia em \texttt{search} e, a partir do ponto de interrogação, são codificados os parâmetros enviados na requisição do recurso:
+
+\texttt{q=métodos+http\&oq=métodos+http\&aqs=chrome.....}
+
+Dividindo esse resto da URL nos símbolos ``\&''. Vamos obter isso aqui:
+
+\texttt{q=métodos+http}\\
+\texttt{oq=métodos+http}\\
+\texttt{aqs=chrome.....}\\
+\texttt{...}
+
+Note que a forma de cada pedaço da parte correspondente aos parâmetros enviados corresponde a é \texttt{x=y}, onde ``\texttt{x}'' é o nome de um parâmetro e ``\texttt{y}'' é o valor associado a ele. No nosso exemplo, o parâmetro ``\texttt{q}'' tem o valor ``métodos+http'' que no caso é a nossa consulta! Ou seja, o componente que trata as pesquisas do Google (\texttt{search}), entenderá que o parâmetro ``\texttt{q}'' vai conter o valor da pesquisa que estamos fazendo!
+
+Execute novamente o nosso projeto, limpe todos os campos e preencha o campo ``Nome'' com ``Juca'' (sem as aspas) e o campo ``Sexo'' com Masculino e clique em ``Enviar Dados''. Veja a URL que foi obtida na barra de endereços:
+
+\texttt{http://localhost:8080/PrimeiroFormulario/processaDadosCliente?nome=Juca\&\\sobrenome=\&cpf=\&dataNasc=\&sexo=M\&observacoes=}
+
+Veja o caminho do recurso!
+
+\texttt{processaDadosCliente?nome=Juca\&sobrenome=\&cpf=\&dataNasc=\&sexo=M\&\\observacoes=}
+
+O que isso quer dizer que, no nosso caso, o Servlet mapeado no endereço ``processaDadosCliente'' receberá os parâmetros \texttt{nome}, \texttt{sobrenome}, \texttt{cpf}, \texttt{dataNasc}, \texttt{sexo} e \texttt{observacoes}, receberá os valores associados a ele para serem usados e deverá, de alguma forma, retornar o recurso associado a eles. O ponto de interrogação após o mapeamento do Servlet (/processaDadosCliente) indica que o que vem depois dele (do ponto de interrogação) são parâmetros HTTP. Cada parâmetro, como já vimos, está na forma \texttt{x=y}, onde ``\texttt{x}'' é o parâmrtro e ``\texttt{y}'' é o valor, sendo que eles são separadas por ``\&''. Então temos: \texttt{nome} igual a ``Juca'', \texttt{sobrenome} igual a vazio, \texttt{cpf} igual a vazio, \texttt{dataNasc} igual a vazio, \texttt{sexo} igual a ``M'' e \texttt{observacoes} igual a vazio. A saída no NetBeans deve ter ficado assim:
+
+\texttt{Dados do Cliente:|\#]}\\
+\texttt{Nome: Juca|\#]}\\
+\texttt{Sobrenome: |\#]}\\
+\texttt{CPF: |\#]}\\
+\texttt{Data de Nascimento: |\#]}\\
+\texttt{Sexo: Masculino|\#]}\\
+\texttt{Observações: |\#]}
+
+Vamos mandar a requisição novamente para o NetBeans, só que agora modificando a URL ao invés de usar o formulário. Dê o sobrenome de ``Santos'' ao Juca e defina o CPF como 123456789. Preencheu a URL na barra de endereços? Tecle \texttt{<ENTER>} e veja o que aconteceu no NetBeans. A saída deve ter sido essa aqui:
+
+\texttt{Dados do Cliente:|\#]}\\
+\texttt{Nome: Juca|\#]}\\
+\texttt{Sobrenome: Santos|\#]}\\
+\texttt{CPF: 123456789|\#]}\\
+\texttt{Data de Nascimento: |\#]}\\
+\texttt{Sexo: Masculino|\#]}\\
+\texttt{Observações: |\#]}
+
+Então, basicamente, ao usarmos o método \texttt{GET}, indicamos que queremos algum recurso do servidor. Quando enviamos dados através do método GET, esses dados, na forma de parâmetros, são codificados na própria URL. O nosso formulário do \texttt{index.html} utiliza por padrão o método \texttt{GET}. Qualquer formulário usa por padrão o método GET, mas se quisermos mudar o método de envio do formulário, precisamos usar a propriedade \texttt{method} da \textit{tag} \texttt{<form>}. Ai você me pergunta: Porque usaríamos outro método? O \texttt{GET} já não funciona? E eu respondo: Sim, o \texttt{GET} funciona, mas imagine a seguinte situação: você vai armazenar os dados de um usuário de um sistema. Você vai mandar vários dados para o servidor, inclusive uma senha. O que acontece? A senha enviada vai aparecer na URL! Afinal, a senha é um campo do formulário! O ideal seria ninguém a ver correto? Outro problema. O tamanho de uma URL é fixo! Então não podemos mandar conteúdos de tamanho arbitrário, visto que iremos perder dados caso usemos o método \texttt{GET}! Imagine mandar um vídeo para publicação no YouTube! Então como fazemos? Método \texttt{POST}, ao resgate!
 
 
 \subsection{Método POST}
 
-O método POST (to post = postar) é usado para enviar dados ao servidor. Ao contrário do método GET, ao usar o método POST, as variáveis de um formulário não são inseridas na URL, mas sim no corpo da requisição. Sendo assim, a quantidade dos dados enviados usando o método POST pode ter qualquer tamanho, desde apenas uma variável, até arquivos de tamanhos variados. Você já enviou uma foto para o Orkut não enviou? Saiba que ela foi enviada usando o método POST.
-Como eu já disse na seção anterior, por padrão, o navegador envia os dados de um formulário usando o método GET. Caso queiramos mudar esse comportamento, basta usar a propriedade method da \textit{tag} form. Vamos fazer isso? Vá ao NetBeans, abra o arquivo index.jsp caso não esteja aberto, procure pela \textit{tag} form e insira a propriedade method. Veja na Listagem 2.4 como deve ficar:
-Listagem 2.4: Usando o método POST para enviar a requisição para o Servlet
- 
-Fonte: do autor
-Salve o arquivo e execute o projeto novamente. Preencha o formulário e clique em ``Enviar Dados''. Verifique a URL, pois agora as variáveis não serão mais codificadas nela. Verifique a saída no NetBeans para constatar que os dados continuam a ser enviados. Edite novamente o index.jsp e mude o método para GET. Teste novamente. As variáveis devem estar aparecendo novamente na URL não é? De novo, edite o index.jsp e volte para o método POST e teste de novo.
-Muito bem! Estamos quase acabando. Tenho certeza que você deve estar entendendo tudo. Se não estiver, releia o que está com dúvida tudo bem? Vamos à nossa última seção, que vai tratar de mais um pouquinho de teoria.
+O método \texttt{POST} (\textit{to post} = postar) é usado para enviar qualquer tipo de dados ao servidor o que, normalmente, acarretará em algum tipo de mudança no recurso requisitado ou mesmo no servidor. Ao contrário do método \texttt{GET}, ao usar o método \texttt{POST}, os parâmetros de um formulário não são inseridos na URL, mas sim no corpo da requisição. Sendo assim, a quantidade dos dados enviados usando o método \texttt{POST} pode ter qualquer tamanho, desde apenas um parâmetro, até arquivos de tamanhos variados. Você já enviou uma foto para o Facebook não enviou? Saiba que ela foi enviada usando o método \texttt{POST}.
+
+Como eu já disse na seção anterior, por padrão, o navegador envia os dados de um formulário usando o método \texttt{GET}. Caso queiramos mudar esse comportamento, basta usar a propriedade \texttt{method} da \textit{tag} \texttt{<form>}. Vamos fazer isso? Vá ao NetBeans, abra o arquivo \texttt{index.html} caso não esteja aberto, procure pela \textit{tag} \texttt{<form>} e insira a propriedade \texttt{method}. Veja na Listagem~\thechapter.\ref{listagem:projetos/capitulo02/parciais/indexMetodo.html} como deve ficar.
+
+\htmlCode{Usando o método \texttt{POST} para enviar a requisição para o Servlet (\texttt{index.html})}{projetos/capitulo02/parciais/indexMetodo.html}
+
+Salve o arquivo e execute o projeto novamente. Preencha o formulário e clique em ``Enviar Dados''. Verifique a URL, pois agora os parâmetros não serão mais codificados nela. Verifique a saída no NetBeans para constatar que os dados continuam a ser enviados. Edite novamente o \texttt{index.html} e mude o método para \texttt{GET}. Teste novamente. Os parâmetros devem estar aparecendo novamente na URL não é? De novo, edite o \texttt{index.html} e volte para o método \texttt{POST} e teste de novo.
+
+Muito bem! Estamos quase acabando. Tenho certeza que você deve estar entendendo tudo. Se não estiver, releia o que está com dúvida tudo bem? Vamos à nossa última Seção, onde trataremos de mais um pouquinho de teoria.
 
 
 
 \subsection{Tratando Métodos HTTP}
 
-Você deve lembrar que quando criamos um Servlet manualmente, nós criávamos três métodos, o processRequest(...), o doGet(...) e o doPost(...). Quando criamos um Servlet usando o assistente do NetBeans, ele também cria uma estrutura parecida com a que a gente criava manualmente, além de já realizar o mapeamento do nosso Servlet. Na seção anterior falamos dos métodos GET e POST do protocolo HTTP, que são os que nós usamos como desenvolvedores Web. Você já deve ter notado, e eu também já falei, que um Servlet deve implementar o método HTTP que ele deve tratar. A implementação de um método HTTP em um Servlet deve ser feita dentro de métodos que por padrão são nomeados ``doXXX(...)'', onde XXX deve ser trocado pelo nome do método HTTP em questão. Sendo assim, requisições usando o método GET são tratadas dentro do método doGet(...) do Servlet. Requisições usando o método POST são tratadas dentro do método doPost(...) do Servlet e assim por diante.
-Note então que todos os Servlets que criamos até agora se comportam da mesma forma tanto para o método GET quanto para o método POST, pois sempre que a requisição chega no Servlet, o método apropriado é escolhido, entretanto, tanto o método doGet(...), quanto o método doPost(...), direcionam o fluxo de execução para o método processRequest(...)! Nós sempre iremos fazer assim, pois é muito mais prático e não precisamos ficar nos preocupando qual método um Servlet trata, precisamos apenas nos preocupar em modificar a propriedade method da \textit{tag} form quando quisermos mudar o método que deve ser utilizado. 
-Muito legal não é mesmo? Com isso fechamos nossa segunda semana. Na próxima aula, iremos aprender a trabalhar com dois recursos superimportantes da especificação das JSPs: EL (Expression Language) e TagLibs. Após aprender essas duas funcionalidades, estaremos prontos para começar a criar nosso primeiro projeto que trabalha com banco de dados, mas antes disso ainda iremos formalizar e aprender algumas coisinhas. Ah, não se esqueça de praticar o que aprendemos até agora! Vamos ao resumo da semana.
+Você deve lembrar que quando criamos um Servlet manualmente, nós criávamos três métodos, o \texttt{processRequest(...)}, o \texttt{doGet(...)} e o \texttt{doPost(...)}. Quando criamos um Servlet usando o assistente do NetBeans, ele também cria uma estrutura parecida com a que a gente criava manualmente, além de já realizar o mapeamento do nosso Servlet usando a anotação \texttt{@WebServlet}. Na seção anterior falamos dos métodos \texttt{GET} e \texttt{POST} do protocolo HTTP, que são os que nós usamos como desenvolvedores Web. Você já deve ter notado, e eu também já falei, que um Servlet deve implementar o método HTTP que ele deve tratar. A implementação de um método HTTP em um Servlet deve ser feita dentro de métodos que por padrão são nomeados ``\texttt{doXXX(...)}'', onde \texttt{XXX} deve ser trocado pelo nome do método HTTP em questão. Sendo assim, requisições usando o método \texttt{GET} são tratadas dentro do método \texttt{doGet(...)} do Servlet. Requisições usando o método \texttt{POST} são tratadas dentro do método \texttt{doPost(...)} do Servlet e assim por diante.
+
+Note então que todos os Servlets que criamos até agora se comportam da mesma forma tanto para o método \texttt{GET} quanto para o método \texttt{POST}, pois sempre que a requisição chega no Servlet, o método apropriado é escolhido, entretanto, tanto o método \texttt{doGet(...)}, quanto o método \texttt{doPost(...)}, direcionam o fluxo de execução para o método \texttt{processRequest(...)}!
+ 
+Muito legal não é mesmo? Com isso fechamos nosso segundo Capítulo. No próximo iremos aprender a trabalhar com dois recursos importantes da especificação das JSPs: \textit{Expression Language} (EL) e TagLibs. Após aprender essas duas funcionalidades, estaremos prontos para começar a criar nosso primeiro projeto que trabalha com banco de dados, mas antes disso ainda iremos formalizar e aprender algumas coisinhas. Ah, não se esqueça de praticar o que aprendemos até agora! Vamos ao resumo do Capítulo.
 
 
 \section{Resumo}
@@ -167,14 +175,36 @@ Nesta aula demos um passo muito importante para a nossa vida como desenvolvedore
 
 \section{Exercícios}
 
-1 – Qual a diferença entre os métodos GET e POST? Quando devemos utilizar um ou o outro?
+\begin{exercicioSemArquivo}{}{}{}
+    Qual a diferença entre os métodos \texttt{GET} e \texttt{POST}? Quando devemos utilizar um ou o outro?
+\end{exercicioSemArquivo}
 
 \section{Projetos}
 
-2 – Incremente o projeto que criamos durante a aula inserindo mais alguns campos no formulário: email, logradouro, número, complemento, cidade, estado, CEP, se o cliente tem ou não filhos. Utilize apropriadamente os tipos de input que aprendemos até agora.
-3 – Crie um novo projeto Java Web, com o nome de ``FormularioDVD'' (sem as aspas), que deve ter um formulário usado para enviar dados de um DVD. Um DVD, no nosso caso, deve ter: número, título, ator/atriz principal, ator/atriz coadjuvante, diretor/diretora e ano de lançamento. Para tratar o formulário, crie um Servlet usando o assistente do NetBeans. Esse Servlet deve obter os dados enviados através do formulário e imprimi-los na saída padrão (usando System.out.println(...)), como foi feito no exemplo construído durante esta aula. Esse formulário deve usar o método POST.
-4 – Crie um novo projeto Java Web, com o nome de ``FormularioProduto'' (sem as aspas), que deve ter um formulário usado para enviar dados de um Produto. Um Produto, no nosso caso, deve ter: código de barras, descrição, unidade de medida (unidade ou kg), quantidade por embalagem, fabricante (nome). Para tratar o formulário, crie um Servlet usando o assistente do NetBeans. Esse Servlet deve obter os dados enviados através do formulário e imprimi-los na saída padrão (usando System.out.println(...)), como foi feito no exemplo construído durante esta aula. Esse formulário deve usar o método POST.
-5 – Crie um novo projeto Java Web, com o nome de ``CalculadoraWeb'' (sem as aspas), que deve ter um formulário usado para atuar como uma calculadora. Nesse formulário, deve haver dois campos (``número 1'' e ``número 2'') e um conjunto de radios para representar a operação a ser realizada (adição, subtração, multiplicação e divisão). Para tratar o formulário, crie um Servlet usando o assistente do NetBeans. Esse Servlet deve obter os dados enviados através do formulário, executar a operação escolhida pelo usuário e imprimir o resultado na saída padrão (usando System.out.println(...)), como foi feito no exemplo construído durante esta aula. Esse formulário deve usar o método GET. Faça testes de envio dos dados usando apenas a URL gerada depois da primeira submissão.
-6 – Crie um novo projeto Java Web, com o nome de ``TamanhoString'' (sem as aspas), que deve ter um formulário com apenas um campo usado para enviar uma String de qualquer tamanho para um Servlet. Utilize uma textarea para o usuário poder inserir essa String no formulário. O Servlet deve obter a String enviada e imprimir o a quantidade de caracteres da String na saída padrão (usando System.out.println(...)), como foi feito no exemplo construído durante esta aula. Qual método HTTP deve ser utilizado nessa situação? Justifique sua resposta.
-7 – Desafio – Crie um novo projeto Java Web, com o nome de ``EhPrimo'' (sem as aspas), que deve ter um formulário usado para enviar um número inteiro para um Servlet, que por sua vez deve verificar se este número é primo. O resultado do teste deve ser impresso na saída padrão. Esse formulário deve usar o método GET.
-8 – Desafio – Crie um novo projeto Java Web, com o nome de ``EquacaoSegundoGrau'' (sem as aspas), que deve ter um formulário usado para enviar os coeficientes de uma equação de segundo grau para um Servlet, que por sua vez deve calcular as raízes da equação em questão e imprimir essas raízes na saída padrão. As raízes de uma equação do segundo grau podem ser determinadas usando a fórmula de Bhaskara (http://pessoal.sercomtel.com.br/matematica/fundam/eq2g/eq2g.htm, http://pt.wikipedia.org/wiki/Bhaskara\_II). O Servlet deve verificar também se os coeficientes passados representam uma equação do segundo grau válida. Esse formulário deve usar o método GET.
+\begin{projetoSemArquivo}{}{}{}
+    Incremente o projeto que criamos durante o Capítulo inserindo mais alguns campos no formulário: email, logradouro, número, complemento, cidade, estado, CEP, se o cliente tem ou não filhos. Utilize apropriadamente os tipos de \textit{input} que aprendemos até agora.
+\end{projetoSemArquivo}
+
+\begin{projetoSemArquivo}{}{}{}
+    Crie um novo projeto Java Web, com o nome de ``FormularioDVD'' (sem as aspas), que deve ter um formulário usado para enviar dados de um DVD. Um DVD, no nosso caso, deve ter: número, título, ator/atriz principal, ator/atriz coadjuvante, diretor/diretora e ano de lançamento. Para tratar o formulário, crie um Servlet usando o assistente do NetBeans. Esse Servlet deve obter os dados enviados através do formulário e imprimi-los na saída padrão usando \texttt{System.out.println(...)}, como foi feito no exemplo construído durante este Capítulo. Esse formulário deve usar o método \texttt{POST}.
+\end{projetoSemArquivo}
+
+\begin{projetoSemArquivo}{}{}{}
+    Crie um novo projeto Java Web, com o nome de ``FormularioProduto'' (sem as aspas), que deve ter um formulário usado para enviar dados de um Produto. Um Produto, no nosso caso, deve ter: código de barras, descrição, unidade de medida (unidade ou kg), quantidade por embalagem, fabricante (nome). Para tratar o formulário, crie um Servlet usando o assistente do NetBeans. Esse Servlet deve obter os dados enviados através do formulário e imprimi-los na saída padrão usando \texttt{System.out.println(...)}, como foi feito no exemplo construído durante este Capítulo. Esse formulário deve usar o método \texttt{POST}.
+\end{projetoSemArquivo}
+
+\begin{projetoSemArquivo}{}{}{}
+    Crie um novo projeto Java Web, com o nome de ``CalculadoraWeb'' (sem as aspas), que deve ter um formulário usado para atuar como uma calculadora. Nesse formulário, deve haver dois campos (``número 1'' e ``número 2'') e um conjunto de radios para representar a operação a ser realizada (adição, subtração, multiplicação e divisão). Para tratar o formulário, crie um Servlet usando o assistente do NetBeans. Esse Servlet deve obter os dados enviados através do formulário, executar a operação escolhida pelo usuário e imprimir o resultado na saída padrão usando \texttt{System.out.println(...)}, como foi feito no exemplo construído durante este Capítulo. Esse formulário deve usar o método \texttt{GET}. Faça testes de envio dos dados usando apenas a URL gerada depois da primeira submissão.
+\end{projetoSemArquivo}
+
+\begin{projetoSemArquivo}{}{}{}
+    Crie um novo projeto Java Web, com o nome de ``TamanhoString'' (sem as aspas), que deve ter um formulário com apenas um campo usado para enviar uma String de qualquer tamanho para um Servlet. Utilize uma \texttt{<textarea>} para o usuário poder inserir essa String no formulário. O Servlet deve obter a String enviada e imprimir a quantidade de caracteres da String na saída padrão usando \texttt{System.out.println(...)}, como foi feito no exemplo construído durante esta aula. Qual método HTTP deve ser utilizado nessa situação? Justifique sua resposta.
+\end{projetoSemArquivo}
+
+\begin{projetoSemArquivo}{}{}{}
+    Crie um novo projeto Java Web, com o nome de ``EhPrimo'' (sem as aspas), que deve ter um formulário usado para enviar um número inteiro para um Servlet, que por sua vez deve verificar se este número é primo. O resultado do teste deve ser impresso na saída padrão. Esse formulário deve usar o método \texttt{GET}.
+\end{projetoSemArquivo}
+
+\begin{projetoSemArquivo}{}{}{}
+Crie um novo projeto Java Web, com o nome de ``EquacaoSegundoGrau'' (sem as aspas), que deve ter um formulário usado para enviar os coeficientes de uma equação de segundo grau para um Servlet, que por sua vez deve calcular as raízes da equação em questão e imprimir essas raízes na saída padrão. As raízes de uma equação do segundo grau podem ser determinadas usando a fórmula de Bhaskara \url{http://pt.wikipedia.org/wiki/Bhaskara_II}. O Servlet deve verificar também se os coeficientes passados representam uma equação do segundo grau válida. Esse formulário deve usar o método \texttt{GET}.
+\end{projetoSemArquivo}
