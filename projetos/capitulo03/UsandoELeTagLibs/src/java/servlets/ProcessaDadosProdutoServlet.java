@@ -14,10 +14,13 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author Prof. Dr. David Buzatto
  */
-@WebServlet( name = "ProcessaDadosProdutoServlet", urlPatterns = { "/processaDadosProduto" } )
+@WebServlet( name = "ProcessaDadosProdutoServlet", 
+             urlPatterns = { "/processaDadosProduto" } )
 public class ProcessaDadosProdutoServlet extends HttpServlet {
 
-    protected void processRequest( HttpServletRequest request, HttpServletResponse response )
+    protected void processRequest( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
         
         request.setCharacterEncoding( "UTF-8" );
@@ -25,12 +28,11 @@ public class ProcessaDadosProdutoServlet extends HttpServlet {
         // obtém os dados do formulário
         int codigo = 0;
         int quantidade = 0;
-
         String descricao = request.getParameter( "descricao" );
         String unidadeMedida = request.getParameter( "unidade" );
 
         try {
-            codigo = Integer.parseInt( request.getParameter( "codigo" ) );
+            codigo = Integer.parseInt( request.getParameter( "codigo" ));
         } catch ( NumberFormatException exc ) {
             System.out.println( "Erro ao converter o código." );
         }
@@ -64,14 +66,16 @@ public class ProcessaDadosProdutoServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet( HttpServletRequest request, 
+    protected void doGet( 
+            HttpServletRequest request, 
             HttpServletResponse response )
             throws ServletException, IOException {
         processRequest( request, response );
     }
 
     @Override
-    protected void doPost( HttpServletRequest request, 
+    protected void doPost( 
+            HttpServletRequest request, 
             HttpServletResponse response )
             throws ServletException, IOException {
         processRequest( request, response );
