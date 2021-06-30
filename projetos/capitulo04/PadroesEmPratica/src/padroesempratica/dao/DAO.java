@@ -10,7 +10,7 @@ import padroesempratica.jdbc.ConnectionFactory;
  *
  * @author Prof. Dr. David Buzatto
  */
-public abstract class DAO<T extends Object> {
+public abstract class DAO<Tipo> {
 
     // cada DAO terá uma conexão.
     private Connection conexao;
@@ -43,56 +43,61 @@ public abstract class DAO<T extends Object> {
     /**
      * Método para fechar a conexão aberta.
      *
-     * @throws SQLException Caso ocorra algum erro durante o fechamento da
-     * conexão.
+     * @throws SQLException Caso ocorra algum erro
+     * durante o fechamento da conexão.
      */
     public void fecharConexao() throws SQLException {
         conexao.close();
     }
 
     /**
-     * Método abstrato para salvar uma instância de uma entidade da base de
-     * dados.
+     * Método abstrato para salvar uma instância de uma
+     * entidade da base de dados.
+     * 
      * É o "C" do CRUD.
      *
      * @param obj Instância do objeto da entidade a ser salvo.
      * @throws SQLException Caso ocorra algum erro durante a gravação.
      */
-    public abstract void salvar( T obj ) throws SQLException;
+    public abstract void salvar( Tipo obj ) throws SQLException;
 
     /**
-     * Método abstrato para atualizar uma instância de uma entidade da base de
-     * dados.
+     * Método abstrato para atualizar uma instância de uma
+     * entidade da base de dados.
+     * 
      * É o "U" do CRUD.
      *
      * @param obj Instância do objeto da entidade a ser atualizado.
      * @throws SQLException Caso ocorra algum erro durante a atualização.
      */
-    public abstract void atualizar( T obj ) throws SQLException;
+    public abstract void atualizar( Tipo obj ) throws SQLException;
 
     /**
-     * Método abstrato para excluir uma instância de uma entidade da base de
-     * dados.
+     * Método abstrato para excluir uma instância de uma
+     * entidade da base de dados.
+     * 
      * É o "D" do CRUD.
      *
      * @param obj Instância do objeto da entidade a ser salvo.
      * @throws SQLException Caso ocorra algum erro durante a exclusão.
      */
-    public abstract void excluir( T obj ) throws SQLException;
+    public abstract void excluir( Tipo obj ) throws SQLException;
 
     /**
-     * Método abstrato para obter todas as instâncias de uma entidade da base
-     * de dados.
+     * Método abstrato para obter todas as instâncias de uma
+     * entidade da base de dados.
+     * 
      * É o "R" do CRUD.
      *
      * @return Lista de todas as instâncias da entidade.
      * @throws SQLException Caso ocorra algum erro durante a consulta.
      */
-    public abstract List<T> listarTodos() throws SQLException;
+    public abstract List<Tipo> listarTodos() throws SQLException;
 
     /**
-     * Método abstrato para obter uma instância de uma entidade pesquisando
-     * pelo seu atributo identificador.
+     * Método abstrato para obter uma instância de uma
+     * entidade pesquisando pelo seu atributo identificador.
+     * 
      * É o "R" do CRUD.
      *
      * @param id Identificador da instância a serv obtida.
@@ -100,6 +105,6 @@ public abstract class DAO<T extends Object> {
      * encontrada.
      * @throws SQLException Caso ocorra algum erro durante a consulta.
      */
-    public abstract T obterPorId( int id ) throws SQLException;
+    public abstract Tipo obterPorId( int id ) throws SQLException;
 
 }

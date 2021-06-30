@@ -154,6 +154,10 @@
     minted language=css%
 }
 
+\newtcblisting{inlineSqlCode}{
+    minted language=sql%
+}
+
 
 \newtcbinputlisting{\javaCode}[3][]{%
     listing file={#3},
@@ -181,6 +185,13 @@
     title=\texttt{\refstepcounter{listagens}\label{listagem:#3}Listagem \thechapter.\thelistagens: #2},
     colframe=corAzulTema,
     minted language=css
+}
+
+\newtcbinputlisting{\sqlCode}[3][]{%
+    listing file={#3},
+    title=\texttt{\refstepcounter{listagens}\label{listagem:#3}Listagem \thechapter.\thelistagens: #2},
+    colframe=corAzulTema,
+    minted language=sql
 }
 
 

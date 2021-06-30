@@ -25,9 +25,7 @@ public class TestePaisDAO {
             dao.salvar( pais );
 
         } catch ( SQLException exc ) {
-
             exc.printStackTrace();
-
         } finally {
 
             if ( dao != null ) {
