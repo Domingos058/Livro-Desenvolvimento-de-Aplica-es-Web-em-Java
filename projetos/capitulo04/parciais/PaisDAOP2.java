@@ -22,22 +22,22 @@ public class PaisDAO extends DAO<Pais> {
 
     @Override
     public void atualizar( Pais obj ) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException( "Not supported yet." );
     }
 
     @Override
     public void excluir( Pais obj ) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException( "Not supported yet." );
     }
 
     @Override
     public List<Pais> listarTodos() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException( "Not supported yet." );
     }
 
     @Override
     public Pais obterPorId( int id ) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException( "Not supported yet." );
     }
 
 }

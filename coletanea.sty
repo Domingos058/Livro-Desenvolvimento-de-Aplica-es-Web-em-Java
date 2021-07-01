@@ -138,26 +138,25 @@
 \newcounter{projeto}[chapter]
 \newcounter{listagens}[chapter]
 
-\newtcblisting{inlineJavaCode}{
-    minted language=java%
-}
-
-\newtcblisting{inlineHTMLCode}{
-    minted language=html%
-}
-
-\newtcblisting{inlineJavascriptCode}{
-    minted language=javascript%
-}
-
-\newtcblisting{inlineCssCode}{
-    minted language=css%
-}
-
-\newtcblisting{inlineSqlCode}{
-    minted language=sql%
-}
-
+%\newtcblisting{inlineJavaCode}{
+%    minted language=java%
+%}
+%
+%\newtcblisting{inlineHTMLCode}{
+%    minted language=html%
+%}
+%
+%\newtcblisting{inlineJavascriptCode}{
+%    minted language=javascript%
+%}
+%
+%\newtcblisting{inlineCssCode}{
+%    minted language=css%
+%}
+%
+%\newtcblisting{inlineSqlCode}{
+%    minted language=sql%
+%}
 
 \newtcbinputlisting{\javaCode}[3][]{%
     listing file={#3},
@@ -173,7 +172,7 @@
     minted language=html
 }
 
-\newtcbinputlisting{\javascriptCode}[3][]{%
+\newtcbinputlisting{\javaScriptCode}[3][]{%
     listing file={#3},
     title=\texttt{\refstepcounter{listagens}\label{listagem:#3}Listagem \thechapter.\thelistagens: #2},
     colframe=corAzulTema,
@@ -387,18 +386,106 @@
 \fi
 
 
-% lista de listagens de código fonte - não gostei.... precisa refazer...
-%\newcommand{\listlistagensname}{Lista de Listagens de Código Fonte}
-%\newlistof{listoflistagens}{lis}{\listlistagensname}
-%\newcounter{list}[chapter]
-%\newcommand{\listagem}[1]{%
-%    \refstepcounter{list}%
-%    \par\noindent Listagem~\thechapter.\thelist: #1%
-%    \addcontentsline{lis}{list}{\protect\numberline{\thechapter.\thelist}#1}\par
-%}
-%\makeatletter
-%\let\l@list\l@figure
-%\makeatother
+% códigos inline
+\DeclareTotalTCBox{\inlineJavaCode}{ s v }{
+    reset,
+    listing only,
+    on line,
+    enhanced,
+    nobeforeafter,
+    tcbox raise base,
+    boxrule=0.7pt,
+    top=1mm,
+    bottom=0mm,
+    right=1mm,
+    left=1mm,
+    boxsep=0.5pt,
+    before upper={\vphantom{dlg}},
+    colback=corFundoCaixas,
+    colframe=corAzulTema,
+    drop fuzzy shadow,
+    arc=3pt}
+{\mintinline{java}{#2}}%
+
+\DeclareTotalTCBox{\inlineHTMLCode}{ s v }{
+    reset,
+    listing only,
+    on line,
+    enhanced,
+    nobeforeafter,
+    tcbox raise base,
+    boxrule=0.7pt,
+    top=1mm,
+    bottom=0mm,
+    right=1mm,
+    left=1mm,
+    boxsep=0.5pt,
+    before upper={\vphantom{dlg}},
+    colback=corFundoCaixas,
+    colframe=corAzulTema,
+    drop fuzzy shadow,
+    arc=3pt}
+{\mintinline{html}{#2}}%
+
+\DeclareTotalTCBox{\inlineJavaScriptCode}{ s v }{
+    reset,
+    listing only,
+    on line,
+    enhanced,
+    nobeforeafter,
+    tcbox raise base,
+    boxrule=0.7pt,
+    top=1mm,
+    bottom=0mm,
+    right=1mm,
+    left=1mm,
+    boxsep=0.5pt,
+    before upper={\vphantom{dlg}},
+    colback=corFundoCaixas,
+    colframe=corAzulTema,
+    drop fuzzy shadow,
+    arc=3pt}
+{\mintinline{javascript}{#2}}%
+
+\DeclareTotalTCBox{\inlineCSSCode}{ s v }{
+    reset,
+    listing only,
+    on line,
+    enhanced,
+    nobeforeafter,
+    tcbox raise base,
+    boxrule=0.7pt,
+    top=1mm,
+    bottom=0mm,
+    right=1mm,
+    left=1mm,
+    boxsep=0.5pt,
+    before upper={\vphantom{dlg}},
+    colback=corFundoCaixas,
+    colframe=corAzulTema,
+    drop fuzzy shadow,
+    arc=3pt}
+{\mintinline{css}{#2}}%
+
+\DeclareTotalTCBox{\inlineSQLCode}{ s v }{
+    reset,
+    listing only,
+    on line,
+    enhanced,
+    nobeforeafter,
+    tcbox raise base,
+    boxrule=0.7pt,
+    top=1mm,
+    bottom=0mm,
+    right=1mm,
+    left=1mm,
+    boxsep=0.5pt,
+    before upper={\vphantom{dlg}},
+    colback=corFundoCaixas,
+    colframe=corAzulTema,
+    drop fuzzy shadow,
+    arc=3pt}
+{\mintinline{sql}{#2}}%
 
 % código até aqui
 

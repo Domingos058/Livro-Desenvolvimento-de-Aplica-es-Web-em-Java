@@ -92,138 +92,149 @@ Legal, temos uma fábrica de conexões, mas do que adianta uma fábrica de algum
 
 \section{Padrão de Projeto \textit{Data Access Object} (DAO)}
 
-Quando temos o nosso primeiro contato com JDBC, normalmente nos é ensinado a colocar todo o código SQL que vai executar uma determinada operação em um método que trata o ``clique'' de um botão. Sendo assim, imagine uma interface desktop (em Swing) onde poderíamos criar, alterar e/ou excluir países. Quando implementamos o botão responsável por criar um novo país, somos ensinados a inserir todo o código SQL para fazer isso, sendo que esse código é implementado usando uma cláusula INSERT. O mesmo aconteceria para os botões alterar e excluir. Será que essa é a melhor solução? Será que a classe que implementa nossa interface gráfica tem que ter essa responsabilidade, ou seja, lidar com SQL? E se por algum motivo nós quiséssemos usar o código para criar um novo país em alguma outra tela? Teríamos que copiar o código de inserção novamente? Tenho certeza que para essa última pergunta você já deve ter respondido mentalmente que ``NÃO!'', pois podemos criar métodos que executariam essa operação, mas então te pergunto: Como fazer isso?
+Quando temos o nosso primeiro contato com JDBC, normalmente nos é ensinado a colocar todo o código SQL que vai executar uma determinada operação em um método que trata o ``clique'' de um botão. Sendo assim, imagine uma interface gráfica de uma aplicação \textit{desktop} (em Swing) onde poderíamos criar, alterar e/ou excluir países. Quando implementamos o botão responsável por criar um novo país, somos ensinados a inserir todo o código SQL para fazer isso, sendo que esse código é implementado usando uma instrução \texttt{INSERT}. O mesmo aconteceria para os botões alterar e excluir. Será que essa é a melhor solução? Será que a classe que implementa nossa interface gráfica tem que ter essa responsabilidade, ou seja, lidar com SQL? E se por algum motivo nós quiséssemos usar o código para criar um novo país em alguma outra janela? Teríamos que copiar o código de inserção novamente? Tenho certeza que para essa última pergunta você já deve ter respondido mentalmente que ``NÃO!'', pois podemos criar métodos que executariam essa operação, mas então te pergunto: Como fazer isso?
 
-Para resolver esse problema, existe um padrão de projeto onde a ideia é isolar todo acesso ao banco de dados em classes que seriam responsáveis em fazer a comunicação entre a aplicação Java, ou qualquer aplicação escrita usando uma linguagem orientada a objetos, e o banco de dados. Esse padrão se chama DAO (Data Access Object – Objeto de Acesso a Dados), sendo este um dos mais famosos. Vamos aprender como implementá-lo?
+Para resolver esse problema, existe um padrão de projeto onde a ideia é isolar todo acesso ao banco de dados em classes que seriam responsáveis em fazer a comunicação entre a aplicação Java, ou qualquer aplicação escrita usando uma linguagem orientada a objetos, e o banco de dados. Esse padrão se chama \textit{Data Access Object} (DAO), sendo este um dos mais famosos. Vamos aprender como implementá-lo?
 
-Um objeto do tipo DAO deve ter a capacidade de executar as operações básicas sobre uma determinada tabela de um banco de dados. Essas operações são comumente chamadas de CRUD (Create, Read, Update e Delete – Criar, Ler, Atualizar e Excluir). Praticamente cada tabela do nosso banco de dados terá no lado da aplicação uma classe implementada que representa um registro da tabela (tabela ``pais'', classe Pais), além de ter uma classe DAO que vai manipular objetos do tipo Pais. Como precisamos definir essas quatro operações básicas que cada DAO vai conter, vamos criar uma classe abstrata que servirá de modelo.
+Um objeto do tipo DAO deve ter a capacidade de executar as operações básicas sobre uma determinada tabela de um banco de dados. Essas operações são comumente chamadas de ``CRUD'' que vem de ``\textit{Create, Read, Update e Delete}'' (Criar, Ler, Atualizar e Excluir). Praticamente cada tabela do nosso banco de dados terá no lado da aplicação uma classe implementada que representará um registro da tabela (tabela ``pais'', classe Pais) por meio de um objeto do tipo em questão, além de ter uma classe DAO que vai manipular esses objetos. Como precisamos definir essas quatro operações básicas que cada DAO vai conter, vamos criar uma classe abstrata que servirá de modelo.
 
-No pacote ``padroesempratica'', crie um novo pacote chamado ``dao''. Dentro do pacote ``padroesempratica.dao'', crie uma classe chamada ``DAO'' e copie o código apresentado na Listagem 4.3 e na Listagem 4.4. Note que as duas listagens são partes da mesma classe.
+No pacote ``padroesempratica'', crie um novo pacote chamado ``dao''. Dentro do pacote ``padroesempratica.dao'', crie uma classe chamada ``DAO'' e copie o código apresentado na Listagem~\thechapter.\ref{listagem:projetos/capitulo04/PadroesEmPratica/src/padroesempratica/dao/DAO.java}.
 
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo04/PadroesEmPratica/src/padroesempratica/dao/DAO.java}
 \javaCode{Implementação da classe abstrata DAO (\texttt{padroesempratica/dao/DAO.java})}{projetos/capitulo04/PadroesEmPratica/src/padroesempratica/dao/DAO.java}
 
+Copiou o código? Ótimo! Vamos entendê-lo. Na linha 13 definimos uma classe abstrata\footnote{Classes abstratas não podem ser instanciadas, são usadas como modelos.} chamada DAO que diz que toda classe que for implementá-la deve fornecer um tipo genérico chamado de \texttt{Tipo}. As construções entre \texttt{<} e \texttt{>} são chamadas de ``Tipos Genéricos'' em Java. Note que o tipo \texttt{Tipo} é usado em todo o corpo da classe. Está confuso? Acalme-se, logo você vai entender.
 
-Copiou o código? Ótimo! Vamos entendê-lo. Na linha 13 da Listagem 4.3 definimos uma classe abstrata (classes abstratas não podem ser instanciadas, são usadas como modelos) chamada DAO que diz que toda classe que for implementá-la, deve definir um tipo ``T'' que obrigatoriamente estende Object. As construções entre ``<'' e ``>'' são chamadas de ``Tipos Genéricos'' em Java. Note que o tipo ``T'' é usado em todo o corpo da classe. Está confuso? Acalme-se, logo você vai entender.
+Na linha 16 é declarada uma variável de instância que referenciará uma conexão, que sempre será obtida usando o método \inlineJavaCode{getConnection()} definido na linha 39. Observe que poderíamos ter declarado essa conexão como \inlineJavaCode{protected}, mas vamos deixá-la como \inlineJavaCode{private} e usar o método \inlineJavaCode{getConnection()} para obtê-la. Na linha 49 é definido o método para fechar a conexão, afinal, sempre depois de usarmos uma conexão, precisamos fechá-la.
 
-Na linha 16 da Listagem 4.3 é declarada uma conexão, que sempre será obtida usando o método getConnection definido na linha 39. Observe que poderíamos ter declarado essa conexão como protected, mas vamos deixá-la como private e usar o método getConnection() para obtê-la. Na linha 49 é definido o método para fechar a conexão, afinal, sempre que usarmos uma conexão, precisamos fechá-la depois de usar.
+Veja que no construtor da classe a conexão é obtida usando a fábrica que criamos na Seção anterior! Esse construtor será executado quando instanciarmos os objetos das classes que estenderem esse DAO, então, quando criarmos nossos objetos DAO, uma conexão com o banco de dados será estabelecida.
 
-Veja que no construtor da classe (linha 24 da Listagem 4.3), a conexão é obtida usando a fábrica que criamos na seção anterior! Esse construtor será executado quando instanciarmos os objetos das classes que estenderem esse DAO, então, quando criarmos nossos objetos DAO, uma conexão com o banco de dados será estabelecida.
+A partir da linha 62 são definidos todos os métodos CRUD deste DAO genérico. Note que temos dois métodos que correspondem à parte ``R'' do CRUD, onde um obtém todas as entidades cadastradas e outro obtém apenas uma usando como base seu identificador.
 
-A partir da linha 60 da Listagem 4.4 são definidos todos os métodos CRUD deste DAO genérico. Note que temos dois métodos que correspondem à parte ``R'' do CRUD, onde um obtém todas as entidades cadastradas e outro obtém apenas uma usando como base seu identificador.
+Com o DAO genérico pronto, vamos implementar a classe que vai representar a tabela ``pais''. Crie um novo pacote chamado ``entidades'' dentro do pacote ``padroesempratica''. Dentro do pacote ``padroesempratica.entidades'', crie uma classe chamada ``Pais'' (sem as aspas). Os objetos dessa classe representarão registros da tabela ``pais'', sendo assim, precisamos que essa classe tenha os mesmos atributos da tabela correspondente. Lembre-se que na tabela ``pais'' nós definimos três colunas: id (\inlineSQLCode{INT}), nome (\inlineSQLCode{VARCHAR}) e sigla (\inlineSQLCode{VARCHAR}). Na nossa classe, iremos usar o tipo \inlineJavaCode{int} como tipo correspondente ao \inlineSQLCode{INT} da tabela. Para o tipo \inlineSQLCode{VARCHAR}, usaremos \inlineJavaCode{String}. Veja na Listagem~\thechapter.\ref{listagem:projetos/capitulo04/parciais/Pais.java} como deve ficar a implementação parcial da classe \texttt{Pais}.
 
-Com o DAO genérico pronto, vamos implementar a classe que vai representar a tabela ``pais''. Crie um novo pacote chamado ``entidades'' dentro do pacote ``padroesempratica''. Dentro do pacote ``padroesempratica.entidades'', crie uma classe chamada ``Pais'' (sem as aspas). Os objetos dessa classe representarão registros da tabela ``pais'', sendo assim, precisamos que essa classe tenha os mesmos atributos da tabela correspondente. Lembre-se que na tabela ``pais'' nós definimos três colunas: id (INT), nome (VARCHAR) e sigla (VARCHAR). Na nossa classe, iremos usar o tipo ``int'' como tipo correspondente ao INT da tabela. Para o tipo VARCHAR, usaremos Strings. Veja na Listagem 4.5 como deve ficar a implementação parcial da classe Pais.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo04/parciais/Pais.java}
 \javaCode{Implementação parcial da classe Pais (\texttt{padroesempratica/entidades/Pais.java})}{projetos/capitulo04/parciais/Pais.java}
 
-Tenho certeza que você se lembra da discussão sobre o padrão JavaBeans não é mesmo? Onde foi dito que devemos expor ao mundo ``fora da classe'' os atributos que nós queremos que possam ser configurados e obtidos por seus utilizadores? Da primeira vez que falamos sobre isso, nós implementamos manualmente cada método set e get correspondente a um campo privado não foi? Como essa tarefa é muito corriqueira, o NetBeans tem uma funcionalidade que faz isso automaticamente para nós. Com a classe implementada, como exibido na Listagem 4.5, clique com o botão direito no editor e escolha ``Inserir código...''. Veja na Figura 4.4.
+Tenho certeza que você se lembra da discussão sobre o padrão JavaBeans não é mesmo? Onde foi dito que devemos expor ao mundo ``fora da classe'' os atributos que nós queremos que possam ser configurados e obtidos por seus utilizadores? Da primeira vez que falamos sobre isso, nós implementamos manualmente cada método \texttt{set} e \texttt{get} correspondente a um campo privado não foi? Como essa tarefa é muito corriqueira, o NetBeans tem uma funcionalidade que faz isso automaticamente para nós. Com a classe implementada, como exibido na Listagem~\thechapter.\ref{listagem:projetos/capitulo04/parciais/Pais.java}, clique com o botão direito no editor e escolha \destaque{\textit{Insert Code...}}. Ao clicar nesta opção, uma pequena lista com o nome de \destaque{\textit{Generate}} será exibida no editor. Nessa lista, escolha a opção \destaque{\textit{Getter and Setter...}}. Adivinhe o que vamos fazer? Gerar os métodos \texttt{get} e \texttt{set} para cada campo da classe! Fazendo isso, um diálogo será exibido, mostrando todos os campos privados da classe. Marque cada um dos campos clicando na caixa de seleção correspondente, ou então, a classe inteira e clique no botão \destaque{\textit{Generate}}. Veja o que aconteceu! A IDE gerou o código dos \texttt{gets} e \texttt{sets} para nós! Segue na Listagem~\thechapter.\ref{listagem:projetos/capitulo04/PadroesEmPratica/src/padroesempratica/entidades/Pais.java} o código completo da classe Pais.
 
-Figura 4.4: Usando o assistente de inserção de código
- 
-Fonte: Print screen, NetBeans IDE 6.9.1
-
-Ao clicar nesta opção, uma pequena lista com o nome de ``Gerar'' será exibida no editor. Nessa lista, escolha a opção ``Getter e setter...''. Adivinhe o que vamos fazer? Gerar os métodos get e set para cada campo da classe! Fazendo isso, um diálogo será exibido, mostrando todos os campos privados da classe. Marque cada um dos campos clicando na caixa de seleção correspondente, ou então, a classe inteira e clique no botão ``Gerar''. Veja o que aconteceu! A ferramenta gerou o código dos gets e sets para nós! Segue na Listagem 4.6 o código completo da classe Pais.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo04/PadroesEmPratica/src/padroesempratica/entidades/Pais.java}
 \javaCode{Implementação da classe Pais (\texttt{padroesempratica/ entidades/Pais.java})}{projetos/capitulo04/PadroesEmPratica/src/padroesempratica/entidades/Pais.java}
 
-Muito legal não é mesmo? Agora que temos a classe que representa a estrutura da tabela ``pais'' da nossa base de dados, vamos implementar nosso primeiro DAO concreto, ou seja, uma classe que vai estender a classe abstrata DAO. Novamente, no pacote ``padroesempratica.dao'', crie uma classe chamada ``PaisDAO'' (sem as aspas). Essa classe irá lidar com os objetos do tipo Pais, fazendo a ponte entre nossos objetos e o banco de dados. Com a classe criada, copie o código apresentado na Listagem 4.7.
+Muito legal não é mesmo? Agora que temos a classe que representa a estrutura da tabela ``pais'' da nossa base de dados, vamos implementar nosso primeiro DAO concreto, ou seja, uma classe que vai estender a classe abstrata DAO. Novamente, no pacote ``padroesempratica.dao'', crie uma classe chamada ``PaisDAO'' (sem as aspas). Essa classe irá lidar com os objetos do tipo \texttt{Pais}, fazendo a ponte entre nossos objetos e o banco de dados. Com a classe criada, copie o código apresentado na Listagem~\thechapter.\ref{listagem:projetos/capitulo04/parciais/PaisDAOP1.java}.
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo04/parciais/PaisDAOP1.java}
-\javaCode{Implementação parcial da classe PaisDAO (\texttt{padroesempratica/ dao/PaisDAO.java})}{projetos/capitulo04/parciais/PaisDAOP1.java}
+\javaCode{Implementação parcial da classe PaisDAO (\texttt{padroesempratica/dao/PaisDAO.java})}{projetos/capitulo04/parciais/PaisDAOP1.java}
 
-Veja que nosso PaisDAO vai estender DAO, informando como tipo a classe Pais (DAO<Pais>). Ao copiar o código, você perceberá que o NetBeans vai reclamar, dizendo que tem um erro na classe. O nome da classe ficará destacado em vermelho. Passe o mouse por cima do nome e aguarde. Será exibida a causa do erro. No erro, é dito que a classe PaisDAO não implementa todos os métodos abstratos da classe DAO e isso é verdade, visto que como estamos estendendo a classe DAO, precisamos implementar todos os métodos abstratos que foram definidos nela e ainda não fizemos isso. Teríamos então que implementar manualmente todos os métodos marcados como abstratos na classe DAO. Ao invés de fazermos isso manualmente, o NetBeans pode nos ajudar novamente. Veja que na linha do erro, à esquerda, é mostrada uma pequena lâmpada. Clique nela. Ao clicar, o NetBeans vai listar as alternativas que ele pode executar para resolver o erro. No caso, apenas uma opção será listada (``Implementar todos os métodos abstratos'') veja a Figura 4.5.
+Veja que nosso \texttt{PaisDAO} vai estender \texttt{DAO}, informando como tipo a classe \texttt{Pais} (\texttt{DAO<Pais>}). Ao copiar o código, você perceberá que o NetBeans vai reclamar, dizendo que tem um erro na classe. O nome da classe ficará destacado em vermelho. Passe o mouse por cima do nome e aguarde. Será exibida a causa do erro. No erro, é dito que a classe \texttt{PaisDAO} não implementa todos os métodos abstratos da classe \texttt{DAO} e isso é verdade, visto que como estamos estendendo a classe \texttt{DAO}, precisamos implementar todos os métodos abstratos que foram definidos nela e ainda não fizemos isso. Teríamos então que implementar manualmente todos os métodos marcados como abstratos na classe \texttt{DAO}. Ao invés de fazermos isso manualmente, o NetBeans pode nos ajudar novamente. Veja que na linha do erro, à esquerda, é mostrada uma pequena lâmpada com uma bolinha vermelha. Clique nela. Ao clicar, o NetBeans vai listar as alternativas que ele pode executar para resolver o erro. Veja a Figura~\ref{fig:cap04ImplementacaoAutomatic}
 
-Figura 4.5: Implementando automaticamente os métodos abstratos de DAO
- 
-Fonte: Print screen, NetBeans IDE 6.9.1
+\FloatBarrier
+\begin{figure}[!htbp]
+    \centering
+    \caption{Implementando automaticamente os métodos abstratos de DAO}
+    \includegraphics[scale=1]{imagens/cap04ImplementacaoAutomatica}
+    \\\textbf{Fonte:} Elaborada pelo autor
+    \label{fig:cap04ImplementacaoAutomatica}
+\end{figure}
+\FloatBarrier
 
-Clique nesta opção e, novamente, como num passe de mágica, o NetBeans gera todo o esqueleto da classe para nós, criando uma implementação padrão para cada método abstrato da classe DAO. Mesmo ao fazer isso, o NetBeans continua reclamando que existe um erro. Nesse caso, é dito que é lançada uma exceção no construtor padrão. Você se lembra que lá no DAO genérico nós temos um construtor que cria a conexão e que ele lança uma SQLException? Pois bem, quando criamos um objeto de uma determinada classe, o construtor da superclasse da classe em questão é executado. Como estendemos DAO em PaisDAO, ao tentarmos instanciar um objeto do tipo PaisDAO, o construtor de PaisDAO será executado, além do construtor de DAO, que é sua superclasse. Como o construtor de DAO lança uma exceção caso ocorra algum problema, nós precisamos ou tratar ou dizer que o construtor de PaisDAO também lança esse tipo de exceção. Nós iremos usar a segunda abordagem. Para isso, basta implementar o construtor padrão de PaisDAO e dizer que ele lança esse tipo de exceção. Sendo assim, segue na Listagem 4.8 a implementação que temos até agora da classe PaisDAO.
+Clique na opção \destaque{\textit{Implement all abstract methods}} e, novamente, como num passe de mágica, o NetBeans gera todo o esqueleto da classe para nós, criando uma implementação padrão para cada método abstrato da classe \texttt{DAO}. Mesmo ao fazer isso, o NetBeans continua reclamando que existe um erro. Nesse caso, é dito que é lançada uma exceção no construtor padrão\footnote{O construtor padrão é o construtor que não tem nenhum parâmetro.}. Você se lembra que lá no \texttt{DAO} genérico nós temos um construtor que cria a conexão e que ele lança uma \texttt{SQLException}? Pois bem, quando criamos um objeto de uma determinada classe, o construtor da superclasse da classe em questão a primeira coisa que será executada. Como estendemos \texttt{DAO} em \texttt{PaisDAO}, ao tentarmos instanciar um objeto do tipo \texttt{PaisDAO}, o construtor de \texttt{PaisDAO} será executado, além do construtor de \texttt{DAO}, que é sua superclasse. Como o construtor de \texttt{DAO} lança uma exceção caso ocorra algum problema, nós precisamos ou tratar ou dizer que o construtor de \texttt{PaisDAO} também lança esse tipo de exceção. Nós iremos usar a segunda abordagem. Para isso, basta implementar o construtor padrão de \texttt{PaisDAO} e dizer que ele lança esse tipo de exceção. Sendo assim, segue na Listagem~\thechapter.\ref{listagem:projetos/capitulo04/parciais/PaisDAOP2.java} a implementação que temos até agora da classe \texttt{PaisDAO}.
 
-<Glossário: Construtor Padrão
-O construtor padrão é o construtor que não tem nenhum parâmetro.
->
+\javaCode{Implementação parcial da classe PaisDAO com o construtor padrão (\texttt{padroesempratica/dao/PaisDAO.java})}{projetos/capitulo04/parciais/PaisDAOP2.java}
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo04/parciais/PaisDAOP2.java}
-\javaCode{Implementação parcial da classe PaisDAO com o construtor padrão (\texttt{padroesempratica/ dao/PaisDAO.java})}{projetos/capitulo04/parciais/PaisDAOP2.java}
+Muito bom! Até agora preparamos toda o esqueleto do nosso \texttt{PaisDAO}, mas SQL que é bom, nada. Vamos agora implementar nosso primeiro método do CRUD, o ``salvar''. Antes de implementar o método ``salvar'', importe a classe \texttt{java.sql.PreparedStatement}. Na Listagem~\thechapter.\ref{listagem:projetos/capitulo04/parciais/PaisDAOSalvar.java} pode ser vista a implementação do método \texttt{salvar} da classe \texttt{PaisDAO}.
 
-Muito bom. Até agora preparamos toda o esqueleto do nosso PaisDAO, mas SQL que é bom, nada. Vamos agora implementar nosso primeiro método do CRUD, o ``salvar''. Para poupar espaço, irei listar apenar o método em questão, ao invés de listar a classe completa, tudo bem? Lembre-se que estamos implementando o método ``salvar'' da classe PaisDAO. Antes de implementar o método ``salvar'', importe a classe ``java.sql.PreparedStatement''. Na Listagem 4.9 pode ser vista a implementação do método ``salvar'' da classe PaisDAO.
+\javaCode{Implementação do método ``salvar'' da classe PaisDAO (\texttt{padroesempratica/dao/PaisDAO.java})}{projetos/capitulo04/parciais/PaisDAOSalvar.java}
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo04/parciais/PaisDAOSalvar.java}
-\javaCode{Implementação do método ``salvar'' da classe PaisDAO (\texttt{padroesempratica/ dao/PaisDAO.java})}{projetos/capitulo04/parciais/PaisDAOSalvar.java}
+Vamos analisar o código para ver o que está acontecendo. Na linha 20 está definida a assinatura do método. O método \texttt{salvar} recebe um parâmetro do tipo \texttt{Pais}, sendo que os dados do objeto passado nesse parâmetro serão persistidos no banco de dados. Nas linhas 22 e 23 é definida a instrução \inlineSQLCode{INSERT} do banco de dados. Como a coluna \texttt{id} da tabela \texttt{pais} foi definida como auto-incremento, nós não precisamos fornecê-la. Ao invés de definirmos manualmente os valores das colunas nome e sigla, perceba que utilizamos sinais de interrogação, indicando que no lugar de cada ponto de interrogação será trocado pelo valor correto. Na linha 25 é criado um \texttt{PreparedStatement} a partir da conexão do \texttt{DAO} usando o código SQL que foi definido nas linhas 22 e 23. Na linha 26, o primeiro parâmetro do código SQL (primeiro ponto de interrogação) é ``trocado'' pelo valor retornado pelo método \inlineJavaCode{getNome()} do objeto referenciado por \texttt{obj} que é do tipo \texttt{Pais}. A mesma coisa acontece na linha 27, onde o segundo parâmetro do código SQL (segundo ponto de interrogação) é ``trocado'' pelo valor retornado pelo método \inlineJavaCode{getSigla()}. Com o \texttt{PreparedStatement} configurado, na linha 29 mandamos que seja executado o \texttt{PreparedStatement}. Por fim, na linha 30, fechamos o \texttt{PreparedStatement}. Fácil não é?
 
-Vamos analisar o código para ver o que está acontecendo. Na linha 2 está definida a assinatura do método. O método ``salvar'' recebe um parâmetro do tipo Pais, sendo que os dados do objeto passado nesse parâmetro serão persistidos no banco de dados. Nas linhas 4 e 5 é definida a cláusula INSERT do banco de dados. Como a coluna id de pais foi definida como auto incremento, nós não precisamos fornecê-la. Ao invés de definirmos manualmente os valores das colunas nome e sigla, perceba que utilizamos sinais de interrogação, indicando que no lugar de cada ponto de interrogação será trocado pelo valor correto. Na linha 7 é criado um PreparedStatement a partir da conexão do DAO usando o código SQL que foi definido nas linhas 4 e 5. Na linha 8, o primeiro parâmetro do código SQL (primeiro ponto de interrogação) é trocado pelo valor retornado pelo método getNome() do objeto ``obj'' do tipo Pais. A mesma coisa acontece na linha 9, onde o segundo parâmetro do código SQL (segundo ponto de interrogação) é trocado pelo valor retornado pelo método getSigla(). Com o PreparedStatement configurado, na linha 11 mandamos que seja executado o PreparedStatement. Por fim, na linha 12, fechamos o PreparedStatement. Fácil não é?
+Vamos testar? No pacote ``padroesempratica.testes'', crie uma classe chamada \texttt{TestePaisDAO} e copie o código da Listagem~\thechapter.\ref{listagem:projetos/capitulo04/PadroesEmPratica/src/padroesempratica/testes/TestePaisDAO.java}.
 
-Vamos testar? No pacote ``padroesempratica.testes'', crie uma classe chamada TestePaisDAO e copie o código da Listagem 4.10.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo04/PadroesEmPratica/src/padroesempratica/testes/TestePaisDAO.java}
 \javaCode{Código de teste para o PaisDAO (\texttt{padroesempratica/ testes/TestePaisDAO.java})}{projetos/capitulo04/PadroesEmPratica/src/padroesempratica/testes/TestePaisDAO.java}
 
-Copiou o código? Execute a classe (botão direito no arquivo, ``Executar arquivo'' ou Shift+F6). Se tudo estiver correto, a classe será compilada e executada e nenhum erro será emitido. Fazendo isso, um novo registro na tabela ``pais'' será gerado. Vamos confirmar isso? No MySQL Workbench, abra o editor de SQL clicando duas vezes na conexão definida na seção ``SQL Development''. Provavelmente o editor já deve estar aberto. Em ``Object Browser'' selecione a base ``testes\_padroes'' em ``Default''. Em ``Scratch'', entre digite ``select * from pais;'' (sem as aspas) e clique no botão que tem um desenho de um raio na barra de tarefas. O código SQL digitado será executado e o resultado será exibido logo abaixo. Veja a Figura 4.6.
+Copiou o código? Execute a classe (botão direito no arquivo, \destaque{\textit{Run File}} ou \texttt{<Shift+F6>}). Se tudo estiver correto, a classe será compilada e executada e nenhum erro será emitido. Fazendo isso, um novo registro na tabela ``pais'' será inserido. Vamos confirmar isso? No MySQL Workbench deve haver um editor SQL já aberto. Se não houver, abra um clicando no ícone com uma folha com a sigla SQL e um sinal de \texttt{+}. Confirme também se a base de dados ``testes\_padroes'' está configurado como padrão ou está ativa. No editor, digite \inlineSQLCode{SELECT * FROM pais;} e clique no botão que tem um desenho de um raio na barra de ferramentas da aba do editor. O código SQL digitado será executado e o resultado será exibido logo abaixo. Veja a Figura~\ref{fig:cap04ExecucaoSelect}.
 
-Figura 4.6: Fazendo uma consulta do MySQL Workbench
- 
-Fonte: Print screen, MySQL Workbench
+cap04ExecucaoSelect.png
 
-Muito bem! Nosso método salvar está funcionando corretamente. Vamos analisar o código da Listagem 4.10. Entre as linhas 16 e 18 instanciamos e configuramos um objeto do tipo Pais. O nome desse país é Brasil e a sigla é BR. Na linha 20, declaramos uma referência do tipo PaisDAO que foi inicializada com null. Como todo o código dos métodos do DAO podem lançar uma exceção do tipo SQLException, temos que usar um bloco try. Na linha 24 instanciamos o PaisDAO e na linha 25 passamos o objeto do tipo Pais que criamos para o método ``salvar'' do DAO, que por sua vez vai executar o código SQL que definimos. Caso ocorra algum problema durante a execução de uma dessas duas linhas, o catch que ouve exceções do tipo SQLException captura o erro e manda mostrar esses problemas dando um printStackTrace() no objeto que representa a exceção. Por fim, temos um bloco finally que trata do fechamento da conexão. Sempre quando usarmos um DAO, precisamos fechar sua conexão quando terminarmos de usar. Na linha 33 verifica-se se o ``dão'' aponta para null. Se não apontar, tenta fechar a conexão, que também pode lançar uma exceção do tipo SQLException e que é tratada dentro do bloco try que está aninhado no finally.
+\FloatBarrier
+\begin{figure}[!htbp]
+    \centering
+    \caption{Fazendo uma consulta do MySQL Workbench}
+    \includegraphics[scale=1]{imagens/cap04ExecucaoSelect}
+    \\\textbf{Fonte:} Elaborada pelo autor
+    \label{fig:cap04ExecucaoSelect}
+\end{figure}
+\FloatBarrier
 
-Agora que já criamos e testamos nosso primeiro método do PaisDAO, vamos implementar o restante dos métodos. Cada um deles será apresentado em uma listagem diferente. Os métodos de pesquisa (``R'' do CRUD) serão um pouco diferente, sendo assim, eu os discutirei depois. Vamos lá!
+Muito bem! Nosso método \texttt{salvar} de \texttt{PaisDAO} está funcionando corretamente. Vamos analisar o código da Listagem~\thechapter.\ref{listagem:projetos/capitulo04/PadroesEmPratica/src/padroesempratica/testes/TestePaisDAO.java}. Entre as linhas 16 e 18 instanciamos e configuramos um objeto do tipo \texttt{Pais}. O nome desse país é \texttt{Brasil} e a sigla é \texttt{BR}. Na linha 20, declaramos uma referência do tipo \texttt{PaisDAO} que foi inicializada com \inlineJavaCode{null}. Como todo o código dos métodos do \texttt{DAO} podem lançar uma exceção do tipo \texttt{SQLException}, temos que usar um bloco \inlineJavaCode{try}. Na linha 24 instanciamos o \texttt{PaisDAO} e na linha 25 passamos o objeto do tipo \texttt{Pais} que criamos para o método ``salvar'' do \texttt{DAO}, que por sua vez vai executar o código SQL que definimos. Caso ocorra algum problema durante a execução de uma dessas duas linhas, o \inlineJavaCode{catch} que ouve exceções do tipo \texttt{SQLException} captura o erro e manda mostrar esses problemas dando um \inlineJavaCode{printStackTrace()} no objeto que representa a exceção. Por fim, temos um bloco \inlineJavaCode{finally} que trata do fechamento da conexão. Sempre quando usarmos um \texttt{DAO}, precisamos fechar sua conexão quando terminarmos de usar. Na linha 31 verifica-se se o \texttt{dao} aponta para \inlineJavaCode{null}. Se não apontar, tenta fechar a conexão, que também pode lançar uma exceção do tipo \texttt{SQLException} e que é tratada dentro do bloco \inlineJavaCode{try} que está aninhado no \inlineJavaCode{finally}.
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo04/PadroesEmPratica/src/padroesempratica/dao/PaisDAO.java}
+Agora que já criamos e testamos nosso primeiro método do \texttt{PaisDAO}, vamos implementar o restante dos métodos. Os métodos de pesquisa (``R'' do CRUD) serão um pouco diferente, sendo assim, eu os discutirei depois. Vamos lá, copie o restante do código para que seu \texttt{PaisDAO} fique igual ao da Listagem~\thechapter.\ref{listagem:projetos/capitulo04/PadroesEmPratica/src/padroesempratica/dao/PaisDAO.java}.
+
 \javaCode{Implementação da classe PaisDAO (\texttt{padroesempratica/ dao/PaisDAO.java})}{projetos/capitulo04/PadroesEmPratica/src/padroesempratica/dao/PaisDAO.java}
 
-Não se esqueça de importar as classes java.sql.ResultSet, java.util.ArrayList e import java.util.List. Para finalizar essa seção, vamos discutir o código da Listagem 4.13. O método listarTodos retorna uma lista que pode conter apenar objetos do tipo Pais. Essa lista que será retornada é instanciada e inicializada na linha 4. Neste momento, temos a lista de objetos do tipo Pais, só que ela ainda está vazia. Na linha 7, cria-se o PreparedStatement com o SQL que foi definido na linha 5 e, na linha 8, executamos o PreparedStatement usando o método executeQuery(), que retorna um objeto do tipo ResultSet. Os objetos do tipo ResultSet representam os resultados que são retornados em consultas SQL (comando SELECT). Na linha 10, criamos um laço de repetição while, que é executado enquanto rs.next() retornar true. Na primeira vez que rs.next() é invocado, o ponteiro de registros do ResultSet passa a apontar para o primeiro resultado obtido na consulta. Dentro do while, entre as linhas 12 e 15, nós criamos um objeto do tipo Pais e configuramos seus dados a partir dos dados obtidos no ResultSet, usando o método apropriado para cada tipo de cada coluna. Na linha 17, o objeto Pais que acabou de ser criado e configurado, é inserido na lista. O corpo do while é repetido até que rs.next() retorne false, ou seja, quando todos os resultados da consulta foram obtidos. Nesse ponto, temos a lista de objetos totalmente preenchida. Nas linhas 21 e 22, são fechados o ResultSet e o PreparedStatement. Por fim, na linha 24, a lista com os objetos do tipo Pais é retornada.
+Não se esqueça de importar as classes \texttt{java.sql.ResultSet}, \texttt{java.util.ArrayList} e \texttt{java.util.List}. Para finalizar essa seção, vamos discutir o código da Listagem~\thechapter.\ref{listagem:projetos/capitulo04/PadroesEmPratica/src/padroesempratica/dao/PaisDAO.java}. O método \inlineJavaCode{listarTodos()} retorna uma lista que pode conter apenar objetos do tipo \texttt{Pais}. Essa lista que será retornada é instanciada e inicializada na linha 72. Neste momento, temos a lista de objetos do tipo \texttt{Pais}, só que ela ainda está vazia. Na linha 75, cria-se o \texttt{PreparedStatement} com o SQL que foi definido na linha 73 e, na linha 75, executamos o \texttt{PreparedStatement} usando o método \inlineJavaCode{executeQuery()}, que retorna um objeto do tipo \texttt{ResultSet}. Os objetos do tipo \texttt{ResultSet} representam os resultados que são retornados em consultas SQL (instrução \inlineSQLCode{SELECT}). Na linha 78 usamos um \inlineJavaCode{while}, que é executado enquanto \inlineJavaCode{rs.next()} retornar \inlineJavaCode{true}. Na primeira vez que \inlineJavaCode{rs.next()} é invocado, o ponteiro de registros do \texttt{ResultSet} passa a apontar para o primeiro resultado obtido na consulta. Dentro do \inlineJavaCode{while}, entre as linhas 80 e 83, nós criamos um objeto do tipo \texttt{Pais} e configuramos seus dados a partir dos dados obtidos no \texttt{ResultSet}, usando o método apropriado para cada tipo de cada coluna. Na linha 85, o objeto \texttt{Pais} que acabou de ser criado e configurado é inserido na lista. O corpo do \inlineJavaCode{while} é repetido até que \inlineJavaCode{rs.next()} retorne \inlineJavaCode{false}, ou seja, quando todos os resultados da consulta foram obtidos. Nesse ponto, temos a lista de objetos completa. Nas linhas 89 e 90 são fechados o \texttt{ResultSet} e o \texttt{PreparedStatement}. Por fim, na linha 92, a lista com os objetos do tipo \texttt{Pais} é retornada.
 
-Note que o método ``obterPorId'', definido na Listagem 4.14, tem uma implementação muito parecida com o método ``listarTodos'', só que no caso do ``obterPorId'', apenas um objeto pode ser retornado, visto que cada registro da tabela pais tem um identificador específico. Caso o id passado como parâmetro não represente um registro da tabela pais, o método retorna null.
+Note que o método \inlineJavaCode{obterPorId( int id )} tem uma implementação muito parecida com o método \inlineJavaCode{listarTodos()}, só que no caso do \texttt{obterPorId}, apenas um objeto pode ser retornado, visto que cada registro da tabela \texttt{pais} tem um identificador específico. Caso o \texttt{id} passado como parâmetro não represente um registro da tabela \texttt{pais}, o método retorna \inlineJavaCode{null}.
 
-Agora, como exercício, modifique a classe TestePaisDAO para testar todos os métodos que foram implementados. Verifique se todos estão corretos usando o MySQL Workbench para comparar os resultados obtidos. Tente entender a implementação de cada método do CRUD.
+Agora, como exercício, modifique a classe \texttt{TestePaisDAO} para testar todos os métodos que foram implementados. Verifique se todos estão corretos usando o MySQL Workbench para comparar os resultados obtidos. Tente entender a implementação de cada método do CRUD. Não fez o exercício? Então faça! Ele não é opcional.
 
-Não fez o exercício? Então faça! Ele não é opcional.
+Viu só que legal? Com tudo isso que fizemos, conseguimos isolar toda a camada de persistência da nossa aplicação. Para cada tabela nova que tivermos na base de dados, precisamos implementar a classe correspondente à tabela (que chamamos de entidade) e a classe DAO que vai manipular os objetos da classe criada e fazer o intercâmbio entre o mundo orientado a objetos com o mundo relacional. Essa comunicação entre objetos e o modelo relacional é chamada de Object-Relational Mapping (ORM). Existem alguns \textit{frameworks} que automatizam esse processo, gerando todo o código SQL automaticamente para nós. Infelizmente não teremos tempo para aprendê-los. Um desses \textit{frameworks} é o Hibernate.
 
-Viu só que legal? Com tudo isso que fizemos, conseguimos isolar toda a camada de persistência da nossa aplicação. Para cada tabela nova que tivermos na base de dados, precisamos implementar a classe correspondente à tabela (que chamamos de entidade) e a classe DAO que vai manipular os objetos da classe criada e fazer o intercâmbio entre o mundo orientado a objetos com o mundo relacional. Essa comunicação entre objetos e o modelo relacional, é chamada de ORM (Object-Relational Mapping – Mapeamento Objeto-Relacional). Existem diversos frameworks que automatizam esse processo, gerando todo o código SQL automaticamente para nós. Infelizmente não teremos tempo para aprendê-los. Um desses frameworks é o Hibernate.
+\begin{saibaMais}
+    Quer saber mais sobre ORM? Dê uma olhada nesses \textit{links}: \url{http://pt.wikipedia.org/wiki/Mapeamento_objeto-relacional}, \url{http://en.wikipedia.org/wiki/Object-relational_mapping}, \url{http://www.hibernate.org/}
+\end{saibaMais}
 
-<Saiba mais:
-Quer saber mais sobre ORM? Acesse os links a seguir:
-http://pt.wikipedia.org/wiki/Mapeamento\_objeto-relacional
-http://en.wikipedia.org/wiki/Object-relational\_mapping (em inglês)
-http://www.hibernate.org/
->
 Estamos quase acabando! Vamos para o último padrão de projeto.
-
 
 
 \section{Padrão de Projeto \textit{Model-View-Controller} (MVC)}
 
 
-O padrão MVC (Model-View-Controller – Modelo-Visualização-Controle) é um padrão muito utilizado no desenvolvimento de aplicações que utilizam linguagens orientadas a objetos. Este padrão ajuda os desenvolvedores a separar as regras de negócio da aplicação, ou seja, as regras de como os dados devem se armazenados, qual a ordem que devem ser gravados, etc., da lógica de apresentação desses dados, ou seja, como eles serão exibidos aos usuários do sistema. Essa separação se dá utilizando três camadas: 
+O padrão MVC é um padrão muito utilizado no desenvolvimento de aplicações que utilizam linguagens orientadas a objetos. Este padrão ajuda os desenvolvedores a separar as regras de negócio da aplicação, ou seja, as regras de como os dados devem se armazenados, qual a ordem que devem ser gravados etc., da lógica de apresentação desses dados, ou seja, como eles serão exibidos aos usuários do sistema. Essa separação se dá utilizando três camadas: 
 
-•	Model (Modelo): A camada Model é usada para organizar como a informação é armazenada e gerenciada dentro da aplicação. No exemplo que construímos durante esta aula, as classes Pais e PaisDAO fazem parte do modelo.
+\begin{itemize}
 
-•	View (Visualização): Essa camada organiza os recursos utilizados para exibir ao usuário os dados que são gerenciados pela camada de modelo.
-
-•	Controller (Controle): A camada Controller, como o próprio nome já diz, é responsável por controlar o fluxo de execução da aplicação.
+    \item \textbf{\textit{Model} (Modelo):} A camada \textit{Model} é usada para organizar como os dados são armazenados e gerenciados dentro da aplicação. No exemplo que construímos durante esta aula, as classes \texttt{Pais} e \texttt{PaisDAO} fazem parte do modelo;
+    
+    \item \textbf{\textit{View} (Visualização):} Essa camada organiza os recursos utilizados para exibir ao usuário os dados que são gerenciados pela camada de modelo;
+    
+    \item \textbf{\textit{Controller} (Controle):} A camada \textit{Controller}, como o próprio nome já diz, é responsável por controlar o fluxo de execução da aplicação.
+    
+\end{itemize}
 
 A partir dessas definições, nós podemos ver nitidamente, nos exemplos que estamos construindo desde o início da disciplina, qual recurso faz parte de cada camada. A entidade Pais faz parte do modelo. Uma JSP faz parte da visualização, pois é usada pelo usuário tanto para inserir dados no sistema quanto para visualizá-los. Os Servlets que construímos fazem parte do controle, pois são eles que recebem os dados, os utilizam usando a camada de modelo e decidem para onde o fluxo da aplicação deve ser direcionado, por exemplo, uma página JSP que vai exibir a saída gerada por eles.
 
-Essa foi uma pequena introdução do MVC, pois durante a próxima aula nós iremos usá-lo extensivamente no projeto que iremos criar. Tenho certeza que você vai achar muito legal e útil! Como de costume, pratique o que você aprendeu durante esta aula, com as atividades de aprendizagem.
-
+Essa foi uma pequena introdução do MVC, pois durante o próximo Capítulo nós iremos usá-lo extensivamente no projeto que iremos criar. Tenho certeza que você vai achar muito legal e útil! Como de costume, pratique o que você aprendeu durante este Capítulo com as atividades de aprendizagem.
 
 
 \section{Resumo}
 
-Nesta aula demos um passo muito importante na nossa vida como desenvolvedores. Nós aprendemos que existem os chamados ``padrões de projeto'' ou ``design patterns'', que são padrões que guiam os desenvolvedores na solução de problemas recorrentes através do uso de soluções de sucesso. Estudamos os padrões Factory e DAO implementando exemplos e aprendemos o básico do funcionamento do padrão MVC. Na próxima aula iremos implementar um projeto completo usando esses três padrões. 
+Neste Capítulo demos um passo muito importante na nossa vida como desenvolvedores. Nós aprendemos que existem os chamados ``padrões de projeto'' ou ``\textit{design patterns}'', que são padrões que guiam os desenvolvedores na solução de problemas recorrentes através do uso de soluções de sucesso. Estudamos os padrões \textit{Factory} e DAO implementando exemplos e aprendemos o básico do funcionamento do padrão MVC. No próximo capítulo iremos implementar um projeto completo usando esses três padrões. 
 
 
 \section{Exercícios}
 
-1 – Defina, com suas palavras, o padrão Factory.
-2 – Defina, com suas palavras, o padrão DAO.
-3 – Defina, com suas palavras, o padrão MVC.
-4 – Da mesma forma que fizemos para a tabela ``pais'', crie uma tabela no MySQL, usando o Workbench, com o nome de ``fruta''. Essa tabela deve ter como colunas um campo identificador (id), um campo que armazenará o nome da fruta (VARCHAR) e um campo para armazenar a cor predominante da fruta (VARCHAR). Implemente, no projeto que criamos durante a Aula 4, a entidade Fruta e a classe FrutaDAO. Crie uma classe de testes chamada TesteFrutaDAO para testar os métodos do DAO da fruta. 
-5 – Repita a atividade 4, só que agora para a tabela ``carro''. Um carro deve ter um identificador, um nome (VARCHAR), um modelo (VARCHAR) e um ano de fabricação (INT).
-6 – Repita a atividade 4, só que agora para a tabela ``produto''. Um produto deve ter um identificador, uma descrição (VARCHAR) e uma quantidade em estoque (INT).
+\begin{exercicioSemArquivo}{}{}{}
+    Defina, com suas palavras, o padrão \textit{Factory}.
+\end{exercicioSemArquivo}
+
+\begin{exercicioSemArquivo}{}{}{}
+    Defina, com suas palavras, o padrão DAO.
+\end{exercicioSemArquivo}
+
+\begin{exercicioSemArquivo}{}{}{}
+    Defina, com suas palavras, o padrão MVC.
+\end{exercicioSemArquivo}
 
 
 \section{Projetos}
+
+\begin{projetoSemArquivo}{}{}{}
+    Da mesma forma que fizemos para a tabela \texttt{pais}, crie uma tabela na base de dados \texttt{testes\_padroes}, usando o MySQL Workbench, com o nome de ``fruta''. Essa tabela deve ter como colunas um campo identificador (\inlineSQLCode{INT}), um campo que armazenará o nome da fruta (\inlineSQLCode{VARCHAR}) e um campo para armazenar a cor predominante da fruta (\inlineSQLCode{VARCHAR}). Implemente, no projeto que criamos durante este Capítulo, a entidade \texttt{Fruta} e a classe \texttt{FrutaDAO}. Crie uma classe de testes chamada \texttt{TesteFrutaDAO} para testar os métodos do DAO da fruta. 
+\end{projetoSemArquivo}
+
+\begin{projetoSemArquivo}{}{}{}
+    Repita o Projeto 4.1, só que agora para a tabela ``carro''. Um carro deve ter um identificador, um nome (\inlineSQLCode{VARCHAR}), um modelo (\inlineSQLCode{VARCHAR}) e um ano de fabricação (\inlineSQLCode{INT}).
+\end{projetoSemArquivo}
+
+\begin{projetoSemArquivo}{}{}{}
+    Repita o Projeto 4.1, só que agora para a tabela ``produto''. Um produto deve ter um identificador, uma descrição (\inlineSQLCode{VARCHAR}) e uma quantidade em estoque (\inlineSQLCode{INT}).
+\end{projetoSemArquivo}
+
+
