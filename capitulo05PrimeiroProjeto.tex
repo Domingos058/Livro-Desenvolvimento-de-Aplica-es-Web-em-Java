@@ -1,10 +1,7 @@
 \chapter{Primeiro Projeto - Sistema para Controle de Clientes}
-\epigraph{``\textit{texto}''.}{autor}
+\epigraph{``\textit{É longo o caminho que vai do projeto à coisa}''.}{Molière}
 
-\lettrine[lines=4, lhang=0.1, lraise=0, loversize=0.2, findent=0.1em]{\textcolor{corAzulTema}{N}}{ESTE} aaa.
-
-Objetivos
-Entender e realizar a construção de uma aplicação Web em Java completa.
+\lettrine[lines=4, lhang=0.1, lraise=0, loversize=0.2, findent=0.1em]{\textcolor{corAzulTema}{N}}{ESTE} Capítulo teremos como objetivos entender e realizar a construção de uma aplicação Web em Java completa.
 
 
 \section{Introdução}
@@ -19,7 +16,8 @@ Nesta aula iremos colocar em prática tudo o que aprendemos nas aulas anteriores
 Imagine que fomos contratados para criar um sistema para controle de cadastro de clientes. Esse sistema deve manter vários dados de um cliente: nome, sobrenome, data de nascimento, CPF, e-mail, logradouro, número, bairro, cidade e CEP. O contratante também deseja que seja possível manter um cadastro de cidades e de estados, sendo que as cidades devem ter um nome e um estado, enquanto um estado deve ter um nome e uma sigla. Cada um dos cadastros (cliente, cidade e estado), deve conter as funcionalidades de criar, alterar e excluir um determinado registro.
 Vamos analisar esses requisitos. Primeiramente, vamos identificar os tipos de entidades que farão parte do sistema, fazendo a seguinte pergunta: Quais são os tipos de “coisas” que o sistema deve gerenciar? O sistema deve manter um cadastro de Clientes, um cadastro de Cidades e um cadastro de Estados. Sendo assim, identificamos três entidades, ou seja, Cliente, Cidade e Estado.
 Cada um desses tipos de entidade tem uma determinada lista de características. Vamos organizá-las em uma tabela. Veja essa organização na Tabela 5.1.
-Tabela 5.1: Características dos tipos de entidade
+Tabela 5.1: Características dos tipos de entidade
+
 Entidade	Atributos (características)
 Cliente	- nome;
 - sobrenome;
@@ -37,7 +35,8 @@ Estado	- nome;
 - sigla.
 Fonte: do autor
 Sabemos que esses tipos de entidade que foram identificados se tornarão tabelas na nossa base de dados relacional não é mesmo? Cada característica de cada tipo de entidade se tornará uma coluna na tabela correspondente. Sabemos também que cada registro de uma determinada tabela precisa ser diferenciado dos outros não é mesmo? Para isso analisamos as tabelas até que consigamos identificar as chaves primárias de cada uma delas. Uma chave primária é o conjunto mínimo de um ou mais atributos de um determinado tipo de entidade que garante a unicidade de um registro, sendo assim, precisamos encontrar, na lista de características de cada entidade, uma ou mais características que, usadas em conjunto, garantem que um registro é diferente de outro. Tomemos como exemplo o tipo de entidade Estado. Veja na Tabela 5.2 uma lista de registros da tabela “estado” do nosso provável banco de dados.
-Tabela 5.2: Exemplos de registros da tabela “estado”
+Tabela 5.2: Exemplos de registros da tabela “estado”
+
 Tabela: estado
 nome	sigla
 São Paulo	SP
@@ -53,7 +52,8 @@ O que ganhamos com isso? Ganhamos desempenho, pois estamos usando números para 
 \section{Projetando Banco de Dados}
 
 Não irei documentar aqui todo o processo de projeto do banco de dados, que vai desde a análise dos requisitos, passando pela criação do DER (Diagrama Entidade-Relacionamento) até a implementação do modelo físico, pois este não é o objetivo dessa disciplina, mas note que no desenvolvimento de um sistema esses passos são normalmente realizados. Iremos então partir diretamente para a implementação do modelo físico. Antes de criarmos o SQL para a criação da estrutura da nossa base de dados, vamos organizar os atributos das nossas tabelas – que são baseadas nas características dos tipos de entidade – e especificar suas características. Veja a Tabela 5.3.
-Tabela 5.3: Detalhamento das colunas de cada tabela
+Tabela 5.3: Detalhamento das colunas de cada tabela
+
 Tabela	Coluna	Tipo	É único?
 cliente	id*	INT	sim
 	nome	VARCHAR(45)	
