@@ -22,10 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet( name = "ClientesServlet", urlPatterns = { "/processaClientes" } )
 public class ClientesServlet extends HttpServlet {
 
-    protected void processRequest( HttpServletRequest request, HttpServletResponse response )
+    protected void processRequest( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
-        
-        request.setCharacterEncoding( "UTF-8" );
         
         String acao = request.getParameter( "acao" );
         ClienteDAO dao = null;
@@ -35,7 +35,7 @@ public class ClientesServlet extends HttpServlet {
 
             dao = new ClienteDAO();
 
-            if ( acao.equals( "criar" ) ) {
+            if ( acao.equals( "inserir" ) ) {
 
                 String nome = request.getParameter( "nome" );
                 String sobrenome = request.getParameter( "sobrenome" );
@@ -46,7 +46,8 @@ public class ClientesServlet extends HttpServlet {
                 String numero = request.getParameter( "numero" );
                 String bairro = request.getParameter( "bairro" );
                 String cep = request.getParameter( "cep" );
-                int idCidade = Integer.parseInt( request.getParameter( "idCidade" ) );
+                int idCidade = Integer.parseInt( 
+                        request.getParameter( "idCidade" ) );
 
                 Cidade ci = new Cidade();
                 ci.setId( idCidade );
@@ -88,7 +89,8 @@ public class ClientesServlet extends HttpServlet {
                 String numero = request.getParameter( "numero" );
                 String bairro = request.getParameter( "bairro" );
                 String cep = request.getParameter( "cep" );
-                int idCidade = Integer.parseInt( request.getParameter( "idCidade" ) );
+                int idCidade = Integer.parseInt( 
+                        request.getParameter( "idCidade" ) );
 
                 Cidade ci = new Cidade();
                 ci.setId( idCidade );
@@ -131,24 +133,20 @@ public class ClientesServlet extends HttpServlet {
                 disp = request.getRequestDispatcher(
                         "/formularios/clientes/listagem.jsp" );
 
-            } else if ( acao.equals( "prepAlteracao" ) ) {
-
+            } else {
+                
                 int id = Integer.parseInt( request.getParameter( "id" ) );
                 Cliente c = dao.obterPorId( id );
                 request.setAttribute( "cliente", c );
-
-                disp = request.getRequestDispatcher(
-                        "/formularios/clientes/alterar.jsp" );
-
-            } else if ( acao.equals( "prepExclusao" ) ) {
-
-                int id = Integer.parseInt( request.getParameter( "id" ) );
-                Cliente c = dao.obterPorId( id );
-                request.setAttribute( "cliente", c );
-
-                disp = request.getRequestDispatcher(
-                        "/formularios/clientes/excluir.jsp" );
-
+                
+                if ( acao.equals( "prepararAlteracao" ) ) {
+                    disp = request.getRequestDispatcher( 
+                            "/formularios/clientes/alterar.jsp" );
+                } else if ( acao.equals( "prepararExclusao" ) ) {
+                    disp = request.getRequestDispatcher( 
+                            "/formularios/clientes/excluir.jsp" );
+                }
+                
             }
 
         } catch ( SQLException exc ) {
@@ -170,13 +168,17 @@ public class ClientesServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+    protected void doGet( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
         processRequest( request, response );
     }
 
     @Override
-    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+    protected void doPost( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
         processRequest( request, response );
     }

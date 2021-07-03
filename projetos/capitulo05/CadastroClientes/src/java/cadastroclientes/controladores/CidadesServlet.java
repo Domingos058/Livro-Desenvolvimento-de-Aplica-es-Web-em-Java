@@ -20,10 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet( name = "CidadesServlet", urlPatterns = { "/processaCidades" } )
 public class CidadesServlet extends HttpServlet {
 
-    protected void processRequest( HttpServletRequest request, HttpServletResponse response )
+    protected void processRequest( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
-        
-        request.setCharacterEncoding( "UTF-8" );
         
         String acao = request.getParameter( "acao" );
         CidadeDAO dao = null;
@@ -33,10 +33,11 @@ public class CidadesServlet extends HttpServlet {
 
             dao = new CidadeDAO();
 
-            if ( acao.equals( "criar" ) ) {
+            if ( acao.equals( "inserir" ) ) {
 
                 String nome = request.getParameter( "nome" );
-                int idEstado = Integer.parseInt( request.getParameter( "idEstado" ) );
+                int idEstado = Integer.parseInt( 
+                        request.getParameter( "idEstado" ) );
 
                 Estado e = new Estado();
                 e.setId( idEstado );
@@ -54,7 +55,8 @@ public class CidadesServlet extends HttpServlet {
 
                 int id = Integer.parseInt( request.getParameter( "id" ) );
                 String nome = request.getParameter( "nome" );
-                int idEstado = Integer.parseInt( request.getParameter( "idEstado" ) );
+                int idEstado = Integer.parseInt( 
+                        request.getParameter( "idEstado" ) );
 
                 Estado e = new Estado();
                 e.setId( idEstado );
@@ -81,24 +83,20 @@ public class CidadesServlet extends HttpServlet {
                 disp = request.getRequestDispatcher(
                         "/formularios/cidades/listagem.jsp" );
 
-            } else if ( acao.equals( "prepAlteracao" ) ) {
-
+            } else {
+                
                 int id = Integer.parseInt( request.getParameter( "id" ) );
                 Cidade c = dao.obterPorId( id );
                 request.setAttribute( "cidade", c );
-
-                disp = request.getRequestDispatcher(
-                        "/formularios/cidades/alterar.jsp" );
-
-            } else if ( acao.equals( "prepExclusao" ) ) {
-
-                int id = Integer.parseInt( request.getParameter( "id" ) );
-                Cidade c = dao.obterPorId( id );
-                request.setAttribute( "cidade", c );
-
-                disp = request.getRequestDispatcher(
-                        "/formularios/cidades/excluir.jsp" );
-
+                
+                if ( acao.equals( "prepararAlteracao" ) ) {
+                    disp = request.getRequestDispatcher( 
+                            "/formularios/cidades/alterar.jsp" );
+                } else if ( acao.equals( "prepararExclusao" ) ) {
+                    disp = request.getRequestDispatcher( 
+                            "/formularios/cidades/excluir.jsp" );
+                }
+                
             }
 
         } catch ( SQLException exc ) {
@@ -120,13 +118,17 @@ public class CidadesServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+    protected void doGet( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
         processRequest( request, response );
     }
 
     @Override
-    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+    protected void doPost( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
         processRequest( request, response );
     }

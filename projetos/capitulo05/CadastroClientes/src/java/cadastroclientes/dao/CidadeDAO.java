@@ -85,7 +85,8 @@ public class CidadeDAO extends DAO<Cidade> {
                 "    cidade c, " + 
                 "    estado e " + 
                 "WHERE" + 
-                "    c.estado_id = e.id;" );
+                "    c.estado_id = e.id " +
+                "ORDER BY c.nome, e.nome, e.sigla;" );
 
         ResultSet rs = stmt.executeQuery();
 

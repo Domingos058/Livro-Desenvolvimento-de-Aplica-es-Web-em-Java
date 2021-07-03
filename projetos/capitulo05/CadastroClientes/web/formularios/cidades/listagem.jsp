@@ -35,8 +35,8 @@
                         <td>${cidade.id}</td>
                         <td>${cidade.nome}</td>
                         <td>${cidade.estado.sigla}</td>
-                        <td><a href="${pageContext.request.contextPath}/processaCidades?acao=prepAlteracao&id=${cidade.id}">Alterar</a></td>
-                        <td><a href="${pageContext.request.contextPath}/processaCidades?acao=prepExclusao&id=${cidade.id}">Excluir</a></td>
+                        <td><a href="${pageContext.request.contextPath}/processaCidades?acao=prepararAlteracao&id=${cidade.id}">Alterar</a></td>
+                        <td><a href="${pageContext.request.contextPath}/processaCidades?acao=prepararExclusao&id=${cidade.id}">Excluir</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

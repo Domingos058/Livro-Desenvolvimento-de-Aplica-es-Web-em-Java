@@ -132,7 +132,8 @@ public class ClienteDAO extends DAO<Cliente> {
                 "    estado e " + 
                 "WHERE" + 
                 "    c.cidade_id = ci.id AND " + 
-                "    ci.estado_id = e.id;" );
+                "    ci.estado_id = e.id " +
+                "ORDER BY c.nome, c.sobreNome, ci.nome;" );
 
         ResultSet rs = stmt.executeQuery();
 

@@ -74,7 +74,8 @@ public class EstadoDAO extends DAO<Estado> {
         List<Estado> lista = new ArrayList<Estado>();
 
         PreparedStatement stmt = getConnection().prepareStatement(
-                "SELECT * FROM estado;" );
+                "SELECT * FROM estado " + 
+                "ORDER BY nome, sigla;" );
 
         ResultSet rs = stmt.executeQuery();
 

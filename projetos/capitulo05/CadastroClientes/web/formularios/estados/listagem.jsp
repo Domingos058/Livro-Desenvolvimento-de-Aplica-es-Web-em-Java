@@ -35,8 +35,8 @@
                         <td>${estado.id}</td>
                         <td>${estado.nome}</td>
                         <td>${estado.sigla}</td>
-                        <td><a href="${pageContext.request.contextPath}/processaEstados?acao=prepAlteracao&id=${estado.id}">Alterar</a></td>
-                        <td><a href="${pageContext.request.contextPath}/processaEstados?acao=prepExclusao&id=${estado.id}">Excluir</a></td>
+                        <td><a href="${pageContext.request.contextPath}/processaEstados?acao=prepararAlteracao&id=${estado.id}">Alterar</a></td>
+                        <td><a href="${pageContext.request.contextPath}/processaEstados?acao=prepararExclusao&id=${estado.id}">Excluir</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

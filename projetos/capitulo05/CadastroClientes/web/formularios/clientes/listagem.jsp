@@ -41,8 +41,8 @@
                         <td>${cliente.email}</td>
                         <td>${cliente.cpf}</td>
                         <td>${cliente.cidade.nome}</td>
-                        <td><a href="${pageContext.request.contextPath}/processaClientes?acao=prepAlteracao&id=${cliente.id}">Alterar</a></td>
-                        <td><a href="${pageContext.request.contextPath}/processaClientes?acao=prepExclusao&id=${cliente.id}">Excluir</a></td>
+                        <td><a href="${pageContext.request.contextPath}/processaClientes?acao=prepararAlteracao&id=${cliente.id}">Alterar</a></td>
+                        <td><a href="${pageContext.request.contextPath}/processaClientes?acao=prepararExclusao&id=${cliente.id}">Excluir</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

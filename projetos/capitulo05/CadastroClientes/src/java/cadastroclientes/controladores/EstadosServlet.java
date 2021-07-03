@@ -19,10 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet( name = "EstadosServlet", urlPatterns = { "/processaEstados" } )
 public class EstadosServlet extends HttpServlet {
 
-    protected void processRequest( HttpServletRequest request, HttpServletResponse response )
+    protected void processRequest( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
-        
-        request.setCharacterEncoding( "UTF-8" );
         
         String acao = request.getParameter( "acao" );
         EstadoDAO dao = null;
@@ -32,7 +32,7 @@ public class EstadosServlet extends HttpServlet {
 
             dao = new EstadoDAO();
 
-            if ( acao.equals( "criar" ) ) {
+            if ( acao.equals( "inserir" ) ) {
 
                 String nome = request.getParameter( "nome" );
                 String sigla = request.getParameter( "sigla" );
@@ -74,24 +74,20 @@ public class EstadosServlet extends HttpServlet {
                 disp = request.getRequestDispatcher(
                         "/formularios/estados/listagem.jsp" );
 
-            } else if ( acao.equals( "prepAlteracao" ) ) {
-
+            } else {
+                
                 int id = Integer.parseInt( request.getParameter( "id" ) );
                 Estado e = dao.obterPorId( id );
                 request.setAttribute( "estado", e );
-
-                disp = request.getRequestDispatcher(
-                        "/formularios/estados/alterar.jsp" );
-
-            } else if ( acao.equals( "prepExclusao" ) ) {
-
-                int id = Integer.parseInt( request.getParameter( "id" ) );
-                Estado e = dao.obterPorId( id );
-                request.setAttribute( "estado", e );
-
-                disp = request.getRequestDispatcher(
-                        "/formularios/estados/excluir.jsp" );
-
+                
+                if ( acao.equals( "prepararAlteracao" ) ) {
+                    disp = request.getRequestDispatcher( 
+                            "/formularios/estados/alterar.jsp" );
+                } else if ( acao.equals( "prepararExclusao" ) ) {
+                    disp = request.getRequestDispatcher( 
+                            "/formularios/estados/excluir.jsp" );
+                }
+                
             }
 
         } catch ( SQLException exc ) {
@@ -113,13 +109,17 @@ public class EstadosServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+    protected void doGet( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
         processRequest( request, response );
     }
 
     @Override
-    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+    protected void doPost( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
         processRequest( request, response );
     }

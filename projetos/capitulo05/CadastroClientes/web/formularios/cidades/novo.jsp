@@ -17,7 +17,7 @@
         <form method="post"
               action="${pageContext.request.contextPath}/processaCidades">
 
-            <input name="acao" type="hidden" value="criar"/>
+            <input name="acao" type="hidden" value="inserir"/>
 
             <table>
                 <tr>
