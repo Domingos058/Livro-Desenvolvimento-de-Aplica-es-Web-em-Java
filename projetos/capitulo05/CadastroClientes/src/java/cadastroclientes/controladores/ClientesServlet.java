@@ -19,7 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Prof. Dr. David Buzatto
  */
-@WebServlet( name = "ClientesServlet", urlPatterns = { "/processaClientes" } )
+@WebServlet( name = "ClientesServlet", 
+             urlPatterns = { "/processaClientes" } )
 public class ClientesServlet extends HttpServlet {
 
     protected void processRequest( 
@@ -79,7 +80,7 @@ public class ClientesServlet extends HttpServlet {
 
             } else if ( acao.equals( "alterar" ) ) {
 
-                int id = Integer.parseInt( request.getParameter( "id" ) );
+                int id = Integer.parseInt(request.getParameter( "id" ));
                 String nome = request.getParameter( "nome" );
                 String sobrenome = request.getParameter( "sobrenome" );
                 String dataNascimento = request.getParameter( "dataNascimento" );
@@ -107,7 +108,7 @@ public class ClientesServlet extends HttpServlet {
                 c.setCep( cep );
                 c.setCidade( ci );
 
-                SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy" );
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
                 try {
                     java.util.Date data = sdf.parse( dataNascimento );
@@ -123,7 +124,7 @@ public class ClientesServlet extends HttpServlet {
 
             } else if ( acao.equals( "excluir" ) ) {
 
-                int id = Integer.parseInt( request.getParameter( "id" ) );
+                int id = Integer.parseInt(request.getParameter( "id" ));
 
                 Cliente c = new Cliente();
                 c.setId( id );
@@ -135,7 +136,7 @@ public class ClientesServlet extends HttpServlet {
 
             } else {
                 
-                int id = Integer.parseInt( request.getParameter( "id" ) );
+                int id = Integer.parseInt(request.getParameter( "id" ));
                 Cliente c = dao.obterPorId( id );
                 request.setAttribute( "cliente", c );
                 

@@ -1,4 +1,4 @@
-\chapter{Java para Web}
+\chapter{Java para Web}\label{cap:javaParaWeb}
 \epigraph{``\textit{Uma longa viagem começa com um único passo}''.}{Lao-Tsé}
 
 \lettrine[lines=4, lhang=0.1, lraise=0, loversize=0.2, findent=0.1em]{\textcolor{corAzulTema}{N}}{ESTE} Capítulo teremos como objetivos entender o funcionamento e a arquitetura de aplicações Web desenvolvidas em Java, entender o funcionamento dos Servlets e dos JSPs e aprender a configurar e a utilizar a \textit{Integrated Development Environment} (IDE) Apache NetBeans para o apoio ao desenvolvimento de aplicações Web em Java.
@@ -108,7 +108,7 @@ Já aprendemos que os Servlets são componentes de uma aplicação Web feita em 
 
 A rigor, um JSP é processado pelo Servidor de Aplicações e todo o seu conteúdo é traduzido em um Servlet, que por sua vez é compilado e executado pelo Servidor. Todo esse processo é realizado nos bastidores, então não precisamos nos preocupar com esses detalhes, mas é sempre bom saber um pouquinho como as coisas funcionam não é mesmo?
 
-Por causa desse comportamento de tradução das JSPs para Servlets, nós podemos inserir código Java dentro das JSPs, mas novamente não iremos usar essa abordagem, muito menos irei ensinar como fazer, visto que da mesma forma que gerar HTML dentro de um Servlet manualmente é desencorajado, essa abordagem de inserir código Java dentro das JSPs também não deve ser utilizada. Uma JSP deve ser usada para exibir dados, não para processá-los diretamente usando código Java. Note que não estou dizendo que não iremos manipular dados dentro das JSPs, mas sim que existem formas seguras e corretas para fazer isso. Aprenderemos esses detalhes só no Capítulo 3, pois até lá, já teremos aprendido outros detalhes que ainda não foram apresentados.
+Por causa desse comportamento de tradução das JSPs para Servlets, nós podemos inserir código Java dentro das JSPs, mas novamente não iremos usar essa abordagem, muito menos irei ensinar como fazer, visto que da mesma forma que gerar HTML dentro de um Servlet manualmente é desencorajado, essa abordagem de inserir código Java dentro das JSPs também não deve ser utilizada. Uma JSP deve ser usada para exibir dados, não para processá-los diretamente usando código Java. Note que não estou dizendo que não iremos manipular dados dentro das JSPs, mas sim que existem formas seguras e corretas para fazer isso. Aprenderemos esses detalhes só no Capítulo~\ref{cap:elTagLibs}, pois até lá, já teremos aprendido outros detalhes que ainda não foram apresentados.
 
 
 \section{Preparação do Ambiente de Desenvolvimento}
@@ -145,7 +145,7 @@ Por fim, vamos registrar o GlassFish no NetBeans. Com o NetBeans aberto, do lado
 \FloatBarrier
 \begin{figure}[!htbp]
     \centering
-    \caption{Registrando um Servidor no NetBeans}
+    \caption{Registrando um servidor no NetBeans}
     \includegraphics[scale=0.7]{imagens/cap01Servers}
     \\\textbf{Fonte:} Elaborada pelo autor
     \label{fig:cap01Servers}
@@ -157,7 +157,7 @@ Ao clicar em \destaque{\textit{Add Server...}} o assistente para registrar o ser
 \FloatBarrier
 \begin{figure}[!htbp]
     \centering
-    \caption{Registrando um Servidor no NetBeans - Passo 1}
+    \caption{Registrando um servidor no NetBeans - Passo 1}
     \includegraphics[scale=0.7]{imagens/cap01AddServerInstanceP01}
     \\\textbf{Fonte:} Elaborada pelo autor
     \label{fig:cap01AddServerP01}
@@ -169,7 +169,7 @@ O segundo passo do assistente precisamos definir onde os arquivos do servidor es
 \FloatBarrier
 \begin{figure}[!htbp]
     \centering
-    \caption{Registrando um Servidor no NetBeans - Passo 2}
+    \caption{Registrando um servidor no NetBeans - Passo 2}
     \includegraphics[scale=0.7]{imagens/cap01AddServerInstanceP02}
     \\\textbf{Fonte:} Elaborada pelo autor
     \label{fig:cap01AddServerP02}
@@ -181,7 +181,7 @@ Nesse passo, faremos a última configuração necessária, que consiste apenas e
 \FloatBarrier
 \begin{figure}[!htbp]
     \centering
-    \caption{Registrando um Servidor no NetBeans - Passo 3}
+    \caption{Registrando um servidor no NetBeans - Passo 3}
     \includegraphics[scale=0.7]{imagens/cap01AddServerInstanceP03}
     \\\textbf{Fonte:} Elaborada pelo autor
     \label{fig:cap01AddServerP03}
@@ -229,7 +229,7 @@ Salve o arquivo depois de editá-lo. Se o navegador ainda estiver aberto no \tex
 \end{figure}
 \FloatBarrier
 
-Poderíamos ter usado um arquivo \textit{JavaServer Pages} (JSP) ao invés de usar um arquivo HTML, permitindo a existência de outros tipos de estruturas que vamos aprender no decorrer da disciplina, mas por enquanto vamos manter o HTML. Vamos testar os Servlets agora? Como primeiro exemplo, nós vamos criar um Servlet manualmente, enquanto os outros que vamos desenvolver durante o nosso curso serão feitos usando um assistente do NetBeans, mas essa forma fácil nós só vamos aprender a partir do Capítulo 2.
+Poderíamos ter usado um arquivo \textit{JavaServer Pages} (JSP) ao invés de usar um arquivo HTML, permitindo a existência de outros tipos de estruturas que vamos aprender no decorrer da disciplina, mas por enquanto vamos manter o HTML. Vamos testar os Servlets agora? Como primeiro exemplo, nós vamos criar um Servlet manualmente, enquanto os outros que vamos desenvolver durante o nosso curso serão feitos usando um assistente do NetBeans, mas essa forma fácil nós só vamos aprender a partir do Capítulo~\ref{cap:processamentoFormularios}.
 
 Aprenderemos como criar manualmente um Servlet, para que possamos aprender alguns detalhes importantes sobre o funcionamento de aplicações Web feitas em Java. Antes disso, e daqui por diante, sempre que você criar um projeto Web, antes de qualquer coisa, siga os seguintes passos para adicionar a biblioteca necessária para viablizar o desenvolvimento.
 
@@ -240,7 +240,7 @@ Aprenderemos como criar manualmente um Servlet, para que possamos aprender algun
     \FloatBarrier
     \begin{figure}[!htbp]
         \centering
-        \caption{Inserção de Bibliotecas no Projeto}
+        \caption{Inserção de bibliotecas no projeto}
         \includegraphics[scale=0.9]{imagens/cap01AddLibraryProjeto}
         \\\textbf{Fonte:} Elaborada pelo autor
         \label{fig:cap01AddLibraryProjeto}
@@ -252,7 +252,7 @@ Aprenderemos como criar manualmente um Servlet, para que possamos aprender algun
     \FloatBarrier
     \begin{figure}[!htbp]
         \centering
-        \caption{Diálogo de Inserção de Bibliotecas}
+        \caption{Diálogo de inserção de bibliotecas}
         \includegraphics[scale=0.9]{imagens/cap01AddLibraryDialog}
         \\\textbf{Fonte:} Elaborada pelo autor
         \label{fig:cap01AddLibraryDialog}
@@ -264,7 +264,7 @@ Aprenderemos como criar manualmente um Servlet, para que possamos aprender algun
     \FloatBarrier
     \begin{figure}[!htbp]
         \centering
-        \caption{Diálogo de Importação de Bibliotecas}
+        \caption{Diálogo de importação de bibliotecas}
         \includegraphics[scale=0.9]{imagens/cap01AddLibraryImport}
         \\\textbf{Fonte:} Elaborada pelo autor
         \label{fig:cap01AddLibraryImport}
@@ -276,7 +276,7 @@ Aprenderemos como criar manualmente um Servlet, para que possamos aprender algun
     \FloatBarrier
     \begin{figure}[!htbp]
         \centering
-        \caption{Diálogo de Inserção de Bibliotecas com Biblioteca Importada}
+        \caption{Diálogo de inserção de bibliotecas com biblioteca importada}
         \includegraphics[scale=0.9]{imagens/cap01AddLibraryImported}
         \\\textbf{Fonte:} Elaborada pelo autor
         \label{fig:cap01AddLibraryImported}
@@ -288,7 +288,7 @@ Aprenderemos como criar manualmente um Servlet, para que possamos aprender algun
     \FloatBarrier
     \begin{figure}[!htbp]
         \centering
-        \caption{Biblioteca Inserida no Projeto}
+        \caption{Biblioteca inserida no projeto}
         \includegraphics[scale=0.9]{imagens/cap01AddLibraryFinished}
         \\\textbf{Fonte:} Elaborada pelo autor
         \label{fig:cap01AddLibraryFinished}
@@ -308,7 +308,7 @@ Agora que importamos e inserimos a biblioteca \destaque{\textit{Jakarta EE Web 8
     \FloatBarrier
     \begin{figure}[!htbp]
         \centering
-        \caption{Criação do Pacote \texttt{olamundoweb.servlets}}
+        \caption{Criação do pacote \texttt{olamundoweb.servlets}}
         \includegraphics[scale=0.9]{imagens/cap01CriacaoPacote}
         \\\textbf{Fonte:} Elaborada pelo autor
         \label{fig:cap01CriacaoPacote}
@@ -343,12 +343,12 @@ Sei que pode parecer um pouco confuso no começo, mas logo você vai pegar o jei
 \end{figure}
 \FloatBarrier
     
-Por mais que nosso exemplo não tenha nenhuma utilidade aparente, ele foi importante para nós entendermos o funcionamento básico de uma aplicação Web feita em Java. Nas próximas aulas vamos colocar o que aprendemos em prática, além de aprender várias outras coisas com o objetivo criarmos um sistema de cadastro na forma de uma aplicação Web. Não se esqueça de praticar o que aprendemos até agora. 
+Por mais que nosso exemplo não tenha nenhuma utilidade aparente, ele foi importante para nós entendermos o funcionamento básico de uma aplicação Web feita em Java. Nos próximos Capítulos vamos colocar o que aprendemos em prática, além de aprender várias outras coisas com o objetivo criarmos um sistema de cadastro na forma de uma aplicação Web. Não se esqueça de praticar o que aprendemos até agora. 
 
 
 \section{Resumo}
 
-Nesta aula aprendemos o que é e como funciona uma aplicação Web em Java. Aprendemos a criar nosso primeiro projeto e alguns detalhes sobre a tecnologia que estamos utilizando. Executamos nossa aplicação e fizemos algumas modificações nela para vermos o que estava sendo feito. Criamos também –de forma manual– um Servlet, que como aprendemos é um dos componentes principais de uma aplicação Web em Java.
+Neste Capítulo aprendemos o que é e como funciona uma aplicação Web em Java. Aprendemos a criar nosso primeiro projeto e alguns detalhes sobre a tecnologia que estamos utilizando. Executamos nossa aplicação e fizemos algumas modificações nela para vermos o que estava sendo feito. Criamos também –de forma manual– um Servlet, que como aprendemos é um dos componentes principais de uma aplicação Web em Java.
 
 
 \section{Exercícios}

@@ -16,7 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Prof. Dr. David Buzatto
  */
-@WebServlet( name = "EstadosServlet", urlPatterns = { "/processaEstados" } )
+@WebServlet( name = "EstadosServlet", 
+             urlPatterns = { "/processaEstados" } )
 public class EstadosServlet extends HttpServlet {
 
     protected void processRequest( 
@@ -48,7 +49,7 @@ public class EstadosServlet extends HttpServlet {
 
             } else if ( acao.equals( "alterar" ) ) {
 
-                int id = Integer.parseInt( request.getParameter( "id" ) );
+                int id = Integer.parseInt(request.getParameter( "id" ));
                 String nome = request.getParameter( "nome" );
                 String sigla = request.getParameter( "sigla" );
 
@@ -64,7 +65,7 @@ public class EstadosServlet extends HttpServlet {
 
             } else if ( acao.equals( "excluir" ) ) {
 
-                int id = Integer.parseInt( request.getParameter( "id" ) );
+                int id = Integer.parseInt(request.getParameter( "id" ));
 
                 Estado e = new Estado();
                 e.setId( id );
@@ -76,7 +77,7 @@ public class EstadosServlet extends HttpServlet {
 
             } else {
                 
-                int id = Integer.parseInt( request.getParameter( "id" ) );
+                int id = Integer.parseInt(request.getParameter( "id" ));
                 Estado e = dao.obterPorId( id );
                 request.setAttribute( "estado", e );
                 

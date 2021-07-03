@@ -1,51 +1,76 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="cp" value="${pageContext.request.contextPath}"/>
+<c:set var="prefixo" value="processaEstados?acao=preparar"/>
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <title>Estados Cadastrados</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/estilos.css"/>
-    </head>
+  <head>
+    <title>Estados Cadastrados</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          type="text/css"
+          href="${cp}/css/estilos.css"/>
+  </head>
 
-    <body>
-        
-        <h1>Estados Cadastrados</h1>
+  <body>
 
-        <p><a href="${pageContext.request.contextPath}/formularios/estados/novo.jsp">Novo Estado</a></p>
+    <h1>Estados Cadastrados</h1>
 
-        <table class="tabelaListagem">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nome</th>
-                    <th>Sigla</th>
-                    <th>Alterar</th>
-                    <th>Excluir</th>
-                </tr>
-            </thead>
-            <tbody>
+    <p>
+      <a href="${cp}/formularios/estados/novo.jsp">
+        Novo Estado
+      </a>
+    </p>
 
-                <jsp:useBean id="servicos" scope="page" class="cadastroclientes.servicos.EstadoServices"/>
+    <table class="tabelaListagem">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nome</th>
+          <th>Sigla</th>
+          <th>Alterar</th>
+          <th>Excluir</th>
+        </tr>
+      </thead>
+      <tbody>
 
-                <c:forEach items="${servicos.todos}" var="estado">
-                    <tr>
-                        <td>${estado.id}</td>
-                        <td>${estado.nome}</td>
-                        <td>${estado.sigla}</td>
-                        <td><a href="${pageContext.request.contextPath}/processaEstados?acao=prepararAlteracao&id=${estado.id}">Alterar</a></td>
-                        <td><a href="${pageContext.request.contextPath}/processaEstados?acao=prepararExclusao&id=${estado.id}">Excluir</a></td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+        <jsp:useBean 
+            id="servicos"
+            scope="page"
+            class="cadastroclientes.servicos.EstadoServices"/>
 
-        <p><a href="${pageContext.request.contextPath}/formularios/estados/novo.jsp">Novo Estado</a></p>
-        
-        <p><a href="${pageContext.request.contextPath}/index.jsp">Tela Principal</a></p>
+        <c:forEach items="${servicos.todos}" var="estado">
+          <tr>
+            <td>${estado.id}</td>
+            <td>${estado.nome}</td>
+            <td>${estado.sigla}</td>
+            <td>
+              <a href="${cp}/${prefixo}Alteracao&id=${estado.id}">
+                Alterar
+              </a>
+            </td>
+            <td>
+              <a href="${cp}/${prefixo}Exclusao&id=${estado.id}">
+                Excluir
+              </a>
+            </td>
+          </tr>
+        </c:forEach>
+      </tbody>
+      
+    </table>
 
-    </body>
+    <p>
+      <a href="${cp}/formularios/estados/novo.jsp">
+        Novo Estado
+      </a>
+    </p>
+
+    <p><a href="${cp}/index.jsp">Tela Principal</a></p>
+
+  </body>
 
 </html>

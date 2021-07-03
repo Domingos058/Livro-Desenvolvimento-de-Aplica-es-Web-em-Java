@@ -14,7 +14,8 @@ import javax.servlet.annotation.WebFilter;
  * 
  * @author Prof. Dr. David Buzatto
  */
-@WebFilter( filterName = "ConfigurarEncodingFilter", urlPatterns = { "/*" } )
+@WebFilter( filterName = "ConfigurarEncodingFilter", 
+            urlPatterns = { "/*" } )
 public class ConfigurarEncodingFilter implements Filter {
     
     @Override

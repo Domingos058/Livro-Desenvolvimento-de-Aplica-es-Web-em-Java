@@ -1,4 +1,4 @@
-\chapter{\textit{Expression Language} e \textit{TagLibs}}
+\chapter{\textit{Expression Language} e \textit{TagLibs}}\label{cap:elTagLibs}
 \epigraph{``\textit{A magia da linguagem é o mais perigoso dos encantos}''.}{Edward Bulwer-Lytton}
 
 \lettrine[lines=4, lhang=0.1, lraise=0, loversize=0.2, findent=0.1em]{\textcolor{corAzulTema}{N}}{ESTE} Capítulo teremos como objetivo entender a sintaxe, o propósito e como utilizar tanto a \textit{Expression Language} quanto as \textit{tags} JSP, além de aprendermos a lidar com as \textit{tags} disponibilizadas na \textit{Java Standard Template Library} (JSTL).
@@ -6,7 +6,7 @@
 
 \section{Introdução}
 
-Nesta aula iremos aprender duas funcionalidades muito importantes e úteis do mundo Java Web: a \textit{Expression Language} (EL) e as TagLibs. Essas duas funcionalidades nos ajudarão na tarefa de não misturar código Java nas nossas JSPs. Você se lembra quando falei que era possível inserir código Java dentro das JSPs, não lembra? Falei também que isso não deveria ser feito, pois deixa o código difícil de ler e de manter, além de fazer com que o trabalho do Web designer (que normalmente conhece mais HTML e CSS) se torne difícil, visto que ele teria que ter um bom conhecimento em Java e em como as JSPs funcionam. Usando a EL e as TagLibs, a manipulação de dados, provenientes dos Servlets, se torna muito mais fácil, pois utiliza uma sintaxe simples e fácil de entender, ajudando no trabalho de quem não conhece muito bem o funcionamento de aplicações Web em Java. Vamos começar?
+Neste Capítulo iremos aprender duas funcionalidades muito importantes e úteis do mundo Java Web: a \textit{Expression Language} (EL) e as TagLibs. Essas duas funcionalidades nos ajudarão na tarefa de não misturar código Java nas nossas JSPs. Você se lembra quando falei que era possível inserir código Java dentro das JSPs, não lembra? Falei também que isso não deveria ser feito, pois deixa o código difícil de ler e de manter, além de fazer com que o trabalho do Web designer (que normalmente conhece mais HTML e CSS) se torne difícil, visto que ele teria que ter um bom conhecimento em Java e em como as JSPs funcionam. Usando a EL e as TagLibs, a manipulação de dados, provenientes dos Servlets, se torna muito mais fácil, pois utiliza uma sintaxe simples e fácil de entender, ajudando no trabalho de quem não conhece muito bem o funcionamento de aplicações Web em Java. Vamos começar?
 
 
 \section{\textit{Expression Language} (EL)}
@@ -70,7 +70,7 @@ Da mesma forma que existem as \textit{tags} JSP padrão, você pode criar suas p
 
 \section{\textit{JavaServer Pages Standard Tag Library} - JSTL}
 
-A JSTL é uma biblioteca formada por um conjunto de \textit{tags} (TagLib = \textit{tag} \textit{Library} = Biblioteca de \textit{tags}) que visam apoiar o desenvolvedor na tarefa de construir suas páginas JSP, permitindo que várias coisas possam ser feitas sem o uso direto de código Java, por exemplo, iterar por uma lista de objetos, executar testes lógicos, formatar dados, entre muitos outros. Quando formos implementar nosso primeiro projeto no Capítulo 5, iremos utilizar muitos recursos da JSTL, mas por agora vamos aprender apenas como inseri-la no nosso projeto e fazer um pequeno exemplo.
+A JSTL é uma biblioteca formada por um conjunto de \textit{tags} (TagLib = \textit{tag} \textit{Library} = Biblioteca de \textit{tags}) que visam apoiar o desenvolvedor na tarefa de construir suas páginas JSP, permitindo que várias coisas possam ser feitas sem o uso direto de código Java, por exemplo, iterar por uma lista de objetos, executar testes lógicos, formatar dados, entre muitos outros. Quando formos implementar nosso primeiro projeto no Capítulo~\ref{cap:primeiroProjeto}, iremos utilizar muitos recursos da JSTL, mas por agora vamos aprender apenas como inseri-la no nosso projeto e fazer um pequeno exemplo.
 
 Vamos implementar um exemplo bem simples. Iremos criar um \inlineJavaCode{for} usando \textit{tags} da JSTL. Crie mais uma página JSP, com o nome de ``testesJSTL''. O NetBeans vai abrir o arquivo quando este for criado. Vamos editá-lo? Copie então o código da Listagem~\thechapter.\ref{listagem:projetos/capitulo03/UsandoELeTagLibs/web/testesJSTL.jsp}.
 
@@ -102,12 +102,12 @@ Na linha 26, usamos a \textit{tag} \inlineHTMLCode{c:forEach} (olhe o prefixo!),
 
 Para criar séries de testes lógicos como numa estrutura \texttt{if/else if/else}, nós usamos a \textit{tag} \inlineHTMLCode{<c:choose>} (\textit{to choose} = escolher) e dentro dela colocamos as condições que queremos testar usando a \textit{tag} \inlineHTMLCode{<c:when>} que é equivalente aos \texttt{if’s} e \texttt{else if’s} e, por fim, se necessário, usamos a \textit{tag} \inlineHTMLCode{<c:otherwise>} que é equivalente ao \inlineJavaCode{else}. Vamos analisar o código então: entre as linhas 27 e 38 nós definimos nossa estrutura condicional usando a \textit{tag} \inlineHTMLCode{<c:choose>}. Dentro dela, definimos na linha 28 uma \textit{tag} \inlineHTMLCode{<c:when>}, que testa (atributo \texttt{test}) se a divisão da propriedade \texttt{count} da variável \texttt{i} por dois é igual a zero (par). Note o uso da EL e que podemos executar operações aritméticas dentro dela! Se o resultado for \inlineJavaCode{true}, o número é par e o conteúdo deste \inlineHTMLCode{<c:when>} é gerado, ou seja, uma linha da tabela usando a classe \inlineCSSCode{.linhaPar}. Caso contrário, como não temos mais nenhum \inlineHTMLCode{<c:when>}, é gerado o código dentro do \inlineHTMLCode{<c:otherwise>}, que por sua vez também gera uma linha da tabela, só que usando a classe \inlineCSSCode{.linhaImpar}. Fique à vontade para mudar o conteúdo gerado dentro de cada linha, bem como as classes.
 
-Viu como não é tão complicado? Na verdade é bem simples e fácil de usar, mas precisamos praticar para ficarmos craques. Depois dessa introdução à EL e a JSTL, nós já estamos quase prontos para começarmos o nosso primeiro projeto Web de verdade, mas ainda temos que formalizar algumas coisas que serão vistas no próximo Capítulo. Novamente, não se esqueça de praticar o que fizemos até agora.  
+Viu como não é tão complicado? Na verdade é bem simples e fácil de usar, mas precisamos praticar para ficarmos craques. Depois dessa introdução à EL e a JSTL, nós já estamos quase prontos para começarmos o nosso primeiro projeto Web de verdade, mas ainda temos que formalizar algumas coisas que serão vistas no próximo Capítulo~\ref{cap:padroesDeProjeto}. Novamente, não se esqueça de praticar o que fizemos até agora.  
 
 
 \section{Resumo}
 
-Neste Capítulo nós aprendemos a criar um formulário que teve seus dados tratados por um Servlet, que por sua vez redirecionou o fluxo da aplicação para outra página JSP, utilizada para mostrar os dados informados no formulário. Com isso, tivemos uma noção do que é a EL e como ela funciona. Depois aprendemos um pouco sobre as \textit{tags} padrão da especificação dos JSPs e, por fim, aprendemos utilizar a JSTL em nosso projeto, além de fazermos alguns testes. No próximo Capítulo vamos dar uma paradinha com os JSPs e Servlets para podermos aprender como estruturar um projeto Web que trabalha com banco de dados. Tenho certeza que você vai gostar bastante.
+Neste Capítulo nós aprendemos a criar um formulário que teve seus dados tratados por um Servlet, que por sua vez redirecionou o fluxo da aplicação para outra página JSP, utilizada para mostrar os dados informados no formulário. Com isso, tivemos uma noção do que é a EL e como ela funciona. Depois aprendemos um pouco sobre as \textit{tags} padrão da especificação dos JSPs e, por fim, aprendemos utilizar a JSTL em nosso projeto, além de fazermos alguns testes. No Capítulo~\ref{cap:padroesDeProjeto} vamos dar uma paradinha com os JSPs e Servlets para podermos aprender como estruturar um projeto Web que trabalha com banco de dados. Tenho certeza que você vai gostar bastante.
 
 
 \section{Exercícios}
@@ -123,11 +123,11 @@ Neste Capítulo nós aprendemos a criar um formulário que teve seus dados trata
 \section{Projetos}
 
 \begin{projetoSemArquivo}{}{}{}
-    Modifique o Projeto 1.1 do Capítulo 2 para executar da mesma forma que o projeto criado neste Capítulo, ou seja, o formulário deve submeter os dados para um Servlet, que por sua vez deve criar e enviar um objeto através do \texttt{request} para um JSP, que deve exibir ao usuário usando EL.
+    Modifique o Projeto~\ref{cap:processamentoFormularios}.1 do Capítulo~\ref{cap:processamentoFormularios} para executar da mesma forma que o projeto criado neste Capítulo, ou seja, o formulário deve submeter os dados para um Servlet, que por sua vez deve criar e enviar um objeto através do \texttt{request} para um JSP, que deve exibir ao usuário usando EL.
 \end{projetoSemArquivo}
 
 \begin{projetoSemArquivo}{}{}{}
-    Modifique o Projeto 1.2 do Capítulo 2 para executar da mesma forma que o projeto criado neste Capítulo, ou seja, o formulário deve submeter os dados para um Servlet, que por sua vez deve criar e enviar um objeto através do \texttt{request} para um JSP, que deve exibir ao usuário usando EL.
+    Modifique o Projeto~\ref{cap:processamentoFormularios}.2 do Capítulo~\ref{cap:processamentoFormularios} para executar da mesma forma que o projeto criado neste Capítulo, ou seja, o formulário deve submeter os dados para um Servlet, que por sua vez deve criar e enviar um objeto através do \texttt{request} para um JSP, que deve exibir ao usuário usando EL.
 \end{projetoSemArquivo}
 
 \begin{projetoSemArquivo}{}{}{}

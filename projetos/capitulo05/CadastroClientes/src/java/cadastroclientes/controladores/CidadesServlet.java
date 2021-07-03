@@ -17,7 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Prof. Dr. David Buzatto
  */
-@WebServlet( name = "CidadesServlet", urlPatterns = { "/processaCidades" } )
+@WebServlet( name = "CidadesServlet", 
+             urlPatterns = { "/processaCidades" } )
 public class CidadesServlet extends HttpServlet {
 
     protected void processRequest( 
@@ -53,7 +54,7 @@ public class CidadesServlet extends HttpServlet {
 
             } else if ( acao.equals( "alterar" ) ) {
 
-                int id = Integer.parseInt( request.getParameter( "id" ) );
+                int id = Integer.parseInt(request.getParameter( "id" ));
                 String nome = request.getParameter( "nome" );
                 int idEstado = Integer.parseInt( 
                         request.getParameter( "idEstado" ) );
@@ -73,7 +74,7 @@ public class CidadesServlet extends HttpServlet {
 
             } else if ( acao.equals( "excluir" ) ) {
 
-                int id = Integer.parseInt( request.getParameter( "id" ) );
+                int id = Integer.parseInt(request.getParameter( "id" ));
 
                 Cidade c = new Cidade();
                 c.setId( id );
@@ -85,7 +86,7 @@ public class CidadesServlet extends HttpServlet {
 
             } else {
                 
-                int id = Integer.parseInt( request.getParameter( "id" ) );
+                int id = Integer.parseInt(request.getParameter( "id" ));
                 Cidade c = dao.obterPorId( id );
                 request.setAttribute( "cidade", c );
                 
