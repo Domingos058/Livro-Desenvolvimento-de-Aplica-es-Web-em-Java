@@ -11,32 +11,33 @@ Neste Capítulo iremos colocar em prática tudo o que aprendemos nos Capítulos 
 
 \section{Analisando os Requisitos}
 
-Imagine que fomos contratados para criar um sistema para controle de cadastro de clientes. Esse sistema deve manter vários dados de um cliente: nome, sobrenome, data de nascimento, CPF, e-mail, logradouro, número, bairro, cidade e CEP. O contratante também deseja que seja possível manter um cadastro de cidades e de estados, sendo que as cidades devem ter um nome e um estado, enquanto um estado deve ter um nome e uma sigla. Cada um dos cadastros (cliente, cidade e estado), deve conter as funcionalidades de criar, alterar e excluir um determinado registro.
+Imagine que fomos contratados para criar um sistema para controle de cadastro de clientes. Esse sistema deve manter vários dados de um cliente: nome, sobrenome, data de nascimento, CPF, e-mail, logradouro, número, bairro, cidade e CEP. O contratante também deseja que seja possível manter um cadastro de cidades e de estados, sendo que as cidades devem ter um nome e um estado, enquanto um estado deve ter um nome e uma sigla. Cada um dos cadastros (cliente, cidade e estado), deve conter as funcionalidades de inserir, alterar e excluir um determinado registro.
 
 Vamos analisar esses requisitos. Primeiramente, vamos identificar os tipos de entidades que farão parte do sistema, fazendo a seguinte pergunta: Quais são os tipos de ``coisas'' que o sistema deve gerenciar? O sistema deve manter um cadastro de Clientes, um cadastro de Cidades e um cadastro de Estados. Sendo assim, identificamos três entidades, ou seja, Cliente, Cidade e Estado.
-Cada um desses tipos de entidade tem uma determinada lista de características. Vamos organizá-las em uma tabela. Veja essa organização na Tabela~\ref{tab:caracteristicasEntidades}.
+
+Cada um desses tipos de entidade tem uma determinada lista de características ou atributos. Vamos organizá-las em uma tabela. Veja essa organização na Tabela~\ref{tab:caracteristicasEntidades}.
 
 \FloatBarrier
 \begin{table}[ht]
     \centering
-    \caption{Características dos tipos de entidade}
+    \caption{Atributos dos tipos de entidade}
 	\begin{tabular}{cl}
 	    \hline
 	        \textbf{Entidade}     & \textbf{Atributos (características)} \\ \hline
-	    \multirow{10}{*}{Cliente} & nome                                 \\
-	                              & sobrenome                            \\
-	                              & data de nascimento                   \\
-	                              & CPF                                  \\
-	                              & e-mail                               \\
-	                              & logradouro                           \\ 
-	                              & número                               \\
-	                              & bairro                               \\
-	                              & Cidade                               \\
-	                              & CEP                                  \\ \hline
-	     \multirow{2}{*}{Cidade}  & nome                                 \\
-	                              & Estado                               \\ \hline
-	     \multirow{2}{*}{Estado}  & nome                                 \\
-	                              & sigla                                \\ \hline
+	    \multirow{10}{*}{Cliente} & - nome                                 \\
+	                              & - sobrenome                            \\
+	                              & - data de nascimento                   \\
+	                              & - CPF                                  \\
+	                              & - e-mail                               \\
+	                              & - logradouro                           \\ 
+	                              & - número                               \\
+	                              & - bairro                               \\
+	                              & - Cidade                               \\
+	                              & - CEP                                  \\ \hline
+	     \multirow{2}{*}{Cidade}  & - nome                                 \\
+	                              & - Estado                               \\ \hline
+	     \multirow{2}{*}{Estado}  & - nome                                 \\
+	                              & - sigla                                \\ \hline
 	\end{tabular}
     \\ \vspace{0.2cm}
     \textbf{Fonte:} Elaborada pelo autor
@@ -44,7 +45,7 @@ Cada um desses tipos de entidade tem uma determinada lista de características. 
 \end{table}
 \FloatBarrier
 
-Sabemos que esses tipos de entidade que foram identificados se tornarão tabelas na nossa base de dados relacional não é mesmo? Cada característica de cada tipo de entidade se tornará uma coluna na tabela correspondente. Sabemos também que cada registro de uma determinada tabela precisa ser diferenciado dos outros não é mesmo? Para isso analisamos as tabelas até que consigamos identificar as chaves primárias de cada uma delas. Uma chave primária é o conjunto mínimo de um ou mais atributos de um determinado tipo de entidade que garante a unicidade de um registro, sendo assim, precisamos encontrar, na lista de características de cada entidade, uma ou mais características que, usadas em conjunto, garantem que um registro é diferente de outro. Tomemos como exemplo o tipo de entidade Estado. Veja na Tabela~\ref{tab:exemplosEstados} uma lista de registros da tabela ``estado'' do nosso provável banco de dados.
+Sabemos que esses tipos de entidade que foram identificados se tornarão tabelas na nossa base de dados relacional não é mesmo? Cada atributo de cada tipo de entidade se tornará uma coluna na tabela correspondente. Sabemos também que cada registro de uma determinada tabela precisa ser diferenciado dos outros não é mesmo? Para isso analisamos as tabelas até que consigamos identificar as chaves primárias de cada uma delas. Uma chave primária é o conjunto mínimo de um ou mais atributos de um determinado tipo de entidade que garante a unicidade de um registro, sendo assim, precisamos encontrar, na lista de características de cada entidade, uma ou mais características que, usadas em conjunto, garantem que um registro é diferente de outro. Tomemos como exemplo o tipo de entidade Estado. Veja na Tabela~\ref{tab:exemplosEstados} uma lista de registros da tabela \texttt{estado} do nosso provável banco de dados.
 
 \FloatBarrier
 \begin{table}[ht]
@@ -65,16 +66,16 @@ Sabemos que esses tipos de entidade que foram identificados se tornarão tabelas
 \end{table}
 \FloatBarrier
 
-O que diferencia um estado de outro? Se usarmos os atributos ``nome'' e ``sigla'', nós sempre teremos um estado diferente do outro não é mesmo? E se usarmos apenas o ``nome''? Ou então somente a ``sigla''? Temos então três opções para definir a chave primária dessa tabela. Podemos usar ``nome'' e ``sigla'', somente ``nome'' ou somente ``sigla''. Dentre essas três opções, qual ou quais são as que têm o menor conjunto de atributos? Somente ``nome'' ou somente ``sigla'', correto? Como temos duas opções, podemos escolher qualquer uma delas. Vamos dizer que nós escolhemos a opção de definir a chave primária da tabela usando o atributo ``sigla''. Legal, agora sabemos que um estado é diferenciado do outro pela sua sigla, então não pode existir mais de um registro com a mesma sigla.
+O que diferencia um estado de outro? Se usarmos os atributos \texttt{nome} e \texttt{sigla}, nós sempre teremos um estado diferente do outro, ou seja, não seria permitido a criação de um novo estado que tivesse o mesmo nome \textbf{e} a mesma sigla do que ume estado que já existe na tabela, concorda? Agora pense, e se usarmos apenas o \texttt{nome} ou somente a \texttt{sigla}, qual seria suficiente? Temos então três opções para definir a chave primária dessa tabela. Podemos usar \texttt{nome} \textbf{e} \texttt{sigla}, somente \texttt{nome} ou somente \texttt{sigla}. Dentre essas três opções, qual ou quais são as que têm o menor conjunto de atributos? Somente \texttt{nome} ou somente \texttt{sigla}, correto? Como temos duas opções, podemos escolher qualquer uma delas, desde que, para o cenário ou ``minimundo'' que está sendo modelado, um desses atributos garanta a unicidade de tupla. Vamos dizer que nós escolhemos a opção de definir a chave primária da tabela usando o atributo \texttt{sigla}. Legal, agora sabemos que um Estado é diferenciado do outro pela sua sigla, então não pode existir mais de um registro com a mesma sigla.
 
-Agora temos outro problema: desempenho do banco de dados. Quando criarmos a tabela ``cidade'', esta vai ter que referenciar a tabela ``estado'' usando uma coluna que vai ter o mesmo tipo da coluna que representa a chave primária da tabela ``estado''. Essa coluna, como você deve se lembrar, é denominada chave estrangeira. Como cada estado tem uma sigla de dois caracteres, sempre que um estado for referenciado em um registro da tabela ``cidade'', essa referência vai ter que ter o mesmo valor da tabela sigla. Apesar de essa abordagem funcionar, nós podemos atacar esse problema de outra forma. Podemos definir que a coluna ``sigla'' tem valor único (unique) nos registros da tabela ``estado'', e então criar uma chave primária que contém apenas um número. Essa chave primária é chamada de chave artificial, ou surrogate, sendo que normalmente é chamada de ``id'' (identificador). Note que como o próprio nome diz, essa chave é artificial. O que vai garantir a unicidade dos registros é a configuração de cada uma das colunas. 
+Agora temos outro problema: o desempenho do banco de dados. Quando criarmos a tabela \texttt{cidade}, esta vai ter que referenciar a tabela \texttt{estado}, usando uma coluna que vai ter o mesmo tipo da coluna que representa a chave primária da tabela \texttt{estado}. Essa coluna, como você deve se lembrar, é denominada chave estrangeira. Como cada estado tem uma sigla de dois caracteres, sempre que um estado for referenciado em um registro da tabela \texttt{cidade}, essa referência vai ter que ter o mesmo valor do registro contido na tabela sigla. Apesar de essa abordagem funcionar, nós podemos atacar esse problema de outra forma. Podemos definir que a coluna \texttt{sigla} tem valor único (\textit{unique}) nos registros da tabela \texttt{estado} e então criar uma chave primária que contém apenas um número. Essa chave primária é chamada de chave artificial, ou \textit{surrogate}, sendo que normalmente é chamada de \texttt{id} (identificador). Note que como o próprio nome diz, essa chave é artificial. O que vai garantir a unicidade dos registros é a configuração de cada uma das colunas.
 
-O que ganhamos com isso? Ganhamos desempenho, pois estamos usando números para referenciar colunas de outras tabelas, não Strings. Imagine definir a chave primária de um cliente como CPF. Ao precisarmos referenciar um cliente em outra tabela, digamos uma tabela de ``pedidos'', precisaríamos ter uma cópia do CPF do cliente em cada pedido, gastando cerca de 14 caracteres (um CPF é no formato 000.000.000-00), ao passo que poderíamos usar apenas um número! Sabendo de tudo isso, podemos partir para o projeto do banco de dados.
+O que ganhamos com isso? Ganhamos desempenho, pois estamos usando números para referenciar colunas de outras tabelas, não Strings. Imagine definir a chave primária de um Cliente como CPF. Ao precisarmos referenciar um cliente em outra tabela, digamos uma tabela de \texttt{pedidos}, precisaríamos ter uma cópia do CPF do cliente em cada pedido, gastando cerca de 11 a 14 caracteres (um CPF é no formato 000.000.000-00), ao passo que poderíamos usar apenas um número! Veja, se cada caractere ocupar 4 bytes em disco/memória, um CPF de 11 dígitos (só os números) ocupará 44 bytes (352 bits), enquanto um número inteiro provavelmente ocupará 4 ou 8 bytes (32 ou 64 bits). Pense nas implicações! Sabendo de tudo isso, podemos partir para o projeto do banco de dados.
 
 
 \section{Projetando Banco de Dados}
 
-Não irei documentar aqui todo o processo de projeto do banco de dados, que vai desde a análise dos requisitos, passando pela criação do DER (Diagrama Entidade-Relacionamento) até a implementação do modelo físico, pois este não é o objetivo dessa disciplina, mas note que no desenvolvimento de um sistema esses passos são normalmente realizados. Iremos então partir diretamente para a implementação do modelo físico. Antes de criarmos o SQL para a criação da estrutura da nossa base de dados, vamos organizar os atributos das nossas tabelas – que são baseadas nas características dos tipos de entidade – e especificar suas características. Veja a Tabela~\ref{tab:detalhesTabelas}.
+Não irei documentar aqui todo o processo de projeto do banco de dados, que vai desde a análise dos requisitos, passando pela criação do DER (Diagrama Entidade-Relacionamento) até a implementação do modelo físico, pois este não é o objetivo deste livro, mas note que no desenvolvimento de um sistema esses passos são normalmente realizados. Iremos partir diretamente para a implementação do modelo físico. Antes de criarmos o código escrito em \textit{Structured Query Language} (SQL) para a criação da estrutura da nossa base de dados, vamos organizar os atributos das nossas tabelas –que são baseadas nas características dos tipos de entidade– e especificar suas características. Veja a Tabela~\ref{tab:detalhesTabelas}.
 
 \FloatBarrier
 \begin{table}[ht]
@@ -122,9 +123,9 @@ Usei o MySQL Workbench para criar um diagrama do nosso modelo físico. Veja como
 \end{figure}
 \FloatBarrier
 
-Vamos agora implementar o banco de dados. No MySQL Workbench, crie uma nova base de dados com o nome de ``cadastro\_clientes'' como feito na Seção 4.2. Com a base criada, selecione-a no ``Object Browser'' e copie o código da Listagem~\thechapter.\ref{listagem:projetos/capitulo05/banco/estado.sql} no editor (Scratch) e execute o script.
+Vamos agora implementar o banco de dados. No MySQL Workbench, crie uma nova base de dados com o nome de \texttt{cadastro\_clientes} como feito na Seção~\ref{sec:preparandoAmbiente}. Com a base criada, torne-a padrão, abra uma aba para digitar código SQL e copie o código da Listagem~\thechapter.\ref{listagem:projetos/capitulo05/banco/estado.sql} no editor e execute o \textit{script}.
 
-\sqlCode{Script SQL para criação da tabela ``estado''}{projetos/capitulo05/banco/estado.sql}
+\sqlCode{\textit{Script} SQL para criação da tabela ``estado''}{projetos/capitulo05/banco/estado.sql}
 
 Faça o mesmo processo para a Listagem~\thechapter.\ref{listagem:projetos/capitulo05/banco/cidade.sql} e para a Listagem~\thechapter.\ref{listagem:projetos/capitulo05/banco/cliente.sql}.
 
@@ -132,14 +133,12 @@ Faça o mesmo processo para a Listagem~\thechapter.\ref{listagem:projetos/capitu
 
 \sqlCode{Script SQL para criação da tabela ``cliente''}{projetos/capitulo05/banco/cliente.sql}
 
-Ao fazer esses três passos, temos nossas três tabelas criadas dentro da base de dados. Clique com o botão direito no ``Object Browser'' e escolhe ``Refresh All''. Expanda o banco ``cadastro\_clientes'' e então expanda a pasta ``Tables''. Lá dentro estarão as três tabelas criadas. Muito bem, terminamos a implementação do banco. Vamos agora criar um diagrama de classes para representar cada uma das nossas entidades, que serão mapeamentos das nossas tabelas no mundo orientado a objetos.
-
+Ao fazer esses três passos, temos nossas três tabelas criadas dentro da base de dados. Expanda o banco \texttt{cadastro\_clientes} e então expanda o nó \destaque{\textit{Tables}}. Lá dentro estarão as três tabelas criadas. Muito bem, terminamos a implementação do banco. Vamos agora criar um diagrama de classes para representar cada uma das nossas entidades, que serão mapeamentos das nossas tabelas no mundo orientado a objetos.
 
 
 \section{Criando o Diagrama de Classes}
 
-Para criar nosso diagrama de classes UML, vamos usar a ferramenta astah* UML (o antigo JUDE UML) que pode ser obtida através do endereço http://astah.change-vision.com/. Usaremos a versão ``Community'' que é gratuita. Como já disse cada tabela do nosso banco de dados vai ter uma representação na nossa aplicação. Essa representação, como você já sabe, é criada usando classes. No diagrama de classes da Figura~\ref{fig:cap05DiagramaClasses}, você pode ver as três classes que representam nossas entidades. Note que cada classe contém uma série de atributos privados que representam as colunas da tabela e que o acesso a esses atributos é feito usando os métodos get e set correspondentes (omitidos no diagrama). 
-
+Para criar nosso diagrama de classes UML eu usei a ferramenta Astah UML. Existem diversas ferramentas de modelagem gratuítas. Infelizmente o Astah não poussi mais esse tipo de versão desde 2018. Você pode usar qualquer uma caso queria fazer a modelagem, mas ela não é obrigatória. Como já disse cada tabela do nosso banco de dados vai ter uma representação na nossa aplicação. Essa representação, como você já sabe, é criada usando classes. No diagrama de classes da Figura~\ref{fig:cap05DiagramaClasses}, você pode ver as três classes que representam nossas entidades. Note que cada classe contém uma série de atributos privados, denotados pelo sinal de ``\texttt{-}'', que representam as colunas da tabela e que o acesso a esses atributos é feito usando os métodos \texttt{get} e \texttt{set} correspondentes, omitidos no diagrama.
 
 \FloatBarrier
 \begin{figure}[!htbp]
@@ -151,33 +150,42 @@ Para criar nosso diagrama de classes UML, vamos usar a ferramenta astah* UML (o 
 \end{figure}
 \FloatBarrier
 
-Outro detalhe é que criei apenas o diagrama das classes que são as entidades do sistema, não me preocupando com as outras classes que nosso sistema conterá. Novamente, como no exemplo do nosso banco de dados, em um sistema de verdade, normalmente são desenvolvidos diagramas de classes muito mais completos e complexos, bem como outros tipos de diagramas UML que forem necessários. Com tudo isso pronto, podemos partir para o desenvolvimento do sistema propriamente dito!
+Outro detalhe é que criei apenas o diagrama das classes que são as entidades do sistema, não me preocupando com as outras classes que nosso sistema conterá. Novamente, como no exemplo do nosso banco de dados, em um sistema de verdade, normalmente são desenvolvidos diagramas de classes muito mais completos e complexos, dependendo do nível de representação que se deseja, bem como outros tipos de diagramas UML que forem necessários. Com tudo isso pronto, podemos partir para o desenvolvimento do sistema propriamente dito! Novamente, essa não é a nossa preocupação neste livro.
 
 
 \section{Construindo o Sistema}
 
-%CUIDADO! É NECESSÁRIO DISPONIBILIZAR DENTRO DO DOMÍNIO CONFIGURADO NO GLASSFISH OS .JARS NECESSÁRIOS PELAS APLICAÇÕES. A CONFIGURAÇÃO VIA NETBEANS/PROJETO/ARQUIVO WAR NÃO É EFETIVADA!!!
-%CAMINHO: C:\Users\<USUÁRIO>\glassfish5\glassfish\domains\domain1\lib
+Antes de qualquer coisa precisamos fazer um ajuste no GlassFish, pois ele precisa que todas as biblitecas/APIs que não fazem parte do Java \textit{Standard Edition} (SE), ou do Java/Jakarta EE, sejam fornecidas à ele. Para isso, faça uma cópia do arquivo \texttt{.jar} do \textit{driver} JDBC do MariaDB para o diretório:
 
-Nossa primeira tarefa será criar o projeto no NetBeans. Para isso, abra o NetBeans e crie um novo projeto do tipo Java Web com o nome de ``CadastroClientes'' (sem as aspas). Marque a opção para usar uma pasta dedicada para armazenar as bibliotecas. Com o projeto criado, acesse suas propriedades e desmarque a opção ``Implantar ao salvar''. Nas bibliotecas, importe a ``JSTL 1.1'' e o ``MySQL JDBC Driver'' e após importar, adicione no projeto.
-Em ``Pacotes de código-fonte'', crie o pacote ``cadastroclientes'' (sem as aspas) e os pacotes ``controladores'', ``dao'', ``entidades'', ``jdbc'' e ``testes'' dentro do pacote ``cadastroclientes''. Em ``Páginas Web'', crie os diretórios ``formularios'' (sem acento) e dentro deste, crie os diretórios ``cidades'', ``clientes'' e ``estados''. Veja na Figura~\ref{fig:cap05EstruturaProjeto} como deve ficar a estrutura do projeto.
+\destaque{\texttt{C:\textbackslash Users\textbackslash <SeuUsuário>\textbackslash glassfish5\textbackslash glassfish\textbackslash domains\textbackslash domain1\textbackslash lib\textbackslash}}
 
+Com isso, nossa aplicação poderá usar o \textit{driver} quando estiver implantada no servidor, mas note que ainda precisaremos configurá-lo do projeto, visto que ele será necessário no processo de \textit{build}.
+
+Agora nossa tarefa será criar o projeto no NetBeans. Para isso, abra o NetBeans e crie um novo projeto do tipo Java Web com o nome de ``CadastroClientes'' (sem as aspas). Siga os passos que você tem seguido em todos os projetos criados, além de, é claro, configurar a bibliteca do \textit{driver} JDBC do MariaDB, como descrito no Capítulo~\ref{cap:padroesDeProjeto}. Em \destaque{\textit{Source Packages}}, crie o pacote ``\texttt{cadastroclientes}'' (sem as aspas) e, dentro dele, os pacotes ``controladores'', ``dao'', ``entidades'', ``jdbc'' e ``testes'' dentro do pacote ``cadastroclientes''. Em \destaque{\textit{Web Pages}}, crie os diretórios ``\texttt{css}'' e ``\texttt{formularios}'' (sem acento) e dentro deste, crie os diretórios ``\texttt{cidades}'', ``\texttt{clientes}'' e ``\texttt{estados}''. Apague o arquivo \texttt{index.html} e crie um arquivo JSP chamado \texttt{index.jsp}. Veja na Figura~\ref{fig:cap05EstruturaProjeto} como deve ficar a estrutura do projeto. Ignore os pacotes \texttt{...filtros} e \texttt{...servicos} por enquanto!
 
 \FloatBarrier
 \begin{figure}[!htbp]
     \centering
     \caption{Estrutura do projeto}
-    \includegraphics[scale=0.8]{imagens/cap05EstruturaProjeto}
+    \includegraphics[scale=0.7]{imagens/cap05EstruturaProjeto}
     \\\textbf{Fonte:} Elaborada pelo autor
     \label{fig:cap05EstruturaProjeto}
 \end{figure}
 \FloatBarrier
 
-Com a estrutura configurada, vamos agora copiar algumas classes do projeto ``PadroesEmPatrica'' que criamos no Capítulo~\ref{cap:padroesDeProjeto}. Para isso abra esse projeto, se ainda não estiver aberto, no NetBeans. Expanda o pacote ``padroesempratica.jdbc'', clique com o botão direito no arquivo ``ConnectionFactory.java'' e escolha ``Copiar''. Volte ao projeto ``CadastroClientes'', clique com o botão direito no pacote ``cadastroclientes.jdbc'', escolha ``Colar'' e então ``Refatorar Copiar...''. Um diálogo será aberto. Clique no botão ``Refatorar''. O arquivo será copiado para o projeto e as alterações que forem necessárias fazer no arquivo, como mudar a cláusula ``package'', serão feitas pelo NetBeans. Faça o mesmo processo para o arquivo ``DAO.java'' contido no pacote ``pradoesempratica.dao'' do projeto ``PadroesEmPratica'', copiando-o no pacote ``cadastroclientes.dao'' do projeto ``CadastroClientes''. O NetBeans vai apontar um erro no arquivo depois da cópia. Para corrigir, abra o arquivo no editor e altere o ``import'' que está com problema. 
+Com a estrutura configurada, vamos agora copiar algumas classes do projeto ``PadroesEmPatrica'' que criamos no Capítulo~\ref{cap:padroesDeProjeto}. Para isso abra esse projeto, se ainda não estiver aberto, no NetBeans. Expanda o pacote ``\texttt{padroesempratica.jdbc}'', clique com o botão direito no arquivo ``\texttt{ConnectionFactory.java}'' e escolha \destaque{\textit{Copy}}. Volte ao projeto ``CadastroClientes'', clique com o botão direito no pacote ``cadastroclientes.jdbc'', escolha \destaque{\textit{Paste}} e então \destaque{\textit{Refactor Copy...}}. Um diálogo será aberto. Clique no botão \destaque{\textit{Refactor}}. O arquivo será copiado para o projeto e as alterações que forem necessárias fazer no arquivo, como mudar a cláusula \inlineJavaCode{package}, serão feitas pelo NetBeans. Faça o mesmo processo para o arquivo ``DAO.java'' contido no pacote ``pradoesempratica.dao'' do projeto ``PadroesEmPratica'', copiando-o no pacote ``cadastroclientes.dao'' do projeto ``CadastroClientes''. Talvez o NetBeans aponte um erro no arquivo depois da cópia. Para corrigir, abra o arquivo no editor e altere o \inlineJavaCode{import} que está com problema. 
 
-Outro detalhe é que precisamos mudar a URL da nossa fábrica de conexões para fazer com que as conexões criadas sejam relativas à base de dados ``cadastro\_clientes''. Para isso, abra o arquivo ``ConnectionFactory.java'' do pacote ``cadastroclientes.jdbc'' e mude a URL de ``jdbc:mysql://localhost/testes\_padroes'' para ``jdbc:mysql://localhost/cadastro\_clientes''.
+Outro detalhe é que precisamos mudar a URL da nossa fábrica de conexões para fazer com que as conexões criadas sejam relativas à base de dados \texttt{cadastro\_clientes}. Para isso, abra o arquivo ``\texttt{ConnectionFactory.java}'' do pacote\linebreak%
+``\texttt{cadastroclientes.jdbc}'' e mude a URL de:
 
-Agora vamos preparar toda a camada de persistência. No pacote ``cadastroclientes.entidades'', crie três classes: ``Estado'', ``Cidade'' e ``Cliente'' (sem as aspas). Nas três listagens a seguir estão listados os códigos-fonte das três classes. Note que estou omitindo os gets e os sets, mas isso não significa que eles não devam existir. Fica por sua conta criar os gets e sets ok? Não se esqueça de fazer isso!
+\destaque{\texttt{jdbc:mariadb://localhost/testes\_padroes}}
+
+Para:
+
+\destaque{\texttt{jdbc:mariadb://localhost/cadastro\_clientes}}
+
+Agora vamos preparar toda a camada de persistência. No pacote\linebreak%
+``\texttt{cadastroclientes.entidades}'', crie três classes: ``\texttt{Estado}'', ``\texttt{Cidade}'' e ``\texttt{Cliente}'' (sem as aspas). Nas três listagens a seguir estão listados os códigos-fonte das três classes. Note que estou omitindo os gets e os sets, mas isso não significa que eles não devam existir. Fica por sua conta criá-los ok? Não se esqueça de fazer isso!
 
 \javaCode{Entidade ``Estado''\newline%
 Arquivo: \texttt{cadastroclientes/entidades/Estado.java}}{projetos/capitulo05/CadastroClientes/src/java/cadastroclientes/entidades/Estado.java}
@@ -188,7 +196,7 @@ Arquivo: \texttt{cadastroclientes/entidades/Cidade.java}}{projetos/capitulo05/Ca
 \javaCode{Entidade ``Cliente''\newline%
 Arquivo: \texttt{cadastroclientes/entidades/Cliente.java}}{projetos/capitulo05/CadastroClientes/src/java/cadastroclientes/entidades/Cliente.java}
 
-Com as entidades prontas, vamos criar os DAOs. No pacote ``cadastroclientes.dao'', crie três classes: ``EstadoDAO'', ``CidadeDAO'' e ``ClienteDAO''. O código-fonte de cada uma dessas classes é apresentado nas listagens a seguir. Atenção! As listagens foram divididas.
+Com as entidades prontas, vamos criar os DAOs. No pacote ``\texttt{cadastroclientes.dao}'', crie três classes: ``\texttt{EstadoDAO}'', ``\texttt{CidadeDAO}'' e ``\texttt{ClienteDAO}''. O código-fonte de cada uma dessas classes é apresentado nas listagens a seguir.
 
 \javaCode{Código da classe ``EstadoDAO''\newline%
 Arquivo: \texttt{cadastroclientes/dao/EstadoDAO.java}}{projetos/capitulo05/CadastroClientes/src/java/cadastroclientes/dao/EstadoDAO.java}
@@ -199,48 +207,55 @@ Arquivo: \texttt{cadastroclientes/dao/CidadeDAO.java}}{projetos/capitulo05/Cadas
 \javaCode{Código da classe ``ClienteDAO''\newline%
 Arquivo: \texttt{cadastroclientes/dao/ClienteDAO.java}}{projetos/capitulo05/CadastroClientes/src/java/cadastroclientes/dao/ClienteDAO.java}
 
-Quantos códigos hein? Copiou tudo? Crie algumas classes de teste no pacote ``cadastroclientes.teste'' e teste a persistência de cada entidade. Com isso, terminamos a parte da persistência do nosso projeto.
-Agora nós vamos começar a implementar as visualizações e os controladores. Nossa aplicação terá três links no index.jsp, sendo que cada link levará a um determinado cadastro. Cada cadastro vai conter uma página principal onde todos os itens desse cadastro serão exibidos e onde poderão ser alterados, excluídos ou então poderemos cadastrar um novo item.
-Vamos começar pelo cadastro de estados. Na pasta ``estados'' dentro da pasta ``formularios'', crie um arquivo JSP com o nome de ``listagem'' (sem as aspas). Nesse arquivo vão ser listados todos os estados, portanto precisamos obter esses estados de alguma forma. Você se lembra que nos nossos DAOs existe um método chamado listarTodos que retorna todos os registros de uma determinada tabela? Nós não vamos usar esse método diretamente no JSP, então vamos criar uma classe de serviços que vai instanciar o DAO, gerar a lista e fechar a conexão para nós. Nos pacotes de código-fonte, crie um novo pacote dentro do ``cadastroclientes'' chamado ``servicos'' (sem o ``ç''). Nesse pacote, crie uma classe chamada ``EstadoServices'' (sem as aspas). Essa classe vai ter apenas um método, chamado getTodos, que retornará uma lista de estados. Veja o código-fonte dela na Listagem 5.18.
+Quantos códigos hein? Copiou tudo? Crie algumas classes de teste no pacote\linebreak%
+``\texttt{cadastroclientes.teste}'' e teste a persistência de cada entidade. Com isso, terminamos a parte da persistência do nosso projeto.
+
+Agora nós vamos começar a implementar as visualizações e os controladores. Nossa aplicação terá três \textit{links} no \texttt{index.jsp}, sendo que cada \textit{link} levará a um determinado cadastro. Cada cadastro vai conter uma página principal onde todos os itens desse cadastro serão exibidos e onde poderão ser alterados, excluídos ou então poderemos cadastrar um novo item.
+
+Vamos começar pelo cadastro de estados. Na pasta ``\texttt{estados}'' dentro da pasta\linebreak%
+``\texttt{formularios}'', crie um arquivo JSP com o nome de ``\texttt{listagem.jsp}'' (sem as aspas). Nesse arquivo vão ser listados todos os estados, portanto precisamos obter esses estados de alguma forma. Você se lembra que nos nossos DAOs existe um método chamado \inlineJavaCode{listarTodos()} que retorna todos os registros de uma determinada tabela? Nós não vamos usar esse método diretamente no JSP, então vamos criar uma classe de serviços que vai instanciar o DAO, gerar a lista e fechar a conexão para nós. Nos pacotes de código-fonte, crie um novo pacote dentro do ``\texttt{cadastroclientes}'' chamado ``\texttt{servicos}'' (sem o ``ç''). Nesse pacote, crie uma classe chamada ``\texttt{EstadoServices}'' (sem as aspas). Essa classe vai ter apenas um método, chamado \inlineJavaCode{getTodos()}, que retornará uma lista de estados. Veja o código-fonte dela na Listagem~\thechapter.\ref{listagem:projetos/capitulo05/CadastroClientes/src/java/cadastroclientes/servicos/EstadoServices.java}.
 
 \javaCode{Código-fonte da classe de serviços para Estados\newline%
 Arquivo: \texttt{cadastroclientes/servicos/EstadoServices.java}}{projetos/capitulo05/CadastroClientes/src/java/cadastroclientes/servicos/EstadoServices.java}
 
-Criamos essa classe para que ela encapsule todo o processo de obtenção da lista de estados. Note que é no método getTodos que o EstadoDAO vai ser instanciado e gerenciado.
-Agora que temos a classe que vai obter a lista de estados para nós, além de gerenciar o DAO, nós podemos implementar o nosso arquivo de listagem de estados. Abra o arquivo ``/formulários/estados/listagem.jsp'' e copie o código da Listagem 5.19.
+Criamos essa classe para que ela encapsule todo o processo de obtenção da lista de estados. Note que é no método \inlineJavaCode{getTodos()} que o \texttt{EstadoDAO} vai ser instanciado e gerenciado.
 
-\textcolor{red}{escrever observação sobre identação usando 2 espaços para economizar na largura nos arquivos html/jsp}
-
-\textcolor{red}{explicar o overlap dosl inks GET dentro do formulário}
+Agora que temos o JSP que vai obter a lista de estados para nós, além de gerenciar o DAO, nós podemos implementar o nosso arquivo de listagem de estados. Abra o arquivo ``\texttt{/formularios/estados/listagem.jsp}'' e copie o código da Listagem~\thechapter.\ref{listagem:projetos/capitulo05/CadastroClientes/src/java/cadastroclientes/servicos/EstadoServices.java}.
 
 \htmlCode{Código da listagem de Estados\newline%
 Arquivo: \texttt{/formularios/estados/listagem.jsp}}{projetos/capitulo05/CadastroClientes/web/formularios/estados/listagem.jsp}
 
+Perceba que a identação do código foi feita com dois espaços para economizar espaço nas listagens, mas você pode manter os quatro espaços usados por padrão.
+
+\textcolor{red}{continuar daqui}
+
 Vamos analisar o código. Na linha 18, usamos a EL ``\${pageContext.request.contextPath}'' que vai gerar o caminho completo dos recursos da aplicação. Nesta linha, criamos um link que aponta para o arquivo ``/formularios/estado/novo.jsp'' – que ainda não implementamos – e que será o formulário responsável em criar um novo estado. Este mesmo código é repetido na linha 46. Na linha 20, abrimos a \textit{tag} de uma tabela e, até a linha 29, criamos seu cabeçalho. Na linha 32, usamos a \textit{tag} \inlineHTMLCode{<jsp:useBean>} para instanciar um objeto do tipo EstadoServices, que contém o método que vamos usar para obter a lista de estados. Demos o nome de ``servicos'' para essa instância. Na linha 34, usamos um c:forEach para iterar sobre a lista retornada pelo método getTodos da instância ``servicos''. Note que a chamada do método getTodos é somente ``todos'', pois seguimos o padrão JavaBeans nas ELs como você deve se lembrar. Essa chamada é feita usando EL na propriedade ``items''. Na propriedade ``var'', damos o nome da variável que vai armazenar a instância atual durante a iteração, no caso, ``estado''. Entre as linhas 35 e 41 nós definimos o código que será gerado a cada iteração do c:forEach. As três primeiras colunas da tabela são fáceis de entender, entretanto a quarta e a quinta mudam um pouco. Na linha 39, a coluna é formada por um link que aponta para ``/processaEstados?acao=prepAlteracao\&id=\${estado.id}''. Note que estamos codificando na URL duas variáveis. A primeira, chamada ``acao'', vai informar para o Servlet que vai estar mapeado para /processaEstados o que queremos fazer, no caso, ``prepAlteracao'' (preparar alteração). A segunda variável, chamada ``id'' vai conter o id do estado daquela linha da tabela, ou seja, queremos alterar um estado que tem um determinado id. O mesmo acontece na linha 40, mudando a ação para ``prepExclusao'' (preparar exclusão). Sei que pode estar um pouco confuso, mas na hora que terminarmos todos os arquivos do cadastro de estados tudo isso vai ficar fácil de entender, não se preocupe.
-Note que deixei a linha 11 por último. Nela usamos a \textit{tag} \inlineHTMLCode{<link>} para referenciar um arquivo de folhas de estilos. Nos exemplos dos Capítulos anteriores nós usamos estilos declarados dentro do arquivo JSP usando a \textit{tag} \inlineHTMLCode{<style>}. A partir de agora iremos separar os estilos em arquivos e é por isso que foi usada a \textit{tag} \inlineHTMLCode{<link>} para a pontar para ``/css/estilos.css''. Vamos criar esse arquivo? Na pasta ``Páginas Web'', crie um diretório chamado ``css'' (sem as aspas), clique com o botão direito sobre ele e escolha ``Novo''. Provavelmente o item que queremos não estará visível, então escolha ``Outro...''. Escolha ``Web'' na categoria e em ``Tipo de arquivos'' escolha ``Folha de estilos em cascata''. Clique em próximo e dê o nome de ``estilos'' ao arquivo. Copie o código da Listagem 5.20 neste arquivo.
+Note que deixei a linha 11 por último. Nela usamos a \textit{tag} \inlineHTMLCode{<link>} para referenciar um arquivo de folhas de estilos. Nos exemplos dos Capítulos anteriores nós usamos estilos declarados dentro do arquivo JSP usando a \textit{tag} \inlineHTMLCode{<style>}. A partir de agora iremos separar os estilos em arquivos e é por isso que foi usada a \textit{tag} \inlineHTMLCode{<link>} para a pontar para ``/css/estilos.css''. Vamos criar esse arquivo? Na pasta ``Páginas Web'', crie um diretório chamado ``css'' (sem as aspas), clique com o botão direito sobre ele e escolha ``Novo''. Provavelmente o item que queremos não estará visível, então escolha ``Outro...''. Escolha ``Web'' na categoria e em ``Tipo de arquivos'' escolha ``Folha de estilos em cascata''. Clique em próximo e dê o nome de ``estilos'' ao arquivo. Copie o código da Listagem~\thechapter.\ref{listagem:projetos/capitulo05/CadastroClientes/web/css/estilos.css}. neste arquivo.
 
 \cssCode{Arquivo de estilos da aplicação\newline%
 Arquivo: \texttt{/css/estilos.css}}{projetos/capitulo05/CadastroClientes/web/css/estilos.css}
 
-Execute o projeto e aponte o navegador para a página de listagem para ver como está ficando. Se você já tiver alguns estados cadastrados, vai ver que eles aparecerão na tabela. Vamos agora criar nosso formulário para criar estados. Na pasta ``/formularios/estados'', crie um arquivo JSP chamado ``novo'' (sem as aspas). O código-fonte do arquivo pode ser visto na Listagem 5.21.
+Execute o projeto e aponte o navegador para a página de listagem para ver como está ficando. Se você já tiver alguns estados cadastrados, vai ver que eles aparecerão na tabela. Vamos agora criar nosso formulário para criar estados. Na pasta ``/formularios/estados'', crie um arquivo JSP chamado ``novo'' (sem as aspas). O código-fonte do arquivo pode ser visto na Listagem~\thechapter.\ref{listagem:projetos/capitulo05/CadastroClientes/web/formularios/estados/novo.jsp}.
 
 \htmlCode{Formulário de cadastro de novos Estados\newline%
 Arquivo: \texttt{/formularios/estados/novo.jsp}}{projetos/capitulo05/CadastroClientes/web/formularios/estados/novo.jsp}
 
 Salve o arquivo e veja se ele está sendo exibido corretamente no navegador. Acesse-o pelo link ``Novo Estado'' da página de listagem de estados. Vamos analisar o código. Na linha 10 referenciamos o nosso arquivo de estilos. Nas linhas 18 e 19 declaramos a \textit{tag} do formulário. Note que a action está apontando para ``/processaEstados'' que será a URL que mapearemos o Servlet que tratará os estados. A novidade nesse formulário é o uso de um input do tipo hidden (escondido). Esses tipos de input são usados para guardar valores que o usuário do sistema não tem acesso diretamente. No nosso caso, esse input, que tem o nome de ``acao'' e valor ``criar'', vai indicar ao Servlet que queremos criar um novo estado. Nós precisamos tratar isso na implementação do nosso Servlet ok? Como já temos nossa página de listagem e o nosso formulário de criação de estados, está na hora de criarmos o Servlet que vai gerenciar isso. No pacote ``cadastroclientes.controladores'', crie um Servlet com o nome de ``EstadosServlet'' (sem as aspas) e configure o mapeamento dele para ``/processaEstados'' (sem as aspas).
 
-A seguir, na Listagem 5.22 e na Listagem 5.23, é apresentado o código do método processRequest do Servlet EstadosServlet.
-
-
-\textcolor{red}{falar do filtro UTF-8}
-\javaCode{Filtro de configuração de encoding padrão\newline%
-Arquivo: \texttt{cadastroclientes/controladores/filtros/ConfigurarEncoding-\newline%
-Filter.java}}{projetos/capitulo05/CadastroClientes/src/java/cadastroclientes/controladores/filtros/ConfigurarEncodingFilter.java}
+A seguir, na Listagem~\thechapter.\ref{listagem:projetos/capitulo05/CadastroClientes/src/java/cadastroclientes/controladores/EstadosServlet.java} é apresentado o código completo da classe \texttt{EstadosServlet}.
 
 \javaCode{Código-fonte do Servlet ``EstadosServlet''\newline%
 Arquivo: \texttt{cadastroclientes/controladores/EstadosServlet.java}}{projetos/capitulo05/CadastroClientes/src/java/cadastroclientes/controladores/EstadosServlet.java}
 
-Copie todo o código e execute o projeto. Acesse a listagem de estados e clique para criar um novo estado. Preencha o formulário e salve. O novo estado será salvo e a listagem aparecerá novamente. Como exercício, tente entender o que está acontecendo no Servlet. Todo o código apresentado já foi estudado nos exemplos anteriores. Perceba que foram tratadas todas as ações possíveis, mas ainda faltam dois arquivos JSP para implementarmos. O ``alterar.jsp'' e o ``excluir.jsp''. Vamos fazer isso? Crie um arquivo na pasta ``/formularios/estados'' com o nome de ``alterar'' (sem as aspas) e copie o código da Listagem 5.24.
+Perceba que a linha que contém o código para a configuração do \textit{encoding} do \texttt{request} que estávamos usando até agora foi removida pois, para não precisarmos ter essa configuração em cada Servlet, criaremos um Filtro para realizar essa ação padrão para nós. Os filtros das aplicações Web em Java são componentes que podem atuar antes e/ou depois de requisições à outros componentes da aplicação, inclusive outros filtros. Para isso, crie primeiramente o pacote ``\texttt{filtros}'' dentro do pacote ``\texttt{controladores}''. No pacote ``\texttt{filtros}', crie uma nova classe chamada ``\texttt{ConfigurarEncodingFilter.java}'' e copie o código apresentado na Listagem~\thechapter.\ref{listagem:projetos/capitulo05/CadastroClientes/src/java/cadastroclientes/controladores/filtros/ConfigurarEncodingFilter.java}. Note que poderíamos ter criado o filtro usando a opção apropriada nos tipos de arquivo disponíveis no NetBeans, entretanto, nosso filtro é bastante simples e todo o \textit{template} que o NetBeans insere no arquivo é praticamente desnecessário para nossa necessidade.
+
+\javaCode{Filtro de configuração de encoding padrão\newline%
+Arquivo: \texttt{cadastroclientes/controladores/filtros/ConfigurarEncoding-\newline%
+Filter.java}}{projetos/capitulo05/CadastroClientes/src/java/cadastroclientes/controladores/filtros/ConfigurarEncodingFilter.java}
+
+\textcolor{red}{Explicar o filtro}
+
+Voltando ao EstadosServlet apresentado na Listagem~\thechapter.\ref{listagem:projetos/capitulo05/CadastroClientes/src/java/cadastroclientes/controladores/EstadosServlet.java}, copie todo o código e execute o projeto. Acesse a listagem de estados e clique para criar um novo estado. Preencha o formulário e salve. O novo estado será salvo e a listagem aparecerá novamente. Teste a inserção de estados com nomes que contém palavras acentuadas, por exemplo, ``São Paulo'' e verifique se os caracteres acentuados estão sendo persistidos apropriadamente. Como exercício, tente entender o que está acontecendo no Servlet. Todo o código apresentado já foi estudado nos exemplos anteriores. Perceba que foram tratadas todas as ações possíveis, mas ainda faltam dois arquivos JSP para implementarmos. O ``\texttt{alterar.jsp}'' e o ``\texttt{excluir.jsp}''. Vamos fazer isso? Crie um arquivo JSP na pasta ``\texttt{/formularios/estados}'' com o nome de ``\texttt{alterar.jsp}'' (sem as aspas) e copie o código da Listagem~\thechapter.\ref{listagem:projetos/capitulo05/CadastroClientes/web/formularios/estados/alterar.jsp}.
 
 \htmlCode{Formulário de alteração de Estados cadastrados\newline%
 Arquivo: \texttt{/formularios/estados/alterar.jsp}}{projetos/capitulo05/CadastroClientes/web/formularios/estados/alterar.jsp}

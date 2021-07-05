@@ -63,7 +63,7 @@ Preencha o campo \destaque{\textit{Class Name:}} com ``ProcessaDadosClienteServl
 
 Ao fazer isso, o nosso Servlet será criado e aberto no editor. Veja que a anotação \inlineJavaCode{@WebServlet} foi inserida apropriadamente no código da classe! Legal hein?
 
-Note também que o NetBeans já implementou o esqueleto do Servlet para nós. O primeiro método implementado é o \inlineJavaCode{processRequest(...)}. Lembra-se dele? É nele que vamos inserir o código que queremos que o Servlet execute. Após o fechamento do bloco deste método, note que existe uma linha onde está escrito ``\textit{HttpServlet methods. Click on the + sign on the left to Edit the code.}''. Siga a sugestão da frase e clique no ``+''. O que apareceu? A implementação dos métodos \texttt{GET} e \texttt{POST}, sendo que dentro delas é chamado o \inlineJavaCode{processRequest(...)}! Viu só? Da mesma forma que fazíamos manualmente! Não iremos mexer ali, então você pode contrair novamente esta seção do código clicando no sinal de ``–''.
+Note também que o NetBeans já implementou o esqueleto do Servlet para nós. O primeiro método implementado é o \inlineJavaCode{processRequest(...)}. Lembra-se dele? É nele que vamos inserir o código que queremos que o Servlet execute. Após o fechamento do bloco deste método, note que existe uma linha onde está escrito ``\textit{HttpServlet methods. Click on the + sign on the left to Edit the code.}''. Siga a sugestão da frase e clique no ``+''. O que apareceu? A implementação dos métodos \texttt{GET} e \texttt{POST}, sendo que dentro delas é chamado o \inlineJavaCode{processRequest(...)}! Viu só? Da mesma forma que fazíamos manualmente! Não iremos mexer ali, então você pode contrair novamente esta seção do código clicando no sinal de ``\texttt{–}''.
 
 Note que além de implementar o esqueleto do nosso Servlet, o NetBeans também inseriu um trecho de código dentro do \inlineJavaCode{processRequest(...)}. O código que está inserido configura o que o Servlet gerará de resposta a quem o requisitou \linebreak(\inlineJavaCode{response.setContentType(...)}), obtém o fluxo de escrita do Servlet, escreve uma série de Strings que representam uma página HTML nesse fluxo e o fecha automaticamente, dado o uso do \textit{try with resources}. Você se lembra que já falei algumas vezes que não iremos implementar Servlets que geram código HTML? Então, vamos limpar esse método, tirando todo o código que foi inserido dentro dele. Vá no editor e apague o conteúdo entre as linhas 34 (\inlineJavaCode{response.setContentType(...)}) e 46 (\texttt{\}}), incluindo elas. Seu \inlineJavaCode{processRequest(...)} deve estar vazio agora.
 
@@ -83,7 +83,8 @@ Volte ao Servlet, vamos implementar o método \inlineJavaCode{processRequest(...
 
 Copiou o código? Legal. Vamos entender o que está acontecendo. Primeiramente, na linha 31, para mantermos a consistência da codificação em que os dados da nossa aplicação estão trafegando entre as camadas, configuramos o \texttt{request} para processar seus dados usando o encoding \texttt{UTF-8}. Mais adiante no livro aprenderemos a criar um filtro que fará isso automaticamente para todos os nossos Servlets, mas por enquanto vamos fazer um a um, da forma que está no código.
 
-Na linha 41 é declarada uma variável do tipo \texttt{String} com o nome de ``nome''. Essa variável é inicializada com o valor obtido ao se chamar o método \inlineJavaCode{getParameter( String param )} de \texttt{request}. O parâmetro passado ao método \inlineJavaCode{getParameter(...)}, que é uma \texttt{String}, é o nome que foi dado ao componente do formulário, que no caso foi ``nome''. Estude as linhas 42, 43, 44, 45 e 46 e tente fazer um paralelo com o formulário contido no \texttt{index.html}. Note que a String que é passada como parâmetro no método \inlineJavaCode{getParameter(...)} sempre reflete o nome dado ao componente do formulário através da propriedade \texttt{name}. Veja a linha 44. Declaramos uma variável chamada \texttt{dataNascimento} que é inicializada com o valor do parâmetro ``dataNasc'' (configurado no formulário).
+Na linha 41 é declarada uma variável do tipo \texttt{String} com o nome de ``nome''. Essa variável é inicializada com o valor obtido ao se chamar o método\linebreak%
+\inlineJavaCode{getParameter( String param )} de \texttt{request}. O parâmetro passado ao método \inlineJavaCode{getParameter( String param )}, que é uma \texttt{String}, é o nome que foi dado ao componente do formulário, que no caso foi ``nome''. Estude as linhas 42, 43, 44, 45 e 46 e tente fazer um paralelo com o formulário contido no \texttt{index.html}. Note que a String que é passada como parâmetro no método \inlineJavaCode{getParameter(...)} sempre reflete o nome dado ao componente do formulário através da propriedade \texttt{name}. Veja a linha 44. Declaramos uma variável chamada \texttt{dataNascimento} que é inicializada com o valor do parâmetro ``dataNasc'' (configurado no formulário).
 
 O que fizemos até a linha 46 foi criar uma variável que vai receber o valor de cada componente do formulário. A partir da linha 48, até o final do método, direcionamos para a saída os dados que foram obtidos. Vamos testar? Salve o Servlet e execute o projeto (botão de ``play'', lembra?). Na página, preencha o formulário, clique em ``Enviar Dados'' e volte no NetBeans para ver o que aconteceu. Olhe na janela de saída! Lá estão os dados que você preencheu no formulário! Muito bem! Imagine agora se esse fosse um sistema real. Esses dados recebidos dentro do Servlet poderiam alimentar uma \textit{query} SQL para inserir esse cliente em um banco de dados! Legal não é?! A partir desse ponto, você já deve estar entendendo melhor o que está acontecendo, mas e aquele monte de coisas escritas no endereço do navegador depois de clicar em ``Enviar Dados''? Esse comportamento está intrinsecamente ligado ao tipo de método HTTP que estamos usando. Vamos para a próxima Seção, vou explicar isso lá.
 
@@ -101,28 +102,30 @@ O protocolo HTTP que usamos em nossas aplicações Web, define uma série de mé
 
 O método \texttt{GET} (\textit{to get} = obter) é usado principalmente para pedir ao servidor algum recurso, sendo que ele retornará os dados requisitados, caso existam, claro. Quando nós fazemos uma pesquisa no Google ou clicamos em um \textit{link}, estamos usando o método \texttt{GET}. Qualquer URL que colocamos na barra de endereço do nosso navegador é enviada ao servidor usando o método \texttt{GET}. Vamos fazer um teste. Entre na página do Google (\url{www.google.com}) e pesquise por ``métodos http'' (sem as aspas). Ao clicar em pesquisar, o resultado será mostrado no navegador. Note que no meu caso eu fiz a busca digitando diretamente na barra do navegador Chrome. Veja a barra de endereços. Haverá algo assim:
 
-\texttt{https://www.google.com/search?q=métodos+http\&oq=métodos+http\&aqs=chrome.....}
+\destaque{\texttt{https://www.google.com/search?q=métodos+http\&oq=métodos+http\&aqs=chrome.....}}
 
 Parece grego, mas não é! Vamos entender a URL. Estamos usando o protocolo HTTP, para acessar a máquina \texttt{www.google.com} e o recurso inicia em \texttt{search} e, a partir do ponto de interrogação, são codificados os parâmetros enviados na requisição do recurso:
 
-\texttt{q=métodos+http\&oq=métodos+http\&aqs=chrome.....}
+\destaque{\texttt{q=métodos+http\&oq=métodos+http\&aqs=chrome.....}}
 
 Dividindo esse resto da URL nos símbolos ``\&''. Vamos obter isso aqui:
 
-\texttt{q=métodos+http}\\
-\texttt{oq=métodos+http}\\
-\texttt{aqs=chrome.....}\\
-\texttt{...}
+\destaque{\texttt{q=métodos+http}}\\
+\destaque{\texttt{oq=métodos+http}}\\
+\destaque{\texttt{aqs=chrome.....}}\\
+\destaque{\texttt{...}}
 
 Note que a forma de cada pedaço da parte correspondente aos parâmetros enviados corresponde a é \texttt{x=y}, onde ``\texttt{x}'' é o nome de um parâmetro e ``\texttt{y}'' é o valor associado a ele. No nosso exemplo, o parâmetro ``\texttt{q}'' tem o valor ``métodos+http'' que no caso é a nossa consulta! Ou seja, o componente que trata as pesquisas do Google (\texttt{search}), entenderá que o parâmetro ``\texttt{q}'' vai conter o valor da pesquisa que estamos fazendo!
 
 Execute novamente o nosso projeto, limpe todos os campos e preencha o campo ``Nome'' com ``Juca'' (sem as aspas) e o campo ``Sexo'' com Masculino e clique em ``Enviar Dados''. Veja a URL que foi obtida na barra de endereços:
 
-\texttt{http://localhost:8080/PrimeiroFormulario/processaDadosCliente?nome=Juca\&\\sobrenome=\&cpf=\&dataNasc=\&sexo=M\&observacoes=}
+\destaque{\texttt{http://localhost:8080/PrimeiroFormulario/processaDadosCliente?}}\\
+\destaque{\texttt{nome=Juca\&\\sobrenome=\&cpf=\&dataNasc=\&sexo=M\&observacoes=}}
 
 Veja o caminho do recurso!
 
-\texttt{processaDadosCliente?nome=Juca\&sobrenome=\&cpf=\&dataNasc=\&sexo=M\&\\observacoes=}
+\destaque{\texttt{processaDadosCliente?nome=Juca\&sobrenome=\&cpf=\&dataNasc=\&}}\\
+\destaque{\texttt{sexo=M\&\\observacoes=}}
 
 O que isso quer dizer que, no nosso caso, o Servlet mapeado no endereço ``processaDadosCliente'' receberá os parâmetros \texttt{nome}, \texttt{sobrenome}, \texttt{cpf}, \texttt{dataNasc}, \texttt{sexo} e \texttt{observacoes}, receberá os valores associados a ele para serem usados e deverá, de alguma forma, retornar o recurso associado a eles. O ponto de interrogação após o mapeamento do Servlet (\texttt{/processaDadosCliente}) indica que o que vem depois dele (do ponto de interrogação) são parâmetros HTTP. Cada parâmetro, como já vimos, está na forma \texttt{x=y}, onde ``\texttt{x}'' é o parâmrtro e ``\texttt{y}'' é o valor, sendo que eles são separadas por ``\&''. Então temos: \texttt{nome} igual a ``Juca'', \texttt{sobrenome} igual a vazio, \texttt{cpf} igual a vazio, \texttt{dataNasc} igual a vazio, \texttt{sexo} igual a ``M'' e \texttt{observacoes} igual a vazio. A saída no NetBeans deve ter ficado assim:
 

@@ -11,7 +11,7 @@ A partir de agora iremos dar um passo importantíssimo em nossos estudos sobre d
 Antes de começarmos a discussão e a implementação desses padrões, nós precisamos preparar nosso ambiente de desenvolvimento. O NetBeans já temos instalado. O Sistema Gerenciador de Banco de Dados (SGBD) que iremos utilizar, o MariaDB\footnote{Provavelmente você deve ter instalado na sua máquina o MariaDB que é distribuído junto ao XAMPP}/MySQL, você provavelmente já deve ter instalado também. Com isso pronto, precisamos instalar uma ferramenta para nos ajudar a criar nossa base de dados. Iremos utilizar o MySQL Workbench, uma ferramenta gratuita para gerenciamento do MariaDB/MySQL. 
 
 
-\section{Preparando o Ambiente}
+\section{Preparando o Ambiente}\label{sec:preparandoAmbiente}
 
 Para começar, vamos fazer o download da ferramenta. Acesse o endereço \url{https://dev.mysql.com/downloads/workbench/}, escolha Microsoft Windows como plataforma, que provavelmente é o sistema operacional que você está utilizando e clique no botão ``\textit{Download}''. Fazendo isso, você será direcionado para uma página onde é requisitado um nome de usuário e senha. Se você não quiser se cadastrar (não precisa), clique no link embaixo do formulário de \textit{login} onde está escrito ``\textit{No thanks, just start my download}''. O download do instalador será iniciado.
 
@@ -149,8 +149,6 @@ Vamos testar? No pacote ``padroesempratica.testes'', crie uma classe chamada \te
 \javaCode{Código de teste para o PaisDAO (\texttt{padroesempratica/ testes/TestePaisDAO.java})}{projetos/capitulo04/PadroesEmPratica/src/padroesempratica/testes/TestePaisDAO.java}
 
 Copiou o código? Execute a classe (botão direito no arquivo, \destaque{\textit{Run File}} ou \texttt{<Shift+F6>}). Se tudo estiver correto, a classe será compilada e executada e nenhum erro será emitido. Fazendo isso, um novo registro na tabela ``pais'' será inserido. Vamos confirmar isso? No MySQL Workbench deve haver um editor SQL já aberto. Se não houver, abra um clicando no ícone com uma folha com a sigla SQL e um sinal de \texttt{+}. Confirme também se a base de dados ``testes\_padroes'' está configurado como padrão ou está ativa. No editor, digite \inlineSQLCode{SELECT * FROM pais;} e clique no botão que tem um desenho de um raio na barra de ferramentas da aba do editor. O código SQL digitado será executado e o resultado será exibido logo abaixo. Veja a Figura~\ref{fig:cap04ExecucaoSelect}.
-
-cap04ExecucaoSelect.png
 
 \FloatBarrier
 \begin{figure}[!htbp]
