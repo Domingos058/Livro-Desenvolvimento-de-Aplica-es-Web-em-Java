@@ -4,9 +4,10 @@ import cadastroclientes.dao.ClienteDAO;
 import cadastroclientes.entidades.Cidade;
 import cadastroclientes.entidades.Cliente;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,9 +30,11 @@ public class ClientesServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String acao = request.getParameter( "acao" );
+        
         ClienteDAO dao = null;
         RequestDispatcher disp = null;
-
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
         try {
 
             dao = new ClienteDAO();
@@ -56,6 +59,8 @@ public class ClientesServlet extends HttpServlet {
                 Cliente c = new Cliente();
                 c.setNome( nome );
                 c.setSobrenome( sobrenome );
+                c.setDataNascimento( Date.valueOf( 
+                        LocalDate.parse( dataNascimento, dtf ) ) );
                 c.setCpf( cpf );
                 c.setEmail( email );
                 c.setLogradouro( logradouro );
@@ -63,15 +68,6 @@ public class ClientesServlet extends HttpServlet {
                 c.setBairro( bairro );
                 c.setCep( cep );
                 c.setCidade( ci );
-
-                SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy" );
-
-                try {
-                    java.util.Date data = sdf.parse( dataNascimento );
-                    c.setDataNascimento( new java.sql.Date( data.getTime() ) );
-                } catch ( ParseException exc ) {
-                    
-                }
 
                 dao.salvar( c );
 
@@ -100,6 +96,8 @@ public class ClientesServlet extends HttpServlet {
                 c.setId( id );
                 c.setNome( nome );
                 c.setSobrenome( sobrenome );
+                c.setDataNascimento( Date.valueOf( 
+                        LocalDate.parse( dataNascimento, dtf ) ) );
                 c.setCpf( cpf );
                 c.setEmail( email );
                 c.setLogradouro( logradouro );
@@ -107,15 +105,6 @@ public class ClientesServlet extends HttpServlet {
                 c.setBairro( bairro );
                 c.setCep( cep );
                 c.setCidade( ci );
-
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-                try {
-                    java.util.Date data = sdf.parse( dataNascimento );
-                    c.setDataNascimento( new java.sql.Date( data.getTime() ) );
-                } catch ( ParseException exc ) {
-
-                }
 
                 dao.atualizar( c );
 

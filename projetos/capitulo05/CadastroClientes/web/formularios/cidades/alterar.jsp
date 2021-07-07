@@ -44,7 +44,7 @@
               <c:forEach items="${servicos.todos}" var="estado">
                 <c:choose>
                   <c:when test="${requestScope.cidade.estado.id eq estado.id}">
-                    <option value="${estado.id}" selected="true">
+                    <option value="${estado.id}" selected>
                       ${estado.nome} - ${estado.sigla}
                     </option>
                   </c:when>
