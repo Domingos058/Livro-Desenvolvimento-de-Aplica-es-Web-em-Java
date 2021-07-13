@@ -33,7 +33,7 @@ public class ClientesServlet extends HttpServlet {
         
         ClienteDAO dao = null;
         RequestDispatcher disp = null;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         
         try {
 

@@ -27,14 +27,20 @@
         <tr>
           <td class="alinharDireita">Nome:</td>
           <td>
-            <input name="nome" type="text" size="20"
+            <input name="nome"
+                   type="text"
+                   size="20"
+                   maxlength="30"
                    value="${requestScope.estado.nome}"/>
           </td>
         </tr>
         <tr>
           <td class="alinharDireita">Sigla:</td>
           <td>
-            <input name="sigla" type="text" size="3"
+            <input name="sigla"
+                   type="text"
+                   size="3"
+                   maxlength="2"
                    value="${requestScope.estado.sigla}"/>
           </td>
         </tr>

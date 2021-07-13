@@ -27,7 +27,11 @@
         <tr>
           <td class="alinharDireita">Nome:</td>
           <td>
-            <input name="nome" type="text" size="20"
+            <input name="nome"
+                   type="text"
+                   size="20"
+                   maxlength="30"
+                   required
                    value="${requestScope.cidade.nome}"/>
           </td>
         </tr>
@@ -40,7 +44,7 @@
                 scope="page"
                 class="cadastroclientes.servicos.EstadoServices"/>
 
-            <select name="idEstado">
+            <select name="idEstado" required>
               <c:forEach items="${servicos.todos}" var="estado">
                 <c:choose>
                   <c:when test="${requestScope.cidade.estado.id eq estado.id}">

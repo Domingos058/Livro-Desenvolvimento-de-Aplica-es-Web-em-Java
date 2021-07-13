@@ -35,9 +35,7 @@
         </tr>
         <tr>
           <td class="alinharDireita">
-            Data de Nascimento
-            <br/>
-            (dd/mm/aaaa):
+            Data de Nascimento:
           </td>
           <td>
             <fmt:formatDate 
@@ -50,7 +48,7 @@
           <td>${requestScope.cliente.cpf}</td>
         </tr>
         <tr>
-          <td class="alinharDireita">Email:</td>
+          <td class="alinharDireita">E-mail:</td>
           <td>${requestScope.cliente.email}</td>
         </tr>
         <tr>

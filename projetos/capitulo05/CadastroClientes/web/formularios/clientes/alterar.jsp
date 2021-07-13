@@ -28,31 +28,41 @@
         <tr>
           <td class="alinharDireita">Nome:</td>
           <td>
-            <input name="nome" type="text" size="20"
+            <input name="nome"
+                   type="text"
+                   size="20"
+                   maxlength="45"
+                   required
                    value="${requestScope.cliente.nome}"/>
           </td>
         </tr>
         <tr>
           <td class="alinharDireita">Sobrenome:</td>
           <td>
-            <input name="sobrenome" type="text" size="20"
+            <input name="sobrenome"
+                   type="text"
+                   size="20"
+                   maxlength="45"
+                   required
                    value="${requestScope.cliente.sobrenome}"/>
           </td>
         </tr>
         <tr>
           <td class="alinharDireita">
-            Data de Nascimento
-            <br/>
-            (dd/mm/aaaa):
+            Data de Nascimento:
           </td>
           <td>
 
             <fmt:formatDate 
-                pattern="dd/MM/yyyy"
+                pattern="yyyy-MM-dd"
                 value="${requestScope.cliente.dataNascimento}"
                 var="data" scope="page"/>
 
-            <input name="dataNascimento" type="text" size="8"
+            <input name="dataNascimento"
+                   type="date"
+                   size="8"
+                   placeholder="dd/mm/yyyy"
+                   required
                    value="${data}"/>
 
           </td>
@@ -60,42 +70,67 @@
         <tr>
           <td class="alinharDireita">CPF:</td>
           <td>
-            <input name="cpf" type="text" size="13"
+            <input name="cpf"
+                   type="text"
+                   size="13"
+                   pattern="\d{3}.\d{3}.\d{3}-\d{2}"
+                   placeholder="###.###.###-##"
+                   required
                    value="${requestScope.cliente.cpf}"/>
           </td>
         </tr>
         <tr>
-          <td class="alinharDireita">Email:</td>
+          <td class="alinharDireita">E-mail:</td>
           <td>
-            <input name="email" type="text" size="20"
+            <input name="email"
+                   type="email"
+                   size="20"
+                   maxlength="60"
+                   required
                    value="${requestScope.cliente.email}"/>
           </td>
         </tr>
         <tr>
           <td class="alinharDireita">Logradouro:</td>
           <td>
-            <input name="logradouro" type="text" size="25"
+            <input name="logradouro"
+                   type="text"
+                   size="25"
+                   maxlength="50"
+                   required
                    value="${requestScope.cliente.logradouro}"/>
           </td>
         </tr>
         <tr>
           <td class="alinharDireita">Número:</td>
           <td>
-            <input name="numero" type="text" size="6"
+            <input name="numero"
+                   type="text"
+                   size="6"
+                   maxlength="6"
+                   required
                    value="${requestScope.cliente.numero}"/>
           </td>
         </tr>
         <tr>
           <td class="alinharDireita">Bairro:</td>
           <td>
-            <input name="bairro" type="text" size="15"
+            <input name="bairro"
+                   type="text"
+                   size="15"
+                   maxlength="30"
                    value="${requestScope.cliente.bairro}"/>
           </td>
         </tr>
         <tr>
           <td class="alinharDireita">CEP:</td>
           <td>
-            <input name="cep" type="text" size="7"
+            <input name="cep"
+                   type="text"
+                   size="7"
+                   pattern="\d{5}-\d{3}"
+                   placeholder="#####-###"
+                   required
                    value="${requestScope.cliente.cep}"/>
           </td>
         </tr>
@@ -108,7 +143,7 @@
                 scope="page"
                 class="cadastroclientes.servicos.CidadeServices"/>
 
-            <select name="idCidade">
+            <select name="idCidade" required>
               <c:forEach items="${servicos.todos}" var="cidade">
                 <c:choose>
                   <c:when test="${requestScope.cliente.cidade.id eq cidade.id}">
