@@ -10,4 +10,15 @@ body {
     border-radius: 5px;
     height: 300px;
     width: 600px;
+    overflow: scroll;
+    overflow-style: scrollbar;
+}
+
+.pDOM:nth-child(even) {
+    background-color: #006699;
+}
+
+.canvasExemplo10 {
+    border: solid thin #000000;
+    margin: 10px;
 }
