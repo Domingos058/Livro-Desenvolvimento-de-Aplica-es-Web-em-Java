@@ -22,3 +22,25 @@ body {
     border: solid thin #000000;
     margin: 10px;
 }
+
+.dadosPessoa {
+    border: solid thin #006699;
+    background-color: #ffa800;
+    margin-bottom: 5px;
+}
+
+.dadosPessoa p {
+    margin: 0px;
+}
+
+.dadosPessoa p:nth-child(1) {
+    background-color: #489eff;
+}
+
+.dadosPessoa p:nth-child(2) {
+    background-color: #248bff;
+}
+
+.dadosPessoa p:nth-child(3) {
+    background-color: #0068ddff;
+}

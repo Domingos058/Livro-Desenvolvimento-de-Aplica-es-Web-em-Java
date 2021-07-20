@@ -162,7 +162,10 @@ function prepararCanvasExemplo10() {
         
     };
     
+    // esconde o menu de contexto no clique
+    // com o botão direito
     canvas.oncontextmenu = event => {
+        // quebra a cadeia de propagação do evento
         event.preventDefault();
     };
     

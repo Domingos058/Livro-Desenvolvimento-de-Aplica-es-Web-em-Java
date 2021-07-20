@@ -24,7 +24,7 @@
     </head>
     <body>
         <div>
-            <!--
+            
             <h1>Construções da Linguagem</h1>
             
             <p>
@@ -46,7 +46,6 @@
             <p>
                 <button onclick="executarExemplo05(event)">Exemplo 05 - "Classes" e Objetos</button>
             </p>
-            -->
         </div>
         
         <hr>
@@ -54,7 +53,7 @@
         <div>
             
             <h1>Manipulação do DOM</h1>
-            <!--
+            
             <div>
                 <p>
                     <button onclick="executarExemplo06(event)">Exemplo 06 - JavaScript puro</button>
@@ -113,7 +112,7 @@
                     <hr>
                 </div>
             </div>
-            -->
+            
             <div>
                 <p>
                     <h2>Exemplo 09 - Eventos</h2>
@@ -127,7 +126,8 @@
                         <option value="o3">Opção 3</option>
                     </select>
                 </div>
-                <!-- precisa executar depois das tags estarem prontas! -->
+                <!-- precisa executar depois das
+                     tags estarem prontas! -->
                 <script>registrarEventosExemplo09();</script>
             </div>
             
@@ -143,30 +143,24 @@
             
         </div>
         
-        <hr>
+        <hr-->
         
         <div>
-            <h1>Assincronia e Intercâmbio de Dados</h1>
+            
+            <h1>Requisições Assíncronas e Intercâmbio de Dados</h1>
             
             <div>
                 <p>
-                    <button onclick="executarExemplo11(event)">Exemplo 11 - Promises, async e await</button>
+                    <button onclick="executarExemplo11(event)">Exemplo 11 - AJAX (jQuery)</button>
                 </p>
                 <div id="divExemplo11" class="divExemplo"></div>
             </div>
             
             <div>
                 <p>
-                    <button onclick="executarExemplo12(event)">Exemplo 12 - AJAX</button>
+                    <button onclick="executarExemplo12(event)">Exemplo 12 - JSON (jQuery)</button>
                 </p>
                 <div id="divExemplo12" class="divExemplo"></div>
-            </div>
-            
-            <div>
-                <p>
-                    <button onclick="executarExemplo13(event)">Exemplo 13 - JSON</button>
-                </p>
-                <div id="divExemplo13" class="divExemplo"></div>
             </div>
             
         </div>
