@@ -11,18 +11,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import vendaprodutos.dao.ClienteDAO;
+import vendaprodutos.dao.FornecedorDAO;
 import vendaprodutos.entidades.Cidade;
-import vendaprodutos.entidades.Cliente;
+import vendaprodutos.entidades.Fornecedor;
 
 /**
- * Servlet para tratar Clientes.
+ * Servlet para tratar Fornecedores.
  *
  * @author Prof. Dr. David Buzatto
  */
-@WebServlet( name = "ClientesServlet", 
-             urlPatterns = { "/processaClientes" } )
-public class ClientesServlet extends HttpServlet {
+@WebServlet( name = "FornecedoresServlet", 
+             urlPatterns = { "/processaFornecedores" } )
+public class FornecedoresServlet extends HttpServlet {
 
     protected void processRequest( 
             HttpServletRequest request, 
@@ -31,20 +31,17 @@ public class ClientesServlet extends HttpServlet {
         
         String acao = request.getParameter( "acao" );
         
-        ClienteDAO dao = null;
+        FornecedorDAO dao = null;
         RequestDispatcher disp = null;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         
         try {
 
-            dao = new ClienteDAO();
+            dao = new FornecedorDAO();
 
             if ( acao.equals( "inserir" ) ) {
 
-                String nome = request.getParameter( "nome" );
-                String sobrenome = request.getParameter( "sobrenome" );
-                String dataNascimento = request.getParameter( "dataNascimento" );
-                String cpf = request.getParameter( "cpf" );
+                String razaoSocial = request.getParameter( "razaoSocial" );
+                String cnpj = request.getParameter( "cnpj" );
                 String email = request.getParameter( "email" );
                 String logradouro = request.getParameter( "logradouro" );
                 String numero = request.getParameter( "numero" );
@@ -56,31 +53,26 @@ public class ClientesServlet extends HttpServlet {
                 Cidade ci = new Cidade();
                 ci.setId( idCidade );
 
-                Cliente c = new Cliente();
-                c.setNome( nome );
-                c.setSobrenome( sobrenome );
-                c.setDataNascimento( Date.valueOf( 
-                        LocalDate.parse( dataNascimento, dtf ) ) );
-                c.setCpf( cpf );
-                c.setEmail( email );
-                c.setLogradouro( logradouro );
-                c.setNumero( numero );
-                c.setBairro( bairro );
-                c.setCep( cep );
-                c.setCidade( ci );
+                Fornecedor f = new Fornecedor();
+                f.setRazaoSocial( razaoSocial );
+                f.setCnpj( cnpj );
+                f.setEmail( email );
+                f.setLogradouro( logradouro );
+                f.setNumero( numero );
+                f.setBairro( bairro );
+                f.setCep( cep );
+                f.setCidade( ci );
 
-                dao.salvar( c );
+                dao.salvar( f );
 
                 disp = request.getRequestDispatcher(
-                        "/formularios/clientes/listagem.jsp" );
+                        "/formularios/fornecedores/listagem.jsp" );
 
             } else if ( acao.equals( "alterar" ) ) {
 
                 int id = Integer.parseInt(request.getParameter( "id" ));
-                String nome = request.getParameter( "nome" );
-                String sobrenome = request.getParameter( "sobrenome" );
-                String dataNascimento = request.getParameter( "dataNascimento" );
-                String cpf = request.getParameter( "cpf" );
+                String razaoSocial = request.getParameter( "razaoSocial" );
+                String cnpj = request.getParameter( "cnpj" );
                 String email = request.getParameter( "email" );
                 String logradouro = request.getParameter( "logradouro" );
                 String numero = request.getParameter( "numero" );
@@ -92,49 +84,46 @@ public class ClientesServlet extends HttpServlet {
                 Cidade ci = new Cidade();
                 ci.setId( idCidade );
 
-                Cliente c = new Cliente();
-                c.setId( id );
-                c.setNome( nome );
-                c.setSobrenome( sobrenome );
-                c.setDataNascimento( Date.valueOf( 
-                        LocalDate.parse( dataNascimento, dtf ) ) );
-                c.setCpf( cpf );
-                c.setEmail( email );
-                c.setLogradouro( logradouro );
-                c.setNumero( numero );
-                c.setBairro( bairro );
-                c.setCep( cep );
-                c.setCidade( ci );
+                Fornecedor f = new Fornecedor();
+                f.setId( id );
+                f.setRazaoSocial( razaoSocial );
+                f.setCnpj( cnpj );
+                f.setEmail( email );
+                f.setLogradouro( logradouro );
+                f.setNumero( numero );
+                f.setBairro( bairro );
+                f.setCep( cep );
+                f.setCidade( ci );
 
-                dao.atualizar( c );
+                dao.atualizar( f );
 
                 disp = request.getRequestDispatcher(
-                        "/formularios/clientes/listagem.jsp" );
+                        "/formularios/fornecedores/listagem.jsp" );
 
             } else if ( acao.equals( "excluir" ) ) {
 
                 int id = Integer.parseInt(request.getParameter( "id" ));
 
-                Cliente c = new Cliente();
-                c.setId( id );
+                Fornecedor f = new Fornecedor();
+                f.setId( id );
 
-                dao.excluir( c );
+                dao.excluir( f );
 
                 disp = request.getRequestDispatcher(
-                        "/formularios/clientes/listagem.jsp" );
+                        "/formularios/fornecedores/listagem.jsp" );
 
             } else {
                 
                 int id = Integer.parseInt(request.getParameter( "id" ));
-                Cliente c = dao.obterPorId( id );
-                request.setAttribute( "cliente", c );
+                Fornecedor f = dao.obterPorId( id );
+                request.setAttribute( "fornecedor", f );
                 
                 if ( acao.equals( "prepararAlteracao" ) ) {
                     disp = request.getRequestDispatcher( 
-                            "/formularios/clientes/alterar.jsp" );
+                            "/formularios/fornecedores/alterar.jsp" );
                 } else if ( acao.equals( "prepararExclusao" ) ) {
                     disp = request.getRequestDispatcher( 
-                            "/formularios/clientes/excluir.jsp" );
+                            "/formularios/fornecedores/excluir.jsp" );
                 }
                 
             }
@@ -175,7 +164,7 @@ public class ClientesServlet extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "ClientesServlet";
+        return "FornecedoresServlet";
     }
 
 }

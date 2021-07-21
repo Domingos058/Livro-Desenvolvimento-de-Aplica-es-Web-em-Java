@@ -5,7 +5,7 @@
 
 <html>
   <head>
-    <title>Novo Cliente</title>
+    <title>Novo Fornecedor</title>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
@@ -15,53 +15,31 @@
 
   <body>
 
-    <h1>Novo Cliente</h1>
+    <h1>Novo Fornecedor</h1>
 
-    <form method="post" action="${cp}/processaClientes">
+    <form method="post" action="${cp}/processaFornecedores">
 
       <input name="acao" type="hidden" value="inserir"/>
 
       <table>
         <tr>
-          <td class="alinharDireita">Nome:</td>
+          <td class="alinharDireita">Razão Social:</td>
           <td>
-            <input name="nome"
+            <input name="razaoSocial"
                    type="text"
                    size="20"
-                   maxlength="45"
+                   maxlength="100"
                    required/>
           </td>
         </tr>
         <tr>
-          <td class="alinharDireita">Sobrenome:</td>
+          <td class="alinharDireita">CNPJ:</td>
           <td>
-            <input name="sobrenome"
+            <input name="cnpj"
                    type="text"
-                   size="20"
-                   maxlength="45"
-                   required/>
-          </td>
-        </tr>
-        <tr>
-          <td class="alinharDireita">
-            Data de Nascimento:
-          </td>
-          <td>
-            <input name="dataNascimento"
-                   type="date"
-                   size="8"
-                   placeholder="dd/mm/yyyy"
-                   required/>
-          </td>
-        </tr>
-        <tr>
-          <td class="alinharDireita">CPF:</td>
-          <td>
-            <input name="cpf"
-                   type="text"
-                   size="13"
-                   pattern="\d{3}.\d{3}.\d{3}-\d{2}"
-                   placeholder="###.###.###-##"
+                   size="18"
+                   pattern="\d{2}.\d{3}.\d{3}/\d{4}-\d{2}"
+                   placeholder="##.###.###/####-##"
                    required/>
           </td>
         </tr>
@@ -137,7 +115,7 @@
         </tr>
         <tr>
           <td>
-            <a href="${cp}/formularios/clientes/listagem.jsp">
+            <a href="${cp}/formularios/fornecedores/listagem.jsp">
               Voltar
             </a>
           </td>

@@ -1,10 +1,10 @@
 package vendaprodutos.servicos;
 
-import vendaprodutos.dao.CidadeDAO;
-import vendaprodutos.entidades.Cidade;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import vendaprodutos.dao.CidadeDAO;
+import vendaprodutos.entidades.Cidade;
 
 /**
  * Classe de serviços para a entidade Cidade.

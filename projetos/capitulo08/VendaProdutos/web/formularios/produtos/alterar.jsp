@@ -6,7 +6,7 @@
 
 <html>
   <head>
-    <title>Alterar Cliente</title>
+    <title>Alterar Produto</title>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
@@ -16,12 +16,12 @@
 
   <body>
 
-    <h1>Alterar Cliente</h1>
+    <h1>Alterar Produto</h1>
 
-    <form method="post" action="${cp}/processaClientes">
+    <form method="post" action="${cp}/processaProdutos">
 
       <input name="acao" type="hidden" value="alterar"/>
-      <input name="id" type="hidden" value="${requestScope.cliente.id}"/>
+      <input name="id" type="hidden" value="${requestScope.produto.id}"/>
 
       <table>
         <tr>
@@ -32,7 +32,7 @@
                    size="20"
                    maxlength="45"
                    required
-                   value="${requestScope.cliente.nome}"/>
+                   value="${requestScope.produto.nome}"/>
           </td>
         </tr>
         <tr>
@@ -43,7 +43,7 @@
                    size="20"
                    maxlength="45"
                    required
-                   value="${requestScope.cliente.sobrenome}"/>
+                   value="${requestScope.produto.sobrenome}"/>
           </td>
         </tr>
         <tr>
@@ -54,7 +54,7 @@
 
             <fmt:formatDate 
                 pattern="yyyy-MM-dd"
-                value="${requestScope.cliente.dataNascimento}"
+                value="${requestScope.produto.dataNascimento}"
                 var="data" scope="page"/>
 
             <input name="dataNascimento"
@@ -75,7 +75,7 @@
                    pattern="\d{3}.\d{3}.\d{3}-\d{2}"
                    placeholder="###.###.###-##"
                    required
-                   value="${requestScope.cliente.cpf}"/>
+                   value="${requestScope.produto.cpf}"/>
           </td>
         </tr>
         <tr>
@@ -86,7 +86,7 @@
                    size="20"
                    maxlength="60"
                    required
-                   value="${requestScope.cliente.email}"/>
+                   value="${requestScope.produto.email}"/>
           </td>
         </tr>
         <tr>
@@ -97,7 +97,7 @@
                    size="25"
                    maxlength="50"
                    required
-                   value="${requestScope.cliente.logradouro}"/>
+                   value="${requestScope.produto.logradouro}"/>
           </td>
         </tr>
         <tr>
@@ -108,7 +108,7 @@
                    size="6"
                    maxlength="6"
                    required
-                   value="${requestScope.cliente.numero}"/>
+                   value="${requestScope.produto.numero}"/>
           </td>
         </tr>
         <tr>
@@ -118,7 +118,7 @@
                    type="text"
                    size="15"
                    maxlength="30"
-                   value="${requestScope.cliente.bairro}"/>
+                   value="${requestScope.produto.bairro}"/>
           </td>
         </tr>
         <tr>
@@ -130,7 +130,7 @@
                    pattern="\d{5}-\d{3}"
                    placeholder="#####-###"
                    required
-                   value="${requestScope.cliente.cep}"/>
+                   value="${requestScope.produto.cep}"/>
           </td>
         </tr>
         <tr>
@@ -145,7 +145,7 @@
             <select name="idCidade" required>
               <c:forEach items="${servicos.todos}" var="cidade">
                 <c:choose>
-                  <c:when test="${requestScope.cliente.cidade.id eq cidade.id}">
+                  <c:when test="${requestScope.produto.cidade.id eq cidade.id}">
                     <option value="${cidade.id}" selected>
                       ${cidade.nome}
                     </option>
@@ -163,7 +163,7 @@
         </tr>
         <tr>
           <td>
-            <a href="${cp}/formularios/clientes/listagem.jsp">Voltar</a>
+            <a href="${cp}/formularios/produtos/listagem.jsp">Voltar</a>
           </td>
           <td class="alinharDireita">
             <input type="submit" value="Alterar"/>

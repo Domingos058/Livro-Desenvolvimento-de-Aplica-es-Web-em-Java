@@ -1,10 +1,10 @@
 package vendaprodutos.servicos;
 
-import vendaprodutos.dao.ClienteDAO;
-import vendaprodutos.entidades.Cliente;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import vendaprodutos.dao.ClienteDAO;
+import vendaprodutos.entidades.Cliente;
 
 /**
  * Classe de serviços para a entidade Cliente.

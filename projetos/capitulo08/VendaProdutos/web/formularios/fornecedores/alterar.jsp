@@ -1,12 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="cp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 
 <html>
   <head>
-    <title>Alterar Cliente</title>
+    <title>Alterar Fornecedor</title>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
@@ -16,66 +15,35 @@
 
   <body>
 
-    <h1>Alterar Cliente</h1>
+    <h1>Alterar Fornecedor</h1>
 
-    <form method="post" action="${cp}/processaClientes">
+    <form method="post" action="${cp}/processaFornecedores">
 
       <input name="acao" type="hidden" value="alterar"/>
-      <input name="id" type="hidden" value="${requestScope.cliente.id}"/>
+      <input name="id" type="hidden" value="${requestScope.fornecedor.id}"/>
 
       <table>
         <tr>
-          <td class="alinharDireita">Nome:</td>
+          <td class="alinharDireita">Razão Social:</td>
           <td>
-            <input name="nome"
+            <input name="razaoSocial"
                    type="text"
                    size="20"
-                   maxlength="45"
+                   maxlength="100"
                    required
-                   value="${requestScope.cliente.nome}"/>
+                   value="${requestScope.fornecedor.razaoSocial}"/>
           </td>
         </tr>
         <tr>
-          <td class="alinharDireita">Sobrenome:</td>
+          <td class="alinharDireita">CNPJ:</td>
           <td>
-            <input name="sobrenome"
+            <input name="cnpj"
                    type="text"
-                   size="20"
-                   maxlength="45"
+                   size="18"
+                   pattern="\d{2}.\d{3}.\d{3}/\d{4}-\d{2}"
+                   placeholder="##.###.###/####-##"
                    required
-                   value="${requestScope.cliente.sobrenome}"/>
-          </td>
-        </tr>
-        <tr>
-          <td class="alinharDireita">
-            Data de Nascimento:
-          </td>
-          <td>
-
-            <fmt:formatDate 
-                pattern="yyyy-MM-dd"
-                value="${requestScope.cliente.dataNascimento}"
-                var="data" scope="page"/>
-
-            <input name="dataNascimento"
-                   type="date"
-                   size="8"
-                   placeholder="dd/mm/yyyy"
-                   required
-                   value="${data}"/>
-
-          </td>
-        </tr>
-        <tr>
-          <td class="alinharDireita">CPF:</td>
-          <td>
-            <input name="cpf"
-                   type="text"
-                   size="13"
-                   pattern="\d{3}.\d{3}.\d{3}-\d{2}"
-                   placeholder="###.###.###-##"
-                   required
-                   value="${requestScope.cliente.cpf}"/>
+                   value="${requestScope.fornecedor.cnpj}"/>
           </td>
         </tr>
         <tr>
@@ -86,7 +54,7 @@
                    size="20"
                    maxlength="60"
                    required
-                   value="${requestScope.cliente.email}"/>
+                   value="${requestScope.fornecedor.email}"/>
           </td>
         </tr>
         <tr>
@@ -97,7 +65,7 @@
                    size="25"
                    maxlength="50"
                    required
-                   value="${requestScope.cliente.logradouro}"/>
+                   value="${requestScope.fornecedor.logradouro}"/>
           </td>
         </tr>
         <tr>
@@ -108,7 +76,7 @@
                    size="6"
                    maxlength="6"
                    required
-                   value="${requestScope.cliente.numero}"/>
+                   value="${requestScope.fornecedor.numero}"/>
           </td>
         </tr>
         <tr>
@@ -118,7 +86,7 @@
                    type="text"
                    size="15"
                    maxlength="30"
-                   value="${requestScope.cliente.bairro}"/>
+                   value="${requestScope.fornecedor.bairro}"/>
           </td>
         </tr>
         <tr>
@@ -130,7 +98,7 @@
                    pattern="\d{5}-\d{3}"
                    placeholder="#####-###"
                    required
-                   value="${requestScope.cliente.cep}"/>
+                   value="${requestScope.fornecedor.cep}"/>
           </td>
         </tr>
         <tr>
@@ -145,7 +113,7 @@
             <select name="idCidade" required>
               <c:forEach items="${servicos.todos}" var="cidade">
                 <c:choose>
-                  <c:when test="${requestScope.cliente.cidade.id eq cidade.id}">
+                  <c:when test="${requestScope.fornecedor.cidade.id eq cidade.id}">
                     <option value="${cidade.id}" selected>
                       ${cidade.nome}
                     </option>
@@ -163,7 +131,7 @@
         </tr>
         <tr>
           <td>
-            <a href="${cp}/formularios/clientes/listagem.jsp">Voltar</a>
+            <a href="${cp}/formularios/fornecedores/listagem.jsp">Voltar</a>
           </td>
           <td class="alinharDireita">
             <input type="submit" value="Alterar"/>

@@ -8,17 +8,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import vendaprodutos.dao.EstadoDAO;
-import vendaprodutos.entidades.Estado;
+import vendaprodutos.dao.UnidadeMedidaDAO;
+import vendaprodutos.entidades.UnidadeMedida;
 
 /**
- * Servlet para tratar Estados.
+ * Servlet para tratar Unidades de Medida.
  *
  * @author Prof. Dr. David Buzatto
  */
-@WebServlet( name = "EstadosServlet", 
-             urlPatterns = { "/processaEstados" } )
-public class EstadosServlet extends HttpServlet {
+@WebServlet( name = "UnidadesMedidaServlet", 
+             urlPatterns = { "/processaUnidadesMedida" } )
+public class UnidadesMedidaServlet extends HttpServlet {
 
     protected void processRequest( 
             HttpServletRequest request, 
@@ -26,67 +26,67 @@ public class EstadosServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String acao = request.getParameter( "acao" );
-        EstadoDAO dao = null;
+        UnidadeMedidaDAO dao = null;
         RequestDispatcher disp = null;
 
         try {
 
-            dao = new EstadoDAO();
+            dao = new UnidadeMedidaDAO();
 
             if ( acao.equals( "inserir" ) ) {
 
-                String nome = request.getParameter( "nome" );
+                String descricao = request.getParameter( "descricao" );
                 String sigla = request.getParameter( "sigla" );
 
-                Estado e = new Estado();
-                e.setNome( nome );
-                e.setSigla( sigla );
+                UnidadeMedida u = new UnidadeMedida();
+                u.setDescricao( descricao );
+                u.setSigla( sigla );
 
-                dao.salvar( e );
+                dao.salvar( u );
 
                 disp = request.getRequestDispatcher(
-                        "/formularios/estados/listagem.jsp" );
+                        "/formularios/unidadesMedida/listagem.jsp" );
 
             } else if ( acao.equals( "alterar" ) ) {
 
                 int id = Integer.parseInt(request.getParameter( "id" ));
-                String nome = request.getParameter( "nome" );
+                String descricao = request.getParameter( "descricao" );
                 String sigla = request.getParameter( "sigla" );
 
-                Estado e = new Estado();
-                e.setId( id );
-                e.setNome( nome );
-                e.setSigla( sigla );
+                UnidadeMedida u = new UnidadeMedida();
+                u.setId( id );
+                u.setDescricao( descricao );
+                u.setSigla( sigla );
 
-                dao.atualizar( e );
+                dao.atualizar( u );
 
                 disp = request.getRequestDispatcher(
-                        "/formularios/estados/listagem.jsp" );
+                        "/formularios/unidadesMedida/listagem.jsp" );
 
             } else if ( acao.equals( "excluir" ) ) {
 
                 int id = Integer.parseInt(request.getParameter( "id" ));
 
-                Estado e = new Estado();
-                e.setId( id );
+                UnidadeMedida u = new UnidadeMedida();
+                u.setId( id );
 
-                dao.excluir( e );
+                dao.excluir( u );
 
                 disp = request.getRequestDispatcher(
-                        "/formularios/estados/listagem.jsp" );
+                        "/formularios/unidadesMedida/listagem.jsp" );
 
             } else {
                 
                 int id = Integer.parseInt(request.getParameter( "id" ));
-                Estado e = dao.obterPorId( id );
-                request.setAttribute( "estado", e );
+                UnidadeMedida u = dao.obterPorId( id );
+                request.setAttribute( "un", u );
                 
                 if ( acao.equals( "prepararAlteracao" ) ) {
                     disp = request.getRequestDispatcher( 
-                            "/formularios/estados/alterar.jsp" );
+                            "/formularios/unidadesMedida/alterar.jsp" );
                 } else if ( acao.equals( "prepararExclusao" ) ) {
                     disp = request.getRequestDispatcher( 
-                            "/formularios/estados/excluir.jsp" );
+                            "/formularios/unidadesMedida/excluir.jsp" );
                 }
                 
             }
@@ -127,7 +127,7 @@ public class EstadosServlet extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "EstadosServlet";
+        return "UnidadesMedidaServlet";
     }
 
 }

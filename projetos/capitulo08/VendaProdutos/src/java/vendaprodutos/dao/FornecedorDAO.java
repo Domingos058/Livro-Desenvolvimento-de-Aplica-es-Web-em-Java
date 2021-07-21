@@ -24,7 +24,7 @@ public class FornecedorDAO extends DAO<Fornecedor> {
 
         PreparedStatement stmt = getConnection().prepareStatement(
                 "INSERT INTO " + 
-                "fonecedor(" + 
+                "fornecedor(" + 
                 "    razaoSocial, " + 
                 "    cnpj, " + 
                 "    email, " + 

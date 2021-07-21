@@ -1,12 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="cp" value="${pageContext.request.contextPath}"/>
-<c:set var="prefixo" value="processaClientes?acao=preparar"/>
+<c:set var="prefixo" value="processaFornecedores?acao=preparar"/>
 <!DOCTYPE html>
 
 <html>
   <head>
-    <title>Clientes Cadastrados</title>
+    <title>Fornecedores Cadastrados</title>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
@@ -16,11 +16,11 @@
 
   <body>
 
-    <h1>Clientes Cadastrados</h1>
+    <h1>Fornecedores Cadastrados</h1>
 
     <p>
-      <a href="${cp}/formularios/clientes/novo.jsp">
-        Novo Cliente
+      <a href="${cp}/formularios/fornecedores/novo.jsp">
+        Novo Fornecedor
       </a>
     </p>
 
@@ -28,10 +28,9 @@
       <thead>
         <tr>
           <th>Id</th>
-          <th>Nome</th>
-          <th>Sobrenome</th>
+          <th>Razão Social</th>
           <th>E-mail</th>
-          <th>CPF</th>
+          <th>CNPJ</th>
           <th>Cidade</th>
           <th>Alterar</th>
           <th>Excluir</th>
@@ -42,23 +41,22 @@
         <jsp:useBean 
             id="servicos"
             scope="page"
-            class="cadastroclientes.servicos.ClienteServices"/>
+            class="vendaprodutos.servicos.FornecedorServices"/>
 
-        <c:forEach items="${servicos.todos}" var="cliente">
+        <c:forEach items="${servicos.todos}" var="fornecedor">
           <tr>
-            <td>${cliente.id}</td>
-            <td>${cliente.nome}</td>
-            <td>${cliente.sobrenome}</td>
-            <td>${cliente.email}</td>
-            <td>${cliente.cpf}</td>
-            <td>${cliente.cidade.nome}</td>
+            <td>${fornecedor.id}</td>
+            <td>${fornecedor.razaoSocial}</td>
+            <td>${fornecedor.email}</td>
+            <td>${fornecedor.cnpj}</td>
+            <td>${fornecedor.cidade.nome}</td>
             <td>
-              <a href="${cp}/${prefixo}Alteracao&id=${cliente.id}">
+              <a href="${cp}/${prefixo}Alteracao&id=${fornecedor.id}">
                 Alterar
               </a>
             </td>
             <td>
-              <a href="${cp}/${prefixo}Exclusao&id=${cliente.id}">
+              <a href="${cp}/${prefixo}Exclusao&id=${fornecedor.id}">
                 Excluir
               </a>
             </td>
@@ -69,8 +67,8 @@
     </table>
 
     <p>
-      <a href="${cp}/formularios/clientes/novo.jsp">
-        Novo Cliente
+      <a href="${cp}/formularios/fornecedores/novo.jsp">
+        Novo Fornecedor
       </a>
     </p>
 

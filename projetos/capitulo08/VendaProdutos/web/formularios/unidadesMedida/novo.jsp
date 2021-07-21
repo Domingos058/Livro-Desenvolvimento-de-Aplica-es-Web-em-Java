@@ -5,7 +5,7 @@
 
 <html>
   <head>
-    <title>Nova Cidade</title>
+    <title>Novo Estado</title>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
@@ -15,45 +15,38 @@
 
   <body>
 
-    <h1>Nova Cidade</h1>
+    <h1>Nova Unidade de Medida</h1>
 
-    <form method="post" action="${cp}/processaCidades">
+    <form method="post" action="${cp}/processaUnidadesMedida">
 
       <input name="acao" type="hidden" value="inserir"/>
 
       <table>
         <tr>
-          <td class="alinharDireita">Nome:</td>
+          <td class="alinharDireita">Descrição:</td>
           <td>
-            <input name="nome"
+            <input name="descricao"
                    type="text"
                    size="20"
-                   maxlength="30"
+                   maxlength="45"
                    required/>
           </td>
         </tr>
         <tr>
-          <td class="alinharDireita">Estado:</td>
+          <td class="alinharDireita">Sigla:</td>
           <td>
-
-            <jsp:useBean 
-                id="servicos"
-                scope="page"
-                class="vendaprodutos.servicos.EstadoServices"/>
-
-            <select name="idEstado" required>
-              <c:forEach items="${servicos.todos}" var="estado">
-                <option value="${estado.id}">
-                  ${estado.nome} - ${estado.sigla}
-                </option>
-              </c:forEach>
-            </select>
-
+            <input name="sigla"
+                   type="text"
+                   size="4"
+                   maxlength="4"
+                   required/>
           </td>
         </tr>
         <tr>
           <td>
-            <a href="${cp}/formularios/cidades/listagem.jsp">Voltar</a>
+            <a href="${cp}/formularios/unidadesMedida/listagem.jsp">
+              Voltar
+            </a>
           </td>
           <td class="alinharDireita">
             <input type="submit" value="Salvar"/>

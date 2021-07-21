@@ -1,12 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="cp" value="${pageContext.request.contextPath}"/>
-<c:set var="prefixo" value="processaClientes?acao=preparar"/>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="prefixo" value="processaProdutos?acao=preparar"/>
 <!DOCTYPE html>
 
 <html>
   <head>
-    <title>Clientes Cadastrados</title>
+    <title>Produtos Cadastrados</title>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
@@ -16,11 +17,11 @@
 
   <body>
 
-    <h1>Clientes Cadastrados</h1>
+    <h1>Produtos Cadastrados</h1>
 
     <p>
-      <a href="${cp}/formularios/clientes/novo.jsp">
-        Novo Cliente
+      <a href="${cp}/formularios/produtos/novo.jsp">
+        Novo Produto
       </a>
     </p>
 
@@ -28,11 +29,11 @@
       <thead>
         <tr>
           <th>Id</th>
-          <th>Nome</th>
-          <th>Sobrenome</th>
-          <th>E-mail</th>
-          <th>CPF</th>
-          <th>Cidade</th>
+          <th>Descrição</th>
+          <th>Valor de Venda</th>
+          <th>Estoque</th>
+          <th>Fornecedor</th>
+          <th>Unidade de Medida</th>
           <th>Alterar</th>
           <th>Excluir</th>
         </tr>
@@ -42,23 +43,23 @@
         <jsp:useBean 
             id="servicos"
             scope="page"
-            class="cadastroclientes.servicos.ClienteServices"/>
+            class="vendaprodutos.servicos.ProdutoServices"/>
 
-        <c:forEach items="${servicos.todos}" var="cliente">
+        <c:forEach items="${servicos.todos}" var="produto">
           <tr>
-            <td>${cliente.id}</td>
-            <td>${cliente.nome}</td>
-            <td>${cliente.sobrenome}</td>
-            <td>${cliente.email}</td>
-            <td>${cliente.cpf}</td>
-            <td>${cliente.cidade.nome}</td>
+            <td>${produto.id}</td>
+            <td>${produto.descricao}</td>
+            <td>R$ ${produto.valorVenda}</td>
+            <td>${produto.estoque}</td>
+            <td>${produto.fornecedor.razaoSocial}</td>
+            <td>${produto.unidadeMedida.sigla}</td>
             <td>
-              <a href="${cp}/${prefixo}Alteracao&id=${cliente.id}">
+              <a href="${cp}/${prefixo}Alteracao&id=${produto.id}">
                 Alterar
               </a>
             </td>
             <td>
-              <a href="${cp}/${prefixo}Exclusao&id=${cliente.id}">
+              <a href="${cp}/${prefixo}Exclusao&id=${produto.id}">
                 Excluir
               </a>
             </td>
@@ -69,8 +70,8 @@
     </table>
 
     <p>
-      <a href="${cp}/formularios/clientes/novo.jsp">
-        Novo Cliente
+      <a href="${cp}/formularios/produtos/novo.jsp">
+        Novo Produto
       </a>
     </p>
 

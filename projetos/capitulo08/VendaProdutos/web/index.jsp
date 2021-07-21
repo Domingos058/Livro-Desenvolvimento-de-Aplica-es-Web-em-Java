@@ -18,13 +18,39 @@
     <h1>Sistema para Cadastro de Clientes</h1>
 
     <p>
-      <a href="${cp}/formularios/clientes/listagem.jsp">Clientes</a>
+      <a href="${cp}/formularios/vendas/listagem.jsp">
+          Vendas
+      </a>
     </p>
     <p>
-      <a href="${cp}/formularios/cidades/listagem.jsp">Cidades</a>
+      <a href="${cp}/formularios/clientes/listagem.jsp">
+          Clientes
+      </a>
     </p>
     <p>
-      <a href="${cp}/formularios/estados/listagem.jsp">Estados</a>
+      <a href="${cp}/formularios/fornecedores/listagem.jsp">
+          Fornecedores
+      </a>
+    </p>
+    <p>
+      <a href="${cp}/formularios/produtos/listagem.jsp">
+          Produtos
+      </a>
+    </p>
+    <p>
+      <a href="${cp}/formularios/cidades/listagem.jsp">
+          Cidades
+      </a>
+    </p>
+    <p>
+      <a href="${cp}/formularios/estados/listagem.jsp">
+          Estados
+      </a>
+    </p>
+    <p>
+      <a href="${cp}/formularios/unidadesMedida/listagem.jsp">
+          Unidades de Medida
+      </a>
     </p>
 
   </body>

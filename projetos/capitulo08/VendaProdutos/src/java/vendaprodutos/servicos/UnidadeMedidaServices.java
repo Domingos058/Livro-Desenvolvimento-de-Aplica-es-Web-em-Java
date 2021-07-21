@@ -3,28 +3,29 @@ package vendaprodutos.servicos;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import vendaprodutos.dao.EstadoDAO;
-import vendaprodutos.entidades.Estado;
+import vendaprodutos.dao.UnidadeMedidaDAO;
+import vendaprodutos.entidades.UnidadeMedida;
 
 /**
- * Classe de serviços para a entidade Estado.
+ * Classe de serviços para a entidade UnidadeMedida.
  *
  * @author Prof. Dr. David Buzatto
  */
-public class EstadoServices {
+public class UnidadeMedidaServices {
 
     /**
-     * Usa o EstadoDAO para obter todos os estados.
+     * Usa o UnidadeMedidaDAO para obter todos as unidades
+     * de medida.
      *
-     * @return Lista de Estados.
+     * @return Lista de Unidades de Medida.
      */
-    public List<Estado> getTodos() {
+    public List<UnidadeMedida> getTodos() {
 
-        List<Estado> lista = new ArrayList<>();
-        EstadoDAO dao = null;
+        List<UnidadeMedida> lista = new ArrayList<>();
+        UnidadeMedidaDAO dao = null;
 
         try {
-            dao = new EstadoDAO();
+            dao = new UnidadeMedidaDAO();
             lista = dao.listarTodos();
         } catch ( SQLException exc ) {
             exc.printStackTrace();

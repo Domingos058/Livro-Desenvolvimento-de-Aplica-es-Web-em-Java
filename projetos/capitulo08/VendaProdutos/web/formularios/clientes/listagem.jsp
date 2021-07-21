@@ -30,7 +30,7 @@
           <th>Id</th>
           <th>Nome</th>
           <th>Sobrenome</th>
-          <th>Email</th>
+          <th>E-mail</th>
           <th>CPF</th>
           <th>Cidade</th>
           <th>Alterar</th>
@@ -42,7 +42,7 @@
         <jsp:useBean 
             id="servicos"
             scope="page"
-            class="cadastroclientes.servicos.ClienteServices"/>
+            class="vendaprodutos.servicos.ClienteServices"/>
 
         <c:forEach items="${servicos.todos}" var="cliente">
           <tr>

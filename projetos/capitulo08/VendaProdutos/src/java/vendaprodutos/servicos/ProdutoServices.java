@@ -3,28 +3,28 @@ package vendaprodutos.servicos;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import vendaprodutos.dao.EstadoDAO;
-import vendaprodutos.entidades.Estado;
+import vendaprodutos.dao.ProdutoDAO;
+import vendaprodutos.entidades.Produto;
 
 /**
- * Classe de serviços para a entidade Estado.
+ * Classe de serviços para a entidade Produto.
  *
  * @author Prof. Dr. David Buzatto
  */
-public class EstadoServices {
+public class ProdutoServices {
 
     /**
-     * Usa o EstadoDAO para obter todos os estados.
+     * Usa o ProdutoDAO para obter todos os Produtos.
      *
-     * @return Lista de Estados.
+     * @return Lista de Produtos.
      */
-    public List<Estado> getTodos() {
+    public List<Produto> getTodos() {
 
-        List<Estado> lista = new ArrayList<>();
-        EstadoDAO dao = null;
+        List<Produto> lista = new ArrayList<>();
+        ProdutoDAO dao = null;
 
         try {
-            dao = new EstadoDAO();
+            dao = new ProdutoDAO();
             lista = dao.listarTodos();
         } catch ( SQLException exc ) {
             exc.printStackTrace();

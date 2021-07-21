@@ -41,7 +41,7 @@
             <jsp:useBean 
                 id="servicos"
                 scope="page"
-                class="cadastroclientes.servicos.EstadoServices"/>
+                class="vendaprodutos.servicos.EstadoServices"/>
 
             <select name="idEstado" required>
               <c:forEach items="${servicos.todos}" var="estado">
