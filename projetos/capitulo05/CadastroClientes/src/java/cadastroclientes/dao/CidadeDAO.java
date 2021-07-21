@@ -72,7 +72,7 @@ public class CidadeDAO extends DAO<Cidade> {
     @Override
     public List<Cidade> listarTodos() throws SQLException {
 
-        List<Cidade> lista = new ArrayList<Cidade>();
+        List<Cidade> lista = new ArrayList<>();
 
         PreparedStatement stmt = getConnection().prepareStatement(
                 "SELECT" + 
@@ -140,15 +140,15 @@ public class CidadeDAO extends DAO<Cidade> {
         if ( rs.next() ) {
 
             cidade = new Cidade();
-            Estado estado = new Estado();
+            Estado e = new Estado();
 
             cidade.setId( rs.getInt( "idCidade" ) );
             cidade.setNome( rs.getString( "nomeCidade" ) );
-            cidade.setEstado( estado );
+            cidade.setEstado( e );
 
-            estado.setId( rs.getInt( "idEstado" ) );
-            estado.setNome( rs.getString( "nomeEstado" ) );
-            estado.setSigla( rs.getString( "siglaEstado" ) );
+            e.setId( rs.getInt( "idEstado" ) );
+            e.setNome( rs.getString( "nomeEstado" ) );
+            e.setSigla( rs.getString( "siglaEstado" ) );
 
         }
 

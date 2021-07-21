@@ -107,7 +107,7 @@ public class ClienteDAO extends DAO<Cliente> {
     @Override
     public List<Cliente> listarTodos() throws SQLException {
 
-        List<Cliente> lista = new ArrayList<Cliente>();
+        List<Cliente> lista = new ArrayList<>();
 
         PreparedStatement stmt = getConnection().prepareStatement(
                 "SELECT" + 
@@ -180,30 +180,30 @@ public class ClienteDAO extends DAO<Cliente> {
         Cliente cliente = null;
 
         PreparedStatement stmt = getConnection().prepareStatement(
-                "SELECT "
-                + "    c.id idCliente, "
-                + "    c.nome nomeCliente, "
-                + "    c.sobreNome sobrenomeCliente, "
-                + "    c.dataNascimento dataNascimentoCliente, "
-                + "    c.cpf cpfCliente, "
-                + "    c.email emailCliente, "
-                + "    c.logradouro logradouroCliente, "
-                + "    c.numero numeroCliente, "
-                + "    c.bairro bairroCliente, "
-                + "    c.cep cepCliente, "
-                + "    ci.id idCidade, "
-                + "    ci.nome nomeCidade, "
-                + "    e.id idEstado, "
-                + "    e.nome nomeEstado, "
-                + "    e.sigla siglaEstado "
-                + "FROM "
-                + "    cliente c, "
-                + "    cidade ci, "
-                + "    estado e "
-                + "WHERE"
-                + "    c.id = ? AND "
-                + "    c.cidade_id = ci.id AND "
-                + "    ci.estado_id = e.id;" );
+                "SELECT" +
+                "    c.id idCliente, " +
+                "    c.nome nomeCliente, " +
+                "    c.sobreNome sobrenomeCliente, " +
+                "    c.dataNascimento dataNascimentoCliente, " +
+                "    c.cpf cpfCliente, " +
+                "    c.email emailCliente, " +
+                "    c.logradouro logradouroCliente, " +
+                "    c.numero numeroCliente, " +
+                "    c.bairro bairroCliente, " +
+                "    c.cep cepCliente, " +
+                "    ci.id idCidade, " +
+                "    ci.nome nomeCidade, " +
+                "    e.id idEstado, " +
+                "    e.nome nomeEstado, " +
+                "    e.sigla siglaEstado " +
+                "FROM" +
+                "    cliente c, " +
+                "    cidade ci, " +
+                "    estado e " +
+                "WHERE" +
+                "    c.id = ? AND " +
+                "    c.cidade_id = ci.id AND " +
+                "    ci.estado_id = e.id;" );
 
         stmt.setInt( 1, id );
 
@@ -212,8 +212,8 @@ public class ClienteDAO extends DAO<Cliente> {
         if ( rs.next() ) {
 
             cliente = new Cliente();
-            Cidade cidade = new Cidade();
-            Estado estado = new Estado();
+            Cidade ci = new Cidade();
+            Estado e = new Estado();
 
             cliente.setId( rs.getInt( "idCliente" ) );
             cliente.setNome( rs.getString( "nomeCliente" ) );
@@ -225,15 +225,15 @@ public class ClienteDAO extends DAO<Cliente> {
             cliente.setNumero( rs.getString( "numeroCliente" ) );
             cliente.setBairro( rs.getString( "bairroCliente" ) );
             cliente.setCep( rs.getString( "cepCliente" ) );
-            cliente.setCidade( cidade );
+            cliente.setCidade( ci );
 
-            cidade.setId( rs.getInt( "idCidade" ) );
-            cidade.setNome( rs.getString( "nomeCidade" ) );
-            cidade.setEstado( estado );
+            ci.setId( rs.getInt( "idCidade" ) );
+            ci.setNome( rs.getString( "nomeCidade" ) );
+            ci.setEstado( e );
 
-            estado.setId( rs.getInt( "idEstado" ) );
-            estado.setNome( rs.getString( "nomeEstado" ) );
-            estado.setSigla( rs.getString( "siglaEstado" ) );
+            e.setId( rs.getInt( "idEstado" ) );
+            e.setNome( rs.getString( "nomeEstado" ) );
+            e.setSigla( rs.getString( "siglaEstado" ) );
 
         }
 

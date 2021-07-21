@@ -20,7 +20,7 @@ public class EstadoServices {
      */
     public List<Estado> getTodos() {
 
-        List<Estado> lista = new ArrayList<Estado>();
+        List<Estado> lista = new ArrayList<>();
         EstadoDAO dao = null;
 
         try {

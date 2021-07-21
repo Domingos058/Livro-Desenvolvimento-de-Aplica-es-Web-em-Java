@@ -20,7 +20,7 @@ public class CidadeServices {
      */
     public List<Cidade> getTodos() {
 
-        List<Cidade> lista = new ArrayList<Cidade>();
+        List<Cidade> lista = new ArrayList<>();
         CidadeDAO dao = null;
 
         try {

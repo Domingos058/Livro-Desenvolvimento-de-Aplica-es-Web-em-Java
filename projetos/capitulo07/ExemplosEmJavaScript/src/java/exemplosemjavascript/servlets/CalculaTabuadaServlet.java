@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package exemplosemjavascript.servlets;
 
 import java.io.IOException;
@@ -17,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  * Calcula a tabuada de 0 a 10 de um valor passado como
  * parâmetro na requisição e retorna o resultado como
  * texto puro.
+ * 
  * @author Prof. Dr. David Buzatto
  */
 @WebServlet( name = "CalculaTabuadaServlet",

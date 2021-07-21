@@ -20,7 +20,7 @@ public class ClienteServices {
      */
     public List<Cliente> getTodos() {
 
-        List<Cliente> lista = new ArrayList<Cliente>();
+        List<Cliente> lista = new ArrayList<>();
         ClienteDAO dao = null;
 
         try {

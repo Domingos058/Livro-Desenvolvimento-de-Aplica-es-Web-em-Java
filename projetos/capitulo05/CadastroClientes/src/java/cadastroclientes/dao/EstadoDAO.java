@@ -71,7 +71,7 @@ public class EstadoDAO extends DAO<Estado> {
     @Override
     public List<Estado> listarTodos() throws SQLException {
 
-        List<Estado> lista = new ArrayList<Estado>();
+        List<Estado> lista = new ArrayList<>();
 
         PreparedStatement stmt = getConnection().prepareStatement(
                 "SELECT * FROM estado " + 
