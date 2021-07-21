@@ -12,6 +12,10 @@ function executarExemplo12( event ) {
         let $div = $( "#divExemplo12" );
         $div.html( "" );
         
+        // data chega como json e é 
+        // processado para gerar um objeto
+        // (automaticamente)
+        
         data.forEach( pessoa => {
             let t = `<div class="dadosPessoa">Pessoa:<p>Nome: ${pessoa.nome}</p>` +
                     `<p>Data de Nascimento: ${pessoa.dataNasc}</p>` +

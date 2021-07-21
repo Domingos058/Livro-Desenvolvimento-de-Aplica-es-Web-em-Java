@@ -2,6 +2,8 @@ class Forma {
     
     // só pode haver um construtor
     constructor( xIni, yIni, xFim, yFim ) {
+        // criação da propriedade
+        // usando this
         this.xIni = xIni;
         this.yIni = yIni;
         this.xFim = xFim;
@@ -14,6 +16,7 @@ class Forma {
     
 }
 
+// "herança"
 class Retangulo extends Forma {
     
     calcularArea() {
@@ -26,6 +29,7 @@ class Retangulo extends Forma {
 
 class Circulo extends Forma {
     
+    // novo construtor
     constructor( xCentro, yCentro, raio ) {
         super( xCentro, yCentro, 0, 0 );
         this.raio = raio;
@@ -42,6 +46,37 @@ function executarExemplo05( event ) {
     let r = new Retangulo( 0, 0, 10, 20 );
     let c = new Circulo( 5, 10, 10 );
     
+    // um objeto criado usando o inicilizador de objetos
+    let o = { 
+        nome: "joão",
+        sobrenome: "da silva",
+        endereco: {
+            logradouro: "rua um",
+            numero: 100,
+            cep: "12345-67",
+            cidade: {
+                nome: "Vargem Grande do Sul",
+                estado: {
+                    nome: "São Paulo",
+                    sigla: "SP"
+                }
+            }
+        }
+    };
+    
+    // uma string com um objeto codificado como
+    // JavaScript Object Notation (JSON)
+    let json = '{ "nome": "Maria", "peso": 52.5}';
+    
+    // converte json para objeto
+    let jsonO = JSON.parse( json );
+    
+    // converte objeto para json (string)
+    let jsonD = JSON.stringify( o );
+    
+    // prettyprint
+    let jsonDId = JSON.stringify( o, null, 4 );
+    
     console.log( r );
     console.log( r.calcularArea() );
     
@@ -57,4 +92,33 @@ function executarExemplo05( event ) {
     console.log( c );
     console.log( c.calcularArea() );
     
+    console.log( o );
+    console.log( o.nome );
+    console.log( o[ "sobrenome" ] );
+    
+    // exibindo cada propriedade
+    for ( var p in o ) {
+        console.log( `o.${p} = ${o[p]}`  );
+    }
+    
+    // usando a função recursiva
+    processarObjeto( o, "o" );
+    
+    // mostrando as conversões json <-> objeto
+    console.log( jsonO );
+    processarObjeto( jsonO, "jsonO" );
+    
+    console.log( jsonD );
+    console.log( jsonDId );
+    
+}
+
+function processarObjeto( obj, nome ) {
+    for ( var p in obj ) {
+        if ( typeof obj[p] === 'object' && obj[p] !== null ) {
+            processarObjeto( obj[p], p );
+        } else {
+            console.log( `${nome}.${p} = ${obj[p]}` );
+        }
+    }
 }
