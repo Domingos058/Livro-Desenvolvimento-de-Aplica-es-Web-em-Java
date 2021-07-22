@@ -1,6 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="cp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 
@@ -25,140 +24,104 @@
 
       <table>
         <tr>
-          <td class="alinharDireita">Nome:</td>
+          <td class="alinharDireita">Descrição:</td>
           <td>
-            <input name="nome"
+            <input name="descricao"
                    type="text"
-                   size="20"
-                   maxlength="45"
-                   required
-                   value="${requestScope.produto.nome}"/>
-          </td>
-        </tr>
-        <tr>
-          <td class="alinharDireita">Sobrenome:</td>
-          <td>
-            <input name="sobrenome"
-                   type="text"
-                   size="20"
-                   maxlength="45"
-                   required
-                   value="${requestScope.produto.sobrenome}"/>
-          </td>
-        </tr>
-        <tr>
-          <td class="alinharDireita">
-            Data de Nascimento:
-          </td>
-          <td>
-
-            <fmt:formatDate 
-                pattern="yyyy-MM-dd"
-                value="${requestScope.produto.dataNascimento}"
-                var="data" scope="page"/>
-
-            <input name="dataNascimento"
-                   type="date"
-                   size="8"
-                   placeholder="dd/mm/yyyy"
-                   required
-                   value="${data}"/>
-
-          </td>
-        </tr>
-        <tr>
-          <td class="alinharDireita">CPF:</td>
-          <td>
-            <input name="cpf"
-                   type="text"
-                   size="13"
-                   pattern="\d{3}.\d{3}.\d{3}-\d{2}"
-                   placeholder="###.###.###-##"
-                   required
-                   value="${requestScope.produto.cpf}"/>
-          </td>
-        </tr>
-        <tr>
-          <td class="alinharDireita">E-mail:</td>
-          <td>
-            <input name="email"
-                   type="email"
                    size="20"
                    maxlength="60"
                    required
-                   value="${requestScope.produto.email}"/>
+                   value="${requestScope.produto.descricao}"/>
           </td>
         </tr>
         <tr>
-          <td class="alinharDireita">Logradouro:</td>
+          <td class="alinharDireita">Código de Barras:</td>
           <td>
-            <input name="logradouro"
+            <input name="codigoBarras"
                    type="text"
-                   size="25"
-                   maxlength="50"
+                   size="20"
+                   pattern="\d{13}"
+                   placeholder="9999999999999"
                    required
-                   value="${requestScope.produto.logradouro}"/>
+                   value="${requestScope.produto.codigoBarras}"/>
           </td>
         </tr>
         <tr>
-          <td class="alinharDireita">Número:</td>
+          <td class="alinharDireita">Valor de Venda:</td>
           <td>
-            <input name="numero"
-                   type="text"
-                   size="6"
-                   maxlength="6"
+            <input name="valorVenda"
+                   type="number"
+                   size="8"
+                   placeholder="R$ 9,99"
+                   step="0.01"
+                   min="0"
                    required
-                   value="${requestScope.produto.numero}"/>
+                   value="${requestScope.produto.valorVenda}"/>
           </td>
         </tr>
         <tr>
-          <td class="alinharDireita">Bairro:</td>
+          <td class="alinharDireita">Estoque:</td>
           <td>
-            <input name="bairro"
-                   type="text"
-                   size="15"
-                   maxlength="30"
-                   value="${requestScope.produto.bairro}"/>
-          </td>
-        </tr>
-        <tr>
-          <td class="alinharDireita">CEP:</td>
-          <td>
-            <input name="cep"
-                   type="text"
-                   size="7"
-                   pattern="\d{5}-\d{3}"
-                   placeholder="#####-###"
+            <input name="estoque"
+                   type="number"
+                   size="8"
+                   placeholder="9,99"
+                   step="0.01"
+                   min="0"
                    required
-                   value="${requestScope.produto.cep}"/>
+                   value="${requestScope.produto.estoque}"/>
           </td>
         </tr>
         <tr>
-          <td class="alinharDireita">Cidade:</td>
+          <td class="alinharDireita">Fornecedor:</td>
           <td>
+            <jsp:useBean 
+                id="servicosF" 
+                scope="page" 
+                class="vendaprodutos.servicos.FornecedorServices"/>
 
-            <jsp:useBean
-                id="servicos"
-                scope="page"
-                class="vendaprodutos.servicos.CidadeServices"/>
-
-            <select name="idCidade" required>
-              <c:forEach items="${servicos.todos}" var="cidade">
+            <select name="idFornecedor" required>
+              <c:forEach items="${servicosF.todos}" var="fornecedor">
                 <c:choose>
-                  <c:when test="${requestScope.produto.cidade.id eq cidade.id}">
-                    <option value="${cidade.id}" selected>
-                      ${cidade.nome}
+                  <c:when test="${requestScope.produto.fornecedor.id eq fornecedor.id}">
+                    <option value="${fornecedor.id}" selected>
+                      ${fornecedor.razaoSocial}
                     </option>
                   </c:when>
                   <c:otherwise>
-                    <option value="${cidade.id}">
-                      ${cidade.nome}
+                    <option value="${fornecedor.id}">
+                      ${fornecedor.razaoSocial}
                     </option>
                   </c:otherwise>
                 </c:choose>
               </c:forEach>
             </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="alinharDireita">Unidade de Medida:</td>
+          <td>
+            <jsp:useBean 
+                id="servicosU" 
+                scope="page" 
+                class="vendaprodutos.servicos.UnidadeMedidaServices"/>
 
+            <select name="idUnidadeMedida" required>
+              <c:forEach items="${servicosU.todos}" var="un">
+                <c:choose>
+                  <c:when test="${requestScope.produto.unidadeMedida.id eq un.id}">
+                    <option value="${un.id}" selected>
+                      ${un.sigla}
+                    </option>
+                  </c:when>
+                  <c:otherwise>
+                    <option value="${un.id}">
+                      ${un.sigla}
+                    </option>
+                  </c:otherwise>
+                </c:choose>
+              </c:forEach>
+            </select>
           </td>
         </tr>
         <tr>

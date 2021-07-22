@@ -28,12 +28,20 @@ public class VendaDAO extends DAO<Venda> {
                 "venda(" + 
                 "    data, " + 
                 "    cliente_id ) " + 
-                "VALUES( ?, ? );" );
+                "VALUES( ?, ? );",
+                new String[]{ "id" } );
 
         stmt.setDate( 1, obj.getData() );
         stmt.setInt( 2, obj.getCliente().getId() );
 
         stmt.executeUpdate();
+        
+        ResultSet rsPK = stmt.getGeneratedKeys();
+        if ( rsPK.next() ) {
+            obj.setId( rsPK.getInt( "id" ) );
+        }
+        
+        rsPK.close();
         stmt.close();
 
     }
@@ -106,7 +114,7 @@ public class VendaDAO extends DAO<Venda> {
                 "    v.cliente_id = c.id AND " + 
                 "    c.cidade_id = ci.id AND " + 
                 "    ci.estado_id = e.id " +
-                "ORDER BY p.descricao;" );
+                "ORDER BY p.data DESC, c.nome;" );
 
         ResultSet rs = stmt.executeQuery();
 

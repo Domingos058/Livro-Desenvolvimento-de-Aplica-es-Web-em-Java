@@ -33,9 +33,7 @@
           <td>${requestScope.cliente.sobrenome}</td>
         </tr>
         <tr>
-          <td class="alinharDireita">
-            Data de Nascimento:
-          </td>
+          <td class="alinharDireita">Data de Nascimento:</td>
           <td>
             <fmt:formatDate 
                 pattern="dd/MM/yyyy"

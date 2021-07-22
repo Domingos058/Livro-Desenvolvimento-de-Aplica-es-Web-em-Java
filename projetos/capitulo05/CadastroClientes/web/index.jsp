@@ -15,7 +15,7 @@
 
   <body>
 
-    <h1>Sistema para Cadastro de Clientes</h1>
+    <h1>Sistema para Venda de Produtos</h1>
 
     <p>
       <a href="${cp}/formularios/clientes/listagem.jsp">Clientes</a>

@@ -5,7 +5,7 @@
 
 <html>
   <head>
-    <title>Nova Unidade de Medida</title>
+    <title>Alterar Venda</title>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
@@ -15,21 +15,22 @@
 
   <body>
 
-    <h1>Nova Unidade de Medida</h1>
+    <h1>Alterar Venda</h1>
 
-    <form method="post" action="${cp}/processaUnidadesMedida">
+    <form method="post" action="${cp}/processaVendas">
 
-      <input name="acao" type="hidden" value="inserir"/>
+      <input name="acao" type="hidden" value="alterar"/>
+      <input name="id" type="hidden" value="${requestScope.venda.id}"/>
 
       <table>
         <tr>
-          <td class="alinharDireita">Descrição:</td>
+          <td class="alinharDireita">Descrição</td>
           <td>
             <input name="descricao"
                    type="text"
                    size="20"
                    maxlength="45"
-                   required/>
+                   value="${requestScope.venda.descricao}"/>
           </td>
         </tr>
         <tr>
@@ -39,17 +40,17 @@
                    type="text"
                    size="4"
                    maxlength="4"
-                   required/>
+                   value="${requestScope.venda.sigla}"/>
           </td>
         </tr>
         <tr>
           <td>
-            <a href="${cp}/formularios/unidadesMedida/listagem.jsp">
+            <a href="${cp}/formularios/vendas/listagem.jsp">
               Voltar
             </a>
           </td>
           <td class="alinharDireita">
-            <input type="submit" value="Salvar"/>
+            <input type="submit" value="Alterar"/>
           </td>
         </tr>
       </table>

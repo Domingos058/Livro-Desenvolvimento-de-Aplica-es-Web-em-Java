@@ -22,53 +22,49 @@
 
       <input name="acao" type="hidden" value="excluir"/>
       <input name="id" type="hidden" value="${requestScope.produto.id}"/>
-
+      <fmt:setLocale value="pt_BR" />
+      
       <table>
         <tr>
-          <td class="alinharDireita">Nome:</td>
-          <td>${requestScope.produto.nome}</td>
+          <td class="alinharDireita">Descrição:</td>
+          <td>${requestScope.produto.descricao}</td>
         </tr>
         <tr>
-          <td class="alinharDireita">Sobrenome:</td>
-          <td>${requestScope.produto.sobrenome}</td>
+          <td class="alinharDireita">Código de Barras:</td>
+          <td>${requestScope.produto.codigoBarras}</td>
         </tr>
         <tr>
-          <td class="alinharDireita">
-            Data de Nascimento:
-          </td>
+          <td class="alinharDireita">Valor de Venda:</td>
           <td>
-            <fmt:formatDate 
-                pattern="dd/MM/yyyy"
-                value="${requestScope.produto.dataNascimento}"/>
+            R$
+            <fmt:formatNumber
+                pattern="#.##"
+                minIntegerDigits="1"
+                minFractionDigits="2"
+                maxFractionDigits="2">
+              ${produto.valorVenda}
+            </fmt:formatNumber>
           </td>
         </tr>
         <tr>
-          <td class="alinharDireita">CPF:</td>
-          <td>${requestScope.produto.cpf}</td>
+          <td class="alinharDireita">Estoque:</td>
+          <td>
+            <fmt:formatNumber
+                pattern="#.##"
+                minIntegerDigits="1"
+                minFractionDigits="2"
+                maxFractionDigits="2">
+              ${produto.estoque}
+            </fmt:formatNumber>
+          </td>
         </tr>
         <tr>
-          <td class="alinharDireita">E-mail:</td>
-          <td>${requestScope.produto.email}</td>
+          <td class="alinharDireita">Fornecedor:</td>
+          <td>${requestScope.produto.fornecedor.razaoSocial}</td>
         </tr>
         <tr>
-          <td class="alinharDireita">Logradouro:</td>
-          <td>${requestScope.produto.logradouro}</td>
-        </tr>
-        <tr>
-          <td class="alinharDireita">Número:</td>
-          <td>${requestScope.produto.numero}</td>
-        </tr>
-        <tr>
-          <td class="alinharDireita">Bairro:</td>
-          <td>${requestScope.produto.bairro}</td>
-        </tr>
-        <tr>
-          <td class="alinharDireita">CEP:</td>
-          <td>${requestScope.produto.cep}</td>
-        </tr>
-        <tr>
-          <td class="alinharDireita">Cidade:</td>
-          <td>${requestScope.produto.cidade.nome}</td>
+          <td class="alinharDireita">Unidade de Medida:</td>
+          <td>${requestScope.produto.unidadeMedida.sigla}</td>
         </tr>
         <tr>
           <td>

@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="cp" value="${pageContext.request.contextPath}"/>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="cp" value="${pageContext.request.contextPath}"/>
 <c:set var="prefixo" value="processaProdutos?acao=preparar"/>
 <!DOCTYPE html>
 
@@ -40,6 +40,8 @@
       </thead>
       <tbody>
 
+        <fmt:setLocale value="pt_BR" />
+          
         <jsp:useBean 
             id="servicos"
             scope="page"
@@ -49,8 +51,25 @@
           <tr>
             <td>${produto.id}</td>
             <td>${produto.descricao}</td>
-            <td>R$ ${produto.valorVenda}</td>
-            <td>${produto.estoque}</td>
+            <td>
+              R$
+              <fmt:formatNumber
+                  pattern="#.##"
+                  minIntegerDigits="1"
+                  minFractionDigits="2"
+                  maxFractionDigits="2">
+                ${produto.valorVenda}
+              </fmt:formatNumber>
+            </td>
+            <td>
+              <fmt:formatNumber
+                  pattern="#.##"
+                  minIntegerDigits="1"
+                  minFractionDigits="2"
+                  maxFractionDigits="2">
+                ${produto.estoque}
+              </fmt:formatNumber>
+            </td>
             <td>${produto.fornecedor.razaoSocial}</td>
             <td>${produto.unidadeMedida.sigla}</td>
             <td>

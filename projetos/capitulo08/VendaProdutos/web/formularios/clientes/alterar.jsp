@@ -47,23 +47,18 @@
           </td>
         </tr>
         <tr>
-          <td class="alinharDireita">
-            Data de Nascimento:
-          </td>
+          <td class="alinharDireita">Data de Nascimento:</td>
           <td>
-
             <fmt:formatDate 
                 pattern="yyyy-MM-dd"
                 value="${requestScope.cliente.dataNascimento}"
                 var="data" scope="page"/>
-
             <input name="dataNascimento"
                    type="date"
                    size="8"
                    placeholder="dd/mm/yyyy"
                    required
                    value="${data}"/>
-
           </td>
         </tr>
         <tr>
@@ -73,7 +68,7 @@
                    type="text"
                    size="13"
                    pattern="\d{3}.\d{3}.\d{3}-\d{2}"
-                   placeholder="###.###.###-##"
+                   placeholder="999.999.999-99"
                    required
                    value="${requestScope.cliente.cpf}"/>
           </td>
@@ -128,7 +123,7 @@
                    type="text"
                    size="7"
                    pattern="\d{5}-\d{3}"
-                   placeholder="#####-###"
+                   placeholder="99999-999"
                    required
                    value="${requestScope.cliente.cep}"/>
           </td>

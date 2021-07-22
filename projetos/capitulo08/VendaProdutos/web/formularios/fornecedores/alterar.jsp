@@ -41,7 +41,7 @@
                    type="text"
                    size="18"
                    pattern="\d{2}.\d{3}.\d{3}/\d{4}-\d{2}"
-                   placeholder="##.###.###/####-##"
+                   placeholder="99.999.999/9999-99"
                    required
                    value="${requestScope.fornecedor.cnpj}"/>
           </td>
@@ -96,7 +96,7 @@
                    type="text"
                    size="7"
                    pattern="\d{5}-\d{3}"
-                   placeholder="#####-###"
+                   placeholder="99999-999"
                    required
                    value="${requestScope.fornecedor.cep}"/>
           </td>

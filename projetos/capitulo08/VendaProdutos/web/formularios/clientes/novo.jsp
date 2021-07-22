@@ -43,9 +43,7 @@
           </td>
         </tr>
         <tr>
-          <td class="alinharDireita">
-            Data de Nascimento:
-          </td>
+          <td class="alinharDireita">Data de Nascimento:</td>
           <td>
             <input name="dataNascimento"
                    type="date"
@@ -61,7 +59,7 @@
                    type="text"
                    size="13"
                    pattern="\d{3}.\d{3}.\d{3}-\d{2}"
-                   placeholder="###.###.###-##"
+                   placeholder="999.999.999-99"
                    required/>
           </td>
         </tr>
@@ -112,7 +110,7 @@
                    type="text"
                    size="7"
                    pattern="\d{5}-\d{3}"
-                   placeholder="#####-###"
+                   placeholder="99999-999"
                    required/>
           </td>
         </tr>

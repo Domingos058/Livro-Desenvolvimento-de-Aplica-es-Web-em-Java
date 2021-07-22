@@ -33,7 +33,9 @@ public class ProdutoDAO extends DAO<Produto> {
                 "    estoque, " + 
                 "    fornecedor_id, " + 
                 "    unidade_medida_id ) " + 
-                "VALUES( ?, ?, ?, ?, ?, ? );" );
+                "VALUES( ?, ?, ?, ?, ?, ? );",
+                new String[]{ "id" } ); // para retorno da chave
+                                        // primária gerada
 
         stmt.setString( 1, obj.getDescricao() );
         stmt.setString( 2, obj.getCodigoBarras() );
@@ -43,6 +45,14 @@ public class ProdutoDAO extends DAO<Produto> {
         stmt.setInt( 6, obj.getUnidadeMedida().getId() );
 
         stmt.executeUpdate();
+        
+        // obtenção do valor da chave primária
+        ResultSet rsPK = stmt.getGeneratedKeys();
+        if ( rsPK.next() ) {
+            obj.setId( rsPK.getInt( "id" ) );
+        }
+        
+        rsPK.close();
         stmt.close();
 
     }

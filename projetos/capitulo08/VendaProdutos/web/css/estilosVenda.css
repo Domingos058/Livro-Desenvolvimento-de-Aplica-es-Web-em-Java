@@ -1,0 +1,42 @@
+#divCliente {
+    font-weight: bold;
+    width: 700px;
+    border: solid 2px #003366;
+    border-radius: 10px;
+    background-color: #0099cc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#divItensVenda {
+    font-weight: bold;
+    width: 700px;
+    border: solid 2px #993300;
+    border-radius: 10px;
+    background-color: #ff9933;
+    padding: 10px;
+}
+
+#selectCliente {
+    width: 100%;
+}
+
+#selectProduto {
+    width: 250px;
+}
+
+.btnsItensVenda {
+    text-align: center; padding: 20px;
+}
+
+#selectItensVenda {
+    width: 350px;
+}
+
+#txtQuantidade {
+    width: 100px;
+}
+
+#divTotal {
+    text-align: right;
+}

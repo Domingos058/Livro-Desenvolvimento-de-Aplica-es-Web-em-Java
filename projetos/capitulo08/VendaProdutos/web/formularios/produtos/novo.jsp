@@ -39,19 +39,17 @@
                    type="text"
                    size="20"
                    pattern="\d{13}"
-                   placeholder="#############"
+                   placeholder="9999999999999"
                    required/>
           </td>
         </tr>
         <tr>
-          <td class="alinharDireita">
-            Valor de Venda: R$
-          </td>
+          <td class="alinharDireita">Valor de Venda:</td>
           <td>
             <input name="valorVenda"
                    type="number"
                    size="8"
-                   placeholder="#.##"
+                   placeholder="R$ 9,99"
                    step="0.01"
                    min="0"
                    required/>
@@ -63,7 +61,7 @@
             <input name="estoque"
                    type="number"
                    size="8"
-                   placeholder="#.##"
+                   placeholder="9,99"
                    step="0.01"
                    min="0"
                    required/>
