@@ -5,7 +5,7 @@
 
 <html>
   <head>
-    <title>Sistema para Cadastro de Clientes</title>
+    <title>Sistema para Venda de Produtos</title>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
@@ -15,41 +15,41 @@
 
   <body>
 
-    <h1>Sistema para Cadastro de Clientes</h1>
+    <h1>Sistema para Venda de Produtos</h1>
 
     <p>
       <a href="${cp}/formularios/vendas/listagem.jsp">
-          Vendas
+        Vendas
       </a>
     </p>
     <p>
       <a href="${cp}/formularios/clientes/listagem.jsp">
-          Clientes
+        Clientes
       </a>
     </p>
     <p>
       <a href="${cp}/formularios/fornecedores/listagem.jsp">
-          Fornecedores
+        Fornecedores
       </a>
     </p>
     <p>
       <a href="${cp}/formularios/produtos/listagem.jsp">
-          Produtos
+        Produtos
       </a>
     </p>
     <p>
       <a href="${cp}/formularios/cidades/listagem.jsp">
-          Cidades
+        Cidades
       </a>
     </p>
     <p>
       <a href="${cp}/formularios/estados/listagem.jsp">
-          Estados
+        Estados
       </a>
     </p>
     <p>
       <a href="${cp}/formularios/unidadesMedida/listagem.jsp">
-          Unidades de Medida
+        Unidades de Medida
       </a>
     </p>
 

@@ -24,7 +24,7 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
 
         PreparedStatement stmt = getConnection().prepareStatement(
                 "INSERT INTO " + 
-                "item_venda( venda_id, cliente_id, valor, quantidade ) " + 
+                "item_venda( venda_id, produto_id, valor, quantidade ) " + 
                 "VALUES( ?, ?, ?, ? );" );
 
         stmt.setInt( 1, obj.getVenda().getId() );
@@ -39,41 +39,16 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
 
     @Override
     public void atualizar( ItemVenda obj ) throws SQLException {
-
-        PreparedStatement stmt = getConnection().prepareStatement(
-                "UPDATE item_venda " + 
-                "SET" + 
-                "    valor = ?," + 
-                "    quantidade = ? " + 
-                "WHERE" + 
-                "    venda_id = ? AND " +
-                "    produto_id = ?;" );
-
-        stmt.setBigDecimal( 1, obj.getValor() );
-        stmt.setBigDecimal( 2, obj.getQuantidade() );
-        stmt.setInt( 3, obj.getVenda().getId() );
-        stmt.setInt( 4, obj.getProduto().getId() );
-
-        stmt.executeUpdate();
-        stmt.close();
-
+        // não faz sentido na nossa implementação,
+        // pois não é possível atualizar um item
+        // da venda armazenado
     }
 
     @Override
     public void excluir( ItemVenda obj ) throws SQLException {
-
-        PreparedStatement stmt = getConnection().prepareStatement(
-                "DELETE FROM item_venda " + 
-                "WHERE" + 
-                "    venda_id = ? AND " +
-                "    produto_id = ?;" );
-
-        stmt.setInt( 1, obj.getVenda().getId() );
-        stmt.setInt( 2, obj.getProduto().getId() );
-
-        stmt.executeUpdate();
-        stmt.close();
-
+        // não faz sentido na nossa implementação,
+        // pois não é possível excluir um item
+        // da venda armazenado
     }
 
     @Override
@@ -96,41 +71,49 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
 
     }
     
-    public ItemVenda obterPorId( int idVenda, int idProduto ) throws SQLException {
+    /**
+     * Obtenção de todos os itens de venda por um identificador da venda.
+     * Esse método será utilizado para o ajuste do estoque das vendas
+     * que forem canceladas. Apenas os valores necessários serão obtidos.
+     */
+    public List<ItemVenda> obterPorIdVenda( int idVenda ) throws SQLException {
 
-        ItemVenda itemVenda = null;
+        List<ItemVenda> itensVenda = new ArrayList<>();
 
-        // não serão feitas as junções nesse caso
         PreparedStatement stmt = getConnection().prepareStatement(
-                "SELECT * FROM item_venda " + 
-                "WHERE venda_id = ? AND " +
-                "      produto_id = ?;" );
+                "SELECT" + 
+                "    iv.quantidade quantidadeItemVenda, " +
+                "    p.id idProduto, " + 
+                "    p.estoque estoqueProduto " +
+                "FROM" +
+                "    item_venda iv, " +
+                "    produto p " + 
+                "WHERE iv.produto_id = p.id AND " + 
+                "      iv.venda_id = ?;" );
 
         stmt.setInt( 1, idVenda );
-        stmt.setInt( 2, idProduto );
 
         ResultSet rs = stmt.executeQuery();
 
-        if ( rs.next() ) {
+        while ( rs.next() ) {
 
-            itemVenda = new ItemVenda();
-            Venda v = new Venda();
+            ItemVenda iv = new ItemVenda();
             Produto p = new Produto();
             
-            itemVenda.setValor( rs.getBigDecimal( "valor" ) );
-            itemVenda.setQuantidade( rs.getBigDecimal( "quantidade" ) );
-            itemVenda.setVenda( v );
-            itemVenda.setProduto( p );
+            iv.setQuantidade( rs.getBigDecimal( "quantidadeItemVenda" ) );
+            iv.setProduto( p );
             
-            v.setId( rs.getInt( "venda_id" ) );
-            p.setId( rs.getInt( "produto_id" ) );
+            p.setId( rs.getInt( "idProduto" ) );
+            p.setEstoque( rs.getBigDecimal( "estoqueProduto" ) );
+            
+            itensVenda.add( iv );
 
         }
 
         rs.close();
         stmt.close();
 
-        return itemVenda;
+        return itensVenda;
 
     }
 

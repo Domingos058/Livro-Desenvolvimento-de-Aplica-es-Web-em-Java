@@ -10,6 +10,7 @@ import java.sql.Date;
 public class Venda {
 
     private int id;
+    private boolean cancelada;
     private Date data;
     private Cliente cliente;
 
@@ -19,6 +20,14 @@ public class Venda {
 
     public void setId( int id ) {
         this.id = id;
+    }
+
+    public boolean isCancelada() {
+        return cancelada;
+    }
+
+    public void setCancelada( boolean cancelada ) {
+        this.cancelada = cancelada;
     }
 
     public Date getData() {

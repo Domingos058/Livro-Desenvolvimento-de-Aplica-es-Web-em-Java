@@ -27,12 +27,14 @@ public class VendaDAO extends DAO<Venda> {
                 "INSERT INTO " + 
                 "venda(" + 
                 "    data, " + 
+                "    cancelada, " + 
                 "    cliente_id ) " + 
-                "VALUES( ?, ? );",
+                "VALUES( ?, ?, ? );",
                 new String[]{ "id" } );
 
         stmt.setDate( 1, obj.getData() );
-        stmt.setInt( 2, obj.getCliente().getId() );
+        stmt.setBoolean( 2, obj.isCancelada() );
+        stmt.setInt( 3, obj.getCliente().getId() );
 
         stmt.executeUpdate();
         
@@ -53,13 +55,15 @@ public class VendaDAO extends DAO<Venda> {
                 "UPDATE venda " + 
                 "SET" + 
                 "    data = ?, " + 
+                "    cancelada = ?, " + 
                 "    cliente_id = ? " + 
                 "WHERE" + 
                 "    id = ?;" );
 
         stmt.setDate( 1, obj.getData() );
-        stmt.setInt( 2, obj.getCliente().getId() );
-        stmt.setInt( 3, obj.getId() );
+        stmt.setBoolean( 2, obj.isCancelada() );
+        stmt.setInt( 3, obj.getCliente().getId() );
+        stmt.setInt( 4, obj.getId() );
 
         stmt.executeUpdate();
         stmt.close();
@@ -90,6 +94,7 @@ public class VendaDAO extends DAO<Venda> {
                 "SELECT" + 
                 "    v.id idVenda, " + 
                 "    v.data dataVenda, " +
+                "    v.cancelada vendaCancelada, " +
                 "    c.id idCliente, " + 
                 "    c.nome nomeCliente, " + 
                 "    c.sobreNome sobrenomeCliente, " + 
@@ -114,7 +119,7 @@ public class VendaDAO extends DAO<Venda> {
                 "    v.cliente_id = c.id AND " + 
                 "    c.cidade_id = ci.id AND " + 
                 "    ci.estado_id = e.id " +
-                "ORDER BY p.data DESC, c.nome;" );
+                "ORDER BY v.data DESC, c.nome;" );
 
         ResultSet rs = stmt.executeQuery();
 
@@ -127,6 +132,7 @@ public class VendaDAO extends DAO<Venda> {
 
             v.setId( rs.getInt( "idVenda" ) );
             v.setData( rs.getDate( "dataVenda" ) );
+            v.setCancelada( rs.getBoolean( "vendaCancelada" ) );
             v.setCliente( c );
 
             c.setId( rs.getInt( "idCliente" ) );
@@ -169,6 +175,7 @@ public class VendaDAO extends DAO<Venda> {
                 "SELECT" + 
                 "    v.id idVenda, " + 
                 "    v.data dataVenda, " +
+                "    v.cancelada vendaCancelada, " +
                 "    c.id idCliente, " + 
                 "    c.nome nomeCliente, " + 
                 "    c.sobreNome sobrenomeCliente, " + 
@@ -208,6 +215,7 @@ public class VendaDAO extends DAO<Venda> {
 
             venda.setId( rs.getInt( "idVenda" ) );
             venda.setData( rs.getDate( "dataVenda" ) );
+            venda.setCancelada( rs.getBoolean( "vendaCancelada" ) );
             venda.setCliente( c );
 
             c.setId( rs.getInt( "idCliente" ) );

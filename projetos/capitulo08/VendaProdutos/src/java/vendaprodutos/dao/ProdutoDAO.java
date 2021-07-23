@@ -283,5 +283,25 @@ public class ProdutoDAO extends DAO<Produto> {
         return produto;
 
     }
+    
+    /**
+     * Atualização do estoque para o cancelamento de vendas.
+     */
+    public void atualizarEstoque( Produto obj ) throws SQLException {
+
+        PreparedStatement stmt = getConnection().prepareStatement(
+                "UPDATE produto " + 
+                "SET" + 
+                "    estoque = ? " +
+                "WHERE" + 
+                "    id = ?;" );
+
+        stmt.setBigDecimal( 1, obj.getEstoque() );
+        stmt.setInt( 2, obj.getId() );
+
+        stmt.executeUpdate();
+        stmt.close();
+
+    }
 
 }

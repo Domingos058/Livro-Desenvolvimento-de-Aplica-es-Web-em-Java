@@ -7,12 +7,49 @@
 
 <html>
   <head>
+    
     <title>Vendas Cadastradas</title>
+    
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
+    
     <link rel="stylesheet"
           href="${cp}/css/estilos.css"/>
+    
+    <script src="${cp}/js/libs/jquery/jquery.min.js"></script>
+    <script>
+      
+      function cancelarVenda( event ) {
+          
+        if ( confirm( "Deseja mesmo cancelar essa venda?" ) ) {
+
+          let idVenda = $(event.target).data( "id" );
+
+          $.ajax( "${cp}/processaVendas", {
+            data: {
+              acao: "cancelar",
+              idVenda: idVenda
+            },
+            dataType: "json"
+          }).done( ( data, textStatus ) =>{
+
+            if ( data.status ) {
+              $(event.target).parent().html( "Cancelada" );
+            } else {
+              alert( "Ocorreu um erro na sua requisição!" );
+            }
+
+          }).fail( ( jqXHR, textStatus, errorThrown ) => {
+            alert( "Erro: " + errorThrown + "\n" +
+                   "Status: " + textStatus );
+          });
+
+        }
+
+      }
+    </script>
+    
   </head>
 
   <body>
@@ -31,8 +68,7 @@
           <th>Id</th>
           <th>Data</th>
           <th>Cliente</th>
-          <th>Alterar</th>
-          <th>Excluir</th>
+          <th>Cancelar</th>
         </tr>
       </thead>
       <tbody>
@@ -42,24 +78,27 @@
             scope="page"
             class="vendaprodutos.servicos.VendaServices"/>
 
-        <c:forEach items="${servicos.todos}" var="un">
+        <c:forEach items="${servicos.todos}" var="venda">
           <tr>
             <td>${venda.id}</td>
             <td>
               <fmt:formatDate 
-                pattern="yyyy-MM-dd"
-                value="${requestScope.venda.data}"/>
+                pattern="dd/MM/yyyy"
+                value="${venda.data}"/>
             </td>
             <td>${venda.cliente.nome} ${venda.cliente.sobrenome}</td>
             <td>
-              <a href="${cp}/${prefixo}Alteracao&id=${venda.id}">
-                Alterar
-              </a>
-            </td>
-            <td>
-              <a href="${cp}/${prefixo}Exclusao&id=${venda.id}">
-                Excluir
-              </a>
+              <c:choose>
+                <c:when test="${venda.cancelada}">
+                  Cancelada
+                </c:when>
+                <c:otherwise>
+                  <a href="#" data-id="${venda.id}" onclick="cancelarVenda(event)">
+                    Cancelar
+                  </a>
+                </c:otherwise>
+              </c:choose>
+              
             </td>
           </tr>
         </c:forEach>

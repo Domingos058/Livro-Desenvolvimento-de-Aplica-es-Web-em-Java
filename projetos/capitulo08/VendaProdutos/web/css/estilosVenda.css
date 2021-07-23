@@ -25,12 +25,10 @@
     width: 250px;
 }
 
-.btnsItensVenda {
-    text-align: center; padding: 20px;
-}
-
 #selectItensVenda {
+    font-family: monospace;
     width: 350px;
+    height: 200px;
 }
 
 #txtQuantidade {
@@ -39,4 +37,8 @@
 
 #divTotal {
     text-align: right;
+}
+
+.btnsItensVenda {
+    text-align: center; padding: 20px;
 }
