@@ -1,6 +1,7 @@
 package vendaprodutos.entidades;
 
 import java.sql.Date;
+import javax.validation.constraints.NotNull;
 
 /**
  * Entidade Venda.
@@ -9,24 +10,31 @@ import java.sql.Date;
  */
 public class Venda {
 
-    private int id;
-    private boolean cancelada;
+    @NotNull
+    private Long id;
+    
+    @NotNull
+    private Boolean cancelada;
+    
+    @NotNull
     private Date data;
+    
+    @NotNull
     private Cliente cliente;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId( int id ) {
+    public void setId( Long id ) {
         this.id = id;
     }
 
-    public boolean isCancelada() {
+    public Boolean getCancelada() {
         return cancelada;
     }
 
-    public void setCancelada( boolean cancelada ) {
+    public void setCancelada( Boolean cancelada ) {
         this.cancelada = cancelada;
     }
 

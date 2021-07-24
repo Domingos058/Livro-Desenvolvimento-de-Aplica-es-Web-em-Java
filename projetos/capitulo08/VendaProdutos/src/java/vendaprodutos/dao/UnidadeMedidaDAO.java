@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import vendaprodutos.entidades.UnidadeMedida;
+import vendaprodutos.utils.Utils;
 
 /**
  * DAO para a entidade UnidadeMedida.
@@ -23,12 +24,14 @@ public class UnidadeMedidaDAO extends DAO<UnidadeMedida> {
         PreparedStatement stmt = getConnection().prepareStatement(
                 "INSERT INTO " + 
                 "unidade_medida( descricao, sigla ) " + 
-                "VALUES( ?, ? );" );
+                "VALUES( ?, ? );",
+                new String[]{ "id" } );
 
         stmt.setString( 1, obj.getDescricao() );
         stmt.setString( 2, obj.getSigla() );
 
         stmt.executeUpdate();
+        obj.setId( Utils.getChavePrimariaAposInsercao( stmt, "id" ) );
         stmt.close();
 
     }
@@ -46,7 +49,7 @@ public class UnidadeMedidaDAO extends DAO<UnidadeMedida> {
 
         stmt.setString( 1, obj.getDescricao() );
         stmt.setString( 2, obj.getSigla() );
-        stmt.setInt( 3, obj.getId() );
+        stmt.setLong( 3, obj.getId() );
 
         stmt.executeUpdate();
         stmt.close();
@@ -61,7 +64,7 @@ public class UnidadeMedidaDAO extends DAO<UnidadeMedida> {
                 "WHERE" + 
                 "    id = ?;" );
 
-        stmt.setInt( 1, obj.getId() );
+        stmt.setLong( 1, obj.getId() );
 
         stmt.executeUpdate();
         stmt.close();
@@ -83,7 +86,7 @@ public class UnidadeMedidaDAO extends DAO<UnidadeMedida> {
 
             UnidadeMedida e = new UnidadeMedida();
 
-            e.setId( rs.getInt( "id" ) );
+            e.setId( rs.getLong( "id" ) );
             e.setDescricao( rs.getString( "descricao" ) );
             e.setSigla( rs.getString( "sigla" ) );
 
@@ -99,7 +102,7 @@ public class UnidadeMedidaDAO extends DAO<UnidadeMedida> {
     }
 
     @Override
-    public UnidadeMedida obterPorId( int id ) throws SQLException {
+    public UnidadeMedida obterPorId( Long id ) throws SQLException {
 
         UnidadeMedida unidadeMedida = null;
 
@@ -107,7 +110,7 @@ public class UnidadeMedidaDAO extends DAO<UnidadeMedida> {
                 "SELECT * FROM unidade_medida " + 
                 "WHERE id = ?;" );
 
-        stmt.setInt( 1, id );
+        stmt.setLong( 1, id );
 
         ResultSet rs = stmt.executeQuery();
 
@@ -115,7 +118,7 @@ public class UnidadeMedidaDAO extends DAO<UnidadeMedida> {
 
             unidadeMedida = new UnidadeMedida();
 
-            unidadeMedida.setId( rs.getInt( "id" ) );
+            unidadeMedida.setId( rs.getLong( "id" ) );
             unidadeMedida.setDescricao( rs.getString( "descricao" ) );
             unidadeMedida.setSigla( rs.getString( "sigla" ) );
 

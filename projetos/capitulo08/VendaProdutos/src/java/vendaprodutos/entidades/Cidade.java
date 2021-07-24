@@ -1,5 +1,8 @@
 package vendaprodutos.entidades;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * Entidade Cidade.
  *
@@ -7,15 +10,21 @@ package vendaprodutos.entidades;
  */
 public class Cidade {
 
-    private int id;
+    @NotNull
+    private Long id;
+    
+    @NotNull
+    @Size( min = 1, max = 30 )
     private String nome;
+    
+    @NotNull
     private Estado estado;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId( int id ) {
+    public void setId( Long id ) {
         this.id = id;
     }
 

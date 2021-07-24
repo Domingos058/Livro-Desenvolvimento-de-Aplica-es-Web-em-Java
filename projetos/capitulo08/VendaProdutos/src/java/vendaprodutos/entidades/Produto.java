@@ -1,6 +1,10 @@
 package vendaprodutos.entidades;
 
 import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
 /**
  * Entidade Produto.
@@ -9,19 +13,35 @@ import java.math.BigDecimal;
  */
 public class Produto {
 
-    private int id;
+    @NotNull
+    private Long id;
+    
+    @NotNull
+    @Size( min = 1, max = 60 )
     private String descricao;
+    
+    @NotNull
+    @Pattern( regexp = "^\\d{13}$",
+              message = "deve corresponder à 9999999999999" )
     private String codigoBarras;
+    
+    @PositiveOrZero
     private BigDecimal valorVenda;
+    
+    @PositiveOrZero
     private BigDecimal estoque;
+    
+    @NotNull
     private Fornecedor fornecedor;
+    
+    @NotNull
     private UnidadeMedida unidadeMedida;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId( int id ) {
+    public void setId( Long id ) {
         this.id = id;
     }
 

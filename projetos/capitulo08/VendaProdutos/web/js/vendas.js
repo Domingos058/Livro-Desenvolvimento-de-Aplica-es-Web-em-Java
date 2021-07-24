@@ -1,11 +1,14 @@
 /**
  * Implementação das funções dor formulários de venda.
  */
-// on document ready
+
+// on document ready (quando o documento estiver pronto)
 $( () => {
     
     // array para armazenar os itens da venda
     let itensVenda = [];
+    
+    // formatadores
     let fmtMoeda = new Intl.NumberFormat( 
         "pt-BR", {
             style: "currency",
@@ -28,9 +31,9 @@ $( () => {
         let idProduto = $selectProduto.val();
         let valorVenda = $selectProduto.find( ":selected" ).data( "valor" );
         let descricao = $selectProduto.find( ":selected" ).data( "descricao" );
-        let quantidade = $txtQuantidade.val();
+        let quantidade = Number( $txtQuantidade.val() );
         
-        if ( quantidade !== "" ) {
+        if ( quantidade !== 0 ) {
             
             itensVenda.push({
                 idProduto: idProduto,
@@ -42,6 +45,8 @@ $( () => {
             montarSelectItensVenda();
             $txtQuantidade.val( "" );
             
+        } else {
+            alert( "Forneça uma quantidade!" );
         }
         
     });
@@ -68,8 +73,14 @@ $( () => {
         }
     });
     
-    $( "#btnSalvar" ).on( "click", event => {
-        //alert( "a" );
+    $( "#formNovaVenda" ).on( "submit", event => {
+        
+        if ( $( "#selectItensVenda > option" ).length === 0 ) {
+            alert( "Uma venda precisa conter pelo menos um item!" );
+            return false;
+        }
+        
+        return true;
     });
     
     // evita que, ao teclar enter dentro do campo
@@ -89,7 +100,7 @@ $( () => {
         
         $select.html( "" );
         
-        for ( k in itensVenda ) {
+        for ( let k in itensVenda ) {
             
             let item = itensVenda[k];
             let idProduto = item.idProduto;
@@ -99,7 +110,10 @@ $( () => {
             let valorItem = Number( valorVenda ) * Number( quantidade );
             
             $opt = $( "<option></option>" ).
-                    html( `${descricao} - ${fmtMoeda.format( valorVenda )} x ${fmtNumero.format(quantidade)} = ${fmtMoeda.format( valorItem )}` ).
+                    html( `${descricao} - ` + 
+                    `${fmtMoeda.format( valorVenda )} x ` + 
+                    `${fmtNumero.format(quantidade)} = ` + 
+                    `${fmtMoeda.format( valorItem )}` ).
                     val( `${idProduto}-${quantidade}` );
             
             $select.append( $opt );

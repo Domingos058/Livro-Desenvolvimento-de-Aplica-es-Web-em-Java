@@ -1,5 +1,8 @@
 package vendaprodutos.entidades;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * Entidade UnidadeMedida.
  *
@@ -7,15 +10,22 @@ package vendaprodutos.entidades;
  */
 public class UnidadeMedida {
 
-    private int id;
+    @NotNull
+    private Long id;
+    
+    @NotNull
+    @Size( min = 1, max = 45 )
     private String descricao;
+    
+    @NotNull
+    @Size( min = 1, max = 4 )
     private String sigla;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId( int id ) {
+    public void setId( Long id ) {
         this.id = id;
     }
 

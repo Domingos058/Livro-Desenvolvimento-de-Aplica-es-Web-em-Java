@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import vendaprodutos.dao.EstadoDAO;
 import vendaprodutos.entidades.Estado;
+import vendaprodutos.utils.Utils;
 
 /**
  * Servlet para tratar Estados.
@@ -42,14 +43,19 @@ public class EstadosServlet extends HttpServlet {
                 e.setNome( nome );
                 e.setSigla( sigla );
 
-                dao.salvar( e );
-
-                disp = request.getRequestDispatcher(
-                        "/formularios/estados/listagem.jsp" );
+                String mensagemErro = Utils.<Estado>validarGerarMensagem( e, "id" );
+                
+                if ( mensagemErro != null ) {
+                    disp = Utils.prepararDespachoErro( request, mensagemErro );
+                } else {
+                    dao.salvar( e );
+                    disp = request.getRequestDispatcher(
+                            "/formularios/estados/listagem.jsp" );
+                }
 
             } else if ( acao.equals( "alterar" ) ) {
 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
                 String nome = request.getParameter( "nome" );
                 String sigla = request.getParameter( "sigla" );
 
@@ -58,14 +64,19 @@ public class EstadosServlet extends HttpServlet {
                 e.setNome( nome );
                 e.setSigla( sigla );
 
-                dao.atualizar( e );
-
-                disp = request.getRequestDispatcher(
-                        "/formularios/estados/listagem.jsp" );
+                String mensagemErro = Utils.<Estado>validarGerarMensagem( e );
+                
+                if ( mensagemErro != null ) {
+                    disp = Utils.prepararDespachoErro( request, mensagemErro );
+                } else {
+                    dao.atualizar( e );
+                    disp = request.getRequestDispatcher(
+                            "/formularios/estados/listagem.jsp" );
+                }
 
             } else if ( acao.equals( "excluir" ) ) {
 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
 
                 Estado e = new Estado();
                 e.setId( id );
@@ -77,7 +88,8 @@ public class EstadosServlet extends HttpServlet {
 
             } else {
                 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
+                
                 Estado e = dao.obterPorId( id );
                 request.setAttribute( "estado", e );
                 
@@ -92,13 +104,15 @@ public class EstadosServlet extends HttpServlet {
             }
 
         } catch ( SQLException exc ) {
-            exc.printStackTrace();
+            disp = Utils.prepararDespachoErro( request, 
+                    "<li>" + exc.getMessage() + "</li>" );
         } finally {
             if ( dao != null ) {
                 try {
                     dao.fecharConexao();
                 } catch ( SQLException exc ) {
-                    exc.printStackTrace();
+                    disp = Utils.prepararDespachoErro( request, 
+                            "<li>" + exc.getMessage() + "</li>" );
                 }
             }
         }

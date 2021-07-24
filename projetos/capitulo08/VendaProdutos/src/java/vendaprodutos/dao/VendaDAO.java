@@ -9,6 +9,7 @@ import vendaprodutos.entidades.Cidade;
 import vendaprodutos.entidades.Cliente;
 import vendaprodutos.entidades.Estado;
 import vendaprodutos.entidades.Venda;
+import vendaprodutos.utils.Utils;
 
 /**
  * DAO para a entidade Venda.
@@ -33,17 +34,11 @@ public class VendaDAO extends DAO<Venda> {
                 new String[]{ "id" } );
 
         stmt.setDate( 1, obj.getData() );
-        stmt.setBoolean( 2, obj.isCancelada() );
-        stmt.setInt( 3, obj.getCliente().getId() );
+        stmt.setBoolean( 2, obj.getCancelada() );
+        stmt.setLong( 3, obj.getCliente().getId() );
 
         stmt.executeUpdate();
-        
-        ResultSet rsPK = stmt.getGeneratedKeys();
-        if ( rsPK.next() ) {
-            obj.setId( rsPK.getInt( "id" ) );
-        }
-        
-        rsPK.close();
+        obj.setId( Utils.getChavePrimariaAposInsercao( stmt, "id" ) );
         stmt.close();
 
     }
@@ -61,9 +56,9 @@ public class VendaDAO extends DAO<Venda> {
                 "    id = ?;" );
 
         stmt.setDate( 1, obj.getData() );
-        stmt.setBoolean( 2, obj.isCancelada() );
-        stmt.setInt( 3, obj.getCliente().getId() );
-        stmt.setInt( 4, obj.getId() );
+        stmt.setBoolean( 2, obj.getCancelada() );
+        stmt.setLong( 3, obj.getCliente().getId() );
+        stmt.setLong( 4, obj.getId() );
 
         stmt.executeUpdate();
         stmt.close();
@@ -78,7 +73,7 @@ public class VendaDAO extends DAO<Venda> {
                 "WHERE" + 
                 "    id = ?;" );
 
-        stmt.setInt( 1, obj.getId() );
+        stmt.setLong( 1, obj.getId() );
 
         stmt.executeUpdate();
         stmt.close();
@@ -130,12 +125,12 @@ public class VendaDAO extends DAO<Venda> {
             Cidade ci = new Cidade();
             Estado e = new Estado();
 
-            v.setId( rs.getInt( "idVenda" ) );
+            v.setId( rs.getLong( "idVenda" ) );
             v.setData( rs.getDate( "dataVenda" ) );
             v.setCancelada( rs.getBoolean( "vendaCancelada" ) );
             v.setCliente( c );
 
-            c.setId( rs.getInt( "idCliente" ) );
+            c.setId( rs.getLong( "idCliente" ) );
             c.setNome( rs.getString( "nomeCliente" ) );
             c.setSobrenome( rs.getString( "sobrenomeCliente" ) );
             c.setDataNascimento( rs.getDate( "dataNascimentoCliente" ) );
@@ -147,11 +142,11 @@ public class VendaDAO extends DAO<Venda> {
             c.setCep( rs.getString( "cepCliente" ) );
             c.setCidade( ci );
             
-            ci.setId( rs.getInt( "idCidade" ) );
+            ci.setId( rs.getLong( "idCidade" ) );
             ci.setNome( rs.getString( "nomeCidade" ) );
             ci.setEstado( e );
 
-            e.setId( rs.getInt( "idEstado" ) );
+            e.setId( rs.getLong( "idEstado" ) );
             e.setNome( rs.getString( "nomeEstado" ) );
             e.setSigla( rs.getString( "siglaEstado" ) );
 
@@ -167,7 +162,7 @@ public class VendaDAO extends DAO<Venda> {
     }
 
     @Override
-    public Venda obterPorId( int id ) throws SQLException {
+    public Venda obterPorId( Long id ) throws SQLException {
 
         Venda venda = null;
 
@@ -202,7 +197,7 @@ public class VendaDAO extends DAO<Venda> {
                 "    c.cidade_id = ci.id AND " + 
                 "    ci.estado_id = e.id;" );
 
-        stmt.setInt( 1, id );
+        stmt.setLong( 1, id );
 
         ResultSet rs = stmt.executeQuery();
 
@@ -213,12 +208,12 @@ public class VendaDAO extends DAO<Venda> {
             Cidade ci = new Cidade();
             Estado e = new Estado();
 
-            venda.setId( rs.getInt( "idVenda" ) );
+            venda.setId( rs.getLong( "idVenda" ) );
             venda.setData( rs.getDate( "dataVenda" ) );
             venda.setCancelada( rs.getBoolean( "vendaCancelada" ) );
             venda.setCliente( c );
 
-            c.setId( rs.getInt( "idCliente" ) );
+            c.setId( rs.getLong( "idCliente" ) );
             c.setNome( rs.getString( "nomeCliente" ) );
             c.setSobrenome( rs.getString( "sobrenomeCliente" ) );
             c.setDataNascimento( rs.getDate( "dataNascimentoCliente" ) );
@@ -230,11 +225,11 @@ public class VendaDAO extends DAO<Venda> {
             c.setCep( rs.getString( "cepCliente" ) );
             c.setCidade( ci );
             
-            ci.setId( rs.getInt( "idCidade" ) );
+            ci.setId( rs.getLong( "idCidade" ) );
             ci.setNome( rs.getString( "nomeCidade" ) );
             ci.setEstado( e );
 
-            e.setId( rs.getInt( "idEstado" ) );
+            e.setId( rs.getLong( "idEstado" ) );
             e.setNome( rs.getString( "nomeEstado" ) );
             e.setSigla( rs.getString( "siglaEstado" ) );
 

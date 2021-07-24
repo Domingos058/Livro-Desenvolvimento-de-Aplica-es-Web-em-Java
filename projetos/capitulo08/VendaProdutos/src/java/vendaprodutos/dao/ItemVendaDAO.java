@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import vendaprodutos.entidades.ItemVenda;
 import vendaprodutos.entidades.Produto;
-import vendaprodutos.entidades.Venda;
 
 /**
  * DAO para a entidade ItemVenda.
@@ -27,8 +26,8 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
                 "item_venda( venda_id, produto_id, valor, quantidade ) " + 
                 "VALUES( ?, ?, ?, ? );" );
 
-        stmt.setInt( 1, obj.getVenda().getId() );
-        stmt.setInt( 2, obj.getProduto().getId() );
+        stmt.setLong( 1, obj.getVenda().getId() );
+        stmt.setLong( 2, obj.getProduto().getId() );
         stmt.setBigDecimal( 3, obj.getValor() );
         stmt.setBigDecimal( 4, obj.getQuantidade() );
 
@@ -63,7 +62,7 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
     }
 
     @Override
-    public ItemVenda obterPorId( int id ) throws SQLException {
+    public ItemVenda obterPorId( Long id ) throws SQLException {
 
         // o identificador dessa entidade é composto!
         // precisamos ter um método especializado...
@@ -76,7 +75,7 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
      * Esse método será utilizado para o ajuste do estoque das vendas
      * que forem canceladas. Apenas os valores necessários serão obtidos.
      */
-    public List<ItemVenda> obterPorIdVenda( int idVenda ) throws SQLException {
+    public List<ItemVenda> obterPorIdVenda( Long idVenda ) throws SQLException {
 
         List<ItemVenda> itensVenda = new ArrayList<>();
 
@@ -91,7 +90,7 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
                 "WHERE iv.produto_id = p.id AND " + 
                 "      iv.venda_id = ?;" );
 
-        stmt.setInt( 1, idVenda );
+        stmt.setLong( 1, idVenda );
 
         ResultSet rs = stmt.executeQuery();
 
@@ -103,7 +102,7 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
             iv.setQuantidade( rs.getBigDecimal( "quantidadeItemVenda" ) );
             iv.setProduto( p );
             
-            p.setId( rs.getInt( "idProduto" ) );
+            p.setId( rs.getLong( "idProduto" ) );
             p.setEstoque( rs.getBigDecimal( "estoqueProduto" ) );
             
             itensVenda.add( iv );

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import vendaprodutos.entidades.Cidade;
 import vendaprodutos.entidades.Estado;
+import vendaprodutos.utils.Utils;
 
 /**
  * DAO para a entidade Cidade.
@@ -24,12 +25,14 @@ public class CidadeDAO extends DAO<Cidade> {
         PreparedStatement stmt = getConnection().prepareStatement(
                 "INSERT INTO " + 
                 "cidade( nome, estado_id ) " + 
-                "VALUES( ?, ? );" );
+                "VALUES( ?, ? );",
+                new String[]{ "id" } );
 
         stmt.setString( 1, obj.getNome() );
-        stmt.setInt( 2, obj.getEstado().getId() );
+        stmt.setLong( 2, obj.getEstado().getId() );
 
         stmt.executeUpdate();
+        obj.setId( Utils.getChavePrimariaAposInsercao( stmt, "id" ) );
         stmt.close();
 
     }
@@ -46,8 +49,8 @@ public class CidadeDAO extends DAO<Cidade> {
                 "    id = ?;" );
 
         stmt.setString( 1, obj.getNome() );
-        stmt.setInt( 2, obj.getEstado().getId() );
-        stmt.setInt( 3, obj.getId() );
+        stmt.setLong( 2, obj.getEstado().getId() );
+        stmt.setLong( 3, obj.getId() );
 
         stmt.executeUpdate();
         stmt.close();
@@ -62,7 +65,7 @@ public class CidadeDAO extends DAO<Cidade> {
                 "WHERE" + 
                 "    id = ?;" );
 
-        stmt.setInt( 1, obj.getId() );
+        stmt.setLong( 1, obj.getId() );
 
         stmt.executeUpdate();
         stmt.close();
@@ -95,11 +98,11 @@ public class CidadeDAO extends DAO<Cidade> {
             Cidade c = new Cidade();
             Estado e = new Estado();
 
-            c.setId( rs.getInt( "idCidade" ) );
+            c.setId( rs.getLong( "idCidade" ) );
             c.setNome( rs.getString( "nomeCidade" ) );
             c.setEstado( e );
 
-            e.setId( rs.getInt( "idEstado" ) );
+            e.setId( rs.getLong( "idEstado" ) );
             e.setNome( rs.getString( "nomeEstado" ) );
             e.setSigla( rs.getString( "siglaEstado" ) );
 
@@ -115,7 +118,7 @@ public class CidadeDAO extends DAO<Cidade> {
     }
 
     @Override
-    public Cidade obterPorId( int id ) throws SQLException {
+    public Cidade obterPorId( Long id ) throws SQLException {
 
         Cidade cidade = null;
 
@@ -133,7 +136,7 @@ public class CidadeDAO extends DAO<Cidade> {
                 "    c.id = ? AND " + 
                 "    c.estado_id = e.id;" );
 
-        stmt.setInt( 1, id );
+        stmt.setLong( 1, id );
 
         ResultSet rs = stmt.executeQuery();
 
@@ -142,11 +145,11 @@ public class CidadeDAO extends DAO<Cidade> {
             cidade = new Cidade();
             Estado e = new Estado();
 
-            cidade.setId( rs.getInt( "idCidade" ) );
+            cidade.setId( rs.getLong( "idCidade" ) );
             cidade.setNome( rs.getString( "nomeCidade" ) );
             cidade.setEstado( e );
 
-            e.setId( rs.getInt( "idEstado" ) );
+            e.setId( rs.getLong( "idEstado" ) );
             e.setNome( rs.getString( "nomeEstado" ) );
             e.setSigla( rs.getString( "siglaEstado" ) );
 

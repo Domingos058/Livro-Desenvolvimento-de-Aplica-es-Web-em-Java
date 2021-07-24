@@ -1,6 +1,9 @@
 package vendaprodutos.entidades;
 
 import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 /**
  * Entidade ItemVenda.
@@ -9,9 +12,16 @@ import java.math.BigDecimal;
  */
 public class ItemVenda {
 
+    @NotNull
     private Venda venda;
+    
+    @NotNull
     private Produto produto;
+    
+    @PositiveOrZero
     private BigDecimal valor;
+    
+    @Positive
     private BigDecimal quantidade;
 
     public Venda getVenda() {

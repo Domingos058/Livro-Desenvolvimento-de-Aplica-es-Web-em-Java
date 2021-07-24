@@ -1,6 +1,10 @@
 package vendaprodutos.entidades;
 
 import java.sql.Date;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * Entidade Cliente.
@@ -9,23 +13,55 @@ import java.sql.Date;
  */
 public class Cliente {
 
-    private int id;
+    @NotNull
+    private Long id;
+    
+    @NotNull
+    @Size( min = 1, max = 45 )
     private String nome;
+    
+    @NotNull
+    @Size( min = 1, max = 45 )
     private String sobrenome;
+    
+    @NotNull
     private Date dataNascimento;
+    
+    @NotNull
+    @Pattern( regexp = "^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$",
+              message = "deve corresponder à 999.999.999-99" )
     private String cpf;
+    
+    @NotNull
+    @Email
+    @Size( min = 3, max = 60 )
     private String email;
+    
+    @NotNull
+    @Size( min = 1, max = 50 )
     private String logradouro;
+    
+    @NotNull
+    @Size( min = 1, max = 6 )
     private String numero;
+    
+    @NotNull
+    @Size( min = 1, max = 30 )
     private String bairro;
+    
+    @NotNull
+    @Pattern( regexp = "^\\d{5}\\-\\d{3}$",
+              message = "deve corresponder à 99999-999" )
     private String cep;
+    
+    @NotNull
     private Cidade cidade;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId( int id ) {
+    public void setId( Long id ) {
         this.id = id;
     }
 

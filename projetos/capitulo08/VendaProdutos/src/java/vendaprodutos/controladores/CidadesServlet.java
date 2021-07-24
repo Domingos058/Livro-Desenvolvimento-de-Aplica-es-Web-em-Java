@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import vendaprodutos.dao.CidadeDAO;
 import vendaprodutos.entidades.Cidade;
 import vendaprodutos.entidades.Estado;
+import vendaprodutos.utils.Utils;
 
 /**
  * Servlet para tratar Cidades.
@@ -37,8 +38,7 @@ public class CidadesServlet extends HttpServlet {
             if ( acao.equals( "inserir" ) ) {
 
                 String nome = request.getParameter( "nome" );
-                int idEstado = Integer.parseInt( 
-                        request.getParameter( "idEstado" ) );
+                Long idEstado = Utils.getLong( request, "idEstado" );
 
                 Estado e = new Estado();
                 e.setId( idEstado );
@@ -54,10 +54,9 @@ public class CidadesServlet extends HttpServlet {
 
             } else if ( acao.equals( "alterar" ) ) {
 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
                 String nome = request.getParameter( "nome" );
-                int idEstado = Integer.parseInt( 
-                        request.getParameter( "idEstado" ) );
+                Long idEstado = Utils.getLong( request, "idEstado" );
 
                 Estado e = new Estado();
                 e.setId( idEstado );
@@ -74,7 +73,7 @@ public class CidadesServlet extends HttpServlet {
 
             } else if ( acao.equals( "excluir" ) ) {
 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
 
                 Cidade c = new Cidade();
                 c.setId( id );
@@ -86,7 +85,7 @@ public class CidadesServlet extends HttpServlet {
 
             } else {
                 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
                 Cidade c = dao.obterPorId( id );
                 request.setAttribute( "cidade", c );
                 

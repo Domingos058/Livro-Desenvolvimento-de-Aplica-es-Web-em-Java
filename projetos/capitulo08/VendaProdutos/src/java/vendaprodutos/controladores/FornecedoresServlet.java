@@ -1,10 +1,7 @@
 package vendaprodutos.controladores;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import vendaprodutos.dao.FornecedorDAO;
 import vendaprodutos.entidades.Cidade;
 import vendaprodutos.entidades.Fornecedor;
+import vendaprodutos.utils.Utils;
 
 /**
  * Servlet para tratar Fornecedores.
@@ -47,8 +45,7 @@ public class FornecedoresServlet extends HttpServlet {
                 String numero = request.getParameter( "numero" );
                 String bairro = request.getParameter( "bairro" );
                 String cep = request.getParameter( "cep" );
-                int idCidade = Integer.parseInt( 
-                        request.getParameter( "idCidade" ) );
+                Long idCidade = Utils.getLong( request, "idCidade" );
 
                 Cidade ci = new Cidade();
                 ci.setId( idCidade );
@@ -70,7 +67,7 @@ public class FornecedoresServlet extends HttpServlet {
 
             } else if ( acao.equals( "alterar" ) ) {
 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
                 String razaoSocial = request.getParameter( "razaoSocial" );
                 String cnpj = request.getParameter( "cnpj" );
                 String email = request.getParameter( "email" );
@@ -78,8 +75,7 @@ public class FornecedoresServlet extends HttpServlet {
                 String numero = request.getParameter( "numero" );
                 String bairro = request.getParameter( "bairro" );
                 String cep = request.getParameter( "cep" );
-                int idCidade = Integer.parseInt( 
-                        request.getParameter( "idCidade" ) );
+                Long idCidade = Utils.getLong( request, "idCidade" );
 
                 Cidade ci = new Cidade();
                 ci.setId( idCidade );
@@ -102,7 +98,7 @@ public class FornecedoresServlet extends HttpServlet {
 
             } else if ( acao.equals( "excluir" ) ) {
 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
 
                 Fornecedor f = new Fornecedor();
                 f.setId( id );
@@ -114,7 +110,8 @@ public class FornecedoresServlet extends HttpServlet {
 
             } else {
                 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
+                
                 Fornecedor f = dao.obterPorId( id );
                 request.setAttribute( "fornecedor", f );
                 

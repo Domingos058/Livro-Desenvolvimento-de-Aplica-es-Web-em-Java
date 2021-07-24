@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +19,7 @@ import vendaprodutos.entidades.Cliente;
 import vendaprodutos.entidades.ItemVenda;
 import vendaprodutos.entidades.Produto;
 import vendaprodutos.entidades.Venda;
+import vendaprodutos.utils.Utils;
 
 /**
  * Servlet para tratar Vendas.
@@ -50,10 +50,8 @@ public class VendasServlet extends HttpServlet {
 
             if ( acao.equals( "inserir" ) ) {
 
-                int idCliente = Integer.parseInt( 
-                        request.getParameter( "idCliente" ) );
+                Long idCliente = Utils.getLong( request, "idCliente" );
                 String itensVenda = request.getParameter( "itensVenda" );
-                System.out.println( itensVenda );
                 
                 Cliente c = new Cliente();
                 c.setId( idCliente );
@@ -72,7 +70,7 @@ public class VendasServlet extends HttpServlet {
                     System.out.println( item );
                     String[] dados = item.split( "[-]" );
                     
-                    int idProduto = Integer.parseInt( dados[0] );
+                    Long idProduto = Utils.getLong( dados[0] );
                     BigDecimal quantidade = new BigDecimal( dados[1] );
                     
                     Produto p = daoProduto.obterPorId( idProduto );
@@ -94,14 +92,13 @@ public class VendasServlet extends HttpServlet {
 
             } else if ( acao.equals( "cancelar" ) ) {
 
-                int idVenda = Integer.parseInt( 
-                        request.getParameter( "idVenda" ) );
+                Long id = Utils.getLong( request, "id" );
                 
-                Venda v = daoVenda.obterPorId( idVenda );
+                Venda v = daoVenda.obterPorId( id );
                 v.setCancelada( true );
                 daoVenda.atualizar( v );
                 
-                for ( ItemVenda iv : daoItemVenda.obterPorIdVenda( idVenda ) ) {
+                for ( ItemVenda iv : daoItemVenda.obterPorIdVenda( id ) ) {
                     Produto p = iv.getProduto();
                     p.setEstoque( p.getEstoque().add( iv.getQuantidade() ) );
                     daoProduto.atualizarEstoque( p );

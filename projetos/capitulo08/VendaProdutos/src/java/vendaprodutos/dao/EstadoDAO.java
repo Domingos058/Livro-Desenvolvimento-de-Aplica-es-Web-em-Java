@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import vendaprodutos.entidades.Estado;
+import vendaprodutos.utils.Utils;
 
 /**
  * DAO para a entidade Estado.
@@ -23,12 +24,14 @@ public class EstadoDAO extends DAO<Estado> {
         PreparedStatement stmt = getConnection().prepareStatement(
                 "INSERT INTO " + 
                 "estado( nome, sigla ) " + 
-                "VALUES( ?, ? );" );
+                "VALUES( ?, ? );",
+                new String[]{ "id" } );
 
         stmt.setString( 1, obj.getNome() );
         stmt.setString( 2, obj.getSigla() );
 
         stmt.executeUpdate();
+        obj.setId( Utils.getChavePrimariaAposInsercao( stmt, "id" ) );
         stmt.close();
 
     }
@@ -46,7 +49,7 @@ public class EstadoDAO extends DAO<Estado> {
 
         stmt.setString( 1, obj.getNome() );
         stmt.setString( 2, obj.getSigla() );
-        stmt.setInt( 3, obj.getId() );
+        stmt.setLong( 3, obj.getId() );
 
         stmt.executeUpdate();
         stmt.close();
@@ -61,7 +64,7 @@ public class EstadoDAO extends DAO<Estado> {
                 "WHERE" + 
                 "    id = ?;" );
 
-        stmt.setInt( 1, obj.getId() );
+        stmt.setLong( 1, obj.getId() );
 
         stmt.executeUpdate();
         stmt.close();
@@ -83,7 +86,7 @@ public class EstadoDAO extends DAO<Estado> {
 
             Estado e = new Estado();
 
-            e.setId( rs.getInt( "id" ) );
+            e.setId( rs.getLong( "id" ) );
             e.setNome( rs.getString( "nome" ) );
             e.setSigla( rs.getString( "sigla" ) );
 
@@ -99,7 +102,7 @@ public class EstadoDAO extends DAO<Estado> {
     }
 
     @Override
-    public Estado obterPorId( int id ) throws SQLException {
+    public Estado obterPorId( Long id ) throws SQLException {
 
         Estado estado = null;
 
@@ -107,7 +110,7 @@ public class EstadoDAO extends DAO<Estado> {
                 "SELECT * FROM estado " + 
                 "WHERE id = ?;" );
 
-        stmt.setInt( 1, id );
+        stmt.setLong( 1, id );
 
         ResultSet rs = stmt.executeQuery();
 
@@ -115,7 +118,7 @@ public class EstadoDAO extends DAO<Estado> {
 
             estado = new Estado();
 
-            estado.setId( rs.getInt( "id" ) );
+            estado.setId( rs.getLong( "id" ) );
             estado.setNome( rs.getString( "nome" ) );
             estado.setSigla( rs.getString( "sigla" ) );
 

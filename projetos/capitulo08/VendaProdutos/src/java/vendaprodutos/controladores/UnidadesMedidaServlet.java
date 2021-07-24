@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import vendaprodutos.dao.UnidadeMedidaDAO;
 import vendaprodutos.entidades.UnidadeMedida;
+import vendaprodutos.utils.Utils;
 
 /**
  * Servlet para tratar Unidades de Medida.
@@ -49,7 +50,7 @@ public class UnidadesMedidaServlet extends HttpServlet {
 
             } else if ( acao.equals( "alterar" ) ) {
 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
                 String descricao = request.getParameter( "descricao" );
                 String sigla = request.getParameter( "sigla" );
 
@@ -65,7 +66,7 @@ public class UnidadesMedidaServlet extends HttpServlet {
 
             } else if ( acao.equals( "excluir" ) ) {
 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
 
                 UnidadeMedida u = new UnidadeMedida();
                 u.setId( id );
@@ -77,7 +78,8 @@ public class UnidadesMedidaServlet extends HttpServlet {
 
             } else {
                 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
+                
                 UnidadeMedida u = dao.obterPorId( id );
                 request.setAttribute( "un", u );
                 

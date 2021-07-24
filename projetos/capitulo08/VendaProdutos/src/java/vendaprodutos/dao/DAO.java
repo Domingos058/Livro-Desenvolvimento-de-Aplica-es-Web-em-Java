@@ -100,11 +100,11 @@ public abstract class DAO<Tipo> {
      * 
      * É o "R" do CRUD.
      *
-     * @param id Identificador da instância a serv obtida.
+     * @param id Identificador da instância a ser obtida.
      * @return Instância relacionada ao id passado, ou null caso não seja
      * encontrada.
      * @throws SQLException Caso ocorra algum erro durante a consulta.
      */
-    public abstract Tipo obterPorId( int id ) throws SQLException;
+    public abstract Tipo obterPorId( Long id ) throws SQLException;
 
 }

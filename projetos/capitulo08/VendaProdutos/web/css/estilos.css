@@ -32,3 +32,12 @@ a:hover {
 .alinharDireita {
     text-align: right;
 }
+
+#divErros {
+    font-weight: bold;
+    border: solid 2px #660000;
+    border-radius: 10px;
+    background-color: #ff3333;
+    padding: 10px;
+    margin-bottom: 10px;
+}

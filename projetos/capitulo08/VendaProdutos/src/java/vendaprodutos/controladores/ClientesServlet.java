@@ -1,10 +1,7 @@
 package vendaprodutos.controladores;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import vendaprodutos.dao.ClienteDAO;
 import vendaprodutos.entidades.Cidade;
 import vendaprodutos.entidades.Cliente;
+import vendaprodutos.utils.Utils;
 
 /**
  * Servlet para tratar Clientes.
@@ -33,7 +31,6 @@ public class ClientesServlet extends HttpServlet {
         
         ClienteDAO dao = null;
         RequestDispatcher disp = null;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         
         try {
 
@@ -50,8 +47,7 @@ public class ClientesServlet extends HttpServlet {
                 String numero = request.getParameter( "numero" );
                 String bairro = request.getParameter( "bairro" );
                 String cep = request.getParameter( "cep" );
-                int idCidade = Integer.parseInt( 
-                        request.getParameter( "idCidade" ) );
+                Long idCidade = Utils.getLong( request, "idCidade" );
 
                 Cidade ci = new Cidade();
                 ci.setId( idCidade );
@@ -59,8 +55,7 @@ public class ClientesServlet extends HttpServlet {
                 Cliente c = new Cliente();
                 c.setNome( nome );
                 c.setSobrenome( sobrenome );
-                c.setDataNascimento( Date.valueOf( 
-                        LocalDate.parse( dataNascimento, dtf ) ) );
+                c.setDataNascimento( Utils.getDate( dataNascimento ) );
                 c.setCpf( cpf );
                 c.setEmail( email );
                 c.setLogradouro( logradouro );
@@ -76,7 +71,7 @@ public class ClientesServlet extends HttpServlet {
 
             } else if ( acao.equals( "alterar" ) ) {
 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
                 String nome = request.getParameter( "nome" );
                 String sobrenome = request.getParameter( "sobrenome" );
                 String dataNascimento = request.getParameter( "dataNascimento" );
@@ -86,8 +81,7 @@ public class ClientesServlet extends HttpServlet {
                 String numero = request.getParameter( "numero" );
                 String bairro = request.getParameter( "bairro" );
                 String cep = request.getParameter( "cep" );
-                int idCidade = Integer.parseInt( 
-                        request.getParameter( "idCidade" ) );
+                Long idCidade = Utils.getLong( request, "idCidade" );
 
                 Cidade ci = new Cidade();
                 ci.setId( idCidade );
@@ -96,8 +90,7 @@ public class ClientesServlet extends HttpServlet {
                 c.setId( id );
                 c.setNome( nome );
                 c.setSobrenome( sobrenome );
-                c.setDataNascimento( Date.valueOf( 
-                        LocalDate.parse( dataNascimento, dtf ) ) );
+                c.setDataNascimento( Utils.getDate( dataNascimento ) );
                 c.setCpf( cpf );
                 c.setEmail( email );
                 c.setLogradouro( logradouro );
@@ -113,7 +106,7 @@ public class ClientesServlet extends HttpServlet {
 
             } else if ( acao.equals( "excluir" ) ) {
 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
 
                 Cliente c = new Cliente();
                 c.setId( id );
@@ -125,7 +118,8 @@ public class ClientesServlet extends HttpServlet {
 
             } else {
                 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
+                
                 Cliente c = dao.obterPorId( id );
                 request.setAttribute( "cliente", c );
                 

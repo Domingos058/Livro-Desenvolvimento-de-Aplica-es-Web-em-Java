@@ -8,6 +8,7 @@ import java.util.List;
 import vendaprodutos.entidades.Cidade;
 import vendaprodutos.entidades.Estado;
 import vendaprodutos.entidades.Fornecedor;
+import vendaprodutos.utils.Utils;
 
 /**
  * DAO para a entidade Fornecedor.
@@ -33,7 +34,8 @@ public class FornecedorDAO extends DAO<Fornecedor> {
                 "    bairro, " + 
                 "    cep, " + 
                 "    cidade_id ) " + 
-                "VALUES( ?, ?, ?, ?, ?, ?, ?, ? );" );
+                "VALUES( ?, ?, ?, ?, ?, ?, ?, ? );",
+                new String[]{ "id" } );
 
         stmt.setString( 1, obj.getRazaoSocial() );
         stmt.setString( 2, obj.getCnpj() );
@@ -42,9 +44,10 @@ public class FornecedorDAO extends DAO<Fornecedor> {
         stmt.setString( 5, obj.getNumero() );
         stmt.setString( 6, obj.getBairro() );
         stmt.setString( 7, obj.getCep() );
-        stmt.setInt( 8, obj.getCidade().getId() );
+        stmt.setLong( 8, obj.getCidade().getId() );
 
         stmt.executeUpdate();
+        obj.setId( Utils.getChavePrimariaAposInsercao( stmt, "id" ) );
         stmt.close();
 
     }
@@ -73,8 +76,8 @@ public class FornecedorDAO extends DAO<Fornecedor> {
         stmt.setString( 5, obj.getNumero() );
         stmt.setString( 6, obj.getBairro() );
         stmt.setString( 7, obj.getCep() );
-        stmt.setInt( 8, obj.getCidade().getId() );
-        stmt.setInt( 9, obj.getId() );
+        stmt.setLong( 8, obj.getCidade().getId() );
+        stmt.setLong( 9, obj.getId() );
 
         stmt.executeUpdate();
         stmt.close();
@@ -89,7 +92,7 @@ public class FornecedorDAO extends DAO<Fornecedor> {
                 "WHERE" + 
                 "    id = ?;" );
 
-        stmt.setInt( 1, obj.getId() );
+        stmt.setLong( 1, obj.getId() );
 
         stmt.executeUpdate();
         stmt.close();
@@ -133,7 +136,7 @@ public class FornecedorDAO extends DAO<Fornecedor> {
             Cidade ci = new Cidade();
             Estado e = new Estado();
 
-            f.setId( rs.getInt( "idFornecedor" ) );
+            f.setId( rs.getLong( "idFornecedor" ) );
             f.setRazaoSocial( rs.getString( "razaoSocialFornecedor" ) );
             f.setCnpj( rs.getString( "cnpjFornecedor" ) );
             f.setEmail( rs.getString( "emailFornecedor" ) );
@@ -143,11 +146,11 @@ public class FornecedorDAO extends DAO<Fornecedor> {
             f.setCep( rs.getString( "cepFornecedor" ) );
             f.setCidade( ci );
 
-            ci.setId( rs.getInt( "idCidade" ) );
+            ci.setId( rs.getLong( "idCidade" ) );
             ci.setNome( rs.getString( "nomeCidade" ) );
             ci.setEstado( e );
 
-            e.setId( rs.getInt( "idEstado" ) );
+            e.setId( rs.getLong( "idEstado" ) );
             e.setNome( rs.getString( "nomeEstado" ) );
             e.setSigla( rs.getString( "siglaEstado" ) );
 
@@ -163,7 +166,7 @@ public class FornecedorDAO extends DAO<Fornecedor> {
     }
 
     @Override
-    public Fornecedor obterPorId( int id ) throws SQLException {
+    public Fornecedor obterPorId( Long id ) throws SQLException {
 
         Fornecedor fornecedor = null;
 
@@ -191,7 +194,7 @@ public class FornecedorDAO extends DAO<Fornecedor> {
                 "    f.cidade_id = ci.id AND " + 
                 "    ci.estado_id = e.id;" );
 
-        stmt.setInt( 1, id );
+        stmt.setLong( 1, id );
 
         ResultSet rs = stmt.executeQuery();
 
@@ -201,7 +204,7 @@ public class FornecedorDAO extends DAO<Fornecedor> {
             Cidade ci = new Cidade();
             Estado e = new Estado();
 
-            fornecedor.setId( rs.getInt( "idFornecedor" ) );
+            fornecedor.setId( rs.getLong( "idFornecedor" ) );
             fornecedor.setRazaoSocial( rs.getString( "razaoSocialFornecedor" ) );
             fornecedor.setCnpj( rs.getString( "cnpjFornecedor" ) );
             fornecedor.setEmail( rs.getString( "emailFornecedor" ) );
@@ -211,11 +214,11 @@ public class FornecedorDAO extends DAO<Fornecedor> {
             fornecedor.setCep( rs.getString( "cepFornecedor" ) );
             fornecedor.setCidade( ci );
 
-            ci.setId( rs.getInt( "idCidade" ) );
+            ci.setId( rs.getLong( "idCidade" ) );
             ci.setNome( rs.getString( "nomeCidade" ) );
             ci.setEstado( e );
 
-            e.setId( rs.getInt( "idEstado" ) );
+            e.setId( rs.getLong( "idEstado" ) );
             e.setNome( rs.getString( "nomeEstado" ) );
             e.setSigla( rs.getString( "siglaEstado" ) );
 

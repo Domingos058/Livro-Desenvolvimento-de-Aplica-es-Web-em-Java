@@ -13,6 +13,7 @@ import vendaprodutos.dao.ProdutoDAO;
 import vendaprodutos.entidades.Fornecedor;
 import vendaprodutos.entidades.Produto;
 import vendaprodutos.entidades.UnidadeMedida;
+import vendaprodutos.utils.Utils;
 
 /**
  * Servlet para tratar Produtos.
@@ -45,10 +46,10 @@ public class ProdutosServlet extends HttpServlet {
                         request.getParameter( "valorVenda" ) );
                 BigDecimal estoque = new BigDecimal( 
                         request.getParameter( "estoque" ) );
-                int idFornecedor = Integer.parseInt( 
-                        request.getParameter( "idFornecedor" ) );
-                int idUnidadeMedida = Integer.parseInt( 
-                        request.getParameter( "idUnidadeMedida" ) );
+                Long idFornecedor = Utils.getLong( 
+                        request, "idFornecedor" );
+                Long idUnidadeMedida = Utils.getLong( 
+                        request, "idUnidadeMedida" );
 
                 Fornecedor f = new Fornecedor();
                 f.setId( idFornecedor );
@@ -71,17 +72,17 @@ public class ProdutosServlet extends HttpServlet {
 
             } else if ( acao.equals( "alterar" ) ) {
 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
                 String descricao = request.getParameter( "descricao" );
                 String codigoBarras = request.getParameter( "codigoBarras" );
                 BigDecimal valorVenda = new BigDecimal( 
                         request.getParameter( "valorVenda" ) );
                 BigDecimal estoque = new BigDecimal( 
                         request.getParameter( "estoque" ) );
-                int idFornecedor = Integer.parseInt( 
-                        request.getParameter( "idFornecedor" ) );
-                int idUnidadeMedida = Integer.parseInt( 
-                        request.getParameter( "idUnidadeMedida" ) );
+                Long idFornecedor = Utils.getLong( 
+                        request, "idFornecedor" );
+                Long idUnidadeMedida = Utils.getLong( 
+                        request, "idUnidadeMedida" );
 
                 Fornecedor f = new Fornecedor();
                 f.setId( idFornecedor );
@@ -105,7 +106,7 @@ public class ProdutosServlet extends HttpServlet {
 
             } else if ( acao.equals( "excluir" ) ) {
 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
 
                 Produto p = new Produto();
                 p.setId( id );
@@ -117,7 +118,8 @@ public class ProdutosServlet extends HttpServlet {
 
             } else {
                 
-                int id = Integer.parseInt(request.getParameter( "id" ));
+                Long id = Utils.getLong( request, "id" );
+                
                 Produto p = dao.obterPorId( id );
                 request.setAttribute( "produto", p );
                 

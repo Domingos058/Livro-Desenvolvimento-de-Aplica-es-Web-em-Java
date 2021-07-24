@@ -10,6 +10,7 @@ import vendaprodutos.entidades.Estado;
 import vendaprodutos.entidades.Fornecedor;
 import vendaprodutos.entidades.Produto;
 import vendaprodutos.entidades.UnidadeMedida;
+import vendaprodutos.utils.Utils;
 
 /**
  * DAO para a entidade Produto.
@@ -41,18 +42,11 @@ public class ProdutoDAO extends DAO<Produto> {
         stmt.setString( 2, obj.getCodigoBarras() );
         stmt.setBigDecimal( 3, obj.getValorVenda() );
         stmt.setBigDecimal( 4, obj.getEstoque() );
-        stmt.setInt( 5, obj.getFornecedor().getId() );
-        stmt.setInt( 6, obj.getUnidadeMedida().getId() );
+        stmt.setLong( 5, obj.getFornecedor().getId() );
+        stmt.setLong( 6, obj.getUnidadeMedida().getId() );
 
         stmt.executeUpdate();
-        
-        // obtenção do valor da chave primária
-        ResultSet rsPK = stmt.getGeneratedKeys();
-        if ( rsPK.next() ) {
-            obj.setId( rsPK.getInt( "id" ) );
-        }
-        
-        rsPK.close();
+        obj.setId( Utils.getChavePrimariaAposInsercao( stmt, "id" ) );
         stmt.close();
 
     }
@@ -76,9 +70,9 @@ public class ProdutoDAO extends DAO<Produto> {
         stmt.setString( 2, obj.getCodigoBarras() );
         stmt.setBigDecimal( 3, obj.getValorVenda() );
         stmt.setBigDecimal( 4, obj.getEstoque() );
-        stmt.setInt( 5, obj.getFornecedor().getId() );
-        stmt.setInt( 6, obj.getUnidadeMedida().getId() );
-        stmt.setInt( 7, obj.getId() );
+        stmt.setLong( 5, obj.getFornecedor().getId() );
+        stmt.setLong( 6, obj.getUnidadeMedida().getId() );
+        stmt.setLong( 7, obj.getId() );
 
         stmt.executeUpdate();
         stmt.close();
@@ -93,7 +87,7 @@ public class ProdutoDAO extends DAO<Produto> {
                 "WHERE" + 
                 "    id = ?;" );
 
-        stmt.setInt( 1, obj.getId() );
+        stmt.setLong( 1, obj.getId() );
 
         stmt.executeUpdate();
         stmt.close();
@@ -151,7 +145,7 @@ public class ProdutoDAO extends DAO<Produto> {
             Cidade ci = new Cidade();
             Estado e = new Estado();
 
-            p.setId( rs.getInt( "idProduto" ) );
+            p.setId( rs.getLong( "idProduto" ) );
             p.setDescricao( rs.getString( "descricaoProduto" ) );
             p.setCodigoBarras( rs.getString( "codigoBarrasProduto" ) );
             p.setValorVenda( rs.getBigDecimal( "valorVendaProduto" ) );
@@ -159,11 +153,11 @@ public class ProdutoDAO extends DAO<Produto> {
             p.setUnidadeMedida( u );
             p.setFornecedor( f );
             
-            u.setId( rs.getInt( "idUnidadeMedida" ) );
+            u.setId( rs.getLong( "idUnidadeMedida" ) );
             u.setDescricao( rs.getString( "descricaoUnidadeMedida" ) );
             u.setSigla( rs.getString( "siglaUnidadeMedida" ) );
 
-            f.setId( rs.getInt( "idFornecedor" ) );
+            f.setId( rs.getLong( "idFornecedor" ) );
             f.setRazaoSocial( rs.getString( "razaoSocialFornecedor" ) );
             f.setCnpj( rs.getString( "cnpjFornecedor" ) );
             f.setEmail( rs.getString( "emailFornecedor" ) );
@@ -173,11 +167,11 @@ public class ProdutoDAO extends DAO<Produto> {
             f.setCep( rs.getString( "cepFornecedor" ) );
             f.setCidade( ci );
             
-            ci.setId( rs.getInt( "idCidade" ) );
+            ci.setId( rs.getLong( "idCidade" ) );
             ci.setNome( rs.getString( "nomeCidade" ) );
             ci.setEstado( e );
 
-            e.setId( rs.getInt( "idEstado" ) );
+            e.setId( rs.getLong( "idEstado" ) );
             e.setNome( rs.getString( "nomeEstado" ) );
             e.setSigla( rs.getString( "siglaEstado" ) );
 
@@ -193,7 +187,7 @@ public class ProdutoDAO extends DAO<Produto> {
     }
 
     @Override
-    public Produto obterPorId( int id ) throws SQLException {
+    public Produto obterPorId( Long id ) throws SQLException {
 
         Produto produto = null;
 
@@ -233,7 +227,7 @@ public class ProdutoDAO extends DAO<Produto> {
                 "    f.cidade_id = ci.id AND " + 
                 "    ci.estado_id = e.id;" );
 
-        stmt.setInt( 1, id );
+        stmt.setLong( 1, id );
 
         ResultSet rs = stmt.executeQuery();
 
@@ -245,7 +239,7 @@ public class ProdutoDAO extends DAO<Produto> {
             Cidade ci = new Cidade();
             Estado e = new Estado();
 
-            produto.setId( rs.getInt( "idProduto" ) );
+            produto.setId( rs.getLong( "idProduto" ) );
             produto.setDescricao( rs.getString( "descricaoProduto" ) );
             produto.setCodigoBarras( rs.getString( "codigoBarrasProduto" ) );
             produto.setValorVenda( rs.getBigDecimal( "valorVendaProduto" ) );
@@ -253,11 +247,11 @@ public class ProdutoDAO extends DAO<Produto> {
             produto.setUnidadeMedida( u );
             produto.setFornecedor( f );
             
-            u.setId( rs.getInt( "idUnidadeMedida" ) );
+            u.setId( rs.getLong( "idUnidadeMedida" ) );
             u.setDescricao( rs.getString( "descricaoUnidadeMedida" ) );
             u.setSigla( rs.getString( "siglaUnidadeMedida" ) );
 
-            f.setId( rs.getInt( "idFornecedor" ) );
+            f.setId( rs.getLong( "idFornecedor" ) );
             f.setRazaoSocial( rs.getString( "razaoSocialFornecedor" ) );
             f.setCnpj( rs.getString( "cnpjFornecedor" ) );
             f.setEmail( rs.getString( "emailFornecedor" ) );
@@ -267,11 +261,11 @@ public class ProdutoDAO extends DAO<Produto> {
             f.setCep( rs.getString( "cepFornecedor" ) );
             f.setCidade( ci );
             
-            ci.setId( rs.getInt( "idCidade" ) );
+            ci.setId( rs.getLong( "idCidade" ) );
             ci.setNome( rs.getString( "nomeCidade" ) );
             ci.setEstado( e );
 
-            e.setId( rs.getInt( "idEstado" ) );
+            e.setId( rs.getLong( "idEstado" ) );
             e.setNome( rs.getString( "nomeEstado" ) );
             e.setSigla( rs.getString( "siglaEstado" ) );
 
@@ -297,7 +291,7 @@ public class ProdutoDAO extends DAO<Produto> {
                 "    id = ?;" );
 
         stmt.setBigDecimal( 1, obj.getEstoque() );
-        stmt.setInt( 2, obj.getId() );
+        stmt.setLong( 2, obj.getId() );
 
         stmt.executeUpdate();
         stmt.close();
