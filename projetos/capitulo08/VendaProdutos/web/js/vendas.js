@@ -35,12 +35,26 @@ $( () => {
         
         if ( quantidade !== 0 ) {
             
-            itensVenda.push({
-                idProduto: idProduto,
-                valorVenda: valorVenda,
-                descricao: descricao,
-                quantidade: quantidade
+            // há um item da venda igual?
+            let itemIgual = null;
+            itensVenda.some( item => {
+                if ( item.idProduto === idProduto ) {
+                    itemIgual = item;
+                    return true; // para a iteração
+                }
             });
+            
+            if ( itemIgual !== null ) {
+                // soma a quantidade
+                itemIgual.quantidade += quantidade;
+            } else {
+                itensVenda.push({
+                    idProduto: idProduto,
+                    valorVenda: valorVenda,
+                    descricao: descricao,
+                    quantidade: quantidade
+                });
+            }
             
             montarSelectItensVenda();
             $txtQuantidade.val( "" );

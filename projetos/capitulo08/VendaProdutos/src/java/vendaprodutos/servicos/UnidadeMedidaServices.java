@@ -22,21 +22,11 @@ public class UnidadeMedidaServices {
     public List<UnidadeMedida> getTodos() {
 
         List<UnidadeMedida> lista = new ArrayList<>();
-        UnidadeMedidaDAO dao = null;
 
-        try {
-            dao = new UnidadeMedidaDAO();
+        try ( UnidadeMedidaDAO dao = new UnidadeMedidaDAO() ) {
             lista = dao.listarTodos();
         } catch ( SQLException exc ) {
             exc.printStackTrace();
-        } finally {
-            if ( dao != null ) {
-                try {
-                    dao.fecharConexao();
-                } catch ( SQLException exc ) {
-                    exc.printStackTrace();
-                }
-            }
         }
 
         return lista;

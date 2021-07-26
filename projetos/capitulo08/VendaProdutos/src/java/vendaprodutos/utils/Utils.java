@@ -31,6 +31,7 @@ public abstract class Utils {
     
     // tanto o validador quanto o formatador
     // são thread safe
+    // a implementação do validador normalmente tem cache
     private static Validator validador = Validation
             .buildDefaultValidatorFactory()
             .getValidator();
@@ -119,8 +120,8 @@ public abstract class Utils {
      *
      * Não insere no retorno os campos que devem ser ignorados.
      */
-    public static <T> Set<ConstraintViolation<T>> validar( 
-            T obj,
+    private static Set<ConstraintViolation> validarObj( 
+            Object obj,
             String... ignorar ) {
         
         // uma lista dos campos à ignorar
@@ -129,11 +130,10 @@ public abstract class Utils {
         // conjunto que conterá todas as violações de restrição
         // que tenham caminho da propriedade igual
         // à alguma da lista de ignorar
-        Set<ConstraintViolation<T>> cvs = new LinkedHashSet<>();
+        Set<ConstraintViolation> cvs = new LinkedHashSet<>();
         
-        // valida e percorre todas as restrições
-        // violadas
-        for ( ConstraintViolation<T> cv : validador.validate( obj ) ) {
+        // valida e percorre todas as restrições violadas
+        for ( ConstraintViolation cv : validador.validate( obj ) ) {
             
             // se a lista de campos à ignorar não tiver
             // o caminho da propriedade
@@ -148,34 +148,34 @@ public abstract class Utils {
     }
     
     /*
-     * Gera a mensagem de erro para a validação das entidades.
-     * Retorna null se não houve erro.
+     * Realiza a validação do objeto passado e lança
+     * uma SQLException com todos os erros obtidos.
      */
-    public static <T> String validarGerarMensagem(
-            T obj,
-            String... ignorar ) {
+    public static void validar(
+            Object obj,
+            String... ignorar )
+            throws SQLException {
         
         StringBuilder sb = new StringBuilder();
-        Set<ConstraintViolation<T>> cvs = Utils.<T>validar( obj, ignorar );
+        Set<ConstraintViolation> cvs = 
+                Utils.validarObj( obj, ignorar );
         
-        if ( cvs.size() != 0 ) {
+        if ( !cvs.isEmpty() ) {
             
-            for ( ConstraintViolation<T> cv : cvs ) {
+            for ( ConstraintViolation cv : cvs ) {
                 sb.append( String.format( 
                         "<li>%s: %s</li>", 
                         cv.getPropertyPath(), 
                         cv.getMessage() ) );
             }
             
-            return sb.toString();
+            throw new SQLException( sb.toString() );
             
         }
         
-        return null;
-        
     }
     
-    /**
+    /*
      * Prepara o despacho para a página de erro de aplicação.
      */
     public static RequestDispatcher prepararDespachoErro( 

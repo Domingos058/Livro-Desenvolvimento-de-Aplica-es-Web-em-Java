@@ -9,7 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import vendaprodutos.dao.FornecedorDAO;
 import vendaprodutos.dao.ProdutoDAO;
+import vendaprodutos.dao.UnidadeMedidaDAO;
 import vendaprodutos.entidades.Fornecedor;
 import vendaprodutos.entidades.Produto;
 import vendaprodutos.entidades.UnidadeMedida;
@@ -30,13 +32,11 @@ public class ProdutosServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String acao = request.getParameter( "acao" );
-        
-        ProdutoDAO dao = null;
         RequestDispatcher disp = null;
         
-        try {
-
-            dao = new ProdutoDAO();
+        try ( ProdutoDAO daoProduto = new ProdutoDAO();
+              FornecedorDAO daoFornecedor = new FornecedorDAO();
+              UnidadeMedidaDAO daoUnidadeMedida = new UnidadeMedidaDAO() ) {
 
             if ( acao.equals( "inserir" ) ) {
 
@@ -51,11 +51,8 @@ public class ProdutosServlet extends HttpServlet {
                 Long idUnidadeMedida = Utils.getLong( 
                         request, "idUnidadeMedida" );
 
-                Fornecedor f = new Fornecedor();
-                f.setId( idFornecedor );
-                
-                UnidadeMedida u = new UnidadeMedida();
-                u.setId( idUnidadeMedida );
+                Fornecedor f = daoFornecedor.obterPorId( idFornecedor );
+                UnidadeMedida u = daoUnidadeMedida.obterPorId( idUnidadeMedida );
 
                 Produto p = new Produto();
                 p.setDescricao( descricao );
@@ -65,8 +62,8 @@ public class ProdutosServlet extends HttpServlet {
                 p.setFornecedor( f );
                 p.setUnidadeMedida( u );
 
-                dao.salvar( p );
-
+                Utils.validar( p, "id" );
+                daoProduto.salvar( p );
                 disp = request.getRequestDispatcher(
                         "/formularios/produtos/listagem.jsp" );
 
@@ -84,14 +81,10 @@ public class ProdutosServlet extends HttpServlet {
                 Long idUnidadeMedida = Utils.getLong( 
                         request, "idUnidadeMedida" );
 
-                Fornecedor f = new Fornecedor();
-                f.setId( idFornecedor );
-                
-                UnidadeMedida u = new UnidadeMedida();
-                u.setId( idUnidadeMedida );
+                Fornecedor f = daoFornecedor.obterPorId( idFornecedor );
+                UnidadeMedida u = daoUnidadeMedida.obterPorId( idUnidadeMedida );
 
-                Produto p = new Produto();
-                p.setId( id );
+                Produto p = daoProduto.obterPorId( id );
                 p.setDescricao( descricao );
                 p.setCodigoBarras( codigoBarras );
                 p.setValorVenda( valorVenda );
@@ -99,28 +92,24 @@ public class ProdutosServlet extends HttpServlet {
                 p.setFornecedor( f );
                 p.setUnidadeMedida( u );
 
-                dao.atualizar( p );
-
+                Utils.validar( p );
+                daoProduto.atualizar( p );
                 disp = request.getRequestDispatcher(
                         "/formularios/produtos/listagem.jsp" );
 
             } else if ( acao.equals( "excluir" ) ) {
 
                 Long id = Utils.getLong( request, "id" );
+                Produto p = daoProduto.obterPorId( id );
 
-                Produto p = new Produto();
-                p.setId( id );
-
-                dao.excluir( p );
-
+                daoProduto.excluir( p );
                 disp = request.getRequestDispatcher(
                         "/formularios/produtos/listagem.jsp" );
 
             } else {
                 
                 Long id = Utils.getLong( request, "id" );
-                
-                Produto p = dao.obterPorId( id );
+                Produto p = daoProduto.obterPorId( id );
                 request.setAttribute( "produto", p );
                 
                 if ( acao.equals( "prepararAlteracao" ) ) {
@@ -135,14 +124,6 @@ public class ProdutosServlet extends HttpServlet {
 
         } catch ( SQLException exc ) {
             exc.printStackTrace();
-        } finally {
-            if ( dao != null ) {
-                try {
-                    dao.fecharConexao();
-                } catch ( SQLException exc ) {
-                    exc.printStackTrace();
-                }
-            }
         }
 
         if ( disp != null ) {

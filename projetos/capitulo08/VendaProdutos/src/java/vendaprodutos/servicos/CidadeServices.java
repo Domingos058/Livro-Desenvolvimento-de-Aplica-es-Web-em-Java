@@ -21,21 +21,11 @@ public class CidadeServices {
     public List<Cidade> getTodos() {
 
         List<Cidade> lista = new ArrayList<>();
-        CidadeDAO dao = null;
 
-        try {
-            dao = new CidadeDAO();
+        try ( CidadeDAO dao = new CidadeDAO() ) {
             lista = dao.listarTodos();
         } catch ( SQLException exc ) {
             exc.printStackTrace();
-        } finally {
-            if ( dao != null ) {
-                try {
-                    dao.fecharConexao();
-                } catch ( SQLException exc ) {
-                    exc.printStackTrace();
-                }
-            }
         }
 
         return lista;

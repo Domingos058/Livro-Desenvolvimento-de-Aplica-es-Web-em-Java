@@ -1,3 +1,4 @@
+/* Estilos gerais */
 body {
     font-family: Verdana,Arial,Helvetica,sans-serif;
     font-size: 14px;
@@ -40,4 +41,51 @@ a:hover {
     background-color: #ff3333;
     padding: 10px;
     margin-bottom: 10px;
+}
+
+
+/* Estilos para a página de venda */
+#divCliente {
+    font-weight: bold;
+    width: 700px;
+    border: solid 2px #003366;
+    border-radius: 10px;
+    background-color: #0099cc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#divItensVenda {
+    font-weight: bold;
+    width: 700px;
+    border: solid 2px #993300;
+    border-radius: 10px;
+    background-color: #ff9933;
+    padding: 10px;
+}
+
+#selectCliente {
+    width: 100%;
+}
+
+#selectProduto {
+    width: 250px;
+}
+
+#selectItensVenda {
+    font-family: monospace;
+    width: 350px;
+    height: 200px;
+}
+
+#txtQuantidade {
+    width: 100px;
+}
+
+#divTotal {
+    text-align: right;
+}
+
+.btnsItensVenda {
+    text-align: center; padding: 20px;
 }

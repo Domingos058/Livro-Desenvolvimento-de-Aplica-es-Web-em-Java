@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import vendaprodutos.dao.CidadeDAO;
 import vendaprodutos.dao.FornecedorDAO;
 import vendaprodutos.entidades.Cidade;
 import vendaprodutos.entidades.Fornecedor;
@@ -28,13 +29,10 @@ public class FornecedoresServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String acao = request.getParameter( "acao" );
-        
-        FornecedorDAO dao = null;
         RequestDispatcher disp = null;
         
-        try {
-
-            dao = new FornecedorDAO();
+        try ( FornecedorDAO daoFornecedor = new FornecedorDAO();
+              CidadeDAO daoCidade = new CidadeDAO() ) {
 
             if ( acao.equals( "inserir" ) ) {
 
@@ -47,8 +45,7 @@ public class FornecedoresServlet extends HttpServlet {
                 String cep = request.getParameter( "cep" );
                 Long idCidade = Utils.getLong( request, "idCidade" );
 
-                Cidade ci = new Cidade();
-                ci.setId( idCidade );
+                Cidade ci = daoCidade.obterPorId( idCidade );
 
                 Fornecedor f = new Fornecedor();
                 f.setRazaoSocial( razaoSocial );
@@ -60,8 +57,8 @@ public class FornecedoresServlet extends HttpServlet {
                 f.setCep( cep );
                 f.setCidade( ci );
 
-                dao.salvar( f );
-
+                Utils.validar( f, "id" );
+                daoFornecedor.salvar( f );
                 disp = request.getRequestDispatcher(
                         "/formularios/fornecedores/listagem.jsp" );
 
@@ -77,11 +74,9 @@ public class FornecedoresServlet extends HttpServlet {
                 String cep = request.getParameter( "cep" );
                 Long idCidade = Utils.getLong( request, "idCidade" );
 
-                Cidade ci = new Cidade();
-                ci.setId( idCidade );
+                Cidade ci = daoCidade.obterPorId( idCidade );
 
-                Fornecedor f = new Fornecedor();
-                f.setId( id );
+                Fornecedor f = daoFornecedor.obterPorId( id );
                 f.setRazaoSocial( razaoSocial );
                 f.setCnpj( cnpj );
                 f.setEmail( email );
@@ -91,28 +86,24 @@ public class FornecedoresServlet extends HttpServlet {
                 f.setCep( cep );
                 f.setCidade( ci );
 
-                dao.atualizar( f );
-
+                Utils.validar( f );
+                daoFornecedor.atualizar( f );
                 disp = request.getRequestDispatcher(
                         "/formularios/fornecedores/listagem.jsp" );
 
             } else if ( acao.equals( "excluir" ) ) {
 
                 Long id = Utils.getLong( request, "id" );
+                Fornecedor f = daoFornecedor.obterPorId( id );
 
-                Fornecedor f = new Fornecedor();
-                f.setId( id );
-
-                dao.excluir( f );
-
+                daoFornecedor.excluir( f );
                 disp = request.getRequestDispatcher(
                         "/formularios/fornecedores/listagem.jsp" );
 
             } else {
                 
                 Long id = Utils.getLong( request, "id" );
-                
-                Fornecedor f = dao.obterPorId( id );
+                Fornecedor f = daoFornecedor.obterPorId( id );
                 request.setAttribute( "fornecedor", f );
                 
                 if ( acao.equals( "prepararAlteracao" ) ) {
@@ -127,14 +118,6 @@ public class FornecedoresServlet extends HttpServlet {
 
         } catch ( SQLException exc ) {
             exc.printStackTrace();
-        } finally {
-            if ( dao != null ) {
-                try {
-                    dao.fecharConexao();
-                } catch ( SQLException exc ) {
-                    exc.printStackTrace();
-                }
-            }
         }
 
         if ( disp != null ) {

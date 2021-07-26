@@ -21,21 +21,11 @@ public class EstadoServices {
     public List<Estado> getTodos() {
 
         List<Estado> lista = new ArrayList<>();
-        EstadoDAO dao = null;
 
-        try {
-            dao = new EstadoDAO();
+        try ( EstadoDAO dao = new EstadoDAO() ) {
             lista = dao.listarTodos();
         } catch ( SQLException exc ) {
             exc.printStackTrace();
-        } finally {
-            if ( dao != null ) {
-                try {
-                    dao.fecharConexao();
-                } catch ( SQLException exc ) {
-                    exc.printStackTrace();
-                }
-            }
         }
 
         return lista;

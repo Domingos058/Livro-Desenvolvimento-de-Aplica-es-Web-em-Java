@@ -21,21 +21,11 @@ public class VendaServices {
     public List<Venda> getTodos() {
 
         List<Venda> lista = new ArrayList<>();
-        VendaDAO dao = null;
 
-        try {
-            dao = new VendaDAO();
+        try ( VendaDAO dao = new VendaDAO() ) {
             lista = dao.listarTodos();
         } catch ( SQLException exc ) {
             exc.printStackTrace();
-        } finally {
-            if ( dao != null ) {
-                try {
-                    dao.fecharConexao();
-                } catch ( SQLException exc ) {
-                    exc.printStackTrace();
-                }
-            }
         }
 
         return lista;

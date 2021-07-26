@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import vendaprodutos.dao.CidadeDAO;
+import vendaprodutos.dao.EstadoDAO;
 import vendaprodutos.entidades.Cidade;
 import vendaprodutos.entidades.Estado;
 import vendaprodutos.utils.Utils;
@@ -28,27 +29,24 @@ public class CidadesServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String acao = request.getParameter( "acao" );
-        CidadeDAO dao = null;
         RequestDispatcher disp = null;
 
-        try {
-
-            dao = new CidadeDAO();
+        try ( CidadeDAO daoCidade = new CidadeDAO();
+              EstadoDAO daoEstado = new EstadoDAO() ){
 
             if ( acao.equals( "inserir" ) ) {
 
                 String nome = request.getParameter( "nome" );
                 Long idEstado = Utils.getLong( request, "idEstado" );
 
-                Estado e = new Estado();
-                e.setId( idEstado );
+                Estado e = daoEstado.obterPorId( idEstado );
 
                 Cidade c = new Cidade();
                 c.setNome( nome );
                 c.setEstado( e );
 
-                dao.salvar( c );
-
+                Utils.validar( c, "id" );
+                daoCidade.salvar( c );
                 disp = request.getRequestDispatcher(
                         "/formularios/cidades/listagem.jsp" );
 
@@ -58,35 +56,30 @@ public class CidadesServlet extends HttpServlet {
                 String nome = request.getParameter( "nome" );
                 Long idEstado = Utils.getLong( request, "idEstado" );
 
-                Estado e = new Estado();
-                e.setId( idEstado );
+                Estado e = daoEstado.obterPorId( idEstado );
 
-                Cidade c = new Cidade();
-                c.setId( id );
+                Cidade c = daoCidade.obterPorId( id );
                 c.setNome( nome );
                 c.setEstado( e );
 
-                dao.atualizar( c );
-
+                Utils.validar( c );
+                daoCidade.atualizar( c );
                 disp = request.getRequestDispatcher(
                         "/formularios/cidades/listagem.jsp" );
 
             } else if ( acao.equals( "excluir" ) ) {
 
                 Long id = Utils.getLong( request, "id" );
+                Cidade c = daoCidade.obterPorId( id );
 
-                Cidade c = new Cidade();
-                c.setId( id );
-
-                dao.excluir( c );
-
+                daoCidade.excluir( c );
                 disp = request.getRequestDispatcher(
                         "/formularios/cidades/listagem.jsp" );
 
             } else {
                 
                 Long id = Utils.getLong( request, "id" );
-                Cidade c = dao.obterPorId( id );
+                Cidade c = daoCidade.obterPorId( id );
                 request.setAttribute( "cidade", c );
                 
                 if ( acao.equals( "prepararAlteracao" ) ) {
@@ -101,14 +94,6 @@ public class CidadesServlet extends HttpServlet {
 
         } catch ( SQLException exc ) {
             exc.printStackTrace();
-        } finally {
-            if ( dao != null ) {
-                try {
-                    dao.fecharConexao();
-                } catch ( SQLException exc ) {
-                    exc.printStackTrace();
-                }
-            }
         }
 
         if ( disp != null ) {

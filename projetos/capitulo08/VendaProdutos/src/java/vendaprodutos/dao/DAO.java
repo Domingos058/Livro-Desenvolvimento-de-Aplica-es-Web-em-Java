@@ -1,16 +1,16 @@
 package vendaprodutos.dao;
 
-import vendaprodutos.jdbc.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import vendaprodutos.jdbc.ConnectionFactory;
 
 /**
  * DAO genérico.
  *
  * @author Prof. Dr. David Buzatto
  */
-public abstract class DAO<Tipo> {
+public abstract class DAO<Tipo> implements AutoCloseable {
 
     // cada DAO terá uma conexão.
     private Connection conexao;
@@ -42,11 +42,18 @@ public abstract class DAO<Tipo> {
 
     /**
      * Método para fechar a conexão aberta.
+     * 
+     * Não precisa ser invocado explicitamente caso
+     * o objeto do DAO tenha sido criado usando a construção
+     * try-with-resources.
+     * 
+     * É sobrescrito da interface AutoCloseable.
      *
      * @throws SQLException Caso ocorra algum erro
      * durante o fechamento da conexão.
      */
-    public void fecharConexao() throws SQLException {
+    @Override
+    public void close() throws SQLException {
         conexao.close();
     }
 

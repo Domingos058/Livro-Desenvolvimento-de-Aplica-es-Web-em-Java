@@ -27,12 +27,9 @@ public class UnidadesMedidaServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String acao = request.getParameter( "acao" );
-        UnidadeMedidaDAO dao = null;
         RequestDispatcher disp = null;
 
-        try {
-
-            dao = new UnidadeMedidaDAO();
+        try ( UnidadeMedidaDAO dao = new UnidadeMedidaDAO() ) {
 
             if ( acao.equals( "inserir" ) ) {
 
@@ -43,8 +40,8 @@ public class UnidadesMedidaServlet extends HttpServlet {
                 u.setDescricao( descricao );
                 u.setSigla( sigla );
 
+                Utils.validar( u, "id" );
                 dao.salvar( u );
-
                 disp = request.getRequestDispatcher(
                         "/formularios/unidadesMedida/listagem.jsp" );
 
@@ -54,32 +51,27 @@ public class UnidadesMedidaServlet extends HttpServlet {
                 String descricao = request.getParameter( "descricao" );
                 String sigla = request.getParameter( "sigla" );
 
-                UnidadeMedida u = new UnidadeMedida();
-                u.setId( id );
+                UnidadeMedida u = dao.obterPorId( id );
                 u.setDescricao( descricao );
                 u.setSigla( sigla );
 
+                Utils.validar( u );
                 dao.atualizar( u );
-
                 disp = request.getRequestDispatcher(
                         "/formularios/unidadesMedida/listagem.jsp" );
 
             } else if ( acao.equals( "excluir" ) ) {
 
                 Long id = Utils.getLong( request, "id" );
-
-                UnidadeMedida u = new UnidadeMedida();
-                u.setId( id );
+                UnidadeMedida u = dao.obterPorId( id );
 
                 dao.excluir( u );
-
                 disp = request.getRequestDispatcher(
                         "/formularios/unidadesMedida/listagem.jsp" );
 
             } else {
                 
                 Long id = Utils.getLong( request, "id" );
-                
                 UnidadeMedida u = dao.obterPorId( id );
                 request.setAttribute( "un", u );
                 
@@ -95,14 +87,6 @@ public class UnidadesMedidaServlet extends HttpServlet {
 
         } catch ( SQLException exc ) {
             exc.printStackTrace();
-        } finally {
-            if ( dao != null ) {
-                try {
-                    dao.fecharConexao();
-                } catch ( SQLException exc ) {
-                    exc.printStackTrace();
-                }
-            }
         }
 
         if ( disp != null ) {

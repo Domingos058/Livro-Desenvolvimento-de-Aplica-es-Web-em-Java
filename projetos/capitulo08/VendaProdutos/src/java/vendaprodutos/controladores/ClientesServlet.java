@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import vendaprodutos.dao.CidadeDAO;
 import vendaprodutos.dao.ClienteDAO;
 import vendaprodutos.entidades.Cidade;
 import vendaprodutos.entidades.Cliente;
@@ -28,13 +29,10 @@ public class ClientesServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String acao = request.getParameter( "acao" );
-        
-        ClienteDAO dao = null;
         RequestDispatcher disp = null;
         
-        try {
-
-            dao = new ClienteDAO();
+        try ( ClienteDAO daoCliente = new ClienteDAO();
+              CidadeDAO daoCidade = new CidadeDAO() ) {
 
             if ( acao.equals( "inserir" ) ) {
 
@@ -49,8 +47,7 @@ public class ClientesServlet extends HttpServlet {
                 String cep = request.getParameter( "cep" );
                 Long idCidade = Utils.getLong( request, "idCidade" );
 
-                Cidade ci = new Cidade();
-                ci.setId( idCidade );
+                Cidade ci = daoCidade.obterPorId( idCidade );
 
                 Cliente c = new Cliente();
                 c.setNome( nome );
@@ -64,8 +61,8 @@ public class ClientesServlet extends HttpServlet {
                 c.setCep( cep );
                 c.setCidade( ci );
 
-                dao.salvar( c );
-
+                Utils.validar( c, "id" );
+                daoCliente.salvar( c );
                 disp = request.getRequestDispatcher(
                         "/formularios/clientes/listagem.jsp" );
 
@@ -83,11 +80,9 @@ public class ClientesServlet extends HttpServlet {
                 String cep = request.getParameter( "cep" );
                 Long idCidade = Utils.getLong( request, "idCidade" );
 
-                Cidade ci = new Cidade();
-                ci.setId( idCidade );
+                Cidade ci = daoCidade.obterPorId( idCidade );
 
-                Cliente c = new Cliente();
-                c.setId( id );
+                Cliente c = daoCliente.obterPorId( id );
                 c.setNome( nome );
                 c.setSobrenome( sobrenome );
                 c.setDataNascimento( Utils.getDate( dataNascimento ) );
@@ -99,28 +94,24 @@ public class ClientesServlet extends HttpServlet {
                 c.setCep( cep );
                 c.setCidade( ci );
 
-                dao.atualizar( c );
-
+                Utils.validar( c );
+                daoCliente.atualizar( c );
                 disp = request.getRequestDispatcher(
                         "/formularios/clientes/listagem.jsp" );
 
             } else if ( acao.equals( "excluir" ) ) {
 
                 Long id = Utils.getLong( request, "id" );
+                Cliente c = daoCliente.obterPorId( id );
 
-                Cliente c = new Cliente();
-                c.setId( id );
-
-                dao.excluir( c );
-
+                daoCliente.excluir( c );
                 disp = request.getRequestDispatcher(
                         "/formularios/clientes/listagem.jsp" );
 
             } else {
                 
                 Long id = Utils.getLong( request, "id" );
-                
-                Cliente c = dao.obterPorId( id );
+                Cliente c = daoCliente.obterPorId( id );
                 request.setAttribute( "cliente", c );
                 
                 if ( acao.equals( "prepararAlteracao" ) ) {
@@ -135,14 +126,6 @@ public class ClientesServlet extends HttpServlet {
 
         } catch ( SQLException exc ) {
             exc.printStackTrace();
-        } finally {
-            if ( dao != null ) {
-                try {
-                    dao.fecharConexao();
-                } catch ( SQLException exc ) {
-                    exc.printStackTrace();
-                }
-            }
         }
 
         if ( disp != null ) {

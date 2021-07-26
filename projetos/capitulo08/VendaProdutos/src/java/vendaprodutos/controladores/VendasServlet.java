@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import vendaprodutos.dao.ClienteDAO;
 import vendaprodutos.dao.ItemVendaDAO;
 import vendaprodutos.dao.ProdutoDAO;
 import vendaprodutos.dao.VendaDAO;
@@ -36,52 +37,50 @@ public class VendasServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String acao = request.getParameter( "acao" );
-        
-        VendaDAO daoVenda = null;
-        ItemVendaDAO daoItemVenda = null;
-        ProdutoDAO daoProduto = null;
         RequestDispatcher disp = null;
         
-        try {
-
-            daoVenda = new VendaDAO();
-            daoItemVenda = new ItemVendaDAO();
-            daoProduto = new ProdutoDAO();
+        try ( VendaDAO daoVenda = new VendaDAO();
+              ClienteDAO daoCliente = new ClienteDAO();
+              ItemVendaDAO daoItemVenda = new ItemVendaDAO();
+              ProdutoDAO daoProduto = new ProdutoDAO() ) {
 
             if ( acao.equals( "inserir" ) ) {
 
                 Long idCliente = Utils.getLong( request, "idCliente" );
                 String itensVenda = request.getParameter( "itensVenda" );
                 
-                Cliente c = new Cliente();
-                c.setId( idCliente );
+                Cliente c = daoCliente.obterPorId( idCliente );
                 
                 Venda v = new Venda();
                 v.setData( Date.valueOf( LocalDate.now() ) );
                 v.setCancelada( false );
                 v.setCliente( c );
                 
-                // ao salvar, venda receberá seu identificador
+                Utils.validar( v, "id" );
                 daoVenda.salvar( v );
 
                 // processando os itens de venda!
+                // cada item da venda é separado por um pipe
                 for ( String item : itensVenda.split( "[|]" ) ) {
                     
-                    System.out.println( item );
                     String[] dados = item.split( "[-]" );
                     
                     Long idProduto = Utils.getLong( dados[0] );
                     BigDecimal quantidade = new BigDecimal( dados[1] );
                     
+                    // obtém o produto e atualiza o estoque
                     Produto p = daoProduto.obterPorId( idProduto );
                     p.setEstoque( p.getEstoque().subtract( quantidade ) );
                     
+                    // cria um item da venda
                     ItemVenda iv = new ItemVenda();
                     iv.setVenda( v );
                     iv.setProduto( p );
                     iv.setValor( p.getValorVenda() );
                     iv.setQuantidade( quantidade );
                     
+                    // não validaremos o produto, pois
+                    // permitiremos estoque negativo na venda
                     daoProduto.atualizar( p );
                     daoItemVenda.salvar( iv );
                     
@@ -114,28 +113,6 @@ public class VendasServlet extends HttpServlet {
 
         } catch ( SQLException exc ) {
             exc.printStackTrace();
-        } finally {
-            if ( daoVenda != null ) {
-                try {
-                    daoVenda.fecharConexao();
-                } catch ( SQLException exc ) {
-                    exc.printStackTrace();
-                }
-            }
-            if ( daoItemVenda != null ) {
-                try {
-                    daoItemVenda.fecharConexao();
-                } catch ( SQLException exc ) {
-                    exc.printStackTrace();
-                }
-            }
-            if ( daoProduto != null ) {
-                try {
-                    daoProduto.fecharConexao();
-                } catch ( SQLException exc ) {
-                    exc.printStackTrace();
-                }
-            }
         }
 
         if ( disp != null ) {

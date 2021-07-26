@@ -17,37 +17,7 @@
           href="${cp}/css/estilos.css"/>
     
     <script src="${cp}/js/libs/jquery/jquery.min.js"></script>
-    <script>
-      
-      function cancelarVenda( event ) {
-          
-        if ( confirm( "Deseja mesmo cancelar essa venda?" ) ) {
-
-          let idVenda = $(event.target).data( "id" );
-
-          $.ajax( "${cp}/processaVendas", {
-            data: {
-              acao: "cancelar",
-              idVenda: idVenda
-            },
-            dataType: "json"
-          }).done( ( data, textStatus ) =>{
-
-            if ( data.status ) {
-              $(event.target).parent().html( "Cancelada" );
-            } else {
-              alert( "Ocorreu um erro na sua requisição!" );
-            }
-
-          }).fail( ( jqXHR, textStatus, errorThrown ) => {
-            alert( "Erro: " + errorThrown + "\n" +
-                   "Status: " + textStatus );
-          });
-
-        }
-
-      }
-    </script>
+    <script src="${cp}/js/listagemVendas.js"></script>
     
   </head>
 
@@ -92,7 +62,7 @@
                   Cancelada
                 </c:when>
                 <c:otherwise>
-                  <a href="#" data-id="${venda.id}" onclick="cancelarVenda(event)">
+                  <a href="#" data-id="${venda.id}" onclick="cancelarVenda(event,'${cp}')">
                     Cancelar
                   </a>
                 </c:otherwise>

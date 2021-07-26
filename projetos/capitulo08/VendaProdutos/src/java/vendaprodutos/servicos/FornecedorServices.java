@@ -21,21 +21,11 @@ public class FornecedorServices {
     public List<Fornecedor> getTodos() {
 
         List<Fornecedor> lista = new ArrayList<>();
-        FornecedorDAO dao = null;
 
-        try {
-            dao = new FornecedorDAO();
+        try ( FornecedorDAO dao = new FornecedorDAO() ) {
             lista = dao.listarTodos();
         } catch ( SQLException exc ) {
             exc.printStackTrace();
-        } finally {
-            if ( dao != null ) {
-                try {
-                    dao.fecharConexao();
-                } catch ( SQLException exc ) {
-                    exc.printStackTrace();
-                }
-            }
         }
 
         return lista;
