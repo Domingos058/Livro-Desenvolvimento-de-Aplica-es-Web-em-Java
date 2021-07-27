@@ -3,7 +3,8 @@ package exemplosemjavascript.pojo;
 import java.time.LocalDate;
 
 /**
- *
+ * Um Plain Old Java Object (POJO).
+ * 
  * @author Prof. Dr. David Buzatto
  */
 public class Pessoa {

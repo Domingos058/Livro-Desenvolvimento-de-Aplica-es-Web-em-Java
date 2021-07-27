@@ -19,16 +19,22 @@ import javax.servlet.http.HttpServletResponse;
              urlPatterns = { "/calcularTabuada" } )
 public class CalculaTabuadaServlet extends HttpServlet {
 
-    protected void processRequest( HttpServletRequest request, HttpServletResponse response )
+    protected void processRequest( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
         
-        // resposta em html codificado em UTF-8
+        // resposta em texto/html codificado em UTF-8
         response.setContentType( "text/html;charset=UTF-8" );
         
-        int numero = Integer.parseInt( request.getParameter( "numero" ) );
         StringBuilder sb = new StringBuilder();
+        
+        int numero = Integer.parseInt(
+                request.getParameter( "numero" ) );
+        
         for ( int i = 0; i <= 10; i++ ) {
-            sb.append( String.format( "%d * %d = %d<br>", numero, i, numero * i ) );
+            sb.append( String.format( "%d * %d = %d<br>", 
+                    numero, i, numero * i ) );
         }
         
         // escreve na resposta
@@ -39,13 +45,17 @@ public class CalculaTabuadaServlet extends HttpServlet {
     }
     
     @Override
-    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+    protected void doGet( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
         processRequest( request, response );
     }
     
     @Override
-    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+    protected void doPost( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
         processRequest( request, response );
     }

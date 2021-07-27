@@ -55,6 +55,53 @@ function executarExemplo04( event ) {
         console.log( `a3[${chave}] = ${a3[chave]}` );
     });
     
+    
+    // funções de iteração every e some.
+    
+    // a função forEach não foi projetada parar
+    // parar no meio da execução. para isso, existem
+    // outras duas funções análogas que podem ser
+    // usadas para esse propósito.
+    
+    // some => algum/alguns. a ideia é processar
+    // alguns elementos do array até que uma condição seja
+    // alcançada. o retorno true da função de callback faz
+    // a iteração parar e falso continuar para o próximo
+    // elemento.
+    let algum;
+    console.log( "há algum valor maior que 10?" );
+    algum = a1.some( maiorQue10 );
+    console.log( algum ? "sim" : "não" );
+    
+    console.log( "há algum valor menor que 10?" );
+    algum = a1.some( menorQue10 );
+    console.log( algum ? "sim" : "não" );
+    
+    // every => todos. a ideia é processar
+    // todos elementos do array verificando se todos
+    // passam por uma condição especificada na função
+    // de callback. o retorno true faz a função continuar
+    // para o próximo elemento, enquanto false a faz parar.
+    let todos;
+    console.log( "todos são maiores que 10?" );
+    todos = a1.every( maiorQue10 );
+    console.log( todos ? "sim" : "não" );
+    
+    console.log( "todos são menores que 10?" );
+    todos = a1.every( menorQue10 );
+    console.log( todos ? "sim" : "não" );
+    
     // while e do while são análogos a C, C++, Java etc.
     
+}
+
+// callbacks para testes das funções some e every
+function maiorQue10( valor ) {
+    console.log( valor );
+    return valor > 10;
+}
+
+function menorQue10( valor ) {
+    console.log( valor );
+    return valor < 10;
 }

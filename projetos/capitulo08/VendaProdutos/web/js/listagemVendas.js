@@ -4,7 +4,29 @@ function cancelarVenda( event, cp ) {
 
         let id = $( event.target ).data( "id" );
 
-        $.ajax( `${cp}/processaVendas`, {
+        let parametros = new URLSearchParams();
+        parametros.append( "acao", "cancelar" );
+        parametros.append( "id", id );
+
+        fetch( `${cp}/processaVendas`, {
+            method: "POST",
+            body: parametros
+        }).then( response => {
+            return response.json();
+        }).then( data => {
+
+            if ( data.status ) {
+                $( event.target ).parent().html( "Cancelada" );
+            } else {
+                alert( "Ocorreu um erro na sua requisição!" );
+            }
+
+        }).catch( error => {
+            alert( "Erro: " + error );
+        });
+    
+        // jQuery
+        /*$.ajax( `${cp}/processaVendas`, {
             data: {
                 acao: "cancelar",
                 id: id
@@ -21,7 +43,7 @@ function cancelarVenda( event, cp ) {
         }).fail( ( jqXHR, textStatus, errorThrown ) => {
             alert( "Erro: " + errorThrown + "\n" +
                    "Status: " + textStatus );
-        });
+        });*/
 
     }
 

@@ -16,7 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Cria uma lista de pessoas, serializa em JSON e retorna ao cliente.
+ * Cria uma lista de pessoas, serializa em JSON e
+ * retorna ao cliente.
  * 
  * @author Prof. Dr. David Buzatto
  */
@@ -24,15 +25,18 @@ import javax.servlet.http.HttpServletResponse;
              urlPatterns = { "/listarPessoas" } )
 public class ListagemPessoasServlet extends HttpServlet {
 
-    protected void processRequest( HttpServletRequest request, HttpServletResponse response )
+    protected void processRequest( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
         
-        response.setContentType( "text/json;charset=UTF-8" );
+        response.setContentType( "application/json;charset=UTF-8" );
         
         Jsonb jb = JsonbBuilder.create();
         List<Pessoa> pessoas = new ArrayList<>();
-        int quantidade = Integer.parseInt( request.getParameter( "quantidade" ) );
         
+        int quantidade = Integer.parseInt(
+                request.getParameter( "quantidade" ) );
                 
         for ( int i = 1; i <= quantidade; i++ ) {
             
@@ -55,13 +59,17 @@ public class ListagemPessoasServlet extends HttpServlet {
     }
     
     @Override
-    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+    protected void doGet( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
         processRequest( request, response );
     }
     
     @Override
-    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+    protected void doPost( 
+            HttpServletRequest request, 
+            HttpServletResponse response )
             throws ServletException, IOException {
         processRequest( request, response );
     }

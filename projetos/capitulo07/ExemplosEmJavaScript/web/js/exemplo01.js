@@ -22,9 +22,9 @@ function executarExemplo01( event ) {
                 // ou duplas
                 n1 + " * " + n2 + " = " + multiplicacao + "\n" +
                 `${n1} / ${n2} = ${divisao}\n` +
-                `${n1} % ${n2} = ${resto}\n`;
+                `${n1} % ${n2} = ${resto}`;
     
-    // um alerta. cuidado alert é bloqueante,
+    // um alerta. cuidado! alert é bloqueante,
     // assim como prompt e confirm.
     alert( saida );
     

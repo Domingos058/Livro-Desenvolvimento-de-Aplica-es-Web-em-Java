@@ -29,31 +29,31 @@
       
       <p>
         <button onclick="executarExemplo01(event)">
-            Exemplo 01 - Operações
+            Exemplo 01 - Funções de E/S e Operadores Aritméticos
         </button>
       </p>
       
       <p>
         <button onclick="executarExemplo02(event)">
-            Exemplo 02 - Variáveis
+            Exemplo 02 - Declarações de Variáveis e Suas Implicações
         </button>
       </p>
       
       <p>
         <button onclick="executarExemplo03(event)">
-            Exemplo 03 - Condicionais
+            Exemplo 03 - Estruturas Condicionais, Operadores Relacionais e Lógicos
         </button>
       </p>
       
       <p>
         <button onclick="executarExemplo04(event)">
-            Exemplo 04 - Repetição e Arrays
+            Exemplo 04 - Estruturas de Repetição, Arrays e Funções de Iteração
         </button>
       </p>
       
       <p>
         <button onclick="executarExemplo05(event)">
-            Exemplo 05 - "Classes" e Objetos
+            Exemplo 05 - "Classes" e Objetos e JSON
         </button>
       </p>
     </div>
@@ -67,7 +67,7 @@
       <div>
         <p>
           <button onclick="executarExemplo06(event)">
-              Exemplo 06 - JavaScript puro
+              Exemplo 06 - JavaScript Puro
           </button>
         </p>
         <div id="divExemplo06" class="divExemplo"></div>
@@ -76,7 +76,7 @@
       <div>
         <p>
           <button onclick="executarExemplo07(event)">
-              Exemplo 07 - jQuery
+              Exemplo 07 - Usando jQuery
           </button>
         </p>
         <div id="divExemplo07" class="divExemplo"></div>
@@ -173,7 +173,7 @@
       
       <div>
         <p>
-          <h2>Exemplo 10 - Canvas</h2>
+          <h2>Exemplo 10 - Simulação Usando Canvas</h2>
         </p>
         <div id="divExemplo10" class="divExemplo">
           <canvas id="canvasExemplo10"
@@ -186,7 +186,7 @@
       
     </div>
     
-    <hr-->
+    <hr>
     
     <div>
       
@@ -194,8 +194,11 @@
       
       <div>
         <p>
-          <button onclick="executarExemplo11(event)">
-              Exemplo 11 - AJAX (jQuery)
+          <button onclick="executarExemplo11jQuery(event)">
+              Exemplo 11 - AJAX com jQuery
+          </button>
+          <button onclick="executarExemplo11Fetch(event)">
+              Exemplo 11 - AJAX com Fetch API
           </button>
         </p>
         <div id="divExemplo11" class="divExemplo"></div>
@@ -203,8 +206,11 @@
       
       <div>
         <p>
-          <button onclick="executarExemplo12(event)">
-              Exemplo 12 - JSON (jQuery)
+          <button onclick="executarExemplo12jQuery(event)">
+              Exemplo 12 - AJAX com jQuery e JSON
+          </button>
+          <button onclick="executarExemplo12Fetch(event)">
+              Exemplo 12 - AJAX com Fetch API e JSON
           </button>
         </p>
         <div id="divExemplo12" class="divExemplo"></div>

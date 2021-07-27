@@ -23,7 +23,7 @@ function executarExemplo03( event ) {
         console.log( "como assim???" );
     }
     
-    // mesmo tipo e mesmo valor!
+    // mesmo tipo e mesmo valor (identidade)!
     if ( v1 === v2 ) {
         console.log( "aqui não!" );
     }
@@ -58,6 +58,21 @@ function executarExemplo03( event ) {
     
     // 0, false (óbvio), null e undefined
     // são avaliados como falso
+    
+    // operadores relacionais:
+    //          igual: ==  (mesmo valor com conversão implícita)
+    //     identidade: === (mesmo valor e mesmo tipo)
+    //      diferente: !=  (valor diferente com conversão implícita)
+    // não identidade: !== (valor diferente e tipo diferente)
+    //          menor: <
+    // menor ou igual: <=
+    //          maior: >
+    // maior ou igual: >=
+    
+    // operadores lógicos
+    //   e lógico: &&
+    //  ou lógico: ||
+    // não lógico: !
     
     switch ( v1 ) {
         case 1:

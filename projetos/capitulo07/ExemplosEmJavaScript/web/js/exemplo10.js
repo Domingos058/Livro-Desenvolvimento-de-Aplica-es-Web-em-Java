@@ -165,7 +165,8 @@ function prepararCanvasExemplo10() {
     // esconde o menu de contexto no clique
     // com o botão direito
     canvas.oncontextmenu = event => {
-        // quebra a cadeia de propagação do evento
+        // não realiza a ação padrão
+        // nesse caso, não exibir o menu de contexto
         event.preventDefault();
     };
     
