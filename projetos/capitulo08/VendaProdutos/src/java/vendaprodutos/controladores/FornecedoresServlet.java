@@ -117,7 +117,7 @@ public class FornecedoresServlet extends HttpServlet {
             }
 
         } catch ( SQLException exc ) {
-            exc.printStackTrace();
+            disp = Utils.prepararDespachoErro( request, exc.getMessage() );
         }
 
         if ( disp != null ) {

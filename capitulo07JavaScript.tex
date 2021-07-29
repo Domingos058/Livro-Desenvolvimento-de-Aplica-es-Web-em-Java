@@ -1,13 +1,27 @@
 \chapter{JavaScript}\label{cap:javaScript}
 \epigraph{``\textit{A vida vai ficando cada vez mais dura perto do topo}''.}{Friedrich Nietzsche}
 
-\lettrine[lines=4, lhang=0.1, lraise=0, loversize=0.2, findent=0.1em]{\textcolor{corAzulTema}{N}}{ESTE} Capítulo temos com objetivo aprender as construções básicas da linguagem de programação JavaScript.
+\lettrine[lines=4, lhang=0.1, lraise=0, loversize=0.2, findent=0.1em]{\textcolor{corAzulTema}{N}}{ESTE} Capítulo temos com objetivo aprender as construções básicas da linguagem de programação JavaScript, vastamente utilizada no desenvolvimento de aplicações Web.
 
 \section{Introdução}
 
-Documentação
-\url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference}
-\url{https://developer.mozilla.org/en-US/docs/Web/API}
+Chegamos a talvez à cereja do bolo, ou à cereja do livro ou então à cereja do desenvolvimento para Web: a linguagem de \textit{script} JavaScript. A primeira coisa que precisamos deixar claro é que Java e JavaScript são duas linguagens diferentes, com sintaxe baseada em C e com construções similares, mas o comum entre as duas para por aqui. A linguagem JavaScript não é uma linguagem orientada a objetos, mas sim baseada em protótipos. Nesse tipo de linguagem não existem classes, mas apenas objetos. Novos objetos são criados a partir de cópias de objetos existentes. O JavaScript moderno, baseado no padrão ECMAScript, possui algumas construções que lembram a orientação a objetos como classes e herança de entre classes, mas tudo isso é \textit{syntax sugar} para simplificar coisas que já existiam anteriormente. Outras construções também são suportadas na linguagem como as funções de primeira classe etc.
+
+Neste Capítulo não entraremos em detalhes sobre a história da linguagem e da sua evolução, mas sim no que eu acho útil e fundamental para que possamos começar a usar a linguagem. Iremos ver uma visão geral da linguagem como declaração de variáveis, manipulação do \textit{Document Object Model} (DOM) e requisições assíncronas. Durante o Capítulo serão apresentadas inúmeras caixas do tipo ``Saiba Mais'' com \textit{links} úteis. A maioria desses links serão da \textit{Mozilla Developer Network} (\url{https://developer.mozilla.org/}), uma referência confiável e oficial da maioria, senão todas, tecnologias para Web. Sempre fornecerei os \textit{links} da versão em inglês do site, mas se quiser, você pode verificar a versão em português clicando no botão ``\textit{Change language}'' presente em todas as páginas do site. Sinceramente recomendo a leitura em inglês, pois o texto sempre estará completo, atualizado com a terminologia correta.
+
+\begin{saibaMais}
+    Quer conhecer um pouco mais da história e dos detalhes da linguagem JavaScript? Veja o \textit{link} \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript}.
+\end{saibaMais}
+
+\begin{saibaMais}
+    A referência da linguagem JavaScript pode ser acessada pelo \textit{link} \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference}.
+\end{saibaMais}
+
+\begin{saibaMais}
+    As documentações e referências das tecnologias e APIs usadas para o desenvolvimento para Web podem ser acessadas pelo \textit{link} \url{https://developer.mozilla.org/en-US/docs/Web/API}.
+\end{saibaMais}
+
+Antes de começarmos a falar do JavaScript propriamente dito, vamos montar nosso palco, que é um projeto Java para Web.
 
 Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/index.jsp}
 
