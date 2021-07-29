@@ -7,7 +7,7 @@
 
 Chegamos a talvez à cereja do bolo, ou à cereja do livro ou então à cereja do desenvolvimento para Web: a linguagem de \textit{script} JavaScript. A primeira coisa que precisamos deixar claro é que Java e JavaScript são duas linguagens diferentes, com sintaxe baseada em C e com construções similares, mas o comum entre as duas para por aqui. A linguagem JavaScript não é uma linguagem orientada a objetos, mas sim baseada em protótipos. Nesse tipo de linguagem não existem classes, mas apenas objetos. Novos objetos são criados a partir de cópias de objetos existentes. O JavaScript moderno, baseado no padrão ECMAScript, possui algumas construções que lembram a orientação a objetos como classes e herança de entre classes, mas tudo isso é \textit{syntax sugar} para simplificar coisas que já existiam anteriormente. Outras construções também são suportadas na linguagem como as funções de primeira classe etc.
 
-Neste Capítulo não entraremos em detalhes sobre a história da linguagem e da sua evolução, mas sim no que eu acho útil e fundamental para que possamos começar a usar a linguagem. Iremos ver uma visão geral da linguagem como declaração de variáveis, manipulação do \textit{Document Object Model} (DOM) e requisições assíncronas. Durante o Capítulo serão apresentadas inúmeras caixas do tipo ``Saiba Mais'' com \textit{links} úteis. A maioria desses links serão da \textit{Mozilla Developer Network} (\url{https://developer.mozilla.org/}), uma referência confiável e oficial da maioria, senão todas, tecnologias para Web. Sempre fornecerei os \textit{links} da versão em inglês do site, mas se quiser, você pode verificar a versão em português clicando no botão ``\textit{Change language}'' presente em todas as páginas do site. Sinceramente recomendo a leitura em inglês, pois o texto sempre estará completo, atualizado com a terminologia correta.
+Neste Capítulo não entraremos em detalhes sobre a história da linguagem e da sua evolução, mas sim no que eu acho útil e fundamental para que possamos começar a usar a linguagem. Iremos ver uma visão geral da linguagem como declaração de variáveis, manipulação do \textit{Document Object Model} (DOM) e requisições assíncronas. Durante o Capítulo serão apresentadas inúmeras caixas do tipo ``Saiba Mais'' com \textit{links} úteis. A maioria desses links serão da \textit{Mozilla Developer Network}\footnote{\url{https://developer.mozilla.org/}} (MDN), uma referência confiável e oficial da maioria, senão de todas, das tecnologias para Web. Sempre fornecerei os \textit{links} da versão em inglês do site, mas se quiser, você pode verificar a versão em português clicando no botão ``\textit{Change language}'' presente em todas as páginas do site. Sinceramente recomendo a leitura em inglês, pois o texto sempre estará completo, atualizado com a terminologia correta.
 
 \begin{saibaMais}
     Quer conhecer um pouco mais da história e dos detalhes da linguagem JavaScript? Veja o \textit{link} \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript}.
@@ -21,7 +21,60 @@ Neste Capítulo não entraremos em detalhes sobre a história da linguagem e da 
     As documentações e referências das tecnologias e APIs usadas para o desenvolvimento para Web podem ser acessadas pelo \textit{link} \url{https://developer.mozilla.org/en-US/docs/Web/API}.
 \end{saibaMais}
 
-Antes de começarmos a falar do JavaScript propriamente dito, vamos montar nosso palco, que é um projeto Java para Web.
+\begin{saibaMais}
+    Caso deseje fazer um tutorial completo sobre a linguagem recomendo o tutorial da própria MDN, que é muito bom: \url{https://developer.mozilla.org/en-US/docs/Learn/JavaScript}.
+\end{saibaMais}
+
+
+Antes de começarmos a falar do JavaScript propriamente dito, vamos montar nosso palco, que é um projeto Java para Web. Neste Capítulo ainda faremos a construção dos projetos do zero, mas a partir do próximo focarei apenas nas novidades que serão apresentadas.
+
+Vamos lá. Crie um projeto Java Web com o nome de ``ExemplosEmJavaScript'' da forma que tem feito até aqui. Os passos descritos a seguir são somente estruturais. Os respectivos códigos dos arquivos serão apresentados e explicados posteriormente. Sendo assim, no nó \destaque{\textit{Web Pages}} do projeto:
+
+\begin{itemize}
+    \item Remova o arquivo \texttt{index.html};
+    \item Crie um JSP chamado \texttt{index.jsp};
+    \item Crie uma pasta chamada \texttt{css};
+    \item Crie uma pasta chamada \texttt{js} (JavaScript);
+    \item Dentro da pasta \texttt{css} crie um arquivo CSS chamado \texttt{estilos.css};
+    \item Dentro da pasta \texttt{js} crie 12 arquivos JavaScript, chamados \texttt{exemplo01.js}, \texttt{exemplo02.js}... \texttt{exemplo12.js};
+    \item Em \destaque{\textit{Source Packages}} crie os pacotes \texttt{exemplosemjavascript.pojo} e\newline%
+    \texttt{exemplosemjavascript.servlets};
+    \item No pacote \texttt{exemplosemjavascript.pojo} crie uma classe chamada \texttt{Pessoa};
+    \item No pacote \texttt{exemplosemjavascript.servlets} crie os Servlets \texttt{CalculaTabuadaServlet} e \texttt{ListagemPessoasServlet};
+    \item Importe e insira no projeto a biblioteca \texttt{Jakarta EE Web 8 API};
+    \item Clique com o botão direito do mouse no nó raiz do projeto e escolha o último item do menu de contexto, chamado \destaque{\textit{Properties}};
+    \begin{itemize}
+        \item Do lado esquerdo, em \destaque{\textit{Categories:}}, clique no item \destaque{CDNJS}, situado dentro do nó \destaque{\textit{JavaScript Libraries}};
+        \item Do lado direito, clique no botão \destaque{\textit{Add}};
+        \item No diálogo que abriu, intitulado \destaque{\textit{Add CDNJS Library}}, preencha o campo \destaque{\textit{Find:}} com ``\texttt{jquery}'' (sem as aspas) e clique em \destaque{\textit{Search}};
+        \item Após a busca na \textit{Content Delivery Network} (CDN) a aparecerão diversos componentes na \textit{Graphical User Interface} (GUI). Em \destaque{\textit{Libraries:}} escolha \texttt{jquery}, provavelmente o primeiro item;
+        \item Em \destaque{\textit{Files:}} marque a \textit{checkbox} na frente do item \texttt{jquery.min.js} e clique em \destaque{\textit{Add Library}} como na Figura~\ref{fig:cap07AddCDNJSLibrary};
+        \FloatBarrier
+        \begin{figure}[!htbp]
+            \centering
+            \caption{Adicionando uma biblioteca JavaScript}
+            \includegraphics[scale=0.7]{imagens/cap07AddCDNJSLibrary}
+            \\\textbf{Fonte:} Elaborada pelo autor
+            \label{fig:cap07AddCDNJSLibrary}
+        \end{figure}
+        \FloatBarrier
+        \item Clique em \destaque{OK}. A biblioteca jQuery será baixada e inserida no projeto dentro da pasta \texttt{js/libs/jquery}.
+    \end{itemize}
+\end{itemize}
+
+Realizando todos os passos descritos anteriormente, você terá um projeto com a estrutura apresentada na Figura~\ref{fig:cap07EstruturaDoProjeto}. Agora vamos começar a preencher cada um dos arquivos e aprender o que está acontecendo em cada um deles.
+
+\FloatBarrier
+\begin{figure}[!htbp]
+    \centering
+    \caption{Estrutura do projeto}
+    \includegraphics[scale=0.7]{imagens/cap07EstruturaDoProjeto}
+    \\\textbf{Fonte:} Elaborada pelo autor
+    \label{fig:cap07EstruturaDoProjeto}
+\end{figure}
+\FloatBarrier
+
+Texto.
 
 Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/index.jsp}
 
@@ -29,25 +82,42 @@ Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/
 Arquivo: \texttt{/index.jsp}}{projetos/capitulo07/ExemplosEmJavaScript/web/index.jsp}
 
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/pojo/Pessoa.java}.
+Texto.
+
+Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/css/estilos.css}
+
+\cssCode{Folhas de estilo do projeto\newline%
+Arquivo: \texttt{/index.jsp}}{projetos/capitulo07/ExemplosEmJavaScript/web/css/estilos.css}
+
+
+Texto.
+
+Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/pojo/Pessoa.java}
 
 \javaCode{Classe Pessoa\newline%
 Arquivo: \texttt{exemplosemjavascript/pojo/Pessoa.java}}{projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/pojo/Pessoa.java}
 
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/servlets/CalculaTabuadaServlet.java}.
+Texto.
+
+Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/servlets/CalculaTabuadaServlet.java}
 
 \javaCode{Servlet de tabuada\newline%
 Arquivo: \texttt{exemplosemjavascript/servlets/CalculaTabuadaServlet.java}}{projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/servlets/CalculaTabuadaServlet.java}
 
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/servlets/ListagemPessoasServlet.java}.
+Texto.
+
+Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/servlets/ListagemPessoasServlet.java}
 
 \javaCode{Servlet de listagem de pessoas usando JSON\newline%
 Arquivo: \texttt{exemplosemjavascript/servlets/ListagemPessoasServlet.java}}{projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/servlets/ListagemPessoasServlet.java}
 
 
+
 \section{Funções de E/S e Operadores Aritméticos}
+
+Texto.
 
 Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo01.js}
 
@@ -58,56 +128,78 @@ Arquivo: \texttt{/js/exemplo01.js}}{projetos/capitulo07/ExemplosEmJavaScript/web
 
 \section{Declarações de Variáveis e Suas Implicações}
 
-Documentação: \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements}
+Texto. 
 
 Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo02.js}
 
 \javaScriptCode{Exemplo 02\newline%
 Arquivo: \texttt{/js/exemplo02.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo02.js}
 
+\begin{saibaMais}
+    Para mais detalhes sobre variáveis de clarações em JavaScript, acesse \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements}.
+\end{saibaMais}
 
 
-\section{Estruturas Condicionais, Operadores Relacionais e Lógicos}
+\section{Estruturas Condicionais e Operadores}
 
-lista completa de operadores
-\url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators}
+Texto.
 
 Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo03.js}
 
 \javaScriptCode{Exemplo 03\newline%
 Arquivo: \texttt{/js/exemplo03.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo03.js}
 
+\begin{saibaMais}
+    Para mais detalhes sobre os operadores em JavaScript, acesse \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators}.
+\end{saibaMais}
 
 
-\section{Estruturas de Repetição, Arrays e Funções de Iteração}
+\section{Estruturas de Repetição e Arrays}
 
-documentação arrays:
-\url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array}
+Texto.
 
 Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo04.js}
 
 \javaScriptCode{Exemplo 04\newline%
 Arquivo: \texttt{/js/exemplo04.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo04.js}
 
-
+\begin{saibaMais}
+    Para mais detalhes sobre o tipo Array em JavaScript, acesse \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array}.
+\end{saibaMais}
 
 \section{``Classes'', Objetos e JSON}
 
-String: \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String }
-JSON: \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON}
+Texto.
 
 Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo05.js}
 
 \javaScriptCode{Exemplo 05\newline%
 Arquivo: \texttt{/js/exemplo05.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo05.js}
 
+\begin{saibaMais}
+    Para saber mais sobre classes em JavaScript, acesse \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes}.
+\end{saibaMais}
+
+\begin{saibaMais}
+    Para consultar a documentação sobre o tipo String em JavaScript, acesse \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String}.
+\end{saibaMais}
+
+\begin{saibaMais}
+    Para consultar a documentação sobre JSON em JavaScript, acesse \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON}.
+\end{saibaMais}
 
 
 \section{Manipulação do DOM}
 
-\url{https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model}
+Texto. Lembrar do termo DHTML (não se usa mais!).
+
+\begin{saibaMais}
+    A documentação do DOM pode ser vista no \textit{link} \url{https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model}.
+\end{saibaMais}
 
 \subsection{JavaScript Puro}
+
+Texto.
 
 Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo06.js}
 
@@ -115,17 +207,23 @@ Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/
 Arquivo: \texttt{/js/exemplo06.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo06.js}
 
 
-
 \subsection{Usando jQuery}
+
+A biblioteca jQuery\footnote{\url{https://jquery.com/}}...
 
 Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo07.js}
 
 \javaScriptCode{Exemplo 07\newline%
 Arquivo: \texttt{/js/exemplo07.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo07.js}
 
+\begin{saibaMais}
+    Se quiser aprender um pouco mais sobre a jQuery, acesse \url{https://learn.jquery.com/}.
+\end{saibaMais}
 
 
 \section{Manipulação de Formulários}
+
+Texto.
 
 Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo08.js}
 
@@ -133,38 +231,66 @@ Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/
 Arquivo: \texttt{/js/exemplo08.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo08.js}
 
 
-
 \section{Eventos}
+
+Texto.
 
 Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo09.js}
 
 \javaScriptCode{Exemplo 09\newline%
 Arquivo: \texttt{/js/exemplo09.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo09.js}
 
+\begin{saibaMais}
+    A documentação completa sobre os eventos que podem ser tratados pode ser vista em  \url{https://developer.mozilla.org/en-US/docs/Web/Events}.
+\end{saibaMais}
+
 
 
 \section{Simulação Usando \textit{Canvas}}
+
+Texto.
 
 Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo10.js}
 
 \javaScriptCode{Exemplo 10\newline%
 Arquivo: \texttt{/js/exemplo10.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo10.js}
 
+\begin{saibaMais}
+    A API do Canvas pode ser vista em \url{https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API}.
+\end{saibaMais}
+
 
 
 \section{Requisições Assíncronas e Intercâmbio de Dados}
 
+Texto. Falar da Web Worker API
+
+\begin{saibaMais}
+    Mais sobre a API Web Workers \url{https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_APII}.
+\end{saibaMais}
+
 
 \subsection{AJAX com jQuery e com Fetch API}
+
+Texto.
 
 Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo11.js}
 
 \javaScriptCode{Exemplo 11\newline%
 Arquivo: \texttt{/js/exemplo11.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo11.js}
 
+\begin{saibaMais}
+    Documentação da função jQuery.ajax(): \url{https://api.jquery.com/jquery.ajax/}.
+\end{saibaMais}
+
+\begin{saibaMais}
+    Documentação da Fetch API: \url{https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API}.
+\end{saibaMais}
 
 
 \subsection{AJAX jQuery e com Fetch API Processando JSON}
+
+Texto.
 
 \url{https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch}
 
@@ -172,7 +298,6 @@ Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/
 
 \javaScriptCode{Exemplo 12\newline%
 Arquivo: \texttt{/js/exemplo12.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo12.js}
-
 
 
 \section{Resumo}

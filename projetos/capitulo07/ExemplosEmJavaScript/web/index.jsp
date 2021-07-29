@@ -29,31 +29,31 @@
       
       <p>
         <button onclick="executarExemplo01(event)">
-            Exemplo 01 - Funções de E/S e Operadores Aritméticos
+          Exemplo 01 - Funções de E/S e Operadores Aritméticos
         </button>
       </p>
       
       <p>
         <button onclick="executarExemplo02(event)">
-            Exemplo 02 - Declarações de Variáveis e Suas Implicações
+          Exemplo 02 - Declarações de Variáveis e Suas Implicações
         </button>
       </p>
       
       <p>
         <button onclick="executarExemplo03(event)">
-            Exemplo 03 - Estruturas Condicionais, Operadores Relacionais e Lógicos
+          Exemplo 03 - Estruturas Condicionais e Operadores
         </button>
       </p>
       
       <p>
         <button onclick="executarExemplo04(event)">
-            Exemplo 04 - Estruturas de Repetição, Arrays e Funções de Iteração
+          Exemplo 04 - Estruturas de Repetição e Arrays
         </button>
       </p>
       
       <p>
         <button onclick="executarExemplo05(event)">
-            Exemplo 05 - "Classes" e Objetos e JSON
+          Exemplo 05 - "Classes" e Objetos e JSON
         </button>
       </p>
     </div>
@@ -67,7 +67,7 @@
       <div>
         <p>
           <button onclick="executarExemplo06(event)">
-              Exemplo 06 - JavaScript Puro
+            Exemplo 06 - JavaScript Puro
           </button>
         </p>
         <div id="divExemplo06" class="divExemplo"></div>
@@ -76,7 +76,7 @@
       <div>
         <p>
           <button onclick="executarExemplo07(event)">
-              Exemplo 07 - Usando jQuery
+            Exemplo 07 - Usando jQuery
           </button>
         </p>
         <div id="divExemplo07" class="divExemplo"></div>
@@ -126,24 +126,24 @@
           </form>
           <hr>
           <button onclick="lerDadosFormulario(event)">
-              Ler dados
+            Ler dados
           </button> 
           <button onclick="lerDadosFormularioJQuery(event)">
-              Ler dados jQuery
+            Ler dados jQuery
           </button>
           <hr>
           <button onclick="inserirDadosFormulario(event)">
-              Inserir dados
+            Inserir dados
           </button>
           <button onclick="inserirDadosFormularioJQuery(event)">
-              Inserir dados jQuery
+            Inserir dados jQuery
           </button>
           <hr>
           <button onclick="inserirNovaOpcao(event)">
-              Inserir nova opção (Select 03)
+            Inserir nova opção (Select 03)
           </button>
           <button onclick="inserirNovaOpcaoJQuery(event)">
-              Inserir nova opção jQuery (Select 04)
+            Inserir nova opção jQuery (Select 04)
           </button>
           <hr>
         </div>
@@ -195,10 +195,10 @@
       <div>
         <p>
           <button onclick="executarExemplo11jQuery(event)">
-              Exemplo 11 - AJAX com jQuery
+            Exemplo 11 - AJAX com jQuery
           </button>
           <button onclick="executarExemplo11Fetch(event)">
-              Exemplo 11 - AJAX com Fetch API
+            Exemplo 11 - AJAX com Fetch API
           </button>
         </p>
         <div id="divExemplo11" class="divExemplo"></div>
@@ -207,10 +207,10 @@
       <div>
         <p>
           <button onclick="executarExemplo12jQuery(event)">
-              Exemplo 12 - AJAX com jQuery e JSON
+            Exemplo 12 - AJAX com jQuery e JSON
           </button>
           <button onclick="executarExemplo12Fetch(event)">
-              Exemplo 12 - AJAX com Fetch API e JSON
+            Exemplo 12 - AJAX com Fetch API e JSON
           </button>
         </p>
         <div id="divExemplo12" class="divExemplo"></div>
