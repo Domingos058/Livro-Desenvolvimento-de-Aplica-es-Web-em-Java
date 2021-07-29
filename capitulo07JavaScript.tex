@@ -74,45 +74,49 @@ Realizando todos os passos descritos anteriormente, você terá um projeto com a
 \end{figure}
 \FloatBarrier
 
-Texto.
+Começaremos com o \texttt{index.jsp} apresentado na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/index.jsp}. Entre as linhas 10 e 22 usamos a \textit{tag} \inlineHTMLCode{<script>} para carregarmos no documento treze arquivos de código JavaScript. Inclusive, essa mesma \textit{tag} pode ser utilizada para inserir código JavaScript no próprio documento. Veremos isso mais adiante. Na linha 10 é carregada a biblioteca jQuery que há alguns anos atrás era absolutamente relevante, mas que hoje em dia tem caído em desuso visto a evolução do JavaScript. Ela será tratada no livro pela sua importância em software legado, por facilitar e padronizar algumas coisas e também, é claro, por preferência minha :D. No restante das linhas são associados os arquivos com os exemplos que aprenderemos. O restante do documento consiste na construção de uma interface com alguns componentes e \textit{tags} que serão manipulados pelo nosso código em JavaScript. 
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/index.jsp}
+Os cinco primeiros exemplos são relativos às construções principais da linguagem. Veja que da linha 30 à 34 temos um parágrafo (\textit{tag} \inlineHTMLCode{<p>}) com um botão dentro (\textit{tag} \inlineHTMLCode{<button>}) e que em seu evento \textit{click}, representado pelo atributo \texttt{onclick}, é registrado uma função tratadora/manipuladora/ouvinte de evento (\textit{event handler} ou \textit{event listener}). Para registrar uma função como tratadora de um determinado evento, basta inserir seu nome no valor do atributo \texttt{onclick} e adicionar, entre os parânteses da mesma, a palavra \texttt{event}. Esse \texttt{event} carregará o objeto do evento que será disparado pela \textit{tag} e ouvido pela função. Essa função precisa estar declarada e implementada em algum lugar. No nosso caso, estará no arquivo \texttt{exemplo01.js}, referenciado acima. Note que como o JavaScript é interpretado, para se poder usar algo, essa ``coisa'' precisa ter sido declarada antes ou as vezes ``vista'' pelo interpretador pela primeira vez, sendo que esse segundo comportamento pode gerar muitos problemas caso não seja entendido apropriadamente, mas veremos isso também. Resumindo, ao se clicar (\texttt{onclick}) nesse primeiro botão, afunção \inlineJavaScriptCode{executarExemplo01(event)} será invocada. Fácil não é? Existe uma infinidade de eventos permitidos para cada \textit{tag}, mas falaremos de alguns deles à medida que for necessário. CEsse padrão de um botão invocando uma função se repetirá em praticamente todos os exemplos. Os cinco primeiros têm a mesma estrutura.
+
+Nos exemplos 06, 07 e 08 trataremos da manipulação das \textit{tags}, como dinamicamente inserir conteúdo nas mesmas ou ler/escrever dados em componentes de formulário. Esses exemplos estão dentro da seção ``Manipulação do DOM'', onde DOM significa \textit{Document Object Mode}l que nos bastidores é uma árvore composta de objetos que representam o resultado do \textit{parse} do arquivo HTML pelo navegador ou cliente. Usando JavaScript podemos mexer nessa árvore, alterando atributos dos nós, que na maioria das vezes representam as \textit{tags}, além de inserir e remover nós. Todas as modificações são replicadas automaticamente pelo navegador que entende que a árvore foi alterada e precisa ser redesenhada no processo de renderização do documento. Antigamente, quando isso era novidade há mais de 20 anos atrás, era chamado de ``HTML Dinâmico'' (\textit{Dynamic} HTML (DHTML)). Sim, estou ficando velho :D. Perceba que nesses exemplos, além dos botões temos \textit{divs} que serão usadas para mostrar o resultado de algum processamento, além de componentes de formulário e outros botões no exemplo 08.
+
+No exemplo 09 falaremos um pouco de tratamento de eventos, como já comentei anteriormente. Nesse exemplo, na linha 171, temos a invocação da função\newline%
+\inlineJavaScriptCode{registrarEventosExemplo09()} em que, programaticamente, faremos o registro dos ouvintes de eventos ao invés de usar os atributos prefixados com ``\texttt{on}'' das \textit{tags}.
+
+No exemplo 10 trataremos do uso da \textit{tag} \inlineHTMLCode{<canvas>} usada para desenhar programaticamente, realizando uma simulação física de uma bolinha.
+
+Nos dois últimos exemplos trataremos das requisições assíncronas e de intercâmbio de dados entre cliente e servidor.
 
 \htmlCode{Página principal da aplicação\newline%
 Arquivo: \texttt{/index.jsp}}{projetos/capitulo07/ExemplosEmJavaScript/web/index.jsp}
 
+Caso queira, durante os testes de execução, comente trechos do código do \texttt{index.jsp} para que você não precise ficar rolando a página para chegar em alguma parte toda vez que for testar uma funcionalidade.
 
-Texto.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/css/estilos.css}
+Na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/css/estilos.css} é apresentado o arquivo com as folhas de estilo usadas no \texttt{index.jsp}. O código já contém os comentários para você entender o que se trata cada coisa.
 
 \cssCode{Folhas de estilo do projeto\newline%
 Arquivo: \texttt{/index.jsp}}{projetos/capitulo07/ExemplosEmJavaScript/web/css/estilos.css}
 
+\begin{saibaMais}
+    Sobre CSS, consulte \url{https://developer.mozilla.org/en-US/docs/Web/CSS} e \url{https://developer.mozilla.org/en-US/docs/Web/CSS/Reference}.
+\end{saibaMais}
 
-Texto.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/pojo/Pessoa.java}
+Nas próximas três listagens serão mostrados os componentes do lado do servidor que utilizaremos para os dois últimos exemplos. Na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/pojo/Pessoa.java} definimos a classe \texttt{Pessoa}, um \textit{Plain Old Java Object} (POJO) ou \textit{Value Object} (VO) que é uma classe que utilizaremos para criar objetos para transportar dados.
 
 \javaCode{Classe Pessoa\newline%
 Arquivo: \texttt{exemplosemjavascript/pojo/Pessoa.java}}{projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/pojo/Pessoa.java}
 
-
-Texto.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/servlets/CalculaTabuadaServlet.java}
+Na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/servlets/CalculaTabuadaServlet.java} é apresentado o código do Servlet \texttt{CalculaTabuadaServlet}, mapeado em \texttt{/calcularTabuada} que recebe um valor inteiro e retorna o texto representando a ``tabuada'' do número processado. Esse retorno é gerado pelo próprio Servlet no seu fluxo de saída (linhas 41, 42 e 43), sendo que o objeto response é configurado para indicar ao cliente que o que está chegando é no formato de texto puro (linha 28).
 
 \javaCode{Servlet de tabuada\newline%
 Arquivo: \texttt{exemplosemjavascript/servlets/CalculaTabuadaServlet.java}}{projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/servlets/CalculaTabuadaServlet.java}
 
-
-Texto.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/servlets/ListagemPessoasServlet.java}
+Por fim, na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/servlets/ListagemPessoasServlet.java} é apresentado o código do Servlet \texttt{ListagemPessoasServlet}, mapeado em \texttt{/listarPessoas} que indica ao cliente que os dados que serão retornados irão no formato JavaScript Object Notation\footnote{O formato JSON será tratado no exemplo 05. Por enquanto assuma que é uma forma de codificar os dados de um objeto em forma de texto.} (JSON) (linha 33). Nesse Servlet é criada uma lista de objetos do tipo \texttt{Pessoa}, baseada na quantidade recebida via requisição e essa lista é serializada em JSON usando a camada de \textit{bindind} JSON-B do Java/Jakarta EE. Na linha 35 é criado o objeto serializador e na linha 56 ele é usado, convertendo a lista com os objetos do tipo \texttt{Pessoa} em uma representação em texto, que no nosso caso é o JSON.
 
 \javaCode{Servlet de listagem de pessoas usando JSON\newline%
 Arquivo: \texttt{exemplosemjavascript/servlets/ListagemPessoasServlet.java}}{projetos/capitulo07/ExemplosEmJavaScript/src/java/exemplosemjavascript/servlets/ListagemPessoasServlet.java}
 
+Agora que temos toda a infraestrutura básica do nosso projeto, podemos começar a falar sobre JavaScript. Vamos começar!
 
 
 \section{Funções de E/S e Operadores Aritméticos}

@@ -6,9 +6,12 @@ function executarExemplo12jQuery( event ) {
         data: {
             quantidade: q
         },
+        // esperando JSON no retorno
         dataType: "json"
     }).done( ( data, textStatus ) =>{
         
+        // data já contém o objeto resultado do parse
+        // do json retornado. isso é automático.
         let $div = $( "#divExemplo12" );
         $div.html( "" );
         
@@ -37,6 +40,7 @@ function executarExemplo12Fetch( event ) {
         method: "POST",
         body: parametros
     }).then( response => {
+        // faz o parse do json em objeto e retorna
         return response.json();
     }).then( data => {
         

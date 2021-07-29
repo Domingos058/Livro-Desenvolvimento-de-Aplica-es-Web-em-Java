@@ -19,6 +19,7 @@ class Forma {
 // "herança"
 class Retangulo extends Forma {
     
+    // sobrescrevendo a função calcularArea
     calcularArea() {
         let largura = Math.abs( this.xFim - this.xIni );
         let altura = Math.abs( this.yFim - this.yIni );

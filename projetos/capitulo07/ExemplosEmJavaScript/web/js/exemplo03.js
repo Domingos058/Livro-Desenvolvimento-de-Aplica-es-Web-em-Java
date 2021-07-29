@@ -1,16 +1,18 @@
 function executarExemplo03( event ) {
     
-    let v0 = 0;
-    let v1 = 2;
-    let v2 = "2";
-    let v3 = true;
-    let v4 = null;
-    let v5 = undefined;
-    let v6 = NaN; // Not a Number
+    let v0 = 0;         // número
+    let v1 = 2;         // número
+    let v2 = "2";       // string
+    let v3 = true;      // boolean
+    let v4 = null;      // nulo
+    let v5 = undefined; // indefinido
+    let v6 = NaN;       // Not a Number
     
-    // 0 vira false!
+    // 0, false (óbvio), null e undefined
+    // são avaliados como falso
+    
     if ( v0 ) {
-        console.log( "não devia chegar aqui" )  // ; não obrigatório,
+        console.log( "não devia chegar aqui" )  // ";" não obrigatório,
                                                 // mas é padrão usar
     }
     
@@ -18,12 +20,14 @@ function executarExemplo03( event ) {
         console.log( "aqui sim :)" );
     }
     
+    // operador de igualdade
     // converte os tipos e testa igualdade de valor!
     if ( v1 == v2 ) {
         console.log( "como assim???" );
     }
     
-    // mesmo tipo e mesmo valor (identidade)!
+    // operador de identidade
+    // verifica se os operandos têm mesmo tipo e mesmo valor!
     if ( v1 === v2 ) {
         console.log( "aqui não!" );
     }
@@ -44,6 +48,7 @@ function executarExemplo03( event ) {
         console.log( "não tbm!" );
     }
     
+    // NaN é um valor especial
     if ( v6 == NaN ) {
         console.log( "pq não?" );
     }
@@ -55,9 +60,6 @@ function executarExemplo03( event ) {
     if ( isNaN( NaN ) ) {
         console.log( "pra NaN, só assim..." );
     }
-    
-    // 0, false (óbvio), null e undefined
-    // são avaliados como falso
     
     // operadores relacionais:
     //          igual: ==  (mesmo valor com conversão implícita)
@@ -73,6 +75,8 @@ function executarExemplo03( event ) {
     //   e lógico: &&
     //  ou lógico: ||
     // não lógico: !
+    
+    // veja a documentação referenciada no livro para mais detalhes
     
     switch ( v1 ) {
         case 1:
