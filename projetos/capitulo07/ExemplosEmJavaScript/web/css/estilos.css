@@ -15,8 +15,8 @@ body {
     border-radius: 5px;
     height: 300px;
     width: 600px;
-    overflow: scroll;          /* se houver estouro, permitir rolagem */
-    overflow-style: scrollbar; /* mostrar barra de rolagem */
+    overflow: scroll;  /* se houver estouro, permitir rolagem */
+    overflow-style: scrollbar;    /* mostrar barra de rolagem */
 }
 
 /* estilo para o seletor de classe .pDOM usando
@@ -29,7 +29,7 @@ body {
 
 .canvasExemplo10 {
     border: solid thin #000000;
-    margin: 10px;     /* margin (margem)) é o espaçamento externo da tag */
+    margin: 10px;   /* margin (margem) é o espaçamento externo da tag */
 }
 
 .dadosPessoa {
