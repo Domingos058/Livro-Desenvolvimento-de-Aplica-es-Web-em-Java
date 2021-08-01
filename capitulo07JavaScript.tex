@@ -155,13 +155,13 @@ Nesta seção trataremos as variáveis e as declarações delas em JavaScript. C
 
 Toda variável em JavaScript ao ser declarada passará pelo processo de \textit{hoisting}. Nesse processo, a variável será elevada ou içada até o início ou topo do contexto em que ela foi declarada e que passará a existir. A ideia é que quando o interpretador encontra uma declaração de variável e ela é bem sucedida, ou seja, é sintática e semanticamente correta, ela passará a existir como se houvesse sido declarada no início do escopo em que reside.
 
-Podemeos influenciar em como esse içamento ocorrerá em relação à inicialização das variáveis. Veja a lista abaixo, temos quatro formas de declarar variáveis:
+Podemos influenciar em como esse içamento ocorrerá em relação à inicialização das variáveis. Veja a lista abaixo, temos quatro formas de declarar variáveis:
 
 \begin{enumerate}
     \item \inlineJavaScriptCode{let variavel = "valor";};
+    \item \inlineJavaScriptCode{const constante = "valor";};
     \item \inlineJavaScriptCode{var variavel = "valor";};
     \item \inlineJavaScriptCode{variavel = "valor";};
-    \item \inlineJavaScriptCode{const constante = "valor";};
 \end{enumerate}
 
 Quando a palavra-chave \inlineJavaScriptCode{let} é usada, a variável só poderá ser usada depois da sua inicialização, mesmo havendo \textit{hoisting} para sua declaração. O mesmo acontece com as constantes, declaradas com \inlineJavaScriptCode{const}. Já as variáveis declaradas com a palavra-chave \inlineJavaScriptCode{var} serão inicializadas com \inlineJavaScriptCode{undefined}. Por fim, as variáveis que são declaradas sem indicar nenhuma dessas três palavras-chave passarão a existir no escopo global, o que pode trazer uma série de problemas. Imagine que você declarou mais de uma variável com o mesmo nome em dois ou mais escopos diferentes. A declaração de fato ocorrerá quando o interpretador a encontrar pela primeira vez e, independende de onde for, ela passará a existir no escopo global e a partir desse ponto você pode perder o controle do valor que a variável referencia se não tomar muito cuidado com o que está fazendo. O ideal é não utilizar ok?
@@ -187,7 +187,7 @@ Esse conceito pode gerar muita confusão, inclusive se declararmos uma variável
 
 \section{Estruturas Condicionais e Operadores}
 
-Em JavaScript temos as mesmas estruturas condicionais presentes na maioria das linguagens de programação ou seja, um \inlineJavaScriptCode{if} com \inlineJavaScriptCode{else} aninhados e opcionais e um \inlineJavaScriptCode{switch}. Os operadores relacionais e lógicos também são os operadores padrão encontrados na maioria das linguages derivadas de C, com a adição de mais dois operadores relacionais que são o operador de identidade (\inlineJavaScriptCode{===}) e o operador de não identidade (\inlineJavaScriptCode{!==}). Ao passo que os operadores de igualdade e de desigualdade verificam se o valor dos operandos comparados são respectivamente iguais ou difentes, inclusive após a conversão implícita de algum deles, os operadores de identidade e de não identidade verificam, além do valor, agora sem conversão implícita, se, respectivamente, o tipo é o mesmo ou se é diferente. Na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo03.js} pode ser visto o emprego das estruturas condicionais e a declaração de variáveis com alguns valores permitidos.
+Em JavaScript temos as mesmas estruturas condicionais presentes na maioria das linguagens de programação ou seja, um \inlineJavaScriptCode{if} com \inlineJavaScriptCode{else} aninhados e opcionais e um \inlineJavaScriptCode{switch}. Os operadores relacionais e lógicos também são os operadores padrão encontrados na maioria das linguages derivadas de C, com a adição de mais dois operadores relacionais que são o operador de identidade (\inlineJavaScriptCode{===}) e o operador de não identidade (\inlineJavaScriptCode{!==}). Ao passo que os operadores de igualdade e de desigualdade verificam se o valor dos operandos comparados são respectivamente iguais ou difentes, inclusive após a conversão implícita de algum deles, os operadores de identidade e de não identidade verificam, além do valor (sem conversão implícita), respectivamente, se o tipo é o mesmo ou diferente. Na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo03.js} pode ser visto o emprego das estruturas condicionais e a declaração de variáveis com alguns valores permitidos.
 
 \javaScriptCode{Exemplo 03\newline%
 Arquivo: \texttt{/js/exemplo03.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo03.js}
@@ -199,25 +199,41 @@ Arquivo: \texttt{/js/exemplo03.js}}{projetos/capitulo07/ExemplosEmJavaScript/web
 
 \section{Estruturas de Repetição e Arrays}
 
-Texto.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo04.js}
+Os Arrays em JavaScript atuam como arrays na linguagem Java e C, sendo indexados iniciando em 0, mas podendo crescer ou diminuir quando necessário, assemelhando-se mais com listas do que arrays de tamanho fixo. Podemos usar a notação de colchetes para simular arrays associativos (tabelas de símbolos), mas de fato o que acontece é que estamos criando ou lendo propriedades do objeto do array. Na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo04.js} pode se ver a criação de três arrays e a utilização da estrutura de repetição \inlineJavaScriptCode{for} para iterar por seus elementos.
 
 \javaScriptCode{Exemplo 04\newline%
 Arquivo: \texttt{/js/exemplo04.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo04.js}
+
+Na linha 4 o um array de uma dimensão é criado e inicializado com os valores 1, 2, 3 e 4, contidos respectivamente nas posições 0, 1, 2 e 3. Na linha 7 é criado um array em que nas posições 0 e 1 estão contidos dois outros arrays, um com os valores 1 e 2 e o outro com os valores 3 e 4.
+
+Na linha 10 um novo array vazio é criado e entre as linhas 11 e 14 são inseridas quatro propriedades no objeto em si. Note que essas propriedades são criadas no objeto e pela sintaxe usada, há a impressão que estamos lidando com o array como se fosse um array associativo ou uma tabela de símbolos, mapa ou dicionário, mas não é o caso! Podemos usar a notação de colchetes para lidar com objetos para, por exemplo, acessar propriedades ou atributos que contenham espaço nos nomes. Note que posteriomente, ao se tentar iterar por esse array usando um \inlineJavaScriptCode{for} ``normal'', não se entrará no bloco da estrutura de repetição, visto que, apesar de parecer que o array contém quatro elementos, na verdade ele não tem nenhum, fazendo com que o atributo \inlineJavaScriptCode{length} valha zero.
+
+A inserção e remoção de elementos dos arrays podem ser feitas usando os métodos \inlineJavaScriptCode{push} que insere um elemento no fim do array, \inlineJavaScriptCode{pop} que remove um elemento do fim, \inlineJavaScriptCode{unshift} que insere um elemento no início, \inlineJavaScriptCode{shift} que remove do início e \inlineJavaScriptCode{splice} que remove de uma posição arbitrária. Na caixa ``Saiba Mais'' abaixo você pode dar uma olhada na documentação do objeto Array da linguagem JavaScript.
 
 \begin{saibaMais}
     Para mais detalhes sobre o tipo Array em JavaScript, acesse \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array}.
 \end{saibaMais}
 
+Entre as linhas 24 e 26 usa-se um \inlineJavaScriptCode{for} para iterar pelos elementos do array \inlineJavaScriptCode{a1}. Entre as linhas 30 e 32 usa-se o método \inlineJavaScriptCode{forEach} do objeto Array para iterar pelos elementos, usando uma função de \textit{callback} para processar cada posição. A mesma coisa acontece entre as linhas 34 e 41, com a diferença de se usar a notação de closure para a definição da função de \textit{callback} utilizada no método \inlineJavaScriptCode{forEach} de \inlineJavaScriptCode{a2}.
+
+Como mencionado anteriormente, o uso de um \inlineJavaScriptCode{for} padrão -ou mesmo um \inlineJavaScriptCode{forEach}- para \inlineJavaScriptCode{a3} não surtirá efeito, pois esse array está vazio! Nós inserimos quatro propriedades no mesmo, não quatro elementos. Quando usamos um array dessa forma, inclusive poderia ser qualquer objeto, e queremos iterar por essas propriedades temos basicamente duas formas: ou fazemos como entre as linhas 29 e 51, usando um \inlineJavaScriptCode{for ... in} ou obtemos as chaves do objeto como um array e as processamos usando um \inlineJavaScriptCode{forEach} como mostrado entre as linhas 54 e 56.
+
+Além do método \inlineJavaScriptCode{forEach} existem alguns outros para o processamento dos elementos de um array. Dois desses métodos são mostrados a partir da linha 59: \inlineJavaScriptCode{every} e \inlineJavaScriptCode{some}. Como os nomes sugerem, o primeiro é utilizado com a premissa de testar alguma condição em todos os elementos do array, enquanto o outro espera-se que algum elemento não se enquadre em algo desejado. Podemos utilizar esses métodos para, por exemplo, executar uma busca/pesquisa sequencial/linear no array e parar a iteração quando o elemento for encontrado, retornando um valor verdadeiro ou falso, dependendo da situação e do método empregado. Veja os comentários do exemplo e teste a execução do código do exemplo para entender exatamente do que se trata.
+
+
+
 \section{``Classes'', Objetos e JSON}
 
-Texto.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo05.js}
+Antes do ECMAScript 2015 (sexta edição) a criação de objetos com um ``tipo'' era feito a partir do uso de uma função e o operador \inlineJavaScriptCode{new}. A partir do ECMAScript 2015 existe uma sintaxe para a definição de tipos abstratos de dados em forma de classes, inclusive permitindo herança entre tipos definidos. Na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo05.js}, entre as linhas 1 e 17 é definida a classe \texttt{Forma}. As classes em JavaScript podem ter apenas um construtor e, dentro dele, as propriedades do objeto devem ser criadas utilizando a palavra chave \inlineJavaScriptCode{this}.
 
 \javaScriptCode{Exemplo 05\newline%
 Arquivo: \texttt{/js/exemplo05.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo05.js}
+
+Entre as linhas 20 e 43 cria-se as classes \texttt{Retangulo} e \texttt{Circulo} que herdam de \texttt{Forma}, sobrescrevendo o método \inlineJavaScriptCode{calcularArea()}. Nas linhas 47 e 48 cria-se respectivamente uma instância de \texttt{Retangulo} e uma de \texttt{Circulo}. Entre as linhas e 66 cria-se um novo objeto genético, usando o inicializador de objetos (abre e fecha chaves). Note que esse objeto e os outros dois tem como tipo \texttt{object}, mas é possível verificar se são instância de uma determinada classe/tipo usando o operador \inlineJavaScriptCode{instanceof} como visto entre as linhas 69 e 87.
+
+Podemos também representar objetos inteiros como Strings usando a notação de objetos JavaScript, chamada de JSON. Veja na linha 91 onde temos uma String codificando um objeto usando algo simular à notação de inicilização de objetos. Isso é o JSON. Para transformar essa String em um objeto, usa-se o método \inlineJavaScriptCode{parse()} do objeto global \inlineJavaScriptCode{JSON} e, quando se quer o contrário, ou seja, transformar um objeto em uma String no formato JSON, usa-se o método \inlineJavaScriptCode{stringfy()} do objeto \inlineJavaScriptCode{JSON}. O formato JSON é amplamanete utilizado atualmente em detrimento do formado XML, pois é mais enxuto, ou seja, é necessário menos texto para codificar o mesmo objeto em JSON do que em XML. Tanto o formato JSON quanto XML são utilizados para a serialização de objetos, ou seja, transformar uma notação binária, específica de linguagem, em uma representação serial fácil de ser processada e independente de plataforma. O processo de converter um objeto para um formato de intercâmbio de dados é chamado de serialização, enquanto o processo inverso, ou seja, a partir de um formato de intercâmbio de dados gerar um objeto específico de tecnologia é chamado de desserialização.
+
+O restante do código do exemplo é facilmente entendido ao ser lido. Nas próximas caixas ``Saiba Mais'' há varios links úteis sobre o tema.
 
 \begin{saibaMais}
     Para saber mais sobre classes em JavaScript, acesse \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes}.
@@ -232,19 +248,21 @@ Arquivo: \texttt{/js/exemplo05.js}}{projetos/capitulo07/ExemplosEmJavaScript/web
 \end{saibaMais}
 
 
+
 \section{Manipulação do DOM}
 
-Texto. Lembrar do termo DHTML (não se usa mais!).
+Nesta Seção aprenderemos a manipular o DOM com objetivo de extrair dados do documento ou então modificá-lo em tempo de execução. Isso já foi comentado brevemente anteriormente!
 
 \begin{saibaMais}
     A documentação do DOM pode ser vista no \textit{link} \url{https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model}.
 \end{saibaMais}
 
+Vamos manipular o DOM de duas formas, uma usando JavaScript puro, que normalmente é mais verboso, e a outra usando a biblioteca jQuery\footnote{\url{https://jquery.com/}}, que já foi padrão na construção de aplicações para Web e tem caído em desuso, mas ainda é relevante, principalmente por facilitar algumas coisas e ainda estar presente de forma consistente em diversas aplicações criadas e que você provavelmente terá que dar manutenção na sua vida profissional.
+
+
 \subsection{JavaScript Puro}
 
-Texto.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo06.js}
+A ideia desse exemplo é que ao se clicar no botão, um novo nó da \textit{tag} \inlineHTMLCode{<p>} seja inserido na \inlineHTMLCode{<div>} que tem \texttt{id} igual à \texttt{divExemplo06}, usando um contador para mostrar as sucessivas inserções. Na linha 6 da Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo06.js} obtém-se tal \inlineHTMLCode{<div>} utilizando o método \inlineJavaScriptCode{getElementById("id")} do objeto \inlineJavaScriptCode{document}. Caso bem-sucedido, o método retornará uma referência ao nó dessa \inlineHTMLCode{<div>} no DOM e então poderemos manipulá-lo! Na linha 9 criamos um novo nó para inserir na \inlineHTMLCode{<div>} do tipo correspondente à \textit{tag} \inlineHTMLCode{<p>}. Entre as linhas 12 e 13 inserimos o conteúdo do parágrafo criado e defimos qual é sua classe. Veja no arquivo \texttt{estilos.css} que temos a definição de um seletor de classe chamado \inlineCSSCode{.pDOM} que reflitirá na inserção desses parágrafos, sendo que todo item par terá uma cor de fundo diferente. Por fim, na linha 16 esse novo parágrafo é inserido na \inlineHTMLCode{<div>} e essa alteração é prontamente refletida na renderização do documento! Pare e pense agora todas as possibilidades existentes!
 
 \javaScriptCode{Exemplo 06\newline%
 Arquivo: \texttt{/js/exemplo06.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo06.js}
@@ -252,9 +270,9 @@ Arquivo: \texttt{/js/exemplo06.js}}{projetos/capitulo07/ExemplosEmJavaScript/web
 
 \subsection{Usando jQuery}
 
-A biblioteca jQuery\footnote{\url{https://jquery.com/}}...
+Talvez os dois principais diferenciais ou chamarizes da jQuery que a tornaram famosa é a utilização da sintaxe de seletores do CSS para obter elementos do DOM, o que já foi implementado de forma nativa no JavaScript e a facilidade para lidar com requisições assíncronas com o servidor, o que também já foi endereçado nas versões mais novas do JavaScript.
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo07.js}
+No exemplo apresentado na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo07.js} temos algo análogo ao exemplo anterior, só que usando as funcionalidades dessa biblioteca. Na linha 7 obtemos a \inlineHTMLCode{<div>} que tem \texttt{divExemplo07} como \texttt{id} usando a notação de seletores do CSS! As funcionalidades da jQuery são acessadas através do símbolo de cifrão (\texttt{\$}) que é um alias para o objeto chamado \texttt{jQuery}, disponível para ser utilizado nos script a partir do momento em que a biblioteca é inserida no documento. A criação do parágrafo também é mais direta, bastando inserir o par de \textit{tags} como String no argumento da função \texttt{\$} e então encadear a invocação dos métodos \inlineJavaScriptCode{html} e \inlineJavaScriptCode{addClass}. A linha 16 é idêntica ao exemplo anterior.
 
 \javaScriptCode{Exemplo 07\newline%
 Arquivo: \texttt{/js/exemplo07.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo07.js}
@@ -264,14 +282,15 @@ Arquivo: \texttt{/js/exemplo07.js}}{projetos/capitulo07/ExemplosEmJavaScript/web
 \end{saibaMais}
 
 
+
 \section{Manipulação de Formulários}
 
-Texto.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo08.js}
+A ideia central presente neste Capítulo é fazer com que você entenda um pouco sobre JavaScript para podermos ter formulários mais sofisticados, permitindo a construção de cadastros que envolvam relacionamos muitos-para-muitos. Claro que estamos vendo várias coisas a mais, mas a ideia é dar subsídios para implementarmos coisas novas no projeto iniciado no Capítulo~\ref{cap:primeiroProjeto}. No exemplo apresentado na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo08.js} veremos a obtenção e inserção de dados em componentes de formulários. Detalharei alguns pontos do código para não ficar muito maçante e o restante é com você. Tenho certeza que entenderá o que está acontecendo com base no que foi visto até agora.
 
 \javaScriptCode{Exemplo 08\newline%
 Arquivo: \texttt{/js/exemplo08.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo08.js}
+
+Na linha ....
 
 
 \section{Eventos}

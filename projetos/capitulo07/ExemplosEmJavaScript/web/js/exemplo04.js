@@ -8,10 +8,10 @@ function executarExemplo04( event ) {
     
     // um array vazio
     let a3 = [];
-    a3["a"] = 2; // array associativo!
+    a3["a"] = 2; // simulação de array associativo!
     a3["b"] = 4; // análogo à uma tabela de símbolos
-    a3["c"] = 6;
-    a3["d"] = 8;
+    a3["c"] = 6; // mas as propriedades são inseridas 
+    a3["d"] = 8; // no objeto!
     
     // arrays em JavaScript podem crescer e diminuir
     // livremente usando os métodos:
@@ -25,7 +25,7 @@ function executarExemplo04( event ) {
         console.log( `a1[${i}] = ${a1[i]}` );
     }
     
-    // iterando usando a função forEach do
+    // iterando usando o método forEach do
     // objeto Array
     a1.forEach( function( valor, indice ) {
         console.log( `a1[${indice}] = ${valor}` );
@@ -40,12 +40,21 @@ function executarExemplo04( event ) {
         console.log( `a2[${indice}] = ${valor}` );
     });
     
-    // arrays associativos não têm tamanho!
+    // a3 não tem elementos, pois o usamos como um
+    // "array associativo" 
     for ( let i = 0; i < a3.length; i++ ) {
         // não entra aqui...
         console.log( `a3[${i}] = ${a3[i]}` );
     }
     
+    // e agora?
+    a3.forEach( valor => {
+        // não entra aqui também
+        console.log( valor );
+    });
+    
+    // assim funciona, pois iteramos pelas
+    // propriedades do objeto
     for ( let chave in a3 ) {
         console.log( `a3[${chave}] = ${a3[chave]}` );
     }
@@ -56,9 +65,9 @@ function executarExemplo04( event ) {
     });
     
     
-    // funções de iteração every e some.
+    // métodos de iteração every e some.
     
-    // a função forEach não foi projetada parar
+    // o método forEach não foi projetada parar
     // parar no meio da execução. para isso, existem
     // outras duas funções análogas que podem ser
     // usadas para esse propósito.

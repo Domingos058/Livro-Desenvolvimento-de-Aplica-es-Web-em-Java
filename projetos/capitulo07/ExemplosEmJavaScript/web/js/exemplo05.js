@@ -65,6 +65,27 @@ function executarExemplo05( event ) {
         }
     };
     
+    // tipos dos objetos
+    console.log( "Retângulo:", typeof r );
+    console.log( "Círculo:", typeof c );
+    console.log( "Genérico:", typeof o );
+    
+    // são instâncias de?
+    console.log( "Retângulo é um Objeto?", r instanceof Object );
+    console.log( "Retângulo é uma Forma?", r instanceof Forma );
+    console.log( "Retângulo é um Retângulo?", r instanceof Retangulo );
+    console.log( "Retângulo é um Círculo?", r instanceof Circulo );
+    
+    console.log( "Círculo é um Objeto?", c instanceof Object );
+    console.log( "Círculo é uma Forma?", c instanceof Forma );
+    console.log( "Círculo é um Retângulo?", c instanceof Retangulo );
+    console.log( "Círculo é um Círculo?", c instanceof Circulo );
+    
+    console.log( "Genérico é um Objeto?", o instanceof Object );
+    console.log( "Genérico é uma Forma?", o instanceof Forma );
+    console.log( "Genérico é um Retângulo?", o instanceof Retangulo );
+    console.log( "Genérico é um Círculo?", o instanceof Circulo );
+    
     // uma string com um objeto codificado como
     // JavaScript Object Notation (JSON)
     let json = '{ "nome": "Maria", "peso": 52.5}';
@@ -84,7 +105,6 @@ function executarExemplo05( event ) {
     r.xIni = 5;
     console.log( r );
     console.log( r.calcularArea() );
-    
     
     console.log( c );
     console.log( c.calcularArea() );
