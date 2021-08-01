@@ -131,43 +131,63 @@ Na linha 5 é declarada uma variável local usando a palavra chave \inlineJavaSc
 
 Na linha 9 fazemos basicamente a mesma coisa para a variável \inlineJavaScriptCode{n2}, mas o retorno da função \inlineJavaScriptCode{prompt} é usada como argumento da função \inlineJavaScriptCode{Number} que converterá a String retornada por \inlineJavaScriptCode{prompt} em um número e então esse valor será atribuído a \inlineJavaScriptCode{n2}.
 
-Entre as linhas 12 e 16 declaramos cinco novas variáveis e atribuímos a elas o resultado de cinco operações. Note que como \inlineJavaScriptCode{n1} referencia uma String, o operador \inlineJavaScriptCode{+} será tratado como operador de concatenação de Strings ao invés de adição, ou seja, \inlineJavaScriptCode{n2} será convertida para String e concatenada em \inlineJavaScriptCode{n1}! Os outros operadores como são aplicáveis apenas à números, \inlineJavaScriptCode{n1} será convertido implicitamente e a operação será realizada. O resultado disso será visto na saída que será gerada e exibida.
+Entre as linhas 12 e 16 declaramos cinco novas variáveis e atribuímos a elas o resultado de cinco operações. Note que como \inlineJavaScriptCode{n1} referencia uma String, o operador \inlineJavaScriptCode{+} será tratado como operador de concatenação de Strings ao invés de adição, ou seja, \inlineJavaScriptCode{n2} será convertida para String e concatenada com \inlineJavaScriptCode{n1}! Os outros operadores como são aplicáveis apenas à números, \inlineJavaScriptCode{n1} será convertido implicitamente e a operação será realizada. O resultado disso será visto na saída que será gerada e exibida.
 
 Falando da saída, na linha 19 declaramos a variável \inlineJavaScriptCode{saida} e concatenamos diversas Strings para gerar o resultado. Em JavaScript existem três literais para Strings:
   
 \begin{enumerate}
     \item Delimitadas por aspas simples (apóstrofo): \inlineJavaScriptCode{'uma string'};
-    \item Delimitadas por aspas duplas (aspas/vírgulas dobradas): \inlineJavaScriptCode{"outra string"};
-    \item Delimitadas por símbolos do acento grave (símbolo usado na crase): \inlineJavaScriptCode{`mais uma string`};
+    \item Delimitadas por aspas duplas (aspas): \inlineJavaScriptCode{"outra string"};
+    \item Delimitadas por acento grave (crase): \inlineJavaScriptCode{`mais uma string`};
 \end{enumerate}
 
-Os dois primeiros são análogos, com a diferença que quando se usa aspas simples como delimitador e queremos ter uma aspas simples dentro da String, precisamos escapá-la com contrabarra (barra invertida) e as aspas duplas não precisam. Exemplo \inlineJavaScriptCode{'a\'b"c'} corresponde à \destaque{\texttt{a'b"c}}. Ao passo que ao se usar as aspas duplas como delimitador, temos \inlineJavaScriptCode{"a'b\"c"} correspondendo à \destaque{\texttt{a'b"c}}.
+Os dois primeiros são análogos, com a diferença que quando se usa aspas simples como delimitador e queremos ter uma aspas simples dentro da String, precisamos escapá-la com contrabarra (barra invertida) e as aspas duplas não precisam. Por exemplo, \inlineJavaScriptCode{'a\'b"c'} corresponde à \destaque{\texttt{a\textquotesingle{}b"c}}. Quando delimitamos a String com aspas duplas temos o contrário, ou seja, \inlineJavaScriptCode{"a'b\"c"} correspondendo à \destaque{\texttt{a\textquotesingle{}b"c}}.
 
 O terceiro tipo de delimitador é mais interessante, pois permite que façamos a interpolação de valores dentro da String usando uma notação parecida com a da EL do Java Web, mas que não tem relação a não ser a sintaxe similar. Para o nosso exemplo, se \inlineJavaScriptCode{n1} valer \inlineJavaScriptCode{"10"} e \inlineJavaScriptCode{n2} valer \inlineJavaScriptCode{5}, o resultado de \inlineJavaScriptCode{`${n1} e ${n2}`} será \destaque{\texttt{10 e 5}}.
 
-Por fim, para apresentar a String gerada, usamos duas formas. A primeira, na linha 29, com a função \inlineJavaScriptCode{alert} que, assim como \inlineJavaScriptCode{prompt}, é bloqueante, fazendo a execução do código parar naquele ponto ao experar a interação do usuário. Essa função recebe uma String como parâmetro e a mostra num diálogo ao ser executada. A outra forma é usando a função \inlineJavaScriptCode{log} do objeto \inlineJavaScriptCode{console}, que recebe um objeto como parâmetro e o mostra no console do navegador. No nosso exemplo, a exibição no console está condicionada ao retorno da função \inlineJavaScriptCode{confirm} que exibe uma mensagem ao usuário e aguarda a interação. Caso o usuário confirme a mensagem, a função retornará um valor verdadeiro, usado na estrutura condicional \inlineJavaScriptCode{if} do exemplo.
+Por fim, para apresentar a String gerada, usamos duas formas. A primeira, na linha 29, com a função \inlineJavaScriptCode{alert} que, assim como \inlineJavaScriptCode{prompt}, é bloqueante, fazendo a execução do código parar naquele ponto ao esperar a interação do usuário. Essa função recebe uma String como parâmetro e a mostra num diálogo ao ser executada. A outra forma é usando a função \inlineJavaScriptCode{log} do objeto \inlineJavaScriptCode{console}, que recebe um objeto como parâmetro e o mostra no console do navegador. No nosso exemplo, a exibição no console está condicionada ao retorno da função \inlineJavaScriptCode{confirm} que exibe uma mensagem ao usuário e aguarda a interação. Caso o usuário confirme a mensagem, a função retornará um valor verdadeiro, usado na estrutura condicional \inlineJavaScriptCode{if} do exemplo.
 
 
 
 \section{Declarações de Variáveis e Suas Implicações}
 
-Texto. 
+Nesta seção trataremos as variáveis e as declarações delas em JavaScript. Como já dito, as variáveis não tem um tipo definido, visto que a linguagem é dinamicamente tipada, implicando que o tipo da variável varia de acordo com o que ela referencia. Em JavaScript temos Strings, números, valores lógicos, funções, objetos entre outros.
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo02.js}
+Toda variável em JavaScript ao ser declarada passará pelo processo de \textit{hoisting}. Nesse processo, a variável será elevada ou içada até o início ou topo do contexto em que ela foi declarada e que passará a existir. A ideia é que quando o interpretador encontra uma declaração de variável e ela é bem sucedida, ou seja, é sintática e semanticamente correta, ela passará a existir como se houvesse sido declarada no início do escopo em que reside.
+
+Podemeos influenciar em como esse içamento ocorrerá em relação à inicialização das variáveis. Veja a lista abaixo, temos quatro formas de declarar variáveis:
+
+\begin{enumerate}
+    \item \inlineJavaScriptCode{let variavel = "valor";};
+    \item \inlineJavaScriptCode{var variavel = "valor";};
+    \item \inlineJavaScriptCode{variavel = "valor";};
+    \item \inlineJavaScriptCode{const constante = "valor";};
+\end{enumerate}
+
+Quando a palavra-chave \inlineJavaScriptCode{let} é usada, a variável só poderá ser usada depois da sua inicialização, mesmo havendo \textit{hoisting} para sua declaração. O mesmo acontece com as constantes, declaradas com \inlineJavaScriptCode{const}. Já as variáveis declaradas com a palavra-chave \inlineJavaScriptCode{var} serão inicializadas com \inlineJavaScriptCode{undefined}. Por fim, as variáveis que são declaradas sem indicar nenhuma dessas três palavras-chave passarão a existir no escopo global, o que pode trazer uma série de problemas. Imagine que você declarou mais de uma variável com o mesmo nome em dois ou mais escopos diferentes. A declaração de fato ocorrerá quando o interpretador a encontrar pela primeira vez e, independende de onde for, ela passará a existir no escopo global e a partir desse ponto você pode perder o controle do valor que a variável referencia se não tomar muito cuidado com o que está fazendo. O ideal é não utilizar ok?
+
+O exemplo apresentado na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo02.js} mostra todos esses efeitos quando for executado. O ``problema'' da variável declarada sem \inlineJavaScriptCode{let}, \inlineJavaScriptCode{var} ou \inlineJavaScriptCode{const} pode ser reproduzido ao se clicar pela segunda vez no botão do exemplo 02.
 
 \javaScriptCode{Exemplo 02\newline%
 Arquivo: \texttt{/js/exemplo02.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo02.js}
+
+Veja o exemplo, todo o código está comentado, não sendo necessário entrar em mais detalhes. Recomendo que você dê uma olhada nos \textit{links} disponibilizados nas próximas duas caixas ``Saiba Mais''.
+
+\begin{saibaMais}
+    Para uma explicação mais detalhada sobre essas implicações, acesse \url{http://www.constletvar.com/}.
+\end{saibaMais}
 
 \begin{saibaMais}
     Para mais detalhes sobre variáveis de clarações em JavaScript, acesse \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements}.
 \end{saibaMais}
 
+Esse conceito pode gerar muita confusão, inclusive se declararmos uma variável com \inlineJavaScriptCode{var} no contexto global (fora de funções) ela será uma variável global (uma propriedade do objeto \texttt{window}), ao passo que dentro de uma função ela terá escopo local, assim como \inlineJavaScriptCode{let} e \inlineJavaScriptCode{const}, mas inicializada como \inlineJavaScriptCode{undefined}. Ainda, é importante frisar que uma constante tem ligação imutável (\textit{immutable binding}) com o que ela referencia, ou seja, ela não pode receber um novo valor, mas o valor que ela referencia pode ser modificado (ela não é imutável), por exemplo, se for um objeto e quisermos alterar alguma de suas propriedades.
+
+
 
 \section{Estruturas Condicionais e Operadores}
 
-Texto.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo03.js}
+Em JavaScript temos as mesmas estruturas condicionais presentes na maioria das linguagens de programação ou seja, um \inlineJavaScriptCode{if} com \inlineJavaScriptCode{else} aninhados e opcionais e um \inlineJavaScriptCode{switch}. Os operadores relacionais e lógicos também são os operadores padrão encontrados na maioria das linguages derivadas de C, com a adição de mais dois operadores relacionais que são o operador de identidade (\inlineJavaScriptCode{===}) e o operador de não identidade (\inlineJavaScriptCode{!==}). Ao passo que os operadores de igualdade e de desigualdade verificam se o valor dos operandos comparados são respectivamente iguais ou difentes, inclusive após a conversão implícita de algum deles, os operadores de identidade e de não identidade verificam, além do valor, agora sem conversão implícita, se, respectivamente, o tipo é o mesmo ou se é diferente. Na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo03.js} pode ser visto o emprego das estruturas condicionais e a declaração de variáveis com alguns valores permitidos.
 
 \javaScriptCode{Exemplo 03\newline%
 Arquivo: \texttt{/js/exemplo03.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo03.js}
