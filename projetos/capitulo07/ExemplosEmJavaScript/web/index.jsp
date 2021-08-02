@@ -173,7 +173,7 @@
       
       <div>
         <p>
-          <h2>Exemplo 10 - Simulação Usando Canvas</h2>
+          <h2>Exemplo 10 - Simulação Usando a Canvas API</h2>
         </p>
         <div id="divExemplo10" class="divExemplo">
           <canvas id="canvasExemplo10"

@@ -290,17 +290,34 @@ A ideia central presente neste Capítulo é fazer com que você entenda um pouco
 \javaScriptCode{Exemplo 08\newline%
 Arquivo: \texttt{/js/exemplo08.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo08.js}
 
-Na linha ....
+Neste exemplo são definidas seis funções que tratarão o evento \textit{click} de seis botões. A ideia é apresentar três situações de duas formas diferentes, uma com JavaScript puro e uma usando jQuery. Na linha 11 da primeira função, \inlineJavaScriptCode{lerDadosFormulario(event)}, obtemos o valor do campo de texto identificado por \texttt{campo01} em seu \texttt{id}. Veja que obtemos o elemento pelo \texttt{id} (método \inlineJavaScriptCode{getElementById( "id" )}), acessamos a propriedade \texttt{value} e atribuímos à variável \inlineJavaScriptCode{campo01}. Podemos também obter componentes pelo atributo \texttt{name}, entretanto pode haver mais de um componente com o mesmo \texttt{name}, então o método \inlineJavaScriptCode{getElementsByName( "name" )} retorna um array. No nosso exemplo há apenas um componente com o nome \texttt{campo02}, mas como o retorno do método \inlineJavaScriptCode{getElementsByName( "name" )} é um array, precisamos obter o primeiro elemento do array retornado e então obter o valor.
+
+Entre as linhas 18 e 20 obtemos o valor de dois componentes \inlineHTMLCode{<select>} e um \inlineHTMLCode{<textarea>}. Note que para os \textit{selects} o valor retornado será o da opção selecionada no momento. Por fim, na linha 22, apresentamos os valores lidos usando um alerta.
+
+A segunda função implementada, \inlineJavaScriptCode{lerDadosFormularioJQuery(event)}, faz a mesma coisa que a primeira, entretanto usando jQuery. Perceba que o código fica mais limpo e enxuto. Basta usar o seletor de id do CSS para obter o componente desejado e usar o método \inlineJavaScriptCode{val()} para obter o valor.
+
+No segundo conjunto de funções, \inlineJavaScriptCode{inserirDadosFormulario(event)} e \newline%
+\inlineJavaScriptCode{inserirDadosFormularioJQuery(event)}, faz o processo inverso, ou seja, ao invés de ler os dados para fazer alguma coisa, os dados são inseridos nos componentes. Perceba que a definição da função \inlineJavaScriptCode{inserirDadosFormulario(event)} é feita usando a notação de closures, atribuindo a função à variável \inlineJavaScriptCode{inserirDadosFormulario}.
+
+Por fim, na última dupla de funções, \inlineJavaScriptCode{inserirNovaOpcao(event)} e \newline%
+\inlineJavaScriptCode{inserirNovaOpcaoJQuery(event)} temos o exemplo de criar uma nova opção para os componentes \textit{select}. Isso será útil no nosso próximo projeto.
+
 
 
 \section{Eventos}
 
-Texto.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo09.js}
+Quase todas as \textit{tags} HTML podem ter eventos registrados nelas. Claro que a maioria dos eventos ``úteis'' são registrados em componentes visíveis, mas há inúmeras possibilidades. Na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo09.js} é apresentado como se faz programaticamente o registro de eventos em nós do DOM ao invés de fazer isso direto no HTML como estamos fazendo com os botões.
 
 \javaScriptCode{Exemplo 09\newline%
 Arquivo: \texttt{/js/exemplo09.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo09.js}
+
+É importante perceber que essa função precisa ser executada para que os tratadores de eventos sejam registrados de fato, sendo assim, na linha 171 da Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/index.jsp}, essa função é invocada dentro da \textit{tag} \inlineHTMLCode{<script>}. Normalmente quando se quer registrar eventos programaticamente no documento isso é feito quando todo o documento está pronto para ser processado, ou seja, todo o DOM foi construído. Veremos isso na prática no Capítulo~\ref{cap:terceiroProjeto}.
+
+Usando JavaScript puro, o registro de eventos é feito associando às propriedades prefixadas com \texttt{on} dos nós do DOM uma função para o tratamento dos mesmos. Na linha 4 da Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo09.js} pode-se ver a obtenção de um campo de texto e o registro do tratador de evento para o evento ``key down'' (tecla pressionada) que mostrará, via \inlineJavaScriptCode{console.log(...)}, o caractere digitado no campo de texto.
+
+Já na linha 9 fazemos o registro do evento \textit{change} de um \textit{select} usando jQuery. Veja como a sintaxe é diferente. O evento \textit{change} é disparado quando se seleciona uma opção do \textit{select} em questão. No nosso caso, o valor da opção selecionada será mostrada usando um alerta.
+
+Na caixa ``Saiba Mais'' abaixo você poderá conferir uma lista completa de todos os eventos que existem e podem ser usados.
 
 \begin{saibaMais}
     A documentação completa sobre os eventos que podem ser tratados pode ser vista em  \url{https://developer.mozilla.org/en-US/docs/Web/Events}.
@@ -308,14 +325,35 @@ Arquivo: \texttt{/js/exemplo09.js}}{projetos/capitulo07/ExemplosEmJavaScript/web
 
 
 
-\section{Simulação Usando \textit{Canvas}}
+\section{Simulação Usando a Canvas API}
 
-Texto.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo10.js}
+Nesta Seção falaremos um pouco sobre o \textit{tag} \inlineHTMLCode{<canvas>} e sobre a Canvas API, que nos permitirá realizar operações de desenho em Duas Dimensões (2D). Atualmente, além de trabalhar com desenhos em duas dimensões, podemos também usar a WebGL API para realizar desenhos em 2D ou Três Dimensões (3D) usando aceleração em \textit{hardware}, mas isso foge demais do escopo deste livro. Focaremos no 2D realizando a simulação da física de ``bolinhas'' que serão animadas para que você possa conhecer um pouco sobre a Canvas API e sobre a utilização da função \inlineJavaScriptCode{setInterval(...)} que nos permetirá executar código repetidamente em um intervalo predefinido de tempo. Na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo10.js} podemos ver o código completo do exemplo.
 
 \javaScriptCode{Exemplo 10\newline%
 Arquivo: \texttt{/js/exemplo10.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo10.js}
+
+Entre as linhas 3 e 121 definimos uma classe chamada \texttt{Bolinha}. A ideia é que essa classe modele uma bolinha, na verdade um círculo pequeno, que estará suscetível à forças físicas que simularemos. O construtor da classe -linha 6- possui seis parâmetros:
+
+\begin{itemize}
+    \item \inlineJavaScriptCode{x}: é a posição do centro da bolinha no eixo $x$;
+    \item \inlineJavaScriptCode{y}: é a posição do centro da bolinha no eixo $y$;
+    \item \inlineJavaScriptCode{velocidadeX}: é a quantidade de \textit{pixels} que a bolinha andará no eixo $x$ a cada passo da simulação;
+    \item \inlineJavaScriptCode{velocidadeY}: é a quantidade de \textit{pixels} que a bolinha andará no eixo $y$ a cada passo da simulação;
+    \item \inlineJavaScriptCode{raio}: representa o raio do círculo;
+    \item \inlineJavaScriptCode{cor}: é a cor que será utilizada para desenhar a bolinha.
+\end{itemize}
+
+Ao construir a bolinha esses valores serão usados para inicializar os atributos correspondentes e, além desses, outros atributos serão criados com valores fixos:
+
+\begin{itemize}
+    \item \inlineJavaScriptCode{elasticidade}: representa algo como o coeficiente de elasticidade do ``material'' da bolinha. Na nossa simulação ele será fixo para todas as bolinhas criadas e será usado quando uma bolinha bater em alguma parede;
+    \item \inlineJavaScriptCode{atrito}: é a tentativa de simular o coeficiente de atrito do material da bolinha com o meio em que ela está imersa;
+    \item \inlineJavaScriptCode{emArraste}: indica se a bolinha está sendo arrastada na simulação, ou seja, se o usuário a ``pegou'' com o mouse e está a arrastando no \inlineHTMLCode{<canvas>}.
+\end{itemize}
+
+Entre as linhas 18 e 35 é definido o método \inlineJavaScriptCode{desenhar( ctx )} da bolinha. Esse método tem como parâmetro um objeto do tipo \texttt{CanvasRenderingContext2D} que será o responsável em realizar o desenho propriamente dito. Uma analogia que podemos fazer é que esse objeto atua como uma caneta super poderosa que pode trocar de cor, de traço etc. Chamaremos esse objeto de contexto gráfico. Na linha 22 é informado ao contexto gráfico a cor que deve ser usada, ou seja, a cor definida na construção da bolinha. Precisamos desenhar um círculo para representar nossa bolinha, mas não há um método específico para círculos no contexto gráfico da Canvas API. Para fazer isso, inicia-se um caminho na linha 25 e, na linha 29, usamos o método \inlineJavaScriptCode{arc(...)} que é capaz de desenhar arcos. Esse método recebe a coordenada onde o arco deve começar, no nosso caso é  representada pelo centro da bolinha, ou seja, o par ordenado $\{x, y\}$ em conjunto com o raio da mesma e quantos radianos devem ser usados no início e no fim da traçagem do arco. No nosso caso iniciamos em 0 e vamos até $2\pi$ que representa uma volta completa em torno de $\{x, y\}$, fazendo assim o círculo que precisamos. Na linha 33 o contexto gráfico é informado que o caminho que foi iniciado na linha 25 deve ser fechado e preenchido com a cor definida.
+
+Na linha 38 temos a definição do método \inlineJavaScriptCode{mover()} que será responsável em atualizar o estado da bolinha durante a simulação, trocando sua posição de acordo com as velocidades em $x$ e $y$, detectando a colisão com as ``paredes'' do \inlineHTMLCode{<canvas>} a aplicando as forças que já citamos, além da gravidade, que será um valor global à simulação. Esse método será executado a cada passo da simulação. Logo veremos isso acontecendo. A implementação desse método é relativamente fácil de entender. Nas linhas 45 e 46 a posição da bolinha é incrementada com base nas velocidades. Ou seja, se a bolinha está na posição $\{50, 60\}$\footnote{Costumeiramente em APIs gráficas, o sistema de coordenadas cartesiano em um plano é centralizado no canto superior esquerdo dos componentes gráficos, ou seja, a origem de ambos os eixos (ponto $\{0, 0\}$) está situado nesse canto, com o eixo $x$ crescendo para a direita e o eixo $y$ crescendo para baixo, ou seja, para o eixo $y$ temos o contrário do que estamos acostumados na matemática.} e a velocidade no momento desse incremento é de $5$ em $x$ e $-2$ em $y$, após o incremento a bolinha estará na posição $\{55, 58\}$. Perceba que esse cálculo e as próximas verificações serão feitas apenas se a bolinha não estiver sendo arrastada pelo mouse, pois se o estiver, a posição da bolinha dependerá do cursor e não da simulação física. Essa verificação é feita na linha 41. Entre as linhas 49 e 94 são feitas as verificações se a bolinha passou os limites/``paredes'' do \inlineHTMLCode{<canvas>} e, caso tenha, precisa ser reposicionada para não sumir. Além disso, quando a bolinha bater na parede, é necessário incidir a elasticidade do material, pois ela terá que perder momento. Por fim, nas linhas 97 e 98 as velocidades atuais são recalculadas aplicando o atrito e na linha 101 a gravidade será aplicada à velocidade do componente $y$.
 
 \begin{saibaMais}
     A API do Canvas pode ser vista em \url{https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API}.

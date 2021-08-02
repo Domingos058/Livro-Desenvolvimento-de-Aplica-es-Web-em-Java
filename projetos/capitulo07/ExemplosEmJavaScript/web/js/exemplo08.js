@@ -4,10 +4,10 @@ let contadorOpSelect04 = 4;
 function lerDadosFormulario( event ) {
     
     // obtém os dados do formulário usando
-    // javascript puro
+    // JavaCcript puro
     
     // obtém por id (não deve haver mais de um!)
-    // e pegar o propriedade value
+    // e pegar a propriedade value
     let campo01 = document.getElementById( "campo01" ).value;
     
     // obtém pelo atributo name (pode haver mais de um!)

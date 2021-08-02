@@ -8,7 +8,7 @@ function registrarEventosExemplo09() {
     // jQuery
     $( "#selectExemplo09" ).on( "change", function( event ) {
         // nesse conexto, this é a mesma coisa que event.target
-        // ou seja, o elemento que disparou o evento
+        // ou seja, o elemento em que o evento foi disparado
         let select = $( this );
         alert( `Valor: ${select.val()}` );
     });
