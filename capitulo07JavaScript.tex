@@ -355,6 +355,14 @@ Entre as linhas 18 e 35 é definido o método \inlineJavaScriptCode{desenhar( ct
 
 Na linha 38 temos a definição do método \inlineJavaScriptCode{mover()} que será responsável em atualizar o estado da bolinha durante a simulação, trocando sua posição de acordo com as velocidades em $x$ e $y$, detectando a colisão com as ``paredes'' do \inlineHTMLCode{<canvas>} a aplicando as forças que já citamos, além da gravidade, que será um valor global à simulação. Esse método será executado a cada passo da simulação. Logo veremos isso acontecendo. A implementação desse método é relativamente fácil de entender. Nas linhas 45 e 46 a posição da bolinha é incrementada com base nas velocidades. Ou seja, se a bolinha está na posição $\{50, 60\}$\footnote{Costumeiramente em APIs gráficas, o sistema de coordenadas cartesiano em um plano é centralizado no canto superior esquerdo dos componentes gráficos, ou seja, a origem de ambos os eixos (ponto $\{0, 0\}$) está situado nesse canto, com o eixo $x$ crescendo para a direita e o eixo $y$ crescendo para baixo, ou seja, para o eixo $y$ temos o contrário do que estamos acostumados na matemática.} e a velocidade no momento desse incremento é de $5$ em $x$ e $-2$ em $y$, após o incremento a bolinha estará na posição $\{55, 58\}$. Perceba que esse cálculo e as próximas verificações serão feitas apenas se a bolinha não estiver sendo arrastada pelo mouse, pois se o estiver, a posição da bolinha dependerá do cursor e não da simulação física. Essa verificação é feita na linha 41. Entre as linhas 49 e 94 são feitas as verificações se a bolinha passou os limites/``paredes'' do \inlineHTMLCode{<canvas>} e, caso tenha, precisa ser reposicionada para não sumir. Além disso, quando a bolinha bater na parede, é necessário incidir a elasticidade do material, pois ela terá que perder momento. Por fim, nas linhas 97 e 98 as velocidades atuais são recalculadas aplicando o atrito e na linha 101 a gravidade será aplicada à velocidade do componente $y$.
 
+Entre as linhas 108 e 113 é implementado o método \inlineJavaScriptCode{intercepta( x, y )} que retornará \inlineJavaScriptCode{true} caso a coordenada passada nos parâmetros interceptar a bolinha ou \inlineJavaScriptCode{false} caso contrário, ou seja, se está dentro do círculo que a define. Esse cálculo é relativamente simples, bastando usar o teorema de pitágoras para calcular a distância do centro da bolinha até a coordenada fornecida. Se essa distância, que é a hipotenusa do triângulo retângulo formado por esses dois pontos, considerando que os mesmos são os vértices dos ângulos agudos do triângulo, for menor ou igual ao raio do círculo, quer dizer que a coordenada está dentro do círculo.
+
+O método \inlineJavaScriptCode{gerarNovaVelocidade()} é definido entre as linhas 116 e 119 e gerará uma nova velocidade aleatória para a bolinha quando for invocado, variando de $-30$ a $30$.
+
+Após a definição da classe da bolinha, temos o restante do código da simulação. Note que todo o código está comentado, por isso não ficarei esmiuçando todos os detalhes aqui.
+
+Caso tenha interesse em explorar a Canvas API acesso o \textit{link} disponível na caixa ``Saiba Mais'' abaixo.
+
 \begin{saibaMais}
     A API do Canvas pode ser vista em \url{https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API}.
 \end{saibaMais}
@@ -363,21 +371,38 @@ Na linha 38 temos a definição do método \inlineJavaScriptCode{mover()} que se
 
 \section{Requisições Assíncronas e Intercâmbio de Dados}
 
-Texto. Falar da Web Worker API
+Vamos agora lidar com o último tópico deste Capítulo em que tratamos as requisições assíncronas ao servidor. A linguagem JavaScript atualmente possui diversas funcionalidades e construções para trabalharmos com requisições assíncronas e com linhas de execução -threads- em segundo plano. Lidaremos com o chamado \textit{Asynchronous JavaScript and XML} AJAX. Esse nome não se encaixa mais muito bem com o que é feito atualmente, mas mesmo assim continuaremos a utilizá-lo, visto que se tornou o termo técnico para designar requisições ao servidor que são feitas em segundo plano e que, ao terminarem, são processadas do lado do cliente.
+
+A ideia se baseia em, a partir da execução de código JavaScript, podermos criar um outro canal de comunicação com o servidor, além dos já criados pelo navegador para baixar o código HTML da página, baixar imagens, sincronizar o \textit{stream} de dados de um vídeo que está sendo transmitido pelo servidor e assistido pelos clientes e assim por diante. Essa conversa com o servidor ocorre em segundo plano, ou seja, a invocação do AJAX não é bloqueante como a chamada da função \inlineJavaScriptCode{alert} que faz o código ``parar'' de executar naquele ponto até que a função termine. Dada essa característica assíncrona é necessário que esse canal de comunicação seja tratado no futuro, após a chamada do AJAX começar, pois não sabemos quando ela terminará ou mesmo se terminará a contento.
+
+Antigamente, antes da criação da jQuery, o preparo para a comunicação assíncrona com o servidor era um tanto quanto ``bagunçado'', pois isso não era padronizado entre os navegadores e cada um implementava de uma forma. Como desenvolvemos para a maior quantidade de navegadores possíveis, era necessário ter um código que ficasse verificando em qual navegador estava rodando e as vezes levando em consideração até a versão do mesmo. Enfim, quase um caos.
+
+Depois que John Resig criou a jQuery e ela foi sendo adotada amplamente pelos desenvolvedores de aplicações Web, essa tarefa se tornou muito mais transparente, pois a biblioteca encapsulava essa questão do tratamento entre navegadores diferentes e esse foi um dos principais fatores para sua popularização. Veremos como fazer requisições AJAX com a jQuery, principalmente pelo fato já informado relacionado à software legado, mas também aprenderemos a fazer a mesma requisição usando a Fetch API que se baseia nas \textit{Promises}, outra novidade do JavaScript ``moderno''. Uma \textit{Promise} é utilizada justamente na viabilização de rotinas que necessitam de processamento assíncrono e, como o nome diz, se trata de uma promessa, algo que pode ou não acontecer no futuro. Já falamos disso anteriormente quando definimos o AJAX não é?
+
+Nas próximas caixas ``Saiba Mais'' você poderá encontrar mais material sobre as APIs de nível mais baixo para a execução de processamento assíncrono.
+
+\begin{saibaMais}
+    Mais sobre Promises \url{https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise}
+\end{saibaMais}
 
 \begin{saibaMais}
     Mais sobre a API Web Workers \url{https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_APII}.
 \end{saibaMais}
 
 
+
 \subsection{AJAX com jQuery e com Fetch API}
 
-Texto.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo11.js}
+Neste exemplo faremos a invocação do Servlet de cálculo de tabuadas de forma assíncrona, utilizando tanto a função \inlineJavaScriptCode{ajax(...)} da jQuert, quanto a função \inlineJavaScriptCode{fetch(...)} da Fetch API. Veja que na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo11.js} são definidas suas funções que fazem basicamente a mesma coisa, mudando o meio de execução, pois uma usa jQuery e a outra JavaScript puro.
 
 \javaScriptCode{Exemplo 11\newline%
 Arquivo: \texttt{/js/exemplo11.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo11.js}
+
+As duas funções obtém um valor, que se espera que seja um número inteiro, pois não há tratamento, e então o usam como parâmetro em uma requisição ao Servlet mapeado na URL \texttt{/calcularTabuada}. Como o \textit{script} executará no mesmo diretório em que o Servlet está mapeado, não há necessidade de informar o caminho da requisição de forma absoluta.
+
+Como o código está totalmente comentado não ficarei explicando-o detalhadamente, mas a ideia é que quando a requisição for enviada ela será tratada pelas funções de \textit{callback} apropriadas dependendo do que acontecer. Vejam, é uma promessa do tipo ``vou enviar algo para o servidor pedindo algum recurso e esperar que ele me responda algo''. Essa resposta pode acontecer em um milésimo de segundo ou em alguns segundos ou mesmo nunca retornar! Então espera-se que no futuro o retorno (ou não retorno!) da requisição seja tratado. O que diferencia as chamadas assíncronas nos dois exemplos é justamente a sintaxe das funções. Ambas têm como primeiro parâmetro a URL que deve ser alcançada e como segundo um objeto de opções, que variará de acordo com a função utilizada. Na \inlineJavaScriptCode{ajax(...)} criaremos um objeto com as propriedades \texttt{data}, que contém os parâmetros que serão codificados na requisição e \texttt{dataType} que informa ao chamador que tipo de dado será retornado pelo servidor. Já na \inlineJavaScriptCode{fetch(...)} os parâmetros devem ser encapsulados em um objeto do tipo \texttt{URLSearchParams} e configurados na propriedade \texttt{body} do objeto de opções. Em ambas as funções, caso o método HTTP que deve ser utilizado não for informado, o padrão será utilizar GET.
+
+Recomendo a leitura das respectivas documentações fornecidas nas duas caixas ``Saiba Mais'' abaixo.
 
 \begin{saibaMais}
     Documentação da função jQuery.ajax(): \url{https://api.jquery.com/jquery.ajax/}.
@@ -387,23 +412,38 @@ Arquivo: \texttt{/js/exemplo11.js}}{projetos/capitulo07/ExemplosEmJavaScript/web
     Documentação da Fetch API: \url{https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API}.
 \end{saibaMais}
 
+\begin{saibaMais}
+    Usando a Fetch API: \url{https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch}.
+\end{saibaMais}
+
 
 \subsection{AJAX jQuery e com Fetch API Processando JSON}
 
-Texto.
-
-\url{https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch}
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo12.js}
+Nosso último exemplo é parecido com o primeiro, com a diferença que agora o servidor ao invés de responder texto puro, nos enviará dados em JSON. Sim, JSON é texto puro também, mas como o servidor informará que o texto que está vindo é em JSON, as funções conseguirão fazer a desserialização dos dados de forma automática para que possamos tratá-los. Na Listagem~\thechapter.\ref{listagem:projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo12.js} podem ser vistas as definições das duas funções, novamente uma usando jQuery e a outra a Fetch API.
 
 \javaScriptCode{Exemplo 12\newline%
 Arquivo: \texttt{/js/exemplo12.js}}{projetos/capitulo07/ExemplosEmJavaScript/web/js/exemplo12.js}
 
+Veja que agora os dados retornados serão processados, transformados em objetos JavaScript e então utililizados de forma transparente. Muito interessante concorda? Mais uma vez, todas as novidades estão comentadas!
+
+
 
 \section{Resumo}
 
+Chegamos ao fim de mais um Capítulo, onde aprendemos o básico sobre JavaScript que é a linguagem que invariavelmente, qualquer desenvolvedor Web terá que lidar no seu trabalho. É importante que você tenha um certo domínio sobre a mesma e que, após a leitura e entendimento do Capítulo, você seja capaz de continuar seu aprendizado. No próximo Capítulo usaremos JavaScript para implementarmos um formulário de venda de produtos, com a definição da quantidade que certo produto será vendido. Usaremos também AJAX para podermos cancelar uma venda. Enfim, isso é assunto para o próximo Capítulo!
 
-\section{Exercícios}
 
 
 \section{Projetos}
+
+\begin{projetoSemArquivo}{}{}{}
+    Implemente um cadastro simples, apenas a inserção, de dados de uma ``fruta''. A tabela deve ter como colunas um campo identificador (\inlineSQLCode{INT}), um campo que armazenará o nome da fruta (\inlineSQLCode{VARCHAR}) e um campo para armazenar a cor predominante da fruta (\inlineSQLCode{VARCHAR}). Deve-se listar as frutas cadastrados usando AJAX, montando uma tabela dinamicamente, ao invés de processar os objetos no JSP do lado do servidor. Note que esse projeto é parecido com o Projeto 4.1 do Capítulo~\ref{cap:padroesDeProjeto}.
+\end{projetoSemArquivo}
+
+\begin{projetoSemArquivo}{}{}{}
+    Repita o Projeto 7.1, só que agora para a tabela ``carro''. Um carro deve ter um identificador, um nome (\inlineSQLCode{VARCHAR}), um modelo (\inlineSQLCode{VARCHAR}) e um ano de fabricação (\inlineSQLCode{INT}). Note que esse projeto é parecido com o Projeto 4.2 do Capítulo~\ref{cap:padroesDeProjeto}.
+\end{projetoSemArquivo}
+
+\begin{projetoSemArquivo}{}{}{}
+    Repita o Projeto 7.1, só que agora para a tabela ``produto''. Um produto deve ter um identificador, uma descrição (\inlineSQLCode{VARCHAR}) e uma quantidade em estoque (\inlineSQLCode{INT}). Note que esse projeto é parecido com o Projeto 4.3 do Capítulo~\ref{cap:padroesDeProjeto}.
+\end{projetoSemArquivo}
