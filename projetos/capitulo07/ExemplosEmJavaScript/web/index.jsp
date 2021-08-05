@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="${cp}/css/estilos.css"/>
   </head>
   <body>
-    <!--div>
+    <div>
       
       <h1>Construções da Linguagem</h1>
       
@@ -165,11 +165,11 @@
             <option value="o3">Opção 3</option>
           </select>
           
-        </div-->
+        </div>
         <!-- precisa executar depois das
              tags estarem prontas! -->
-        <!--script>registrarEventosExemplo09();</script>
-      </div-->
+        <script>registrarEventosExemplo09();</script>
+      </div>
       
       <div>
         <p>
