@@ -57,7 +57,7 @@ function executarExemplo03( event ) {
         console.log( "uai!?" );
     }
     
-    if ( isNaN( NaN ) ) {
+    if ( isNaN( v6 ) ) {
         console.log( "pra NaN, só assim..." );
     }
     

@@ -56,7 +56,7 @@ let inserirDadosFormulario = event => {
     
     // configurando os valores
     document.getElementById( "campo01" ).value = "campo 01 atualizado";
-    document.getElementsByName( "campo02" )[0].value = "camo 02 também";
+    document.getElementsByName( "campo02" )[0].value = "campo 02 também";
     document.getElementById( "select03" ).value = "o2";
     document.getElementById( "select04" ).value = "o3";
     document.getElementById( "area05" ).value = "outro valor";
@@ -93,9 +93,9 @@ function inserirNovaOpcao( event ) {
 function inserirNovaOpcaoJQuery( event ) {
     
     // com jQuery é um pouco mais limpo
-    let op = $( "<option></option>" );
-    op.html( `Opção ${contadorOpSelect04}jq` );
-    op.val( `o${contadorOpSelect04}jq` );
+    let op = $( "<option></option>" )
+            .html( `Opção ${contadorOpSelect04}jq` )
+            .val( `o${contadorOpSelect04}jq` );
     
     $( "#select04" ).append( op );
     

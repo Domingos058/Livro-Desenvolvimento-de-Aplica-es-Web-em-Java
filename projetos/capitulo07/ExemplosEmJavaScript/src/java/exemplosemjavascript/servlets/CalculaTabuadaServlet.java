@@ -25,7 +25,7 @@ public class CalculaTabuadaServlet extends HttpServlet {
             throws ServletException, IOException {
         
         // resposta em texto puro codificado em UTF-8
-        response.setContentType( "text/plain;charset=UTF-8" );
+        response.setContentType( "text/html;charset=UTF-8" );
         
         StringBuilder sb = new StringBuilder();
         

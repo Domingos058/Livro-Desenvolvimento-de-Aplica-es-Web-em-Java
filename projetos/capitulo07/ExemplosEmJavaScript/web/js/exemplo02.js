@@ -57,7 +57,7 @@ function testarVariaveis() {
     }
     
     try {
-        // v1 não existe neste escopo nem
+        // v2 não existe neste escopo nem
         // em um escopo externo
         console.log( v2 );
         v2++; // nem aqui
