@@ -2,7 +2,7 @@
  * Implementação das funções dor formulários de venda.
  */
 
-// on document ready (quando o documento estiver pronto)
+// Document ready (quando o documento estiver pronto)
 $( () => {
     
     // array para armazenar os itens da venda
@@ -22,7 +22,7 @@ $( () => {
         }
     );
     
-    
+    // ao clicar no botão inserir
     $( "#btnInserir" ).on( "click", event => {
         
         let $selectProduto = $( "#selectProduto" );
@@ -44,9 +44,13 @@ $( () => {
                 }
             });
             
+            // se há item igual
             if ( itemIgual !== null ) {
+                
                 // soma a quantidade
                 itemIgual.quantidade += quantidade;
+                
+                // caso contrário, cria um novo item
             } else {
                 itensVenda.push({
                     idProduto: idProduto,
@@ -67,14 +71,41 @@ $( () => {
     
     $( "#btnRemover" ).on( "click", event => {
         
-        let $select = $( "#selectItensVenda" );
-        let itemSelecionado = $select.prop( "selectedIndex" );
+        // retorna um array com os values de todos os itens
+        // (option) selecionados
+        let selecao = $( "#selectItensVenda" ).val();
         
-        if ( itemSelecionado === -1 ) {
+        // se não selecionou nenhum
+        if ( selecao.length === 0 ) {
             alert( "Selecione um item da venda para remover!" );
-        } else if ( confirm( "Deseja remover o item da venda selecionado?" ) ) {
-            itensVenda.splice( itemSelecionado, 1 );
+            
+            //se há seleção
+        } else if ( confirm( "Deseja remover o(s) item(ns) da venda selecionado(s)?" ) ) {
+            
+            // itera pela seleção
+            for ( let i = 0; i < selecao.length; i++ ) {
+                
+                // busca sequencial nos itens de venda
+                for ( let j = 0; j < itensVenda.length; j++ ) {
+                    
+                    let item = itensVenda[j];
+                    
+                    // encontrou?
+                    if ( selecao[i].startsWith( item.idProduto + "-" ) ) {
+                        
+                        // remove da posição j
+                        itensVenda.splice( j, 1 );
+                        break;
+                        
+                    }
+                    
+                }
+                
+            }
+            
+            // remonta a lista
             montarSelectItensVenda();
+            
         }
         
     });
@@ -95,6 +126,7 @@ $( () => {
         }
         
         return true;
+        
     });
     
     // evita que, ao teclar enter dentro do campo

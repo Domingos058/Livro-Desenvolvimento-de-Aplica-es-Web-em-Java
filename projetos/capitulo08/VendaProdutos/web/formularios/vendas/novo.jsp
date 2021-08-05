@@ -104,7 +104,7 @@
             <td>
               Itens da Venda:
               <br>
-              <select id="selectItensVenda" size="10">
+              <select id="selectItensVenda" size="10" multiple>
               </select>
               <br>
               <div>
