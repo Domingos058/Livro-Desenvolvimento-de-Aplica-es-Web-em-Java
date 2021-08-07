@@ -17,7 +17,7 @@
           href="${cp}/css/estilos.css"/>
     
     <script src="${cp}/js/libs/jquery/jquery.min.js"></script>
-    <script src="${cp}/js/listagemVendas.js"></script>
+    <script src="${cp}/js/formularios/vendas/listagem.js"></script>
     
   </head>
 
@@ -67,7 +67,6 @@
                   </a>
                 </c:otherwise>
               </c:choose>
-              
             </td>
           </tr>
         </c:forEach>

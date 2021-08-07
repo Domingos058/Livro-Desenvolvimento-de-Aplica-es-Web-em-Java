@@ -17,7 +17,7 @@
           href="${cp}/css/estilos.css"/>
     
     <script src="${cp}/js/libs/jquery/jquery.min.js"></script>
-    <script src="${cp}/js/vendas.js"></script>
+    <script src="${cp}/js/formularios/vendas/novo.js"></script>
     
   </head>
 
