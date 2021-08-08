@@ -18,9 +18,11 @@ public class ItemVenda {
     @NotNull
     private Produto produto;
     
+    @NotNull
     @PositiveOrZero
     private BigDecimal valor;
     
+    @NotNull
     @Positive
     private BigDecimal quantidade;
 

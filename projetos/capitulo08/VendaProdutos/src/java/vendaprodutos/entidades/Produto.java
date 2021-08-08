@@ -25,9 +25,11 @@ public class Produto {
               message = "deve corresponder à 9999999999999" )
     private String codigoBarras;
     
+    @NotNull
     @PositiveOrZero
     private BigDecimal valorVenda;
     
+    @NotNull
     @PositiveOrZero
     private BigDecimal estoque;
     

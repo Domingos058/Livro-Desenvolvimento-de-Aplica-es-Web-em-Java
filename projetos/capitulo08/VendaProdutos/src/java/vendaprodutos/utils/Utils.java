@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vendaprodutos.utils;
 
 import java.sql.Date;
@@ -149,7 +144,8 @@ public abstract class Utils {
     
     /*
      * Realiza a validação do objeto passado e lança
-     * uma SQLException com todos os erros obtidos.
+     * uma SQLException com todos os erros obtidos caso o
+     * objeto seja inválido.
      */
     public static void validar(
             Object obj,
@@ -162,6 +158,9 @@ public abstract class Utils {
         
         if ( !cvs.isEmpty() ) {
             
+            // cria uma mensagem com várias
+            // tags <li> que conterão as inconsistências
+            // encontradas no objeto validado
             for ( ConstraintViolation cv : cvs ) {
                 sb.append( String.format( 
                         "<li>%s: %s</li>", 
@@ -169,6 +168,7 @@ public abstract class Utils {
                         cv.getMessage() ) );
             }
             
+            // lança a exceção com todos os erros
             throw new SQLException( sb.toString() );
             
         }

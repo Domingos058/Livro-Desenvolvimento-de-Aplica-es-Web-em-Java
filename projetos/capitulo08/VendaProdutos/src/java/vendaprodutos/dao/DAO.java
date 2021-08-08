@@ -6,7 +6,8 @@ import java.util.List;
 import vendaprodutos.jdbc.ConnectionFactory;
 
 /**
- * DAO genérico.
+ * DAO genérico que implementa a interface AutoCloseable,
+ * permitindo o uso da construção try-with-resources.
  *
  * @author Prof. Dr. David Buzatto
  */
