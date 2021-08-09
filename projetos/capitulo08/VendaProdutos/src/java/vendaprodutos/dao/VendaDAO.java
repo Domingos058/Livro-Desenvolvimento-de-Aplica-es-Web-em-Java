@@ -46,6 +46,8 @@ public class VendaDAO extends DAO<Venda> {
     @Override
     public void atualizar( Venda obj ) throws SQLException {
 
+        // a atualização das vendas será a de cancelamento
+        
         PreparedStatement stmt = getConnection().prepareStatement(
                 "UPDATE venda " + 
                 "SET" + 
@@ -67,17 +69,7 @@ public class VendaDAO extends DAO<Venda> {
 
     @Override
     public void excluir( Venda obj ) throws SQLException {
-
-        PreparedStatement stmt = getConnection().prepareStatement(
-                "DELETE FROM venda " + 
-                "WHERE" + 
-                "    id = ?;" );
-
-        stmt.setLong( 1, obj.getId() );
-
-        stmt.executeUpdate();
-        stmt.close();
-
+        // vendas não são excluídas!
     }
 
     @Override

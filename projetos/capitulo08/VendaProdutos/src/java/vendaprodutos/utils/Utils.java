@@ -1,5 +1,6 @@
 package vendaprodutos.utils;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,6 +55,25 @@ public abstract class Utils {
     }
     
     /*
+     * Lê um parâmetro BigDecimal do request.
+     * Se a String for inválida, retorna null.
+     */
+    public static BigDecimal getBigDecimal( 
+            HttpServletRequest request,
+            String nomeParametro ) {
+        
+        BigDecimal v = null;
+        
+        try {
+            v = new BigDecimal( request.getParameter( nomeParametro ) );
+        } catch ( NumberFormatException exc ) {
+        }
+        
+        return v;
+        
+    }
+    
+    /*
      * Converte uma String para Long.
      * Se a String for inválida, retorna null.
      */
@@ -63,6 +83,23 @@ public abstract class Utils {
         
         try {
             v = Long.valueOf( valor );
+        } catch ( NumberFormatException exc ) {
+        }
+        
+        return v;
+        
+    }
+    
+    /*
+     * Converte uma String para BigDecimal.
+     * Se a String for inválida, retorna null.
+     */
+    public static BigDecimal getBigDecimal( String valor ) {
+        
+        BigDecimal v = null;
+        
+        try {
+            v = new BigDecimal( valor );
         } catch ( NumberFormatException exc ) {
         }
         

@@ -42,10 +42,10 @@ public class ProdutosServlet extends HttpServlet {
 
                 String descricao = request.getParameter( "descricao" );
                 String codigoBarras = request.getParameter( "codigoBarras" );
-                BigDecimal valorVenda = new BigDecimal( 
-                        request.getParameter( "valorVenda" ) );
-                BigDecimal estoque = new BigDecimal( 
-                        request.getParameter( "estoque" ) );
+                BigDecimal valorVenda = Utils.getBigDecimal( 
+                        request, "valorVenda" );
+                BigDecimal estoque = Utils.getBigDecimal( 
+                        request, "estoque" );
                 Long idFornecedor = Utils.getLong( 
                         request, "idFornecedor" );
                 Long idUnidadeMedida = Utils.getLong( 
@@ -72,10 +72,10 @@ public class ProdutosServlet extends HttpServlet {
                 Long id = Utils.getLong( request, "id" );
                 String descricao = request.getParameter( "descricao" );
                 String codigoBarras = request.getParameter( "codigoBarras" );
-                BigDecimal valorVenda = new BigDecimal( 
-                        request.getParameter( "valorVenda" ) );
-                BigDecimal estoque = new BigDecimal( 
-                        request.getParameter( "estoque" ) );
+                BigDecimal valorVenda = Utils.getBigDecimal( 
+                        request, "valorVenda" );
+                BigDecimal estoque = Utils.getBigDecimal( 
+                        request, "estoque" );
                 Long idFornecedor = Utils.getLong( 
                         request, "idFornecedor" );
                 Long idUnidadeMedida = Utils.getLong( 

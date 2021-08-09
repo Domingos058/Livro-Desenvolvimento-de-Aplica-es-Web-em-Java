@@ -57,7 +57,7 @@ A anotação \inlineJavaCode{@PositiveOrZero} indica que o atributo do tipo BigD
     O site oficial da especificação e da implementação da API \textit{Bean Validation} pode ser acessada pelo link \url{https://beanvalidation.org/}
 \end{saibaMais}
 
-A validação dos objetos será feita sempre nos Servlets e é implementada pelo método \inlineJavaCode{validar}, que tem sua implementação iniciada na linha 150 da classe \texttt{Utils}, mostrada na Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/utils/Utils.java}.
+A validação dos objetos será feita sempre nos Servlets e é implementada pelo método \inlineJavaCode{validar}, que tem sua implementação iniciada na linha 187 da classe \texttt{Utils}, mostrada na Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/utils/Utils.java}.
 
 \javaCode{Classe ``Utils'' com métodos estáticos utilitários\newline%
 Arquivo: \texttt{vendaprodutos/utils/Utils.java}}{projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/utils/Utils.java}
@@ -79,72 +79,83 @@ A outra mudança que temos em nossos DAOs é que agora toda entidade ao ser pers
 \javaCode{Código da classe ``ProdutoDAO''\newline%
 Arquivo: \texttt{vendaprodutos/dao/ProdutoDAO.java}}{projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/dao/ProdutoDAO.java}
 
-Veja que a criação do \texttt{PreparedStatement} do método \inlineJavaCode{salvar} agora usa outra versão do método \inlineJavaCode{prepareStatement(...)} de \texttt{Connection}. Nessa versão, além da String contendo o código SQL que será executado, é passado um array de Strings com o nome da ou das colunas que representam as chaves primárias daquela tabela. Essa ``artimanha'' funciona para colunas que são auto incrementáveis, que é o caso dos nossos identificadores. Precisaremos dessa característica no cadastro das vendas. Veremos isso mais para frente. Quando fazemos uso desse recurso, após a persistência do objeto, que gerará uma nova linha/registro/tupla na tabela, precisaremos usar o mesmo \texttt{PreparedStatement} para obter a ou as chaves. Isso será feito no método \inlineJavaCode{getChavePrimariaAposInsercao(...)} da classe \texttt{Utils} (linha 96 da Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/utils/Utils.java}). Como consistentemente estamos usando uma coluna chamada \texttt{id} como chave primária auto incrementável, usaremos esse método para todas as nossas entidades, com exceção da \texttt{ItemVenda} que funcionará de outra forma.
+Veja que a criação do \texttt{PreparedStatement} do método \inlineJavaCode{salvar} agora usa outra versão do método \inlineJavaCode{prepareStatement(...)} de \texttt{Connection}. Nessa versão, além da String contendo o código SQL que será executado, é passado um array de Strings com o nome da ou das colunas que representam as chaves primárias daquela tabela. Essa ``artimanha'' funciona para colunas que são auto incrementáveis, que é o caso dos nossos identificadores. Precisaremos dessa característica no cadastro das vendas. Veremos isso mais para frente. Quando fazemos uso desse recurso, após a persistência do objeto, que gerará uma nova linha/registro/tupla na tabela, precisaremos usar o mesmo \texttt{PreparedStatement} para obter a ou as chaves. Isso será feito no método \inlineJavaCode{getChavePrimariaAposInsercao(...)} da classe \texttt{Utils} (linha 133 da Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/utils/Utils.java}). Como consistentemente estamos usando uma coluna chamada \texttt{id} como chave primária auto incrementável, usaremos esse método para todas as nossas entidades, com exceção da \texttt{ItemVenda} que funcionará de outra forma.
 
 Muito bem, temos nossas entidades prontas para serem validadas e a camada de persistência atualizada. Vamos ver agora o que mudou nos nossos Servlets.
 
 
 \subsection{Servlets}
 
-Falar do produto, pois tem BigDecimal. ProdutoServlet.
-Falar dos métodos que retornam null na classe Utils caso o dado venha inválido do formulário.
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/controladores/ProdutosServlet.java}.
+Nossos Servlets continuarão a funcionar e a ter a mesma estrutura que vimos anteriormente, mas agora com algumas melhorias. Na Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/controladores/ProdutosServlet.java} pode ser visto o código completo do Servlet de produtos.
 
 \javaCode{Código-fonte do Servlet ``ProdutosServlet''\newline%
 Arquivo: \texttt{vendaprodutos/controladores/ProdutosServlet.java}}{projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/controladores/ProdutosServlet.java}
 
-\subsection{Tratamento de Erros}
+As ações esperadas dos formulários serão as mesmas. Na linha 37 instanciamos três DAOs, um para produtos, um para fornecedores e um para unidades de medida. Precisaremos dos dois últimos para trazer do banco de dados os objetos necessários para compor o produto que será criado.
 
-Mostrar página de tratamento de erros.
+A partir da linha 43 iniciam-se as instruções para obtenção dos dados do formulário de criação de um novo produto. Veja que entre as linhas 45 e 52 usamos os métodos \inlineJavaCode{getBigDecimal(...)} e \inlineJavaCode{getLong(...)} para a obtenção dos dados numéricos que virão do formulário. Estamos prevendo o caso de haver alguma inserção incorreta, passando a validação do lado do cliente e, nesses métodos, que estão definidos respectivamente nas linhas 42 e 61 da Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/utils/Utils.java}, é feita a obtenção dos valores e, caso haja algum problema, eles retornarão \inlineJavaCode{null} ao invés de lançar exceção. Nas linhas 54 e 55 usamos os DAOs dos fornecedores e unidades de medida para a obtenção dos objetos que contém os ids que vieram do formulário. Entre as linhas 57 e 63 configuramos todos os atributos do novo produto que será inserido e, na linha 65, antes de ``salvarmos'' o objeto no banco de dados, realizamos a validação. Note que estamos ignorando o atributo \texttt{id}, pois um novo produto ainda não o tem. O método de validação lançará uma \texttt{SQLException} caso haja algum erro na validação e, caso tudo esteja correto, o produto será salvo na linha 66 e na linha 67 preparamos o despacho para voltar à página de listagem. Outra coisa, após a execução do método \inlineJavaCode{salvar(...)} do DAO de produtos o produto terá seu identificador configurado. Nesse caso não fará muita diferença, mas precisaremos desse comportamento da obtenção do id gerado pelo auto incremento quando formos lidar com as vendas.
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/web/erro.jsp}.
+O restante do tratamento das ações dos formulários continua praticamente a mesma coisa. Como nossos DAOs foram instanciados usando o try-with-resources, não precisamos fechar as conexões dos DAOs de forma explícita, simplificando um pouco nosso código. Caso haja qualquer problema de validação ou mesmo em nível do SGBD, a \texttt{SQLException} lançada será capturada no \inlineJavaCode{catch} da linha 125. Ali usamos mais um método da classe \texttt{Utils}, definido na linha 218 da Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/utils/Utils.java}, em que preparamos o redirecionamento para a página de erros do nosso sistema. Note que na linha 223 configuramos um atributo do \textit{request} com o nome de \texttt{mensagemErro}, em que a mensagem da exceção será usada e na linha 224 configuramos o segundo parâmetro, chamado \texttt{voltarPara} em que forneceremos de qual recurso que veio a requisição para o Servlet, usando para isso o cabeçalho \texttt{Referer} da requisição, permitindo que criemos o \textit{link} apropriado para que possamos voltar à página de onde o erro foi gerado.
+
+Por falar em erros, na Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/web/erro.jsp} pode ser visto o arquivo JSP que tratará os erros de validação e de persistência do sistema.
 
 \htmlCode{Página para exibição de erros\newline%
 Arquivo: \texttt{/erro.jsp}}{projetos/capitulo08/VendaProdutos/web/erro.jsp}
 
+Com o conhecimento que você já adquiriu com o que estamos trabalhando você será capaz de entender o que essa página faz.
+
 
 \subsection{Cadastro de Vendas}
 
-Falar das entidades e dos DAOs.
+Agora vamos detalhar todo o cadastro de vendas do sistema onde, de certa forma, todos os cadastros básicos convergirão. Começaremos com o lado do servidor.
 
-Venda
+\subsubsection{Back-End}
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/entidades/Venda.java}.
+Na Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/entidades/Venda.java} pode ser vista a entidade \texttt{Venda}. Uma venda só poderá ser cadastrada e, caso necessário, ser cancelada. Estamos tentando simular um sistema real com anotações fiscais e esse tipo de coisa precisa acontecer, ou seja, uma venda nunca deve ser excluída! Para o tratamento do cancelamento temos o atributo \texttt{cancelada}.
 
 \javaCode{Entidade ``Venda''\newline%
 Arquivo: \texttt{vendaprodutos/entidades/Venda.java}}{projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/entidades/Venda.java}
 
-ItemVenda
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/entidades/ItemVenda.java}.
+Na Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/entidades/ItemVenda.java} a entidade \texttt{ItemVenda} é apresentada. 
 
 \javaCode{Entidade ``ItemVenda''\newline%
 Arquivo: \texttt{vendaprodutos/entidades/ItemVenda.java}}{projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/entidades/ItemVenda.java}
 
+Cada venda pode conter um ou mais produtos produtos, que por sua vez podem ter sido vendidos em uma ou mais vendas, sendo assim, precisamos ter uma entidade que associa as outras duas. O valor do item da venda é o valor do produto naquele momento em que foi vendido, visto que o valor de venda de um produto pode variar, mas o valor que aconteceu durante a venda deve ser mantido! Além disso, todo item da venda tem uma quantidade associada, pois podemos ter comprado, por exemplo, duas caixas de ovos ou um quilo e meio de peito de frango.
 
-VendaDAO
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/dao/VendaDAO.java}.
+O código do DAO que trata as vendas é apresentado na Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/dao/VendaDAO.java}. O método \inlineJavaCode{atualizar(...)} será usado para cancelar uma venda. Além disso, não há razão para excluirmos vendas realizadas, sendo assim, o corpo do método está vazio.
 
 \javaCode{Código da classe ``VendaDAO''\newline%
 Arquivo: \texttt{vendaprodutos/dao/VendaDAO.java}}{projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/dao/VendaDAO.java}
 
-ItemVendaDAO
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/dao/ItemVendaDAO.java}.
+Já o ItemVendaDAO é exibido na Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/dao/ItemVendaDAO.java}
 
 \javaCode{Código da classe ``ItemVendaDAO''\newline%
 Arquivo: \texttt{vendaprodutos/dao/ItemVendaDAO.java}}{projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/dao/ItemVendaDAO.java}
 
-Falar do Servlet e da atualização do estoque. Falar do cancelamento da venda.
+Nesse DAO temos a implementação do método \inlineJavaCode{salvar(...)}, mas a atualização, a exclusão, a obtenção de todos os itens de venda e a obtenção por \texttt{id} não são implementadas, visto que nunca mexeremos numa venda após ser feita, mas como poderemos cancelar uma venda, implementamos um método adicional no \texttt{ItemVendaDAO} chamado de \inlineJavaCode{obterPorIdVenda}, definido a partir da linha 80. Esse método retornará todos os itens de uma determinada venda para que, ao haver a necessidade de cancelá-la, possamos atualizar o estoque dos produtos, pois se uma venda foi cancelada, os produtos deverão ser devolvidos à loja e voltarão a compor o estoque.
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/controladores/VendasServlet.java}.
+Vamos agora fechar a implementação do nosso \textit{backend} detalhando o Servlet das vendas. Na Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/controladores/VendasServlet.java} pode ser visto o código completo do mesmo.
 
 \javaCode{Código-fonte do Servlet ``VendasServlet''\newline%
 Arquivo: \texttt{vendaprodutos/controladores/VendasServlet.java}}{projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/controladores/VendasServlet.java}
 
-Páginas
+Esse Servlet tratará dois tipos de ação. Uma de inserção, entre as linhas 49 e 90 e uma de cancelamento, entre as linhas 94 e 110. A inserção de uma venda envolve a associação do cliente que está comprando do estabelecimento, a data da mesma e todos os itens que a compõe. Veja que a variável \texttt{itensVenda} é uma \texttt{String} que virá do cliente em um formato que definiremos da seguinte forma:
+
+\texttt{idP1-q1|idP2-q2|idP3-q3|...|idPN-qN}
+
+Nessa \texttt{String} temos codificado um conjunto de ids de produtos com suas respectivas quantidades, ou seja, o id do produto 1, um traço/hífen e a quantidade daquele produto que foi vendido, uma barra vertical/\textit{pipe} com outros dois valores separados por um traço, ou seja, o id e a quantidade do segundo produto e assim por diante. É justamente essa String que trará os dados do relacionamento muitos-para-muitos e que precisaremos montar usando JavaScript do lado do cliente. Veremos isso logo.
+
+Veja que o processamento da \texttt{String} \texttt{itensVenda} é feito inicialmente quebrando a String em todos os \textit{pipes} (linha 64). Cada pedaço conterá o \texttt{id} do produto e a quantidade que serão separados na linha 66 e usados nas linhas 68 e 69. Como salvamos a venda na linha 60 ela já possui seu \texttt{id}, não precisando consultá-la. Na linha 72 consultamos o produto e atualizamos o seu estoque, visto que como estamos vendendo, precisamos subtrair a quantidade do estoque. Entre as linhas 76 e 80 criamos o item da venda, na linha 84 atualizamos o produto por causa do estoque e na linha 85 salvamos o item da venda. Não precisamos validar os itens de venda nem os produtos, visto que todo esse processamento será feito internamente.
+
+O processo de cancelamento, tratado entre as linhas 94 e 110, atualizará a venda, marcando-a como cancelada e atualizará os estoques dos produtos associados. Note que não criaremos um \texttt{RequestDispatcher}, pois a ação de cancelamento será executada via AJAX. Note que não trataremos situações em que possam haver problemas no SGBD, pois após o cancelamento de uma venda retornaremos um JSON sinalizando que a requisição foi bem sucedida, mas em um sistema real teríamos que pensar nisso também. Uma outra coisa a se pensar, mas que não foi endereçada na nossa implementação, seria o caso de haver algum erro durante a inserção dos itens de venda ou na atualização dos produtos no cancelamento. Isso seria resolvido configurando o driver do SGBD para que as transações fossem iniciadas antes das operações dos DAOs e finalizadas explicitamente com um \textit{commit} caso tudo ocorresse como esperado ou canceladas (\textit{rollback}) na detecção de algum problema.
+
+Vamos agora tratar o lado do cliente.
+
+\subsubsection{Front-End}
+
+
+
 
 Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/web/formularios/vendas/listagem.jsp}.
 
@@ -180,3 +191,5 @@ Neste Capítulo construímos uma aplicação Web completa para a venda de produt
 \begin{projetoSemArquivo}{}{}{}
     Modifique a implementação do projeto desenvolvido neste Capítulo para permitir que em uma venda possa existir mais de um item de venda igual. Na implementação atual isso não é permitido, pois cada registro da tabela \texttt{item\_venda} tem como chave primária a composição das duas chaves estrangeiras que a relaciona com as tabelas \texttt{produto} e \texttt{venda}. Será necessário modificar o modelo físico e alguns detalhes da implementação do projeto, tanto do lado do servidor, quanto do lado do cliente.
 \end{projetoSemArquivo}
+
+implementação de relatórios!

@@ -66,7 +66,7 @@ public class VendasServlet extends HttpServlet {
                     String[] dados = item.split( "[-]" );
                     
                     Long idProduto = Utils.getLong( dados[0] );
-                    BigDecimal quantidade = new BigDecimal( dados[1] );
+                    BigDecimal quantidade = Utils.getBigDecimal( dados[1] );
                     
                     // obtém o produto e atualiza o estoque
                     Produto p = daoProduto.obterPorId( idProduto );

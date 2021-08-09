@@ -55,9 +55,10 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
         
         // nesse caso, não há sentido haver uma listagem por todos
         // os itens de venda, visto que essa entidade é uma entidade
-        // de ligação.
-        List<ItemVenda> lista = new ArrayList<>();
-        return lista;
+        // de ligação e não faremos atualização em vendas 
+        // já realizadas, a não ser o cancelamento, mas isso trataremos
+        // usando o método obterPorIdVenda implementado abaixo.
+        return null;
 
     }
 
@@ -65,7 +66,8 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
     public ItemVenda obterPorId( Long id ) throws SQLException {
 
         // o identificador dessa entidade é composto!
-        // precisamos ter um método especializado...
+        // precisamos ter um método especializado se fosse
+        // necessário.
         return null;
 
     }
