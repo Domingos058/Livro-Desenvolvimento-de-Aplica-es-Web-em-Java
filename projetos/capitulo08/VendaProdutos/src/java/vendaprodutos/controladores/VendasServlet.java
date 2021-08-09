@@ -2,10 +2,16 @@ package vendaprodutos.controladores;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonValue;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -49,6 +55,13 @@ public class VendasServlet extends HttpServlet {
                 Long idCliente = Utils.getLong( request, "idCliente" );
                 String itensVenda = request.getParameter( "itensVenda" );
                 
+                // cria um leitor de json para processar os
+                // itens da venda
+                JsonReader jsr = Json.createReader( 
+                        new StringReader( itensVenda ) );
+                // faz a leitura/parse
+                JsonArray jsaItensVenda = jsr.readArray();
+                
                 Cliente c = daoCliente.obterPorId( idCliente );
                 
                 Venda v = new Venda();
@@ -58,15 +71,18 @@ public class VendasServlet extends HttpServlet {
                 
                 Utils.validar( v, "id" );
                 daoVenda.salvar( v );
-
-                // processando os itens de venda!
-                // cada item da venda é separado por um pipe
-                for ( String item : itensVenda.split( "[|]" ) ) {
+                
+                // itera pelos itens da venda genéricos
+                for ( JsonValue jsv : jsaItensVenda ) {
                     
-                    String[] dados = item.split( "[-]" );
+                    // sabemos que cada item é um objeto
+                    JsonObject jso = jsv.asJsonObject();
                     
-                    Long idProduto = Utils.getLong( dados[0] );
-                    BigDecimal quantidade = Utils.getBigDecimal( dados[1] );
+                    // extraímos os atributos 
+                    Long idProduto = Utils.getLong( 
+                            jso.getString( "idProduto" ) );
+                    BigDecimal quantidade = Utils.getBigDecimal(
+                            jso.getString( "quantidade" ) );
                     
                     // obtém o produto e atualiza o estoque
                     Produto p = daoProduto.obterPorId( idProduto );
@@ -105,8 +121,12 @@ public class VendasServlet extends HttpServlet {
                 
                 response.setContentType( "text/json;charset=UTF-8" );
                 
+                JsonObject jo = Json.createObjectBuilder()
+                        .add( "status", "ok" )
+                        .build();
+                
                 try ( PrintWriter out = response.getWriter() ) {
-                    out.print( "{ \"status\": true }" );
+                    out.print( jo );
                 }
 
             }

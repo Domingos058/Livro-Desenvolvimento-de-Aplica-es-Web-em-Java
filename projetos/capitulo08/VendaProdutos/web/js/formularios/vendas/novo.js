@@ -32,9 +32,9 @@ $( () => {
         let idProduto = $selectProduto.val();
         let valorVenda = $selectProduto.find( ":selected" ).data( "valor" );
         let descricao = $selectProduto.find( ":selected" ).data( "descricao" );
-        let quantidade = Number( $txtQuantidade.val() );
+        let quantidade = new Decimal( $txtQuantidade.val() );
         
-        if ( quantidade !== 0 ) {
+        if ( !quantidade.isZero() ) {
             
             // há um item da venda igual?
             let itemIgual = null;
@@ -45,7 +45,7 @@ $( () => {
                 }
             });
             
-            // se há item igual
+            // se há item igual, atualiza
             if ( itemIgual !== null ) {
                 
                 // soma a quantidade
@@ -146,8 +146,6 @@ $( () => {
         
         let $select = $( "#selectItensVenda" );
         let total = 0;
-        let primeiro = true;
-        let valorHidden = "";
         
         $select.html( "" );
         
@@ -170,17 +168,10 @@ $( () => {
             $select.append( $opt );
             total += valorItem;
             
-            // montando os valores do campo escondido
-            if ( !primeiro ) {
-               valorHidden += "|";
-            }
-            valorHidden += `${idProduto}-${quantidade}`;
-            primeiro = false;
-            
         }
         
         $( "#divTotal" ).html( "Total: " + fmtMoeda.format( total ) );
-        $( "#hiddenItensVenda" ).val( valorHidden );
+        $( "#hiddenItensVenda" ).val( JSON.stringify( itensVenda ) );
         
     };
     
