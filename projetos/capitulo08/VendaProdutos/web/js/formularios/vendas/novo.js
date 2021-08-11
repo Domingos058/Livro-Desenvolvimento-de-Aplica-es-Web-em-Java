@@ -49,7 +49,9 @@ $( () => {
             if ( itemIgual !== null ) {
                 
                 // soma a quantidade
-                itemIgual.quantidade += quantidade;
+                itemIgual.quantidade = itemIgual
+                        .quantidade
+                        .plus( quantidade );
                 
                 // caso contrário, cria um novo item
             } else {
@@ -61,7 +63,7 @@ $( () => {
                 });
             }
             
-            montarSelectItensVenda();
+            atualizarGUI();
             $txtQuantidade.val( "" );
             
         } else {
@@ -93,7 +95,7 @@ $( () => {
                     let item = itensVenda[j];
                     
                     // encontrou?
-                    if ( selecao[i].startsWith( item.idProduto + "-" ) ) {
+                    if ( selecao[i] === item.idProduto ) {
                         
                         // remove da posição j
                         itensVenda.splice( j, 1 );
@@ -106,7 +108,7 @@ $( () => {
             }
             
             // remonta a lista
-            montarSelectItensVenda();
+            atualizarGUI();
             
         }
         
@@ -115,9 +117,8 @@ $( () => {
     // ao clicar no botão limpar
     $( "#btnLimpar" ).on( "click", event => {
         if ( confirm( "Deseja remover todos os itens da venda?" ) ) {
-            $( "#selectItensVenda" ).html( "" );
             itensVenda = [];
-            montarSelectItensVenda();
+            atualizarGUI();
         }
     });
     
@@ -141,34 +142,32 @@ $( () => {
         }
     });
     
-    // constrói as opções do <select> (lista) de itens de venda
-    let montarSelectItensVenda = () => {
+    // constrói as opções do <select> (lista) de itens de venda;
+    // atualiza o valor total da venda;
+    // e prepara os dados para envio
+    let atualizarGUI = () => {
         
         let $select = $( "#selectItensVenda" );
-        let total = 0;
+        let total = new Decimal( 0 );
         
         $select.html( "" );
         
-        for ( let k in itensVenda ) {
+        itensVenda.forEach( item => {
             
-            let item = itensVenda[k];
-            let idProduto = item.idProduto;
-            let valorVenda = item.valorVenda;
-            let descricao = item.descricao;
-            let quantidade = item.quantidade;
-            let valorItem = Number( valorVenda ) * Number( quantidade );
+            let valorItem = new Decimal( item.valorVenda )
+                                .times( item.quantidade );
             
             $opt = $( "<option></option>" ).
-                    html( `${descricao} - ` + 
-                    `${fmtMoeda.format( valorVenda )} x ` + 
-                    `${fmtNumero.format(quantidade)} = ` + 
+                    html( `${item.descricao} - ` + 
+                    `${fmtMoeda.format( item.valorVenda )} x ` + 
+                    `${fmtNumero.format( item.quantidade )} = ` + 
                     `${fmtMoeda.format( valorItem )}` ).
-                    val( `${idProduto}-${quantidade}` );
+                    val( `${item.idProduto}` );
             
             $select.append( $opt );
-            total += valorItem;
+            total = total.plus( valorItem );
             
-        }
+        });
         
         $( "#divTotal" ).html( "Total: " + fmtMoeda.format( total ) );
         $( "#hiddenItensVenda" ).val( JSON.stringify( itensVenda ) );

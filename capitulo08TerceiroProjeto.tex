@@ -109,7 +109,7 @@ Com o conhecimento que você já adquiriu com o que estamos trabalhando você se
 
 Agora vamos detalhar todo o cadastro de vendas do sistema onde, de certa forma, todos os cadastros básicos convergirão. Começaremos com o lado do servidor.
 
-\subsubsection{Back-End}
+\subsubsection{\textit{Back-End}}
 
 Na Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/src/java/vendaprodutos/entidades/Venda.java} pode ser vista a entidade \texttt{Venda}. Uma venda só poderá ser cadastrada e, caso necessário, ser cancelada. Estamos tentando simular um sistema real com anotações fiscais e esse tipo de coisa precisa acontecer, ou seja, uma venda nunca deve ser excluída! Para o tratamento do cancelamento temos o atributo \texttt{cancelada}.
 
@@ -148,40 +148,90 @@ O processo de cancelamento, tratado entre as linhas 110 e 130, atualizará a ven
 
 Vamos agora tratar o lado do cliente.
 
-\subsubsection{Front-End}
 
+\subsubsection{\textit{Front-End}}
 
-
-
-Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/web/formularios/vendas/listagem.jsp}.
+Começaremos conferindo como a listagem das vendas foi implementada. Basicamente ela consiste na mesma estrutura dos outros cadastros, ou seja, uma \inlineHTMLCode{<table>} em que cada linha há um registro da tabela do banco de dados em questão. Estamos fazendo a construção dessa tabela a partir das classes de serviços, você se lembra? A novidade aqui é que uma venda não pode ser excluída ou atualizada, com a exceção de que pode ser cancelada. O cancelamento será feito através de uma chamada em AJAX. Para implementarmos isso, veja o \inlineHTMLCode{<c:choose>} construído entre as linhas 60 e 69 da Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/web/formularios/vendas/listagem.jsp}.
 
 \htmlCode{Código da listagem de Vendas\newline%
 Arquivo: \texttt{/formularios/vendas/listagem.jsp}}{projetos/capitulo08/VendaProdutos/web/formularios/vendas/listagem.jsp}
 
+Caso uma venda esteja cancelada, a palavra ``Cancelada'' aparecerá na coluna de cancelamento. Caso contrário, entre as linhas 65 e 67, será gerado um \textit{link} apontando para ``\texttt{\#}'' no atributo \texttt{href} sendo que o sinal ``\texttt{\#}'' sozinho indica que é uma âncora para lugar nenhum, ou seja, quando o link for clicado, ele não fará nada. Outras tags poderiam ter sido usadas aqui, mas para manter a consistência na GUI em relação aos outros cadastros, optei por usar \textit{hyperlinks} mesmo. Nosso \textit{link} terá mais dois atributos definidos. Um você já conhece, que é o \texttt{onclick}, apontando para a função \inlineJavaScriptCode{cancelarVenda(...)}. O outro é o atributo \texttt{data}. Esse atributo é interessante pois podemos armazenar dados nas \textit{tags}! Para usá-lo, começamos com a palavra \texttt{data}, inserimos um traço e depois um identificador qualquer, sem espaços ou letras maiúsculas. Caso queira um identificador com nome composto, ou seja, com mais de uma palavra, separe-as por traços. No nosso caso, o identificador é \texttt{id}. A ideia é que esse link tenha um dado associado que é o identificador da venda. A função \inlineJavaScriptCode{cancelarVenda(...)} usará esse dado para saber qual venda deve ser cancelada. Note que também poderíamos ter passado o identificador da venda como argumento para a função, mas eu quis usar o atributo \texttt{data} para vocês saberem que ele existe.
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/web/js/formularios/vendas/listagem.js}.
+\begin{saibaMais}
+    Mais sobre os atributos \texttt{data}: \url{https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes}
+\end{saibaMais}
+
+Vamos dar uma olhada no arquivo de script em que a função \inlineJavaScriptCode{cancelarVenda(...)} está implementada. Esse arquivo pode ser visto na Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/web/js/formularios/vendas/listagem.js}.
 
 \javaScriptCode{\textit{Script} para cancelamento de Vendas\newline%
 Arquivo: \texttt{/js/formularios/vendas/listagem.js}}{projetos/capitulo08/VendaProdutos/web/js/formularios/vendas/listagem.js}
 
+Dentro da função temos a implementação da requisição AJAX feita tanto usando JavaScript puro, empregando a Fetch API entre as linhas 7 e 26, quanto usando jQuery, implementação essa que está comentada e é encontrada entre as linhas 29 e 46. Na linha 5 obtemos o identificador da venda através do atributo \texttt{dataset}, que é quem referencia os atributos \texttt{data} definidos no código HTML. Veja que acessamos o atributo \texttt{target} do evento, que representa quem disparou o evento (no caso o \textit{link} que foi clicado), acessamos o atributo \texttt{dataset} do \textit{link} e, por sua vez, o atributo \texttt{id} do \texttt{dataset}, que é quem está armazenando o dado que queremos, ou seja, o identificador da venda armazenado no banco de dados. Novamente, como já foi dito, poderíamos alternativamente ter passado o identificador da venda em um parâmetro dessa função.
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/web/formularios/vendas/novo.jsp}.
+Nossa requisição AJAX aponta para o Servlet de vendas, mapeado na URL\newline%
+\texttt{/processaVendas}. Note que passamos o contexto da aplicação para a função, evitando problemas de referências quebradas. Veja que quando a requisição for feita, a ação ``cancelar'' será processada no Servlet, atualizando a coluna do registro que indica que a venda está cancelada, além de retornar ao estoque do ou dos produtos vendidos as suas respectivas quantidades. Note que em caso de sucesso, o JSON trazido do servidor será processado na linha 15 e então o objeto criado, chamado de data, será utilziado para verificar o status, que no caso só poderá ser ``ok'' e o conteúdo da célula da tabela onde a \textit{tag} \inlineHTMLCode{<a>} existia (\texttt{parentElement}) será atualizado para ``Cancelada'', não permitindo mais ser clicado, pois a partir desse momento não haverá mais um \textit{link} naquela posição.
+
+Agora trataremos o nosso formulário de cadastro de uma nova venda. Esse formulário é um pouco mais elaborado que os anteriores, sendo que podemos ver seu código completo na Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/web/formularios/vendas/novo.jsp}.
 
 \htmlCode{Formulário de cadastro de novas Vendas\newline%
 Arquivo: \texttt{/formularios/vendas/novo.jsp}}{projetos/capitulo08/VendaProdutos/web/formularios/vendas/novo.jsp}
 
+Graficamente, o código acima gerará algo como apresentado na Figura~\ref{fig:cap08FormularioNovaVenda}.
 
-Atenção à biblioteca decimal.js! 
+\FloatBarrier
+\begin{figure}[!htbp]
+    \centering
+    \caption{Formulário para Novas Vendas}
+    \includegraphics[scale=0.7]{imagens/cap08FormularioNovaVenda}
+    \\\textbf{Fonte:} Elaborada pelo autor
+    \label{fig:cap08FormularioNovaVenda}
+\end{figure}
+\FloatBarrier
 
-Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/web/js/formularios/vendas/novo.js}.
+Você já conhece praticamente todo o código utilizado na Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/web/formularios/vendas/novo.jsp}, sendo assim focaremos na implementação da funcionalidade apresentado na Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/web/js/formularios/vendas/novo.js}.
 
 \javaScriptCode{\textit{Script} para tratamento de novas Vendas\newline%
 Arquivo: \texttt{/js/formularios/vendas/novo.js}}{projetos/capitulo08/VendaProdutos/web/js/formularios/vendas/novo.js}
 
+Neste formulário optei por fazer o registro de todos os eventos programaticamente. Na linha 6 usamos um dialeto padrão da jQuery em que registramos uma função, passada como argumento para a função \inlineJavaScriptCode{$(...)}, como ouvinte do ``evento'' \texttt{onready}. Esse evento na verdade é uma construção da biblioteca jQuery que define que quando o documento está pronto, ou seja, todo o HTML já passou pelo processo de parsing pelo navegador, a função será executada. Note que essa função contém todas as outras que vamos usar.
+
+Na linha 9 criamos um array que armazenará todos os itens da venda que iremos montar durante o uso do formulário. Entre as linhas 12 e 24 criamos dois formatadores de números que serão usados para formatar apropriadamente valores monetários e valores numéricos em ponto flutuante.
+
+Entre as linhas 27 e 73 temos o evento \texttt{onclick} do botão inserir, que na Figura~\ref{fig:cap08FormularioNovaVenda} pode ser visto entre a caixa de seleção dos produtos e a lista de itens da venda. O valor desse botão é ``\texttt{\&\#x2795}''. que representa o emoji com sinal de mais/adição. O código em hexadecimal desse símbolo é \texttt{2795}, sendo que o prefixo \texttt{\&\#x} indica que é um valor em Unicode codificado em hexadecimal que deve ser processado pelo navegador. Note que o mesmo é aplicado aos botoões com o sinal de menos/subtração (botão remover) e o com o símbolo de um \texttt{X} vermelho (botão limpar).
+
+\begin{saibaMais}
+    A lista completa dos emojis do Unicode pode ser vista nesse \textit{link}: \url{https://unicode.org/emoji/charts/full-emoji-list.html}
+\end{saibaMais}
+
+Para inserir um item de venda precisamos do produto e da quantidade, sendo assim obtemos os controles que detêm esses valores nas linhas 29 e 30. Entre asl inhas 32 e 35 extraímos todos os dados que precisaremos para criar um objeto do item da venda. Veja que na linha 35 é criado um objeto do tipo \texttt{Decimal}. Esse tipo não é nativo do JavaScript, mas sim implementado na biblioteca \texttt{decimal.js} inserida no projeto via CDNJS. Essa bibliteca implementa tipos decimais de precisão arbitrária, assim como o tipo BigDecimal do Java. Como estamos lidando com quantidades de produtos do lado do cliente e não queremos arriscar ter algum tipo de erro ou problema relativo à precisão de números em ponto flutuante, vamos usar essa biblioteca.
+
+Se a quantidade informada for diferente de zero, entraremos no \inlineJavaScriptCode{if} da linha 37, ou seja, se uma quantidade válida foi informada o item da venda será criado ou um item existente será incrementado. Note que não estamos testando valores negativos. O formulário já possui um validador para isso e no servidor teremos a validação também. Não faz sentido ter valor negativo em quantidades para o nosso problema, certo?
+
+A primeira coisa que será feita é verificar se há existe um item de venda para o produto que está se tentando inserir na lista. Nosso banco de dados não permite que possa existir mais de um item de venda para uma mesma venda e um mesmo produto. Veja que no banco de dados a chave primária da tabela \texttt{item\_venda} é composta pelas duas chaves estrangeiras, uma de venda e uma de produto. Uma tarefa desse Capítulo será tornar isso possível. Dada essa restrição, se já houver um item de venda com o produto que se está tentando inserir, o item de venda que foi inserido posteriormente será atualizado, ou seja, sua quantidade será incrementada com a nova quantidade que se está tentando inserir. Para essa verificação, iteraremos sobre os itens da venda e, caso o identificador do produto do elemento atual for igual ao identificador do produto que se está tentando inserir na lista, a variável \inlineJavaScriptCode{itemIgual} receberá esse item e a iteração parará, por causa do retorno \inlineJavaScriptCode{true} do \textit{callback} de \inlineJavaScriptCode{some(...)}.
+
+Na linha 49, caso o item da venda sejá diferente de nulo, ou seja, foi encontrado um item da venda com o mesmo produto, atualiza-se a quantidade desse item de venda. Veja que não usamos simplesmente o operador de adição, visto que o valor do atributo quantidade é do tipo \texttt{Decimal}, havendo a necessidade de usar o método \inlineJavaScriptCode{plus} na quantidade do item, passando a quantidade a ser somada e, além disso, o retorno do método atributo ao à quantidade do item, visto que os objetos do tipo \texttt{Decimal} são imutáveis.
+
+Se o produto que se está inserindo no novo item de venda não existe na lista, um novo item da lista será criado e inserido no array entre as linhas 58 e 63. Na linha 66 a lista de itens de venda é montada na GUI baseada nos dados contidos no array \inlineJavaScriptCode{itensVenda} e na linha 67 o \textit{input} da quantidade é resetado. A linha 70 contém um alerta que será mostrado caso a quantidade fornecida na inserção seja inválida.
+
+Entre as linhas 76 e 115 temos a implementação da remoção de itens da lista. Perceba que esta lista pode ter mais de um item selecionado ao se clicar no botão de remoção, então precisamos tratar isso. Veja na linha 108 da Listagem~\thechapter.\ref{listagem:projetos/capitulo08/VendaProdutos/web/formularios/vendas/novo.jsp} que o select de itens da venda pode ter seleção múltipla, pois contém o atributo booleano \texttt{multiple}. Essa seleção é feita na GUI mantendo pressionada a tecla \destaque{\texttt{<CTRL>}} do teclado ao se clicar nos itens.
+
+Na linha 80 é obtido um array com todas as opções que estão selecionadas na lista. Se o tamanho desse array for zero, significa que não há itens selecionados, então uma mensagem é exibida (linha 84). Caso exista pelo menos um item, um diálogo de confirmação perguntará ao usuário se ele quer realmente remover os itens da venda selecionados. Perceba que não estamos conversando com o banco de dados! Caso o usuário escolha que os itens devem ser removidos, primeiramente precisamos iterarar pelos valores dos elementos selecionados (linha 90) e assim, para cada um desses valores, varrer o array de itens de venda (linha 93), procurando sequencialmente pelo produto e, caso encontrado, removendo esse item do array. Ao terminar esse processo, a função \inlineJavaScriptCode{atualizarGUI()} é invocada, assim como na linha 66 para remontar a lista de itens da venda e atualizar a GUI, baseando-se no array de itens de venda.
+
+Entre as linhas 118 e 123 temos a implementação do botão de limpar a lista de itens de venda, ou seja, remover todos os itens de uma vez. Para isso, basta-se criar um novo array vazio para os itens da venda e, novamente, remontar a lista na GUI. Já falaremos dessa montagem da lista, calma!
+
+Entre as linhas 123 e 135 implementamos a submissão do formulário que só pode ser feita se houver pelo menos um item de venda criado. Para isso, verificamos quantos elementos do tipo \inlineHTMLCode{<option>} existem dentro do \inlineHTMLCode{<select>} de itens da venda. Se houver pelo menos um, o formulário será submetido, visto o retorno \inlineJavaScriptCode{true} na linha 133. Caso contrário, dentro do \inlineJavaScriptCode{if} de verificação dessa quantidade, será retornado o valor \inlineJavaScriptCode{false}.
+
+Outra coisa que trataremos é remover o comportamento padrão de submissão do formulário ao se teclar enter em um campo de texto. Como temos o campo de texto das quantidades, registramos o evento \texttt{onkeydown} nele e verificamos se a tecla que foi pressionada foi o \destaque{\texttt{<ENTER>}} que tem código $13$. Se for o caso, informamos que o comportamento padrão do evento deve ser descartado.
+
+A última coisa que precisamos conferir é a tal da função que monta os itens da venda na GUI e a atualiza. Ela está definida entre as linhas 148 e 175. Primeiramente obtém-se o componente dos itens de venda da linha 150 e na linha 151 cria-se um acumulador para armazenar o valor total da venda. Limpa-se a lista na linha 153 e itera-se sobre os itens da venda que estão armazenados no array de itens de venda entre as linhas 155 e 170. Nessa iteração, cada item de venda é usado para criar uma nova opção para o \inlineHTMLCode{<select>} dos itens de venda. Na linha 157 calcula-se o valor do item que é composto do valor do produto multiplicado pela quantidade, entre as linhas 160 e 165 é criado um novo item da lista, na linha 167 esse item é inserido e na linha 168 o totalizador da venda é incrementado. Ao terminar esse processo, a lista já estará atualiaza com os itens que refletem o array de itens de venda, faltando atualizar o total da venda, o que acontece na linha 172 e, na linha 173, o array de itens de venda é serializado em JSON para ser enviado na submissão do formulário usando o campo escondido chamado \texttt{hiddenItensVenda}.
+
+Pronto, terminamos!
+
 
 \section{Resumo}
 
-Neste Capítulo construímos uma aplicação Web completa para a venda de produtos. Utilizamos para isso tudo que aprendemos até agora. Com isso você já é capaz de implementar a maioria dos tipos de cadastros que aparecerão em sistemas do mundo real. Parabéns! No próximo Capítulo vai ser a sua vez de fazer tudo do zero, reescrevendo e melhorando o sistema de locação de DVDs. 
+Neste Capítulo construímos uma aplicação Web completa para a venda de produtos. Utilizamos para isso tudo que aprendemos até agora. Com isso você já é capaz de implementar a maioria dos tipos de cadastros que aparecerão em sistemas do mundo real. Parabéns! No próximo Capítulo vai ser a sua vez de desenvolver, reescrevendo e melhorando o sistema de locação de DVDs. 
 
 
 \section{Projetos}
@@ -190,4 +240,37 @@ Neste Capítulo construímos uma aplicação Web completa para a venda de produt
     Modifique a implementação do projeto desenvolvido neste Capítulo para permitir que em uma venda possa existir mais de um item de venda igual. Na implementação atual isso não é permitido, pois cada registro da tabela \texttt{item\_venda} tem como chave primária a composição das duas chaves estrangeiras que a relaciona com as tabelas \texttt{produto} e \texttt{venda}. Será necessário modificar o modelo físico e alguns detalhes da implementação do projeto, tanto do lado do servidor, quanto do lado do cliente.
 \end{projetoSemArquivo}
 
-implementação de relatórios!
+
+\section{Desafios}
+
+\begin{desafioSemArquivo}{}{}{}
+    Que tal implementar a paginação das listagens dos cadastros? Imagine que numa situação real você terá centenas de produtos cadastrados, concorda? Ver todos esses produtos de uma só vez na interface gráfica pode ser um grande problema, certo? Você acabou de ser contratato em uma empresa que desenvolveu o sistema deste Capítulo e seu chefe lhe deu a tarefa de implementar a tal da paginação. Você já deve ter visto em sistemas reais, veja o destaque em laranja na Figura~\ref{fig:cap08DesafioPaginacao}. Você deve tomar todas as decisões necessárias, como quantos registros serão mostrados por página e deverá procurar como fazer esse tipo de limitação no banco de dados. Boa sorte!
+    
+    \FloatBarrier
+    \begin{figure}[!htbp]
+        \centering
+        \caption{Paginação em um sistema acadêmico}
+        \includegraphics[scale=0.8]{imagens/cap08DesafioPaginacao}
+        \\\textbf{Fonte:} Elaborada pelo autor
+        \label{fig:cap08DesafioPaginacao}
+    \end{figure}
+    \FloatBarrier
+\end{desafioSemArquivo}
+
+\begin{desafioSemArquivo}{}{}{}
+    Outra funcionalidade importante em sistemas reais é a emissão de relatórios ou de consultas personalizadas para a exibição de dados. Por exemplo, quero ter uma consulta de produtos em que eu insira parte da descrição de um produto em uma caixa de texto e, ao clicar no botão ``Consultar'', é mostrado na GUI do sistema todos os produtos que contenham na sua descrição o valor fornecido como uma substring. Pense só se o sistema tem centenas de produtos cadastrados e você precisa fazer uma venda! Imagine ficar rolando uma caixa de seleção por milhares de registro... Pois é, seu chefe gostou do seu trabalho na tarefa anterior e teu a missão de implementar essa funcionalidade no sistema. Ele quer que ao invés de ser exibida uma caixa de seleção com todos os produtos no formulário da venda, que haja um campo de texto onde o usuário fornecerá um valor que pode tanto ser o identificador do produto quanto seu código de barras e, ao teclar \destaque{\texttt{<ENTER>}} naquele campo, seja montada uma lista com os produtos obtidos, algo como mostrado na Figura~\ref{fig:cap08DesafioConsultaProduto}. Use sua imaginação e criatividade para implementar tal funcionalidade!
+    
+    \FloatBarrier
+    \begin{figure}[!htbp]
+        \centering
+        \caption{Consulta de produtos no formulário de vendas}
+        \includegraphics[scale=0.7]{imagens/cap08DesafioConsultaProduto}
+        \\\textbf{Fonte:} Elaborada pelo autor
+        \label{fig:cap08DesafioConsultaProduto}
+    \end{figure}
+    \FloatBarrier
+\end{desafioSemArquivo}
+
+\begin{desafioSemArquivo}{}{}{}
+    Seu chefe adorou sua solução para o desafio anterior e agora quer mais um ``botãozinho'' no sistema. Entendedores entenderão hahaha! Ele quer que você implemente a emissão de relatórios para o sistema. Neste primeiro momento ele quer dois relatórios, um que mostre a quantidade vendida de todos os produtos em um período de tempo, ou seja, para cada produto, definindo-se uma data inicial e uma data final em um formulário, realizar a consulta no banco de dados e mostrar a quantidade que foi vendida de cada um desses produtos. O outro relatório é um relatório que mostre o montante total das vendas em um período, ou seja, ele quer saber quanto de dinheiro que entrou em um período de tempo. Você não precisa usar nada além do que já sabe, mas se quiser empregar o uso de alguma \textit{engine} de relatórios como o iReport\footnote{\url{https://community.jaspersoft.com/project/ireport-designer}}, fique à vontade. Fácil? Difícil? Seu emprego está em jogo! Mãos a obra!
+\end{desafioSemArquivo}
