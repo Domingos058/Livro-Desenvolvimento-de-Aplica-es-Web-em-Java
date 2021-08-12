@@ -119,7 +119,7 @@ public class VendasServlet extends HttpServlet {
                     daoProduto.atualizarEstoque( p );
                 }
                 
-                response.setContentType( "text/json;charset=UTF-8" );
+                response.setContentType( "application/json;charset=UTF-8" );
                 
                 JsonObject jo = Json.createObjectBuilder()
                         .add( "status", "ok" )
@@ -159,7 +159,7 @@ public class VendasServlet extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "ProdutosServlet";
+        return "VendasServlet";
     }
 
 }

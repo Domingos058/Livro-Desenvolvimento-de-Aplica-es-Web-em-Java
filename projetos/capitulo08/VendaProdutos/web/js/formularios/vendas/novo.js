@@ -32,9 +32,14 @@ $( () => {
         let idProduto = $selectProduto.val();
         let valorVenda = $selectProduto.find( ":selected" ).data( "valor" );
         let descricao = $selectProduto.find( ":selected" ).data( "descricao" );
-        let quantidade = new Decimal( $txtQuantidade.val() );
+        let quantidade = null;
         
-        if ( !quantidade.isZero() ) {
+        try {
+            quantidade = new Decimal( $txtQuantidade.val() );
+        } catch ( e ) {
+        }
+        
+        if ( quantidade !== null && quantidade.greaterThan( 0 ) ) {
             
             // há um item da venda igual?
             let itemIgual = null;
@@ -67,7 +72,7 @@ $( () => {
             $txtQuantidade.val( "" );
             
         } else {
-            alert( "Forneça uma quantidade!" );
+            alert( "Forneça uma quantidade maior que zero!" );
         }
         
     });
