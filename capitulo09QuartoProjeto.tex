@@ -17,13 +17,13 @@ Você foi contratado para criar um sistema para controle de cadastro de mídias.
 \begin{figure}[!htbp]
     \centering
     \caption{Diagrama do modelo físico da base de dados}
-    \includegraphics[scale=0.5]{imagens/cap09ModeloFisico}
+    \includegraphics[scale=0.45]{imagens/cap09ModeloFisico}
     \\\textbf{Fonte:} Elaborada pelo autor
     \label{fig:cap09ModeloFisico}
 \end{figure}
 \FloatBarrier
 
-As entidades e seus atributos você poderá ver no diagrama apresentado acima. Abaixo serão explicados os detalhes de cada uma das funcionalidades. Cada um dos cadastros base, ou seja, cadastro de mídias e seus exemplares, atores/atrizes, gêneros, classificações etárias, tipos, classificações internas, clientes, cidades e estados, deve conter as funcionalidades de criar, alterar e excluir um determinado registro. A página principal da aplicação deve conter um link para cada tipo de cadastro. Cada mídia pode ter um ou mais de um exemplares. O valor da locação virá da classificação interna de uma mídia, por exemplo, quando um filme ou jogo é lançamento, a locação é mais cara, concorda? Abaixo de cada nova tabela há uma caixa de texto com alguns exemplos do que poderia haver naquele cadastro para que você possa se guiar. O processo de locação é análogo ao processo de venda de produtos do Capítulo~\ref{cap:terceiroProjeto} e aqui a locação é por exemplar, então a tabela de itens de locação já está correta para a modelagem da solução desse problema.
+As entidades e seus atributos você poderá ver no diagrama apresentado acima. Cada um dos cadastros base, ou seja, cadastro de mídias e seus exemplares, atores/atrizes, gêneros, classificações etárias, tipos, classificações internas, clientes, cidades e estados, deve conter as funcionalidades de criar, alterar e excluir um determinado registro. A página principal da aplicação deve conter um link para cada tipo de cadastro. Cada mídia pode ter um ou mais de um exemplares. O valor da locação virá da classificação interna de uma mídia, por exemplo, quando um filme ou jogo é lançamento, a locação é mais cara, concorda? Abaixo de cada nova tabela há uma caixa de texto com alguns exemplos do que poderia haver naquele cadastro para que você possa se guiar. O processo de locação é análogo ao processo de venda de produtos do Capítulo~\ref{cap:terceiroProjeto} e aqui a locação é por exemplar, então a tabela de itens de locação já está correta para a modelagem da solução desse problema, pois não será possívei alugar o mesmo examplar duas vezes na mesma locação.
 
 
 \section{Desenvolvimento do Projeto}
@@ -33,4 +33,4 @@ O projeto Web que deverá ser criado deve ter o nome de ``LocacaoMidias''. Confi
 
 \section{Resumo}
 
-Neste Capítulo foi requisitado que você implementasse uma aplicação Web em Java para gerenciar a locação de mídias como DVDs e BluRays, por isso, não há atividades a serem realizadas.
+Neste Capítulo foi requisitado que você implementasse uma aplicação Web em Java para gerenciar a locação de mídias como BluRays e DVDs, por isso, não há atividades a serem realizadas.
