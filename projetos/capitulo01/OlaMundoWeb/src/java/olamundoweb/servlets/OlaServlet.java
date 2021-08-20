@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * A anotação @WebServlet é usada para indicar que esta classe
  * é um Servlet, configurando seu nome o padrão de URL que
- * será associado à esse componte.
+ * será associado à esse componente.
  * 
  * @author Prof. Dr. David Buzatto
  */
