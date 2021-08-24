@@ -51,7 +51,7 @@ public class OlaServlet extends HttpServlet {
 
     /**
      * Método para tratar requisições que usam o método 
-     * GET do protocolo HTTP.
+     * POST do protocolo HTTP.
      * 
      * @param request Referência ao objeto que contém
      * os dados da requisição.
