@@ -38,7 +38,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <a href="index.jsp">Voltar</a>
+                        <a href="index.html">Voltar</a>
                     </td>
                 </tr>
             </table>

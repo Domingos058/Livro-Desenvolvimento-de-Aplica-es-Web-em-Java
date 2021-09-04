@@ -55,8 +55,8 @@ public class ProcessaDadosProdutoServlet extends HttpServlet {
         // sendo que o valor do atributo é o objeto "prod"
         request.setAttribute( "produtoObtido", prod );
 
-        // prepara um RequestDispatcher para direcionar para a págine
-        // "exisbeDados.jsp" que está no mesmo diretório em relação
+        // prepara um RequestDispatcher para direcionar para a página
+        // "exibeDados.jsp" que está no mesmo diretório em relação
         // ao mapeamento deste Servlet
         RequestDispatcher disp = request.getRequestDispatcher( "exibeDados.jsp" );
 
