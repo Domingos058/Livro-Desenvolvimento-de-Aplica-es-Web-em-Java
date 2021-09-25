@@ -69,7 +69,7 @@ public class PaisDAO extends DAO<Pais> {
     @Override
     public List<Pais> listarTodos() throws SQLException {
 
-        List<Pais> lista = new ArrayList<Pais>();
+        List<Pais> lista = new ArrayList<>();
         String sql = "SELECT * FROM pais;";
 
         PreparedStatement stmt = getConnection().prepareStatement( sql );
