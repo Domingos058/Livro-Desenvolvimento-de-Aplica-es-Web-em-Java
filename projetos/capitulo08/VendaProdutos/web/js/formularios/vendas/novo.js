@@ -30,9 +30,14 @@ $( () => {
         let $txtQuantidade = $( "#txtQuantidade" );
         
         let idProduto = $selectProduto.val();
-        let valorVenda = $selectProduto.find( ":selected" ).data( "valor" );
+        let valorVenda = $selectProduto.find( ":selected" ).data( "valor" ).toString();
         let descricao = $selectProduto.find( ":selected" ).data( "descricao" );
         let quantidade = null;
+        
+        // se o valor da venda tem vírgula, troca por ponto
+        if ( valorVenda.includes( "," ) ) {
+            valorVenda = valorVenda.replace( ",", "." );
+        }
         
         try {
             quantidade = new Decimal( $txtQuantidade.val() );
