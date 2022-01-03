@@ -8,7 +8,7 @@
     a4paper,  
     english,  
     brazil,   
-    %draft
+    draft
 ]{memoir}
 
 \usepackage{coletanea}
@@ -28,10 +28,10 @@
 
 \frontmatter
 
-\input{pre01Capa}
-\input{pre02FolhaDeRosto}
-\input{pre03FichaCatalografica}
-\input{pre04Dedicatoria}
+%\input{pre01Capa}
+%\input{pre02FolhaDeRosto}
+%\input{pre03FichaCatalografica}
+%\input{pre04Dedicatoria}
 
 \renewcommand\chaptitlefont{\normalfont\huge\bfseries\scshape\color{corAzulTema}}
     
@@ -53,24 +53,25 @@
 
 \mainmatter
 
-\part{O Básico do Básico...}
-\input{capitulo01JavaParaWeb}
-\input{capitulo02ProcessamentoDeFormularios}
-\input{capitulo03ExpressionLanguageTagLibs}
-\input{capitulo04PadroesDeProjeto}
-\input{capitulo05PrimeiroProjeto}
-\input{capitulo06SegundoProjeto}
+%\part{O Básico do Básico...}
+%\input{capitulo01JavaParaWeb}
+%\input{capitulo02ProcessamentoDeFormularios}
+%\input{capitulo03ExpressionLanguageTagLibs}
+%\input{capitulo04PadroesDeProjeto}
+%\input{capitulo05PrimeiroProjeto}
+%\input{capitulo06SegundoProjeto}
+%
+%\part{O Que Falta do Básico?}
+%\input{capitulo07JavaScript}
+%\input{capitulo08TerceiroProjeto}
+%\input{capitulo09QuartoProjeto}
 
-\part{O Que Falta do Básico?}
-\input{capitulo07JavaScript}
-\input{capitulo08TerceiroProjeto}
-\input{capitulo09QuartoProjeto}
+\part{O Mundo Real}
 
-%\part{O Mundo Real}
-%\input{capitulo10FrameworksPersistencia}
-%\input{capitulo11FrameworksMVC}
-%\input{capitulo12FrameworksFrontEnd}
-%\input{capitulo13TopicosVariados}
+\input{parteIIISobre}
+\input{capitulo10FrameworksMVCPersistencia}
+\input{capitulo11FrameworksBibliotecasFrontEnd}
+\input{capitulo12TopicosVariados}
 
 
 \backmatter
