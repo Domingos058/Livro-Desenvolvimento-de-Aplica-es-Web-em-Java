@@ -96,7 +96,7 @@ Para adicionar uma dependência, clique no botão \destaque{\textit{ADD DEPENDEN
     \item \textbf{Validation:} permite a validação de objetos de dados que serão gerenciados pela aplicação (já fizemos algo parecido, você se lembram?);
 \end{itemize}
 
-Agora com o inicializador do projeto configurado, clique no botão \destaque{GENERATE}. Ao fazer isso, um arquivo \texttt{.zip} será baixado, com o nome de \texttt{venda-produtos-spring.zip}. No local onde foi salvo, descompacte-o. Abra o NetBeanse realize o procedimento de abrir projetos. Vá à pasta onde o arquivo foi descompactado. Você notará que o NetBeans reconhecerá um projeto Maven ali. Selecione-o e abra-o.
+Agora com o inicializador do projeto configurado, clique no botão \destaque{\textit{GENERATE}}. Ao fazer isso, um arquivo \texttt{.zip} será baixado, com o nome de \texttt{venda-produtos-spring.zip}. No local onde foi salvo, descompacte-o. Abra o NetBeanse realize o procedimento de abrir projetos. Vá à pasta onde o arquivo foi descompactado. Você notará que o NetBeans reconhecerá um projeto Maven ali. Selecione-o e abra-o.
 
 As configurações iniciais do projeto gerado no Spring Initilizr podem ser compartilhadas. Sendo assim, se você quiser, pode usar o \textit{link} abaixo para fazer o \textit{download} do projeto com as mesmas configurações apresentadas.
 
@@ -114,19 +114,61 @@ Provavelmente, após abrir o projeto, seu NetBeans vai demorar alguns minutos --
 \end{figure}
 \FloatBarrier
 
-Para resolvermos isso, faremos algo que talvez você já tenha feito para outras situações. Clique com o botão direito no projeto e escola a opção \destaque{\textit{Resolve Project Problems...}} do menu de contexto. Fazendo isso, um diálogo aparecerá com um ou mais itens com o texto ``\textit{Some dependency artifacts are not in the local repository}'', indicando o problema encontrado. Clique no botão \destaque{\textit{``Resolve''}}. O Maven vai começar a realizar o processo de ``Priming'' (preparação) do projeto, prepararando e baixando todas as dependências. Essa preparação pode demorar um pouco também. Você saberá que o processo terminou quando aparecer ``BUILD SUCESS'' na saída do NetBeans e quando o diálogo da solução dos problemas do projeto apresentar o problema apontado anteriormente com um ``check'' ou ``tick'' verde. Clique em Close.
+Para resolvermos isso, faremos algo que talvez você já tenha feito para outras situações. Clique com o botão direito no projeto e escolha a opção \destaque{\textit{Resolve Project Problems...}} do menu de contexto. Fazendo isso, um diálogo aparecerá com um ou mais itens com o texto ``\textit{Some dependency artifacts are not in the local repository}'', indicando o problema encontrado. Clique no botão \destaque{\textit{``Resolve''}}. O Maven vai começar a realizar o processo de ``Priming'' (preparação) do projeto, prepararando e baixando todas as dependências. Essa preparação pode demorar um pouco também. Você saberá que o processo terminou quando aparecer ``BUILD SUCESS'' na saída do NetBeans e quando o diálogo da solução dos problemas do projeto apresentar o problema apontado anteriormente com um ``check'' ou ``tick'' verde. Clique em \destaque{\textit{Close}}.
+
+Agora que criamos o projeto no Spring Initializr e o abrimos no NetBeans, vamos entender sua estrutura que é mostrada com seus principais nós expandidos na Figura~\ref{fig:cap10EstruturaProjeto}
+
+\FloatBarrier
+\begin{figure}[!htbp]
+    \centering
+    \caption{Estrutura do projeto}
+    \includegraphics[scale=1]{imagens/cap10EstruturaProjeto}
+    \\\textbf{Fonte:} Elaborada pelo autor
+    \label{fig:cap10EstruturaProjeto}
+\end{figure}
+\FloatBarrier
 
 explicar estrutura do projeto
 
-falar  other sources para mostrar como diretórios
+falar other sources para mostrar como diretórios
 
-rodar pela primeira vez
+\FloatBarrier
+\begin{figure}[!htbp]
+    \centering
+    \caption{Estrutura do projeto}
+    \includegraphics[scale=1]{imagens/cap10ShowResourcesAsPackages}
+    \\\textbf{Fonte:} Elaborada pelo autor
+    \label{fig:cap10ShowResourcesAsPackages}
+\end{figure}
+\FloatBarrier
+
+\FloatBarrier
+\begin{figure}[!htbp]
+    \centering
+    \caption{Estrutura do projeto}
+    \includegraphics[scale=1]{imagens/cap10EstruturaProjetoOK}
+    \\\textbf{Fonte:} Elaborada pelo autor
+    \label{fig:cap10EstruturaProjetoOK}
+\end{figure}
+\FloatBarrier
 
 criar um index
 
 configurar o WebConfig
 
+rodar pela primeira vez
+
 como executar
+
+\FloatBarrier
+\begin{figure}[!htbp]
+    \centering
+    \caption{\textit{Plugins} do Maven disponibilizados}
+    \includegraphics[scale=1]{imagens/cap10PluginsMaven}
+    \\\textbf{Fonte:} Elaborada pelo autor
+    \label{fig:cap10PluginsMaven}
+\end{figure}
+\FloatBarrier
 
 como associar ao navegador com LiveReload
 
