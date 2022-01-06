@@ -10,7 +10,9 @@
 
 Antes de começarmos a trabalhar, precisamos configurar nosso ambiente de desenvolvimento. Como lidaremos com toda a \textit{stack} de \textit{frameworks} e bibliotecas do Spring, poderíamos utilizar a ferramenta oficial deles para nos auxiliar, a Spring Tool Suite 4. Eu particularmente não sou muito fã, pois ela é baseada na IDE Eclipse que, na minha opinião, é extremamente burocrática e instável, mas como ela é adotada como o padrão da indústria, uma hora ou outra acabamos ter que a adotar. Continuaremos a utilizar o NetBeans como nossa ferramenta padrão, mas você pode testar a Spring Tool Suite caso deseje. No momento em que este texto está sendo escrito existem também versões para o Visual Studio Code (\url{https://code.visualstudio.com/}) a para a IDE Theia (\url{https://theia-ide.org/}). O download de qualquer uma das versões pode ser feito em \url{https://spring.io/tools}.
 
-A primeira coisa que vamos fazer é acessar o site spring initializr (\url{https://start.spring.io/}). Nesse site podermos configurar a infraestrutura básica do nosso projeto, que utilizará o Maven (\url{https://maven.apache.org/}) como ferrameta de gerenciamento do projeto. O Maven é suportado atualmente pelas principais IDEs disponíveis. Sendo um projeto Maven, espera-se que todas as IDEs trabalhem de forma semelhante, então teoriacemente podemos trabalhar com mais de uma ferramenta no mesmo projeto. Note que iremos reconstruir o ``Sistema de Venda de Produtos'' do Capítulo\ref{cap:terceiroProjeto}. Vamos começar?
+A primeira coisa que vamos fazer é acessar o site Spring Initializr (\url{https://start.spring.io/}). Nesse site podermos configurar a infraestrutura básica do nosso projeto, que utilizará o Maven (\url{https://maven.apache.org/}) como ferrameta de gerenciamento do projeto. O Maven é suportado atualmente pelas principais IDEs disponíveis. Sendo um projeto Maven, espera-se que todas as IDEs trabalhem de forma semelhante, então teoriacemente podemos trabalhar com mais de uma ferramenta no mesmo projeto. Note que iremos reconstruir o ``Sistema de Venda de Produtos'' do Capítulo\ref{cap:terceiroProjeto}. Vamos começar?
+
+A versão atual da página principal do site do Spring Initializr pode ser vista na Figura~\ref{fig:cap10SpringInitializr}.
 
 \FloatBarrier
 \begin{figure}[!htbp]
@@ -22,7 +24,22 @@ A primeira coisa que vamos fazer é acessar o site spring initializr (\url{https
 \end{figure}
 \FloatBarrier
 
-Prrencher
+Basicamente do lado esquerdo temos as opções de configuração do projeto:
+\begin{itemize}
+    \item \textbf{Project:} qual ferramenta de gerencimanto de projeto será usada;
+    \item \textbf{Language:} a linguagem de programação do projeto;
+    \item \textbf{Spring Boot:} qual a versão do Spring Boot que usaremos;
+    \item \textbf{Project Metadata:} os metadados do projeto:
+    \begin{itemize}
+    content...
+    \end{itemize}
+    \item \textbf{:}
+    \item \textbf{:}
+    \item \textbf{:}
+    \item \textbf{:}
+    \item \textbf{:}
+    \item \textbf{:}
+\end{itemize}
 
 \FloatBarrier
 \begin{figure}[!htbp]

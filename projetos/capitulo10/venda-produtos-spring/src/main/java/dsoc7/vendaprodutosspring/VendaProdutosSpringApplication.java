@@ -1,13 +1,13 @@
-package vendaprodutos.VendaProdutos;
+package dsoc7.vendaprodutosspring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class VendaProdutosApplication {
+public class VendaProdutosSpringApplication {
 
     public static void main( String[] args ) {
-        SpringApplication.run( VendaProdutosApplication.class, args );
+        SpringApplication.run( VendaProdutosSpringApplication.class, args );
     }
 
 }
