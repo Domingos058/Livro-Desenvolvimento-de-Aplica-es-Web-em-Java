@@ -15,9 +15,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers( ViewControllerRegistry registry ) {
         
-        // addViewController( caminho )
-        // setViewName( arquivo de template )
         registry.addViewController( "/index" ).setViewName( "index" );
+        registry.addViewController( "/index.html" ).setViewName( "index" );
         
     }
     
