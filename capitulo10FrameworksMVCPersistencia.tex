@@ -64,7 +64,7 @@ Ou seja:
     \begin{itemize}
         \item \textbf{\textit{Group}:} usaremos \texttt{dsoc7}, que é a sigla da disciplina para a qual esse livro foi desenvolvido incialmente, mas em um caso real, você deve preencher com a notação de domínio inverso da empresa ou instituição para a qual estiver desenvolvendo o projeto. Por exemplo, se a instuição tem o domínio \texttt{ifsp.edu.br}, você deverá preencher o identificador do grupo com \texttt{br.edu.ifsp}. Caso seja um projeto pessoal e você possuir um domínio, a regra é a mesma. Eu por exemplo tenho o domínio \texttt{davidbuzatto.com.br}, então meu identificador de grupo, para um projeto pessoal, deve ser \texttt{br.com.davidbuzatto};
         \item \textbf{\textit{Artifact}:} usaremos \texttt{venda-produtos-spring};
-        \item \textbf{\textit{Name}:} o nome preencheremos com \texttt{VendaProdutosSpring}, que é o que aparecerá no NetBeans na raiz do projeto. Aqui em um caso real você poderia usar espaços para nomear o projeto. Eu prefiro sem espaços;
+        \item \textbf{\textit{Name}:} o nome preencheremos com \texttt{VendaProdutosSpring}, que é o que aparecerá no NetBeans na raiz do projeto. Aqui em um caso real você poderia usar espaços para nomear o projeto. Eu prefiro sem espaços. Note que para diferenciar do primeiro projeto de venda de produtos, adicionaremos o sufixo Spring;
         \item \textbf{\textit{Description}:} preencher com Sistema de Venda de Produtos Usando Spring Boot;
         \item \textbf{\textit{Project name}:} aqui o Spring Initializr já deve ter preenchido com a concatenção do identificador do grupo e do identificador do artefato, ficando \texttt{dsoc7.venda-produtos-spring}. Na criação do projeto esses hífens serão retirados, pois nomes de pacotes em Java não podem ter hífem;
         \item \textbf{\textit{Packaging}:} usaremos empacotamento em \texttt{.jar};
@@ -128,9 +128,7 @@ Agora que criamos o projeto no Spring Initializr e o abrimos no NetBeans, vamos 
 \end{figure}
 \FloatBarrier
 
-explicar estrutura do projeto
-
-falar other sources para mostrar como diretórios
+As pastas \destaque{\textit{Source Packages}} e \destaque{\textit{Test Packages}} servirão para armazenar, respectivamente, arquivos de código e arquivos de teste do projeto. A pasta \destaque{\textit{Other Sources}} será usada para armazenar quaisquer outros tipos de arquivos do nosso projeto. Note que por padrão o NetBeans a mostrará como as outras duas pastas, ou seja, subentendendo que é uma pasta que conterá código em Java, mas isso não é verdade. Vamos mudar a aparência de como essa pasta é exibida para ficar parecido com o que estávamos acostumados na pasta Web dos nossos projetos anteriores, ou seja, uma exibição como uma árvore de diretórios, não de pacotes. Para isso, clique com o botão direito do mouse em \destaque{\textit{Other Sources}} e escolha a opção \destaque{\textit{Show Resources as Packages}} (Figura~\ref{fig:cap10ShowResourcesAsPackages}), desmarcando-a. 
 
 \FloatBarrier
 \begin{figure}[!htbp]
@@ -142,6 +140,8 @@ falar other sources para mostrar como diretórios
 \end{figure}
 \FloatBarrier
 
+Fazendo isso, a exibição dessa pasta se tornará a exibição padrão de árvore de diretórios, como mostrado na Figura\ref{fig:cap10EstruturaProjetoOK}. Dentro dela teremos inicialmente três itens: 1~) O diretório \destaque{\texttt{static}} que usaremos para armazenar todos os arquivos que conterão conteúdo estático; 2~) o diretório \destaque{\texttt{templates}} que conterá todos os \textit{templates} (modelos) que serão processados pelo \textit{framework} Thymeleaf e, 3~) o arquivo \destaque{\texttt{application.properties}} que armazenará todas as configurações que o Spring Boot usará para configurar todas as dependências do projeto. Eu sei que já começaram a aparecer algumas coisas que ainda não foram explicadas, mas não se preocupe que logo veremos a serventia de cada coisa.
+
 \FloatBarrier
 \begin{figure}[!htbp]
     \centering
@@ -152,13 +152,17 @@ falar other sources para mostrar como diretórios
 \end{figure}
 \FloatBarrier
 
-criar um index
+Ainda sobre a estrutura do projeto, as pastas \destaque{\textit{Dependencies}}, \destaque{\textit{Runtime Dependencies}} e \destaque{\textit{Test Dependencies}} contém respectivamente as dependências de compilação, execução e teste. O conteúdo delas não serão exibidas, pois contém muitos itens e eles são gerenciados diretamente pelo Maven. Na pasta \destaque{\textit{Java Dependencies}} é mostrado qual o JDK está em uso, no meu caso o 17, sendo que pode ser qualquer um com versão maior ou igual à 11 e, em \destaque{\textit{Project Files}} há um arquivo denominado \destaque{\texttt{pom.xml}} que contém as configurações do Maven para o nosso projeto. Eu não mostrarei o conteúdo aqui, pois ele estará disponível para vocês. Abra-o para dar uma olhada no seu conteúdo e siga o texto para entender o que está acontecendo em algumas de suas partes.
 
-configurar o WebConfig
+Entre as linhas 5 e 10 é informado que este projeto é do tipo Spring Boot, versão 2.6.2, lembrando que a versão pode variar. Entre as linhas 11 e 18 são mostrados os valores correspondentes aos metadados que preenchemos no Spring Initializr, com uma única adição, a tag \inlineHTMLCode{<version>} usada para informar a versão do projeto. Por padrão, a versão inicial vem com o conteúdo \texttt{0.0.1-SNAPSHOT}. Se você quiser mudar esse valor, fique à vontade! Agora, entre as linhas 19 e 58 são definidas todas as dependências que escolhemos no Spring Initializr. Se quisermos adicionar mais dependências, podemos editar diretamente esse arquivo ou ir no Spring Initializr, escolher a dependência que queremos inserir como gerenciada pelo Spring Boot, clicar no botão \destaque{\textit{EXPLORE}}, copiar o trecho de código XML e colar no nosso arquivo \destaque{\texttt{pom.xml}}. Dependências que não são gerenciadas pelo Spring Boot também podem ser inseridas.
 
-rodar pela primeira vez
+Agora que já conhecemos a estrutura do projeto, poderíamos tentar executá-lo, mas como adicionamos várias dependências, nós vamos precisar configurar algumas primeiro, senão a execução não vai funcionar. Note que para colocar o projeto em execução nós \textbf{NÃO} usaremos o botão \textit{play} do NetBeans. Logo veremos como fazer. No momento vamos forcar na configuração, editando o arquivo \destaque{\texttt{application.properties}}. Abra-o e copie o código apresentado na Listagem~\thechapter.\ref{listagem:projetos/capitulo10/parciais/application01.properties}
 
-como executar
+\propertiesCode{Arquivo \texttt{application.properties}}{projetos/capitulo10/parciais/application01.properties}
+
+Veja que todo o código está comentado, então não repetirei. Por fim, antes de executarmos nosso projeto pela primeira vez, precisamos colocar o MariaDB no ar e criar o banco de dados com o nome de \destaque{\texttt{venda\_produtos\_spring}}. Faça isso.
+
+Agora vamos executar nosso projeto! Logo abaixo da estrutura do projeto no NetBeans há a aba \destaque{\textit{Navigator}}. Quando o nó raiz do projeto estiver selecionado --na verdade alguns outros nós também-- serão apresentados todos os \textit{plugins} do Maven que estão disponíveis. Esses \textit{plugins} são responsáveis em colocar o Maven para funcionar, executando alguma tarefa. Na Figura~\ref{fig:cap10PluginsMaven} essa aba é apresentada.
 
 \FloatBarrier
 \begin{figure}[!htbp]
@@ -169,6 +173,24 @@ como executar
     \label{fig:cap10PluginsMaven}
 \end{figure}
 \FloatBarrier
+
+Sendo assim, clique no nome do projeto para a aba \destaque{\textit{Navigator}} ser preenchida pelos \textit{plugins} disponíveis. De todos eles, usaremos alguns. O usado para colocar o projeto no ar, compilando-o e iniciando o servidor é o \destaque{\texttt{spring-boot run}}. Clique duas vezes nele e você verá na tela de saída o Spring Boot iniciando o processo. Se tudo der certo, você terá como última linha da saída uma mensagem informando que a inicialização foi completada. Com isso, abra seu navegador (teremos que fazer isso manualmente) e acesse o endereço \url{http://localhost:8080/}. Uma página de erro será apresentada, haja vista que ainda não temos praticamente nada dentro do nosso projeto, mas com isso já sabemos que o servidor está no ar com o projeto.
+
+Por falar em servidor, nos Capítulos anteriores tivemos que lidar com o GlassFish lembra-se? Como estamos usando o Spring MVC como dependência, o Spring Boot usará uma versão do Tomcat, que é um container de Servlet como já aprendemos, embarcada no Spring MVC! Super legal não? Com isso não temos que nos preocupar com servidores durante o desenvolvimento da aplicação!
+
+Vamos continuar, criando uma página index para o nosso projeto. INSTRUçÃO
+
+\htmlCode{Arquivo \texttt{/resources/templates/index.html}}{projetos/capitulo10/venda-produtos-spring/src/main/resources/templates/index.html}
+
+criar um index
+
+configurar o WebConfig
+
+\javaCode{Classe de configuração \texttt{dsoc7/vendaprodutosspring/web/WebConfig.java}}{projetos/capitulo10/venda-produtos-spring/src/main/java/dsoc7/vendaprodutosspring/web/WebConfig.java}
+
+falar da classe VendaProdutosSpringApplication
+
+
 
 como associar ao navegador com LiveReload
 
