@@ -56,7 +56,7 @@
             <input name="dataNascimento"
                    type="date"
                    size="8"
-                   placeholder="dd/mm/yyyy"
+                   placeholder="dd/mm/aaaa"
                    required
                    value="${data}"/>
           </td>

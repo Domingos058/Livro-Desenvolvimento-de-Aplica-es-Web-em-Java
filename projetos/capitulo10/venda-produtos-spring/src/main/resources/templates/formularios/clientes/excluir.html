@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>Alterar Fornecedor</title>
+        <title>Excluir Cliente</title>
         <meta charset="UTF-8"/>
         <meta name="viewport"
               content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
@@ -15,13 +15,13 @@
 
         <div th:replace="~{fragmentos/cabecalho :: cabecalho}"></div>
 
-        <h2>Alterar Fornecedor</h2>
+        <h2>Excluir Cliente</h2>
 
-        <form action="#" 
-              th:action="@{/fornecedores/alterar/{id}(id=${fornecedor.id})}" 
-              th:object="${fornecedor}" 
+        <form action="#"
+              th:action="@{/clientes/excluir/{id}(id=${cliente.id})}"
+              th:object="${cliente}"
               method="post">
-            <div th:replace="~{formularios/fornecedores/componentes :: insercaoAlteracao}"></div>
+            <div th:replace="~{formularios/clientes/componentes :: exclusao}"></div>
         </form>
 
         <div th:replace="~{fragmentos/rodape :: rodape}"></div>

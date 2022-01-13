@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>Excluir Produto</title>
+        <title>Excluir Fornecedor</title>
         <meta charset="UTF-8"/>
         <meta name="viewport"
               content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
@@ -15,13 +15,13 @@
 
         <div th:replace="~{fragmentos/cabecalho :: cabecalho}"></div>
 
-        <h2>Excluir Produto</h2>
+        <h2>Excluir Fornecedor</h2>
 
         <form action="#"
-              th:action="@{/produtos/excluir/{id}(id=${produto.id})}"
-              th:object="${produto}"
+              th:action="@{/fornecedores/excluir/{id}(id=${fornecedor.id})}"
+              th:object="${fornecedor}"
               method="post">
-            <div th:replace="~{formularios/produtos/componentes :: exclusao}"></div>
+            <div th:replace="~{formularios/fornecedores/componentes :: exclusao}"></div>
         </form>
 
         <div th:replace="~{fragmentos/rodape :: rodape}"></div>

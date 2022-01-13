@@ -14,40 +14,79 @@
             <table>
                 <tr>
                     <td class="alinharDireita">
-                        <label for="razaoSocial">Razão Social: </label>
+                        <label for="nome">Nome: </label>
                     </td>
                     <td>
                         <input type="text" 
-                               th:field="*{razaoSocial}" 
+                               th:field="*{nome}" 
                                id="nome" 
-                               placeholder="Razão Social"
+                               placeholder="Nome"
                                size="20"
-                               maxlength="100"
+                               maxlength="45"
                                required="required"/>
                     </td>
                     <td>
                         <small 
-                            th:if="${#fields.hasErrors('razaoSocial')}" 
-                            th:errors="*{razaoSocial}"
+                            th:if="${#fields.hasErrors('nome')}" 
+                            th:errors="*{nome}"
                             class="erroFormulario"/>
                     </td>
                 </tr>
                 <tr>
                     <td class="alinharDireita">
-                        <label for="cnpj">CNPJ: </label>
+                        <label for="sobrenome">Sobrenome: </label>
                     </td>
                     <td>
                         <input type="text" 
-                               th:field="*{cnpj}" 
-                               id="cnpj" 
-                               size="18"
-                               pattern="\d{2}.\d{3}.\d{3}/\d{4}-\d{2}"
-                               placeholder="99.999.999/9999-99"
+                               th:field="*{sobrenome}" 
+                               id="sobrenome" 
+                               placeholder="Sobrenome"
+                               size="20"
+                               maxlength="45"
                                required="required"/>
                     </td>
                     <td>
-                        <small th:if="${#fields.hasErrors('cnpj')}" 
-                               th:errors="*{cnpj}"
+                        <small 
+                            th:if="${#fields.hasErrors('sobrenome')}" 
+                            th:errors="*{sobrenome}"
+                            class="erroFormulario"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="alinharDireita">
+                        <label for="dataNascimento">Data de Nascimento: </label>
+                    </td>
+                    <td>
+                        <input type="date" 
+                               th:field="*{dataNascimento}" 
+                               id="dataNascimento" 
+                               placeholder="dd/mm/aaaa"
+                               size="8"
+                               required="required"/>
+                    </td>
+                    <td>
+                        <small 
+                            th:if="${#fields.hasErrors('dataNascimento')}" 
+                            th:errors="*{dataNascimento}"
+                            class="erroFormulario"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="alinharDireita">
+                        <label for="cpf">CPF: </label>
+                    </td>
+                    <td>
+                        <input type="text" 
+                               th:field="*{cpf}" 
+                               id="cpf" 
+                               size="13"
+                               pattern="\d{3}.\d{3}.\d{3}-\d{2}"
+                               placeholder="999.999.999-99"
+                               required="required"/>
+                    </td>
+                    <td>
+                        <small th:if="${#fields.hasErrors('cpf')}" 
+                               th:errors="*{cpf}"
                                class="erroFormulario"/>
                     </td>
                 </tr>
@@ -171,7 +210,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <a th:href="@{/fornecedores/listar}">Voltar</a>
+                        <a th:href="@{/clientes/listar}">Voltar</a>
                     </td>
                     <td class="alinharDireita">
                         <input type="submit" value="Salvar"/>
@@ -188,25 +227,43 @@
             <table>
                 <tr>
                     <td class="alinharDireita">
-                        <label for="razaoSocial">Razão Social: </label>
+                        <label for="nome">Nome: </label>
                     </td>
                     <td>
-                        <span th:text="*{razaoSocial}" 
-                              id="razaoSocial"/>
+                        <span th:text="*{nome}" 
+                              id="nome"/>
                     </td>
                 </tr>
                 <tr>
                     <td class="alinharDireita">
-                        <label for="cnpj">CNPJ: </label>
+                        <label for="sobrenome">Sobrenome: </label>
                     </td>
                     <td>
-                        <span th:text="*{cnpj}" 
-                              id="cnpj"/>
+                        <span th:text="*{sobrenome}" 
+                              id="sobrenome"/>
                     </td>
                 </tr>
                 <tr>
                     <td class="alinharDireita">
-                        <label for="email">E-mail: </label>
+                        <label for="dataNascimento">Data de Nascimento: </label>
+                    </td>
+                    <td>
+                        <span th:text="*{#temporals.format(dataNascimento, 'dd/MM/yyyy')}" 
+                              id="valorVenda"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="alinharDireita">
+                        <label for="cpf">CPF: </label>
+                    </td>
+                    <td>
+                        <span th:text="*{cpf}" 
+                              id="cpf"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="alinharDireita">
+                        <label for="email">E-mail </label>
                     </td>
                     <td>
                         <span th:text="*{email}" 
@@ -260,7 +317,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <a th:href="@{/fornecedores/listar}">Voltar</a>
+                        <a th:href="@{/clientes/listar}">Voltar</a>
                     </td>
                     <td class="alinharDireita">
                         <input type="submit" value="Excluir"/>
