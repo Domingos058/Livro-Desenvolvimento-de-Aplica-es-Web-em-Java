@@ -10,7 +10,7 @@
     </parent>
     <groupId>dsoc7</groupId>
     <artifactId>venda-produtos-spring</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>VendaProdutosSpring</name>
     <description>Sistema de Venda de Produtos Usando Spring Boot</description>
     <properties>

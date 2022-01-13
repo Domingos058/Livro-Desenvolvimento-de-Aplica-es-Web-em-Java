@@ -4,12 +4,14 @@
     <head>
         <title>Sistema de Venda de Produtos Usando Spring Boot</title>
         <meta charset="UTF-8"/>
-        <meta name="viewport" 
-              content="width=device-width, initial-scale=1.0"/>
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+        <link href="" rel="" th:replace="~{fragmentos/cssJs :: css}"/>
+        <script th:replace="~{fragmentos/cssJs :: js}"></script>  
     </head>
     
     <body>
-        <h1>Sistema de Venda de Produtos Usando Spring Boot</h1>
+        <div th:replace="~{fragmentos/cabecalho :: cabecalho}"></div>
     </body>
     
 </html>

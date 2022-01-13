@@ -1,8 +1,7 @@
 \chapter{\textit{Frameworks} MVC e de Persistência}\label{cap:frameworksPersistencia}
 \epigraph{``\textit{A persistência é o caminho do êxito}''.}{Charles Chaplin}
-\epigraph{``\textit{Não extingua sua inspiração e sua imaginação; não se torne o escravo do seu modelo}''.}{Vincent van Gogh}
 
-\lettrine[lines=4, lhang=0.1, lraise=0, loversize=0.2, findent=0.1em]{\textcolor{corTema}{N}}{ESTE} Capítulo reconstruiremos o ``Sistema de Venda de Produtos'' do Capítulo~\ref{cap:terceiroProjeto} utilizando diversos \textit{frameworks} que tornarão nosso trabalho menos tedioso e mais direto ao ponto!
+\lettrine[lines=4, lhang=0.1, lraise=0, loversize=0.2, findent=0.1em]{\textcolor{corTema}{N}}{ESTE} Capítulo reconstruiremos o ``Sistema de Venda de Produtos'' do Capítulo~\ref{cap:sistemaVendaProdutos} utilizando diversos \textit{frameworks} que tornarão nosso trabalho menos tedioso e mais direto ao ponto! A partir de agora não construiremos os nossos exemplos em sua completude, pois focaremos nas novidades e não queremos Capítulos muito extensos. Os projetos prontos estarão disponíveis como nos Capítulos anteriores.
 
 \vfill
 
@@ -13,7 +12,7 @@ Antes de começarmos a trabalhar, precisamos configurar nosso ambiente de desenv
 
 \subsection{Criando a Primeira Aplicação Spring Boot}
 
-A primeira coisa que vamos fazer é acessar o site Spring Initializr (\url{https://start.spring.io/}). Nesse site podermos configurar a infraestrutura básica do nosso projeto, que utilizará o Maven (\url{https://maven.apache.org/}) como ferrameta de gerenciamento do projeto. O Maven é suportado atualmente pelas principais IDEs disponíveis. Sendo um projeto Maven, espera-se que todas as IDEs trabalhem de forma semelhante, então teoriacemente podemos trabalhar com mais de uma ferramenta no mesmo projeto. Note que iremos reconstruir o ``Sistema de Venda de Produtos'' do Capítulo\ref{cap:terceiroProjeto}. Vamos começar?
+A primeira coisa que vamos fazer é acessar o site Spring Initializr (\url{https://start.spring.io/}). Nesse site podermos configurar a infraestrutura básica do nosso projeto, que utilizará o Maven (\url{https://maven.apache.org/}) como ferrameta de gerenciamento do projeto. O Maven é suportado atualmente pelas principais IDEs disponíveis. Sendo um projeto Maven, espera-se que todas as IDEs trabalhem de forma semelhante, então teoriacemente podemos trabalhar com mais de uma ferramenta no mesmo projeto. Note que iremos reconstruir o ``Sistema de Venda de Produtos'' do Capítulo\ref{cap:sistemaVendaProdutos}. Vamos começar?
 
 A versão atual da página principal do site do Spring Initializr pode ser vista na Figura~\ref{fig:cap10SpringInitializr}.
 
@@ -139,7 +138,7 @@ As configurações iniciais do projeto gerado no Spring Initilizr podem ser comp
 
 \url{https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.6.2&packaging=jar&jvmVersion=11&groupId=dsoc7&artifactId=venda-produtos-spring&name=VendaProdutosSpring&description=Sistema%20de%20Venda%20de%20Produtos%20Usando%20Spring%20Boot&packageName=dsoc7.venda-produtos-spring&dependencies=devtools,lombok,web,thymeleaf,data-jpa,mariadb,validation}
 
-Provavelmente, após abrir o projeto, seu NetBeans vai demorar alguns minutos --pode demorar bastante na verdade-- para baixar o índice central do Maven e prepará-lo no seu computador. Após esse processo, seu NetBeans vai ``reclamar'', informando que o repositório do Maven local não tem uma cópia das dependências do projeto. Veja na Figura~\ref{fig:cap10ConfProjeto03} o que provavelmente aparecerá, ou seja, um sinal de aviso (\textit{warning}) no ícone do projeto.
+Provavelmente, após abrir o projeto, seu NetBeans vai demorar alguns minutos --pode demorar bastante na verdade-- para baixar o índice do repositório central do Maven e prepará-lo no seu computador. Após esse processo, seu NetBeans vai ``reclamar'', informando que o repositório do Maven local não tem uma cópia das dependências do projeto. Veja na Figura~\ref{fig:cap10ConfProjeto03} o que provavelmente aparecerá, ou seja, um sinal de aviso (\textit{warning}) no ícone do projeto.
 
 \FloatBarrier
 \begin{figure}[!htbp]
@@ -258,7 +257,7 @@ Estamos quase terminando essa parte introdutória! Vamos tratar agora sobre outr
 
 Para isso, precisamos instalar uma extensão no Chrome (\url{http://livereload.com/}), chamada de \destaque{LiveReload}. Há versões para outros navegadores também, mas detalharei a versão do Chrome, pois é o navegador que eu uso e que provavelmente a maioria de vocês também. Para a instalação no Chrome, entre na seção de extensões da Chrome Web Store (\url{https://chrome.google.com/webstore/category/extensions}) e na caixa de pesquisa, procure por LiveReload. Pode ser que haja mais de um resultado. A que estamos procurando é a ``oferecida por \url{http://livereload.com/}'' e versão atual é a 2.1.0, mas isso, como você já sabe, pode variar de acordo com a época que você está lendo este livro. Clique nela e depois no botão \destaque{Usar no Chrome}. Isso fará com que um botão\footnote{Algo parecido com isso \includegraphics[scale=1]{imagens/cap10BotaoLiveReloadBranco}, ou isso \includegraphics[scale=1]{imagens/cap10BotaoLiveReloadPreto}.} seja adicionado na barra de endereços do Chrome. Ao clicar nele uma vez, o LiveReload será ativado. A partir de agora, toda alteração que for feita em arquivos HTML, CSS, JavaScript etc, disparará uma atualização automática na página que está atualmente sendo mostrada, visto que o DevTools enviará, via WebSocket, uma notificação ao LiveReload. Faça um teste. Mude algo no \texttt{index.html}, salve e volte ao navegador. A alteração ou já estará sendo exibida ou a página estará sendo atualizada. Se ainda não estiver funcionando, pare a execução do projeto usando a ação \destaque{\texttt{spring-boot stop}} e mate a ação \destaque{\texttt{spring-boot run}} que ainda está em execução clicando no \texttt{x} do indicador de processos do NetBeans\footnote{Canto inferior direito, algo parecido com isso \includegraphics[scale=1]{imagens/cap10MatarProcessoSpringBootRun}}, a inicie novamente com a ação \destaque{\texttt{spring-boot run}}, atualize a página no Chrome, faça a alteração no código HTML do \texttt{index.html} e veja a atualização ser feita automaticamente a partir de agora. Deve funcionar.
 
-Muito bem! Temos a infraestrutura básica do nosso projeto pronta para podermos começar a trabalhar de verdade! Iremos agora começar a construir novamente, camada por camada, nossa aplicação de Venda de Produtos, mas agora usando diversas bibliotecas, \textit{frameworks} de e recursos que, graças ao Spring Boot, já estão prontos para serem utilizados. Vamos lá!
+Muito bem! Temos a infraestrutura básica do nosso projeto pronta para podermos começar a trabalhar de verdade! Iremos agora começar a construir novamente, camada por camada, nossa aplicação de Venda de Produtos, mas agora usando diversas bibliotecas, \textit{frameworks} e recursos que, graças ao Spring Boot, já estão prontos para serem utilizados. Para não ficar muito extenso e cansativo, irei focar em algumas entidades para você aprender o que quero ensinar. O código completo do projeto estará disponível para consulta, como de praxe. Vamos lá!
 
 
 \section{Hibernate, JPA, Validações e Lombok}
@@ -285,31 +284,9 @@ importância das diretivas de pré-processamento, de busca de propriedades, de r
 
 %Falar brevemente de: JavaServer Faces (JSF), Struts, VRaptor etc.
 
+\section{Execução Local do Projeto}
 
-\section{\textit{Web Services RESTful}}
-
-criação de controladores rest e consumir API usando Javascript.
-
-talvez uma inserção e uma listagem?
-
-atualização do CORS via configuração programática
-
-
-\section{Execução Local do Projeto e Empacotamento em Web Archive (\texttt{.war})}
-
-- extensão de SpringBootServletInitializer na classe da aplicação
-
-- implementação do método configure
-
-- mudança do packaging no pom.xml para war
-
-- adicionar a dependência:
-
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-tomcat</artifactId>
-    <scope>provided</scope>
-</dependency>
+falar do .jar
 
 
 \section{Resumo}

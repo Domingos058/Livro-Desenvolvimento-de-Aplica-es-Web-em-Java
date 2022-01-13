@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title></title>
+        <meta charset="UTF-8"/>
+    </head>
+
+    <body>
+
+        <div th:fragment="insercaoAlteracao" th:remove="tag">
+
+            <table>
+                <tr>
+                    <td class="alinharDireita">Nome:</td>
+                    <td>
+                        <input name="nome"
+                               type="text"
+                               size="20"
+                               maxlength="30"
+                               required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="alinharDireita">Estado:</td>
+                    <td>
+
+                        <jsp:useBean 
+                            id="servicos"
+                            scope="page"
+                            class="vendaprodutos.servicos.EstadoServices"/>
+
+                        <select name="idEstado" required>
+                            <c:forEach items="${servicos.todos}" var="estado">
+                                <option value="${estado.id}">
+                                    ${estado.nome} - ${estado.sigla}
+                                </option>
+                            </c:forEach>
+                        </select>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="${cp}/formularios/cidades/listagem.jsp">Voltar</a>
+                    </td>
+                    <td class="alinharDireita">
+                        <input type="submit" value="Salvar"/>
+                    </td>
+                </tr>
+            </table>
+
+            <div>
+                <label for="nome">Nome</label>
+                <input type="text" th:field="*{nome}" id="nome" placeholder="Nome"/>
+                <small th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="erroFormulario"></small>
+            </div>
+
+            <div class="form-group text-left">
+                <label for="estado">Estado</label>
+                <select th:field="*{estado}" id="estado" class="form-control">
+                    <option value="">Selecione um Estado</option>
+                    <option th:each="estado : ${estados}" th:value="${estado.id}" th:text="${estado.nome} + ' - ' + ${estado.sigla}"></option>
+                </select>
+                <small th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}" class="badge badge-pill badge-danger"></small>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary btn-pill"/>
+                <a th:href="@{/cidades/listar}" class="btn btn-secondary btn-pill">Voltar</a>
+            </div>
+
+        </div>
+
+        <div th:fragment="exclusao" th:remove="tag">
+
+            <table>
+                <tr>
+                    <td class="alinharDireita">Nome:</td>
+                    <td>${requestScope.cidade.nome}</td>
+                </tr>
+                <tr>
+                    <td class="alinharDireita">Estado:</td>
+                    <td>${requestScope.cidade.estado.nome} - ${requestScope.cidade.estado.sigla}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="${cp}/formularios/cidades/listagem.jsp">Voltar</a>
+                    </td>
+                    <td class="alinharDireita">
+                        <input type="submit" value="Excluir"/>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="form-group text-left">
+                <label for="nome">Nome</label>
+                <input type="text" th:value="*{nome}" id="nome" class="form-control" readonly=""/>
+            </div>
+
+            <div class="form-group text-left">
+                <label for="estado">Estado</label>
+                <input type="text" th:value="*{estado.nome} + ' - ' + *{estado.sigla}" id="estado" class="form-control" readonly=""/>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Excluir" class="btn btn-primary btn-pill"/>
+                <a th:href="@{/cidades/listar}" class="btn btn-secondary btn-pill">Voltar</a>
+            </div>
+
+        </div>
+
+    </body>
+
+</html>
