@@ -45,7 +45,7 @@ public class Produto {
     @Pattern( regexp = "^\\d{13}$",
               message = "deve corresponder à 9999999999999" )
     @Size( min = 13, max = 13, 
-           message = "Código de barras deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "Código de barras deve ter {min} caracteres" )
     @Column( unique = true )
     private String codigoBarras;
     

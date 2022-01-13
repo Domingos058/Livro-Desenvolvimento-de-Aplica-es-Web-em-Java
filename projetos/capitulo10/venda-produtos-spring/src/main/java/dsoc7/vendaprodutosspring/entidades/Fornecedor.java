@@ -41,7 +41,7 @@ public class Fornecedor {
     @Pattern( regexp = "^\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}\\-\\d{2}$",
               message = "deve corresponder à 99.999.999/9999-99" )
     @Size( min = 18, max = 18, 
-           message = "CNPJ deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "CNPJ deve ter {min} caracteres" )
     @Column( unique = true )
     private String cnpj;
     
@@ -70,7 +70,7 @@ public class Fornecedor {
     @Pattern( regexp = "^\\d{5}\\-\\d{3}$",
               message = "deve corresponder à 99999-999" )
     @Size( min = 9, max = 9, 
-           message = "CEP deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "CEP deve ter {min} caracteres" )
     private String cep;
     
     @NotNull( message = "Cidade é obrigatória" )

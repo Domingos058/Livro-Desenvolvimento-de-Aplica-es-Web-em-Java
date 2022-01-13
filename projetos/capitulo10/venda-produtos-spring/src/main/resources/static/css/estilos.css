@@ -36,7 +36,35 @@ a:hover {
 
 .erroFormulario {
     font-weight: bold;
-    background-color: #ff3333;
+    color: #cc0000;
+}
+
+#divBoasVindas {
+    width: 400px;
+    border: solid thin #999999;
+    border-radius: 10px;
+    background-color: #91e2fc;
+    padding: 20px;
+    padding-top: 0px;
+}
+
+#divErroInterno {
+    width: 500px;
+    border: solid thin #999999;
+    border-radius: 10px;
+    background-color: #91e2fc;
+    padding: 20px;
+    padding-top: 0px;
+    overflow-wrap: break-word;
+    text-align: justify
+}
+
+#divErroInterno .titulo {
+    color: #cc0000;
+}
+
+#divErroInterno .tipoErro {
+    font-weight: bold;
 }
 
 #divErros {

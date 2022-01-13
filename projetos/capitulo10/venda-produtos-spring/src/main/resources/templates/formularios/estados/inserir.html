@@ -5,7 +5,8 @@
     <head>
         <title>Novo Estado</title>
         <meta charset="UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
         <link href="" rel="" th:replace="~{fragmentos/cssJs :: css}"/>
         <script th:replace="~{fragmentos/cssJs :: js}"></script>  
     </head>
@@ -14,9 +15,12 @@
 
         <div th:replace="~{fragmentos/cabecalho :: cabecalho}"></div>
 
-        <h1>Novo Estado</h1>
+        <h2>Novo Estado</h2>
 
-        <form action="#" th:action="@{/estados/inserir}" th:object="${estado}" method="post">
+        <form action="#"
+              th:action="@{/estados/inserir}"
+              th:object="${estado}"
+              method="post">
             <div th:replace="~{formularios/estados/componentes :: insercaoAlteracao}"></div>
         </form>
 

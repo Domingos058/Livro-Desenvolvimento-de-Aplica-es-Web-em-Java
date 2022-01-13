@@ -50,7 +50,7 @@ public class Cliente {
     @Pattern( regexp = "^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$",
               message = "deve corresponder à 999.999.999-99" )
     @Size( min = 14, max = 14, 
-           message = "CPF deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "CPF deve ter {min} caracteres" )
     @Column( unique = true )
     private String cpf;
     
@@ -79,7 +79,7 @@ public class Cliente {
     @Pattern( regexp = "^\\d{5}\\-\\d{3}$",
               message = "deve corresponder à 99999-999" )
     @Size( min = 9, max = 9, 
-           message = "CEP deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "CEP deve ter {min} caracteres" )
     private String cep;
     
     @NotNull( message = "Cidade é obrigatória" )

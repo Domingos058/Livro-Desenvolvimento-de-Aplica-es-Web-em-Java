@@ -5,18 +5,22 @@
     <head>
         <title>Alterar Estado</title>
         <meta charset="UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
         <link href="" rel="" th:replace="~{fragmentos/cssJs :: css}"/>
         <script th:replace="~{fragmentos/cssJs :: js}"></script>  
     </head>
 
-    <body class="bg-light">
+    <body>
 
         <div th:replace="~{fragmentos/cabecalho :: cabecalho}"></div>
 
-        <h1>Alterar Estado</h1>
+        <h2>Alterar Estado</h2>
 
-        <form action="#" th:action="@{/estados/alterar/{id}(id=${estado.id})}" th:object="${estado}" method="post">
+        <form action="#" 
+              th:action="@{/estados/alterar/{id}(id=${estado.id})}" 
+              th:object="${estado}" 
+              method="post">
             <div th:replace="~{formularios/estados/componentes :: insercaoAlteracao}"></div>
         </form>
 

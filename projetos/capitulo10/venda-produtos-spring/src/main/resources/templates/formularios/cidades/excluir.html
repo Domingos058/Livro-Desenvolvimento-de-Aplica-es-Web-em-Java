@@ -5,7 +5,8 @@
     <head>
         <title>Excluir Cidade</title>
         <meta charset="UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
         <link href="" rel="" th:replace="~{fragmentos/cssJs :: css}"/>
         <script th:replace="~{fragmentos/cssJs :: js}"></script>  
     </head>
@@ -16,7 +17,10 @@
 
         <h1>Excluir Cidade</h1>
 
-        <form action="#" th:action="@{/cidades/excluir/{id}(id=${cidade.id})}" th:object="${cidade}" method="post">
+        <form action="#"
+              th:action="@{/cidades/excluir/{id}(id=${cidade.id})}"
+              th:object="${cidade}"
+              method="post">
             <div th:replace="~{formularios/cidades/componentes :: exclusao}"></div>
         </form>
 
