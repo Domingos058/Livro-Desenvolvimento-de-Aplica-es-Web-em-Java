@@ -30,7 +30,6 @@ public class Produto {
     private BigDecimal valorVenda;
     
     @NotNull
-    @PositiveOrZero
     private BigDecimal estoque;
     
     @NotNull

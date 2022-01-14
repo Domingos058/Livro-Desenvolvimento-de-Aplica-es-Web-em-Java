@@ -67,7 +67,6 @@
                    size="8"
                    placeholder="9,99"
                    step="0.01"
-                   min="0"
                    required
                    value="${requestScope.produto.estoque}"/>
           </td>

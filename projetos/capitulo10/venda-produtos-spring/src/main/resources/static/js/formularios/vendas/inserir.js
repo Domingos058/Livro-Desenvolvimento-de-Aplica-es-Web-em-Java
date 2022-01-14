@@ -161,6 +161,7 @@ $( () => {
         let total = new Decimal( 0 );
         
         $select.html( "" );
+        itensEnviar = [];
         
         itensVenda.forEach( item => {
             
@@ -177,10 +178,18 @@ $( () => {
             $select.append( $opt );
             total = total.plus( valorItem );
             
+            itensEnviar.push({
+                produto: {
+                    id: item.idProduto
+                },
+                valor: item.valorVenda,
+                quantidade: item.quantidade
+            });
+            
         });
         
         $( "#divTotal" ).html( "Total: " + fmtMoeda.format( total ) );
-        $( "#hiddenItensVenda" ).val( JSON.stringify( itensVenda ) );
+        $( "#hiddenItensVenda" ).val( JSON.stringify( itensEnviar ) );
         
     };
     

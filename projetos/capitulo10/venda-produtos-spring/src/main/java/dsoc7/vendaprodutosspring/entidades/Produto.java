@@ -55,7 +55,6 @@ public class Produto {
     private BigDecimal valorVenda;
     
     @NotNull( message = "Estoque é obrigatório" )
-    @PositiveOrZero( message = "Estoque deve ser maior ou igual a zero" )
     @Column( precision = 6, scale = 2 )
     private BigDecimal estoque;
     
