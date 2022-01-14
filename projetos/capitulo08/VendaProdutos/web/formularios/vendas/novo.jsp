@@ -98,9 +98,9 @@
 
             </td>
             <td class="btnsItensVenda">
-              <p><input id="btnInserir" type="button" value="&#x2795;"></p>
-              <p><input id="btnRemover" type="button" value="&#x2796;"></p>
-              <p><input id="btnLimpar" type="button" value="&#x274C;"></p>
+              <p><input id="btnInserir" type="button" value="&#x2795;"/></p>
+              <p><input id="btnRemover" type="button" value="&#x2796;"/></p>
+              <p><input id="btnLimpar" type="button" value="&#x274C;"/></p>
             </td>
             <td>
               Itens da Venda:
