@@ -49,6 +49,9 @@
 \RequirePackage{tikz}
 \RequirePackage{tkz-euclide}
 \usetikzlibrary{positioning}
+\RequirePackage{epstopdf}
+\RequirePackage{textcomp}
+\RequirePackage{scalerel}
 
 % força para não quebrar notas de rodapé em mais de uma página
 \interfootnotelinepenalty=10000
@@ -63,7 +66,7 @@
 %\definecolor{corExercicios}{RGB}{0, 66, 137}
 %\definecolor{corDesafios}{RGB}{59, 0, 108}
 %\definecolor{corProjetos}{RGB}{0,153,102}
-%\definecolor{corCaixaBoasPraticas}{RGB}{0,153,102}
+%\definecolor{corCaixaBoaPratica}{RGB}{0,153,102}
 %\definecolor{corCaixaSaibaMais}{RGB}{0,153,204}
 %\definecolor{corCaixaAtencao}{RGB}{255, 102, 0}
 %\definecolor{corCaixaDestaque}{RGB}{0, 0, 255}
@@ -77,7 +80,8 @@
 \definecolor{corExercicios}{RGB}{0, 66, 137}
 \definecolor{corDesafios}{RGB}{59, 0, 108}
 \definecolor{corProjetos}{RGB}{0,153,102}
-\definecolor{corCaixaBoasPraticas}{RGB}{0,153,102}
+\definecolor{corCaixaObservacao}{RGB}{105, 0, 153}
+\definecolor{corCaixaBoaPratica}{RGB}{0,153,102}
 \definecolor{corCaixaSaibaMais}{RGB}{0,153,204}
 \definecolor{corCaixaAtencao}{RGB}{255, 102, 0}
 \definecolor{corCaixaDestaque}{RGB}{0, 0, 255}
@@ -326,12 +330,17 @@
     {\end{tarefaBaseSemArquivo}}%
 
 
+\def\iconeFogo{\scalerel*{\includegraphics{imagens/icones/iconeFogo.eps}}{\textrm{\textbigcircle}}}
+\def\iconeInformacao{\scalerel*{\includegraphics{imagens/icones/iconeInformacao.eps}}{\textrm{\textbigcircle}}}
+\def\iconeLampada{\scalerel*{\includegraphics{imagens/icones/iconeLampada.eps}}{\textrm{\textbigcircle}}}
+\def\iconeAtencao{\scalerel*{\includegraphics{imagens/icones/iconeAtencao.eps}}{\textrm{\textbigcircle}}}
 
 \NewDocumentEnvironment{mensagemBase}{mm}
 {%
-    \begin{tcolorbox}[reset,enhanced,colback=#1!5!corFundoCaixas,colframe=#1,drop fuzzy shadow,left=2mm,right=2mm,top=2mm,bottom=2mm]%
-        \begin{tabular}{ >{\centering}m{0.7cm} >{\centering}m{0.05cm} m{10.4cm} }%
-            \includegraphics[scale=0.08]{imagens/#2} && \color{#1!30!black}
+    \begin{tcolorbox}[reset,enhanced,colback=#1!5!corFundoCaixas,shadow={0.5mm}{-0.5mm}{0mm}{black!30!white},colbacktitle=#1!85!black,frame hidden,fonttitle=\bfseries\sffamily,left=2mm,right=4mm,top=2mm,bottom=2mm,attach boxed title to top left={xshift=-2mm,yshift=-3mm},boxed title style={frame hidden},title=#2]%
+    
+        \begin{tabular}{ m{13.5cm} }%
+            \color{#1!30!black}
         }%
         {%
         \end{tabular}%
@@ -339,16 +348,45 @@
 }%
 
 \NewDocumentEnvironment{boaPratica}{}%
-{\begin{mensagemBase}{corProjetos}{iconeBoasPraticas}}%
+{\begin{mensagemBase}{corCaixaBoaPratica}{\iconeFogo \texttt{|} Boa Prática}}%
     {\end{mensagemBase}}%
 
 \NewDocumentEnvironment{saibaMais}{}%
-{\begin{mensagemBase}{corCaixaSaibaMais}{iconeSaibaMais}}%
+{\begin{mensagemBase}{corCaixaSaibaMais}{\iconeInformacao \texttt{|} Saiba Mais}}%
     {\end{mensagemBase}}%
 
-\NewDocumentEnvironment{atencao}{}%
-{\begin{mensagemBase}{corCaixaAtencao}{iconeAtencao}}%
+\NewDocumentEnvironment{observacao}{}%
+{\begin{mensagemBase}{corCaixaObservacao}{\iconeLampada \texttt{|} Observação}}%
     {\end{mensagemBase}}%
+    
+\NewDocumentEnvironment{atencao}{}%
+{\begin{mensagemBase}{corCaixaAtencao}{\iconeAtencao \texttt{|} Atenção!}}%
+    {\end{mensagemBase}}%
+    
+    
+    
+\NewDocumentEnvironment{mensagemBaseAntiga}{mm}
+{%
+    \begin{tcolorbox}[reset,enhanced,colback=#1!5!corFundoCaixas,colframe=#1,drop fuzzy shadow,left=2mm,right=2mm,top=2mm,bottom=2mm]%
+        \begin{tabular}{ >{\centering}m{0.7cm} >{\centering}m{0.05cm} m{10.4cm} }%
+            \includegraphics[scale=0.08]{imagens/icones/#2} && \color{#1!30!black}
+        }%
+        {%
+        \end{tabular}%
+    \end{tcolorbox}%
+}%
+
+\NewDocumentEnvironment{boaPraticaAntiga}{}%
+{\begin{mensagemBaseAntiga}{corCaixaBoaPratica}{iconeBoasPraticasAntigo}}%
+    {\end{mensagemBaseAntiga}}%
+
+\NewDocumentEnvironment{saibaMaisAntiga}{}%
+{\begin{mensagemBaseAntiga}{corCaixaSaibaMais}{iconeSaibaMaisAntigo}}%
+    {\end{mensagemBaseAntiga}}%
+
+\NewDocumentEnvironment{atencaoAntiga}{}%
+{\begin{mensagemBaseAntiga}{corCaixaAtencao}{iconeAtencaoAntigo}}%
+    {\end{mensagemBaseAntiga}}%
 
 
 %\makeatletter não é necessário em arquivos .sty

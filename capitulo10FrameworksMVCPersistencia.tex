@@ -195,11 +195,15 @@ Entre as linhas 5 e 10 é informado que este projeto é do tipo Spring Boot, ver
 
 \subsection{Configurando e Executando a Aplicação}
 
-Agora que já conhecemos a estrutura do projeto, poderíamos tentar executá-lo, mas como adicionamos várias dependências, nós vamos precisar configurar algumas primeiro, senão a execução não vai funcionar. Note que para colocar o projeto em execução nós \textbf{NÃO} usaremos o botão \textit{play} do NetBeans. Logo veremos como fazer. No momento vamos forcar na configuração, editando o arquivo \destaque{\texttt{application.properties}}. Abra-o e copie o conteúdo apresentado na Listagem~\thechapter.\ref{listagem:projetos/capitulo10/parciais/application01.properties}.
+Agora que já conhecemos a estrutura do projeto, poderíamos tentar executá-lo, mas como adicionamos várias dependências, nós vamos precisar configurar algumas primeiro, senão a execução não vai funcionar. Note que para colocar o projeto em execução nós \textbf{NÃO} usaremos o botão \textit{play} do NetBeans. Logo veremos como fazer. No momento vamos forçar na configuração, editando o arquivo \destaque{\texttt{application.properties}}. Abra-o e copie o conteúdo apresentado na Listagem~\thechapter.\ref{listagem:projetos/capitulo10/parciais/application01.properties}.
 
-\propertiesCode{Arquivo de configuração do Spring Boot (\texttt{application.properties})}{projetos/capitulo10/parciais/application01.properties}
+\propertiesCode{Primeira versão do arquivo de configuração do Spring Boot (\texttt{application.properties})}{projetos/capitulo10/parciais/application01.properties}
 
-Veja que todo o conteúdo está explicado com comentários, então não repetirei o que já foi explicado. Por fim, antes de executarmos nosso projeto pela primeira vez, precisamos colocar o MariaDB no ar e criar o banco de dados com o nome de \destaque{\texttt{venda\_produtos\_spring}}. Faça isso.
+\begin{saibaMais}
+    A lista completa das propriedades que podem ser configuradas no arquivo \texttt{application.properties} pode ser acessada a partir desse endereço: \url{https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html}
+\end{saibaMais}
+
+Veja que todo o conteúdo está explicado com comentários, então não repetirei o que já foi explicado. Ainda atualizaremos esse arquivo algumas vezes durante a construção da nossa aplicação de exemplo. Vale ainda ressaltar que esse arquivo de configuração pode também ser escrito no formato YAML~\footnote{\textit{Yet Another Markup Language} \url{https://en.wikipedia.org/wiki/YAML}}. Por fim, antes de executarmos nosso projeto pela primeira vez, precisamos colocar o MariaDB no ar e criar o banco de dados com o nome de \destaque{\texttt{venda\_produtos\_spring}}. Faça isso.
 
 Agora vamos executar nosso projeto! Logo abaixo da estrutura do projeto no NetBeans há a aba \destaque{\textit{Navigator}}. Quando o nó raiz do projeto estiver selecionado --na verdade alguns outros nós também-- serão apresentados todos os \textit{goals}/abjetivos/ações do Maven que estão disponíveis, sejam do próprio Maven ou através de \textit{plugins} definidos no arquivo \texttt{pom.xml}. Na Figura~\ref{fig:cap10PluginsMaven} essa aba é apresentada.
 
