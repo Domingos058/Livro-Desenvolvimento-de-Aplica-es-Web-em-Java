@@ -415,9 +415,13 @@
 % Controle do espaçamento entre um parágrafo e outro:
 \setlength{\parskip}{0.2cm}  % tente também \onelineskip
 
-\input{GoudyInitialen/GoudyIn.fd}
+\input{tipografia/GoudyIn.fd}
 \newcommand*\GoudyInFamily{\usefont{U}{GoudyIn}{xl}{n}}
 \renewcommand{\LettrineFontHook}{\GoudyInFamily}
+
+%\input{tipografia/Acorn.fd}
+%\newcommand*\LettrineFamily{\usefont{U}{Acorn}{xl}{n}}
+%\renewcommand{\LettrineFontHook}{\LettrineFamily}
 
 % caixinhas de destaque
 \newtcbox{\destaque}{
