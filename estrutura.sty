@@ -337,13 +337,16 @@
 
 \NewDocumentEnvironment{mensagemBase}{mm}
 {%
-    \begin{tcolorbox}[reset,enhanced,colback=#1!5!corFundoCaixas,shadow={0.5mm}{-0.5mm}{0mm}{black!30!white},colbacktitle=#1!85!black,frame hidden,fonttitle=\bfseries\sffamily,left=2mm,right=4mm,top=2mm,bottom=2mm,attach boxed title to top left={xshift=-2mm,yshift=-3mm},boxed title style={frame hidden},title=#2]%
+    \begin{tcolorbox}[reset,enhanced,colback=#1!5!corFundoCaixas,shadow={0.5mm}{-0.5mm}{0mm}{black!30!white},colbacktitle=#1!85!black,frame hidden,fonttitle=\bfseries\sffamily,left=4mm,right=4mm,top=4mm,bottom=2mm,attach boxed title to top left={xshift=-2mm,yshift=-3mm},boxed title style={frame hidden},title=#2]%
     
-        \begin{tabular}{ m{13.5cm} }%
-            \color{#1!30!black}
+%        \begin{tabular}{ m{13.5cm} }%
+%            \color{#1!30!black}
+%        }%
+%        {%
+%        \end{tabular}%
+        \color{#1!30!black}
         }%
         {%
-        \end{tabular}%
     \end{tcolorbox}%
 }%
 

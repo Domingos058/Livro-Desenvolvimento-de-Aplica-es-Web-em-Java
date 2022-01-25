@@ -40,7 +40,14 @@ Basicamente, do lado esquerdo temos as opções de configuração do projeto:
     
     \begin{itemize}
     
-        \item \textbf{\textit{Group}:} nome do identificador do grupo do projeto, normalmente igual ao pacote da organização/empresa do desenvolvedor do projeto, seguindo as regras para nomeação de pacotes da linguagem Java (\url{https://docs.oracle.com/javase/specs/jls/se6/html/packages.html#7.7});
+        \item \textbf{\textit{Group}:} nome do identificador do grupo do projeto, normalmente igual ao pacote da organização/empresa do desenvolvedor do projeto, seguindo as regras para nomeação de pacotes da linguagem Java, que por sinal podem ser acessadas usando os links apresentados na caixa ``Saiba Mais'' abaixo;
+        
+        \begin{saibaMais}
+            \textbf{Resumo das convenções para nomeação de pacotes:}\\
+            \url{https://www.oracle.com/java/technologies/javase/codeconventions-namingconventions.html}\\
+            \textbf{Especificação completa sobre pacotes e módulos do Java 17:}\\
+            \url{https://docs.oracle.com/javase/specs/jls/se17/html/jls-7.html}
+        \end{saibaMais}
         
         \item \textbf{\textit{Artifact}:} nome do arquivo que será gerado (sem a extensão \texttt{.jar} ou \texttt{.war}) após a construção do projeto e também o identificador que será usado pelo Maven para encontrar a versão compilada e instalada do projeto dentro de seu repositório local. Normalmente se o identificador do artefato tiver mais de uma palavra, separamos as mesmas por hífens;
         
@@ -77,7 +84,7 @@ Ou seja:
     
     \item \textbf{\textit{Language}:} programaremos em Java;
     
-    \item \textbf{\textit{Spring Boot}:} a última versão estável do Spring Boot, nesse caso, a 2.6.2. Note que isso pode variar de acordo com a época que você estiver lendo esse texto;
+    \item \textbf{\textit{Spring Boot}:} a última versão estável do Spring Boot, nesse caso, a \texttt{2.6.2}. Note que isso pode variar de acordo com a época que você estiver lendo esse texto. Procure usar uma versão \texttt{2.6.x} para evitarmos inconsistências, onde \texttt{x} pode ser qualquer número;
     
     \item \textbf{\textit{Project Metadata}:} os metadados do projeto, que envolvem:
     
@@ -200,7 +207,7 @@ Agora que já conhecemos a estrutura do projeto, poderíamos tentar executá-lo,
 \propertiesCode{Primeira versão do arquivo de configuração do Spring Boot (\texttt{application.properties})}{projetos/capitulo10/parciais/application01.properties}
 
 \begin{saibaMais}
-    A lista completa das propriedades que podem ser configuradas no arquivo \texttt{application.properties} pode ser acessada a partir desse endereço: \url{https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html}
+    A lista completa das propriedades que podem ser configuradas no arquivo \texttt{application.properties} pode ser acessada a partir do endereço  \url{https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html}
 \end{saibaMais}
 
 Veja que todo o conteúdo está explicado com comentários, então não repetirei o que já foi explicado. Ainda atualizaremos esse arquivo algumas vezes durante a construção da nossa aplicação de exemplo. Vale ainda ressaltar que esse arquivo de configuração pode também ser escrito no formato YAML~\footnote{\textit{Yet Another Markup Language} \url{https://en.wikipedia.org/wiki/YAML}}. Por fim, antes de executarmos nosso projeto pela primeira vez, precisamos colocar o MariaDB no ar e criar o banco de dados com o nome de \destaque{\texttt{venda\_produtos\_spring}}. Faça isso.
@@ -235,7 +242,7 @@ Vamos fazer mais um teste para ver o que acontece. Acesse a URL \url{http://loca
 
 \subsection{Realizando Configurações Programaticamente}
 
-A primeira coisa que faremos é criar um novo pacote, chamado de \destaque{\texttt{web}}, dentro do pacote \destaque{\texttt{dsoc7.vendaprodutosspring}}. Cuidado, estamos trabalhando nos pacotes de código fonte, não nos pacotes de teste! Outra coisa importante. Todo e qualquer código que será gerenciado pelo Spring Boot, pelo Spring Framework e pelo Spring MVC precisa estar, obrigatoriamente, dentro do pacote principal do projeto, no nosso caso o pacote \destaque{\texttt{dsoc7.vendaprodutosspring}} que contém a classe \destaque{\texttt{VendaProdutosSpringApplication}} ou em subpacotes do mesmo.
+A primeira coisa que faremos é criar um novo pacote, chamado de \destaque{\texttt{web}}, dentro do pacote \destaque{\texttt{dsoc7.vendaprodutosspring}}. Cuidado, estamos trabalhando nos pacotes de código fonte, não nos pacotes de teste! Outra coisa importante. Todo e qualquer código que será gerenciado pelo Spring Boot, pelo Spring Framework e pelo Spring MVC precisa estar, obrigatoriamente, dentro do pacote principal do projeto, no nosso caso o \destaque{\texttt{dsoc7.vendaprodutosspring}}, que contém a classe \destaque{\texttt{VendaProdutosSpringApplication}}, ou em algum de seus subpacotes.
 
 No pacote \destaque{\texttt{dsoc7.vendaprodutosspring.web}} recém criado, crie uma classe chamada de \inlineJavaCode{WebConfig}. O nome poderia ser qualquer coisa, mas vamos chamar assim para darmos a noção que essa classe fará a configuração da parte ``web'' do Spring MVC. Veja o código da classe na Listagem~\thechapter.\ref{listagem:projetos/capitulo10/venda-produtos-spring/src/main/java/dsoc7/vendaprodutosspring/web/WebConfig.java}.
 
@@ -263,8 +270,11 @@ Para isso, precisamos instalar uma extensão no Chrome (\url{http://livereload.c
 
 Muito bem! Temos a infraestrutura básica do nosso projeto pronta para podermos começar a trabalhar de verdade! Iremos agora começar a construir novamente, camada por camada, nossa aplicação de Venda de Produtos, mas agora usando diversas bibliotecas, \textit{frameworks} e recursos que, graças ao Spring Boot, já estão prontos para serem utilizados. Para não ficar muito extenso e cansativo, irei focar em algumas entidades para você aprender o que quero ensinar. O código completo do projeto estará disponível para consulta, como de praxe. Vamos lá!
 
+\begin{saibaMais}
+    As documentações das versões atuais do Spring Boot podem ser acessadas no endereço \url{https://spring.io/projects/spring-boot#learn}
+\end{saibaMais}
 
-\section{Hibernate, JPA, Validações e Lombok}
+\section{Lombok, Hibernate, JPA e Validações}
 
 criação das entidades
 
