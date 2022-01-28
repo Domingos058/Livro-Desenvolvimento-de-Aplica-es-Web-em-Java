@@ -8,6 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  * 
  * @author Prof. Dr. David Buzatto
  */
-public interface EstadoRepository extends CrudRepository<Estado, Long>{
+public interface EstadoRepository extends CrudRepository<Estado, Long> {
     
 }

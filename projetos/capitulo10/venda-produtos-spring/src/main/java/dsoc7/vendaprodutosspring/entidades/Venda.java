@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
  *
  * @author Prof. Dr. David Buzatto
  */
-@Data
 @Entity
+@Data
 @AllArgsConstructor 
 @NoArgsConstructor
 @EqualsAndHashCode( onlyExplicitlyIncluded = true )
@@ -42,7 +42,9 @@ public class Venda {
     @ManyToOne
     private Cliente cliente;
     
-    @OneToMany( mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true )
+    @OneToMany( mappedBy = "venda", 
+                cascade = CascadeType.ALL, 
+                orphanRemoval = true )
     private Set<ItemVenda> itensDaVenda;
 
 }

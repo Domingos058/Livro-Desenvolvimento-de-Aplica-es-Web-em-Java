@@ -21,8 +21,8 @@ import lombok.NoArgsConstructor;
  *
  * @author Prof. Dr. David Buzatto
  */
-@Data
 @Entity
+@Data
 @AllArgsConstructor 
 @NoArgsConstructor
 @EqualsAndHashCode( onlyExplicitlyIncluded = true )
@@ -35,12 +35,14 @@ public class Cliente {
     
     @NotNull( message = "Nome é obrigatório" )
     @Size( min = 1, max = 45, 
-           message = "Nome deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "Nome deve ter no mínimo {min} e " +
+                     "no máximo {max} caracteres" )
     private String nome;
     
     @NotNull( message = "Sobrenome é obrigatório" )
     @Size( min = 1, max = 45, 
-           message = "Sobrenome deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "Sobrenome deve ter no mínimo {min} e " +
+                     "no máximo {max} caracteres" )
     private String sobrenome;
     
     @NotNull( message = "Data de nascimento é obrigatória" )
@@ -57,22 +59,26 @@ public class Cliente {
     @NotNull( message = "E-mail é obrigatório" )
     @Email( message = "Formato de e-mail inválido" )
     @Size( min = 3, max = 60, 
-           message = "E-mail deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "E-mail deve ter no mínimo {min} e " +
+                     "no máximo {max} caracteres" )
     private String email;
     
     @NotNull( message = "Logradouro é obrigatório" )
     @Size( min = 1, max = 50, 
-           message = "Logradouro deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "Logradouro deve ter no mínimo {min} e " +
+                     "no máximo {max} caracteres" )
     private String logradouro;
     
     @NotNull( message = "Número é obrigatório" )
     @Size( min = 1, max = 6, 
-           message = "Número deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "Número deve ter no mínimo {min} e " +
+                     "no máximo {max} caracteres" )
     private String numero;
     
     @NotNull( message = "Bairro é obrigatório" )
     @Size( min = 1, max = 30, 
-           message = "Bairro deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "Bairro deve ter no mínimo {min} e " +
+                     "no máximo {max} caracteres" )
     private String bairro;
     
     @NotNull( message = "CEP é obrigatório" )

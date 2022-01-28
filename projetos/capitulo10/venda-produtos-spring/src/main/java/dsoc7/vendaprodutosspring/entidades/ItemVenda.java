@@ -24,8 +24,8 @@ import lombok.ToString;
  *
  * @author Prof. Dr. David Buzatto
  */
-@Data
 @Entity
+@Data
 @AllArgsConstructor 
 @NoArgsConstructor
 @EqualsAndHashCode( onlyExplicitlyIncluded = true )

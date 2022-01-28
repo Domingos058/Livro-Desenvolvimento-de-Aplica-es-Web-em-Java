@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
  *
  * @author Prof. Dr. David Buzatto
  */
-@Data
 @Entity
+@Data
 @AllArgsConstructor 
 @NoArgsConstructor
 @EqualsAndHashCode( onlyExplicitlyIncluded = true )
@@ -31,12 +31,14 @@ public class UnidadeMedida {
     
     @NotNull( message = "Descrição é obrigatória" )
     @Size( min = 1, max = 45, 
-           message = "Descrição deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "Descrição deve ter no mínimo {min} e " +
+                     "no máximo {max} caracteres" )
     private String descricao;
     
     @NotNull( message = "Sigla é obrigatória" )
     @Size( min = 1, max = 4, 
-           message = "Sigla deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "Sigla deve ter no mínimo {min} e no " +
+                     "máximo {max} caracteres" )
     @Column( unique = true )
     private String sigla;
 

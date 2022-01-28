@@ -8,6 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  * 
  * @author Prof. Dr. David Buzatto
  */
-public interface ItemVendaRepository extends CrudRepository<ItemVenda, Long>{
+public interface ItemVendaRepository extends CrudRepository<ItemVenda, Long> {
     
 }

@@ -8,6 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  * 
  * @author Prof. Dr. David Buzatto
  */
-public interface CidadeRepository extends CrudRepository<Cidade, Long>{
+public interface CidadeRepository extends CrudRepository<Cidade, Long> {
     
 }

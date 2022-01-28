@@ -31,7 +31,8 @@ public class Cidade {
     
     @NotNull( message = "Nome é obrigatório" )
     @Size( min = 1, max = 30, 
-           message = "Nome deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "Nome deve ter no mínimo {min} e " +
+                     "no máximo {max} caracteres" )
     private String nome;
     
     @NotNull( message = "Estado é obrigatório" )

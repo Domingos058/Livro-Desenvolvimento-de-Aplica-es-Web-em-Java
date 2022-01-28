@@ -75,12 +75,15 @@ public class VendaController {
         
         try {
             
-            ItemVenda[] itens = objectMapper.readValue( itensVenda, ItemVenda[].class );
+            ItemVenda[] itens = objectMapper.readValue( 
+                    itensVenda, ItemVenda[].class );
             
             for ( ItemVenda item : itens ) {
                 
-                Produto p = produtoRepo.findById( item.getProduto().getId() ).get();
-                p.setEstoque( p.getEstoque().subtract( item.getQuantidade() ) );
+                Produto p = produtoRepo.findById( 
+                        item.getProduto().getId() ).get();
+                p.setEstoque( p.getEstoque().subtract( 
+                        item.getQuantidade() ) );
                 produtoRepo.save( p ); // atualiza o estoque
                 
                 item.setVenda( venda );

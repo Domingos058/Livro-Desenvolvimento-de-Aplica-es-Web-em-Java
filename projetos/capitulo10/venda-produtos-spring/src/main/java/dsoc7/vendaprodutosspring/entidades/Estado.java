@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
  *
  * @author Prof. Dr. David Buzatto
  */
-@Data
 @Entity
+@Data
 @AllArgsConstructor 
 @NoArgsConstructor
 @EqualsAndHashCode( onlyExplicitlyIncluded = true )
@@ -31,12 +31,14 @@ public class Estado {
     
     @NotNull( message = "Nome é obrigatório" )
     @Size( min = 1, max = 30, 
-           message = "Nome deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "Nome deve ter no mínimo {min} e " +
+                     "no máximo {max} caracteres" )
     private String nome;
     
     @NotNull( message = "Sigla é obrigatória" )
     @Size( min = 1, max = 2, 
-           message = "Sigla deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "Sigla deve ter no mínimo {min} e " +
+                     "no máximo {max} caracteres" )
     @Column( unique = true )
     private String sigla;
 

@@ -24,8 +24,8 @@ import lombok.NoArgsConstructor;
  *
  * @author Prof. Dr. David Buzatto
  */
-@Data
 @Entity
+@Data
 @AllArgsConstructor 
 @NoArgsConstructor
 @EqualsAndHashCode( onlyExplicitlyIncluded = true )
@@ -38,7 +38,8 @@ public class Produto {
     
     @NotNull( message = "Descrição é obrigatória" )
     @Size( min = 1, max = 60, 
-           message = "Descrição deve ter no mínimo {min} e no máximo {max} caracteres" )
+           message = "Descrição deve ter no mínimo {min} e " +
+                     "no máximo {max} caracteres" )
     private String descricao;
     
     @NotNull( message = "Código de barras obrigatório" )
@@ -66,7 +67,9 @@ public class Produto {
     @ManyToOne
     private UnidadeMedida unidadeMedida;
     
-    @OneToMany( mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true )
+    @OneToMany( mappedBy = "produto", 
+                cascade = CascadeType.ALL, 
+                orphanRemoval = true )
     private Set<ItemVenda> itensDaVenda;
 
 }
